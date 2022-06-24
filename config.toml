@@ -1,0 +1,125 @@
+title = "Open Service Mesh"
+baseURL = "https://docs.openservicemesh.io/"
+languageCode = "en-us"
+description = "Documentation for Open Service Mesh (OSM)"
+theme = "dosmy"
+RelativeURLs=true
+CanonifyURLs=true
+
+# Theme General Config
+[languages]
+	[languages.en]
+		title = "Open Service Mesh"
+		contentDir = 'content/en'
+		description = "Documentation for Open Service Mesh (OSM)"
+		languageName ="English"
+		weight = 1
+	[languages.zh]
+		title = "开放服务网格"
+		contentDir = 'content/zh'
+		description = "Documentation for Open Service Mesh (OSM)"
+		languageName ="中文"
+		weight = 2
+[services]
+[services.googleAnalytics]
+id = "UA-130516746-13"
+enableRobotsTXT = true
+enableGitInfo = true
+version_menu = "Releases"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+enableMissingTranslationPlaceholders = true
+disableKinds = ["taxonomy", "taxonomyTerm"]
+pygmentsCodeFences = true
+pygmentsUseClasses = false
+pygmentsUseClassic = false
+pygmentsStyle = "tango"
+[imaging]
+resampleFilter = "CatmullRom"
+quality = 75
+anchor = "smart"
+[blackfriday]
+plainIDAnchors = true
+hrefTargetBlank = true
+angledQuotes = false
+latexDashes = true
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+      style = "tango"
+
+
+# OSM top menu (should match main site)
+[[menu.main]]
+	name = "Home"
+	weight = 10
+	url = "https://openservicemesh.io"
+[[menu.main]]
+	name = "Docs"
+	weight = 20
+	url = "https://docs.openservicemesh.io"
+[[menu.main]]
+	name = "Github"
+	weight = 30
+	url = "https://github.com/openservicemesh/osm"
+[[menu.main]]
+	name = "Blog"
+	weight = 40
+	url = "https://openservicemesh.io/blog"
+[[menu.main]]
+	name = "Slack"
+	weight = 50
+	url = "https://cloud-native.slack.com/archives/C018794NV1C"
+[[menu.main]]
+	name = "Twitter"
+	weight = 60
+	url = "https://twitter.com/openservicemesh"
+
+
+# Theme Additional params
+[params]
+copyright = "The Docsy Authors"
+offlineSearch = true
+offlineSearchSummaryLength = 200
+algolia_docsearch = false
+prism_syntax_highlighting = true
+project_home = "https://openservicemesh.io/"
+
+# Version params
+osm_branch = "release-v1.1"
+osm_version = "v1.1.1"
+envoy_version = "v1.19.3"
+min_k8s_version = "v1.20.0"
+
+[[params.versions]]
+  version = "v1.1 (latest)"
+  url = "https://release-v1-1.docs.openservicemesh.io/"
+[[params.versions]]
+  version = "v1.0"
+  url = "https://release-v1-0.docs.openservicemesh.io/"
+[[params.versions]]
+  version = "v0.11"
+  url = "https://release-v0-11.docs.openservicemesh.io/"
+[[params.versions]]
+  version = "v0.10"
+  url = "https://release-v0-10.docs.openservicemesh.io/"
+[[params.versions]]
+  version = "v0.9"
+  url = "https://release-v0-9.docs.openservicemesh.io/"
+[[params.versions]]
+  version = "v0.8"
+  url = "https://release-v0-8.docs.openservicemesh.io/"
+
+[params.ui]
+navbar_logo = true
+sidebar_menu_compact = true
+breadcrumb_disable = false
+sidebar_search_disable = false
+ul_show = 1
+
+[params.ui.feedback]
+enable = true
+yes = 'Glad to hear it! Please <a href="https://github.com/openservicemesh/osm/issues/new">tell us how we can improve</a>.'
+no = 'Sorry to hear that. Please <a href="https://github.com/openservicemesh/osm/issues/new">tell us how we can improve</a>.'
