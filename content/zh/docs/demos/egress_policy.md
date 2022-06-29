@@ -5,12 +5,12 @@ type: docs
 weight: 15
 ---
 
-本指南演示了服务网格中的客户端使用 OSM 的 Egress 策略 API 访问网格外部的目标。
+本指南演示了服务网格中的客户端使用 osm-edge 的 Egress 策略 API 访问网格外部的目标。
 
 ## 先决条件
 
 - Kubernetes 集群版本 {{< param min_k8s_version >}} 或者更高。
-- 已安装 OSM。
+- 已安装 osm-edge。
 - 已安装 `kubectl` 与 API server 交互。
 - 已安装 `osm`  命令行工具，用于管理服务网格。
 
@@ -83,10 +83,8 @@ weight: 15
     date: Thu, 13 May 2021 21:49:35 GMT
     content-type: application/json
     content-length: 335
-    server: envoy
     access-control-allow-origin: *
     access-control-allow-credentials: true
-    x-envoy-upstream-service-time: 168
     ```
 
 4. 确认在删除上面的策略之后，`curl` 客户端无法再访问 `http://httpbin.org:80/get`。
@@ -102,7 +100,7 @@ weight: 15
 
 ## HTTPS 出口
 
-由于 HTTPS 流量通过 TLS 加密，OSM 将 HTTPS 流量时将其当作 TCP 路由给原始目的地。在 TSL 握手时客户端的服务器名称标识（SNI）与出口策略中指定的域名匹配。
+由于 HTTPS 流量通过 TLS 加密，osm-edge 将 HTTPS 流量时将其当作 TCP 路由给原始目的地。在 TSL 握手时客户端的服务器名称标识（SNI）与出口策略中指定的域名匹配。
 
 1. 确认 `curl` 客户点无法发送 HTTPS 请求 `https://httpbin.org:443/get` 到运行在 `443` 端口的网站 `httpbin.org`。
 
@@ -183,7 +181,7 @@ weight: 15
         protocol: tcp
     EOF
     ```
-   > 注意：对于像 `MySQL`、`PostgresSQL` 这样的 `server-first` 协议，服务器发起客户端和服务器之间的数据的第一个字节，协议必须设置为 `tcp-server-first` 指示 OSM 无需在端口上进行协议检测。协议检测依赖于检测连接的第一个字节，与 `server-first` 协议不兼容。当端口的协议设置为 `tcp-server-first` 时，会跳过该端口的协议检测。同样需要注意的 `server-first` 端口号不得用于需要执行协议检测的其他应用程序端口，这就意味着使用 `server-first` 协议的端口不得使用其他需要执行协议检测的如 `HTTP` 和 `TCP` 的协议。
+   > 注意：对于像 `MySQL`、`PostgresSQL` 这样的 `server-first` 协议，服务器发起客户端和服务器之间的数据的第一个字节，协议必须设置为 `tcp-server-first` 指示 osm-edge 无需在端口上进行协议检测。协议检测依赖于检测连接的第一个字节，与 `server-first` 协议不兼容。当端口的协议设置为 `tcp-server-first` 时，会跳过该端口的协议检测。同样需要注意的 `server-first` 端口号不得用于需要执行协议检测的其他应用程序端口，这就意味着使用 `server-first` 协议的端口不得使用其他需要执行协议检测的如 `HTTP` 和 `TCP` 的协议。
 
 3. 确认 `curl` 客户端可以成功发送 HTTPS 请求 `https://openservicemesh.io:443`。
 
@@ -268,10 +266,8 @@ HTTP Egress 策略可以为基于 HTTP 方法、请求头和路径的细粒度�
     date: Thu, 13 May 2021 21:49:35 GMT
     content-type: application/json
     content-length: 335
-    server: envoy
     access-control-allow-origin: *
     access-control-allow-credentials: true
-    x-envoy-upstream-service-time: 168
     ```
 
 4. 确认 `curl` 客户端无法发送请求到  `http://httpbin.org:80/status/200`。
@@ -280,7 +276,6 @@ HTTP Egress 策略可以为基于 HTTP 方法、请求头和路径的细粒度�
     $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/status/200
     HTTP/1.1 404 Not Found
     date: Fri, 14 May 2021 17:08:48 GMT
-    server: envoy
     transfer-encoding: chunked
     ```
 
@@ -310,8 +305,6 @@ HTTP Egress 策略可以为基于 HTTP 方法、请求头和路径的细粒度�
     date: Fri, 14 May 2021 17:10:48 GMT
     content-type: text/html; charset=utf-8
     content-length: 0
-    server: envoy
     access-control-allow-origin: *
     access-control-allow-credentials: true
-    x-envoy-upstream-service-time: 188
     ```

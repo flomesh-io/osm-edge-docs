@@ -1,18 +1,18 @@
 ---
-title: "Prometheus 与 OSM 集成"
-description: "演示如何将 OSM 与 Prometheus 集成用于指标采集"
+title: "Prometheus 与 osm-edge 集成"
+description: "演示如何将 osm-edge 与 Prometheus 集成用于指标采集"
 aliases: "/docs/integrations/demo_prometheus"
 type: docs
 weight: 3
 ---
 
-# Prometheus 与 OSM 集成
+# Prometheus 与 osm-edge 集成
 
-## Prometheus 与 OSM 集成
+## Prometheus 与 osm-edge 集成
 
-To familiarize yourself on how OSM works with Prometheus, try installing a new mesh with sample applications to see which metrics are collected. 为了熟悉 OSM 如何与 Promethues 工作，试着安装网格和示例应用来看收集了哪些指标。
+To familiarize yourself on how osm-edge works with Prometheus, try installing a new mesh with sample applications to see which metrics are collected. 为了熟悉 osm-edge 如何与 Promethues 工作，试着安装网格和示例应用来看收集了哪些指标。
 
-1. 安装 OSM 并使用你自己的 Prometheus 实例：
+1. 安装 osm-edge 并使用你自己的 Prometheus 实例：
 
    ```console
    $ osm install --set osm.deployPrometheus=true,osm.enablePermissiveTrafficPolicy=true
@@ -26,7 +26,7 @@ To familiarize yourself on how OSM works with Prometheus, try installing a new m
    namespace/metrics-demo created
    ```
 
-1. 让 OSM 监控新创建的命名空间：
+1. 让 osm-edge 监控新创建的命名空间：
 
    ```console
    $ osm namespace add metrics-demo
@@ -115,7 +115,7 @@ To familiarize yourself on how OSM works with Prometheus, try installing a new m
    namespace "metrics-demo" deleted
    ```
 
-   然后，卸载 OSM：
+   然后，卸载 osm-edge：
 
    ```
    $ osm uninstall mesh
@@ -123,7 +123,7 @@ To familiarize yourself on how OSM works with Prometheus, try installing a new m
    OSM [mesh name: osm] uninstalled
    ```
 
-   在卸载 OSM 后删除集群范围的资源，执行下面的命令。参阅 [卸载指南](/docs/guides/uninstall/) 获取更多信息。
+   在卸载 osm-edge 后删除集群范围的资源，执行下面的命令。参阅 [卸载指南](/docs/guides/uninstall/) 获取更多信息。
 
    ```console
    $ osm uninstall mesh --delete-cluster-wide-resources

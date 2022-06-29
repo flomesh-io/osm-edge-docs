@@ -12,7 +12,7 @@ weight: 1
 
 支持外部授权的代理将针对每个请求向远程端点发起权限检查。由于系统可能拥有大量 RPS，外部授权有许多可调整的设置，以允许或多或少的控制，但会牺牲性能（仅发送 HTTP 有效负载或标头、超时、授权无法回复时的默认行为等等）。
 
-OSM 允许通过 OSM MeshConfig 来配置 Envoy 的 [外部授权扩展](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/ext_authz_filter) 
+osm-edge 允许通过 osm-edge MeshConfig 来配置 Envoy 的 [外部授权扩展](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/ext_authz_filter) 
 
 ## 局限性
 
@@ -21,7 +21,7 @@ OSM 允许通过 OSM MeshConfig 来配置 Envoy 的 [外部授权扩展](https:/
 类似地，过滤方向将静态应用于网格内的 `inbound` 和 `outbound` 连接，启用后会影响对网格中的任何服务或应用程序发出的所有 HTTP 请求。
 
 
-## OSM 与 OPA 插件外部授权演练
+## osm-edge 与 OPA 插件外部授权演练
 
 以下部分将记录如何结合 `opa-envoy-plugin` 配置外部授权。
 
@@ -29,7 +29,7 @@ OSM 允许通过 OSM MeshConfig 来配置 Envoy 的 [外部授权扩展](https:/
 
 以下示例使用单个远程（通过网络）端点来验证所有流量。不建议将此配置用于生产部署。
 
-- 首先，从部署 OSM 的 Demo 开始。我们将使用此示例部署来测试外部授权功能。请参考 [OSM的自动化Demo](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/demo#how-to-run-the-osm-automated-demo)并按照说明操作。
+- 首先，从部署 osm-edge 的 Demo 开始。我们将使用此示例部署来测试外部授权功能。请参考 [osm-edge的自动化Demo](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/demo#how-to-run-the-osm-automated-demo)并按照说明操作。
 
 ```
 # Assuming OSM repo is available
@@ -37,14 +37,14 @@ cd <PATH_TO_OSM_REPO>
 demo/run-osm-demo.sh  # wait for all services to come up
 ```
 
-- 当 OSM 的演示启动并运行时，继续部署 `opa-envoy-plugin`。OSM 提供了 [整理好的独立 opa-envoy-plugin 部署 chart](https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml），它通过服务公开 `opa-envoy-plugin` 的 gRPC 端口（默认为 `9191`）。这是 OSM 在启用外部授权时将配置代理的端点。下面的代码片段创建了一个 `opa` 命名空间，并在其中部署了 `opa-envoy-plugin`，并使用了最少的 deny-all 配置：
+- 当 osm-edge 的演示启动并运行时，继续部署 `opa-envoy-plugin`。osm-edge 提供了 [整理好的独立 opa-envoy-plugin 部署 chart](https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml），它通过服务公开 `opa-envoy-plugin` 的 gRPC 端口（默认为 `9191`）。这是 osm-edge 在启用外部授权时将配置代理的端点。下面的代码片段创建了一个 `opa` 命名空间，并在其中部署了 `opa-envoy-plugin`，并使用了最少的 deny-all 配置：
 
 ```
 kubectl create namespace opa
 kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml
 ```
 
-- 一旦 OSM 示例启动并运行，修改 OSM MeshConfig  添加网格的外部授权。为此，配置 `inboundExternalAuthorization` 指向远程外部授权端点，如下所示：
+- 一旦 osm-edge 示例启动并运行，修改 osm-edge MeshConfig  添加网格的外部授权。为此，配置 `inboundExternalAuthorization` 指向远程外部授权端点，如下所示：
 
 ```
 kubectl edit meshconfig osm-mesh-config -n osm-system
@@ -60,7 +60,7 @@ inboundExternalAuthorization:
 ...
 ```
 
-- 这一步执行完，OSM 应该配置所有代理依赖外部授权服务用于授权决策。默认情况下，`opa-envoy-plugin` 提供的配置会拒绝所有访问网格内服务的请求。可以通过检查网格中的任一服务的日志来验证，应该有 `403 Forbidden`：
+- 这一步执行完，osm-edge 应该配置所有代理依赖外部授权服务用于授权决策。默认情况下，`opa-envoy-plugin` 提供的配置会拒绝所有访问网格内服务的请求。可以通过检查网格中的任一服务的日志来验证，应该有 `403 Forbidden`：
 ```
 kubectl logs <bookbuyer_pod> -n bookbuyer bookbuyer
 ```

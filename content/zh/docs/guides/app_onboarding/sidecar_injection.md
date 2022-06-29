@@ -1,15 +1,15 @@
 ---
 title: "Sidecar 注入"
-description: "本章节描述 OSM 中 sidecar 的注入流程。"
+description: "本章节描述 osm-edge 中 sidecar 的注入流程。"
 type: docs
 weight: 3
 ---
 
 # Sidecar 注入
-服务网格中的服务通过安装在 pod 中的 sidecar 进行通信。下面的章节描述了 OSM 中的 sidecar 注入流程。
+服务网格中的服务通过安装在 pod 中的 sidecar 进行通信。下面的章节描述了 osm-edge 中的 sidecar 注入流程。
 
 ## Sidecar 自动注入
-目前网格中注入sidecar 的唯一方式就是自动注入。由 OSM 提供的修改性质的 web 准入控制器将 sidecar 自动注入到应用程序 Kubernetes Pod 中。
+目前网格中注入sidecar 的唯一方式就是自动注入。由 osm-edge 提供的修改性质的 web 准入控制器将 sidecar 自动注入到应用程序 Kubernetes Pod 中。
 
 Sidecar 的自动注入可以被以每个命名空间来配置作为注册命名空间到网格的一部分，也可以随后通过 Kubernetes API 完成。通过使用 sidecar 注入注解对命名空间或 pod 资源进行注释，可以在每个命名空间或每个 pod 上启用自动 sidecar 注入。单个 pod 和命名空间可以显式配置为启用或禁用自动 sidecar 注入，从而使用户可以灵活地控制 pod 和命名空间上的 sidecar 注入。
 
@@ -18,7 +18,7 @@ Sidecar 的自动注入可以被以每个命名空间来配置作为注册命名
 先决条件：
 - Pod 所在的命名空间必须是通过 `osm namespace add` 命令注册到网格的。
 - Pod 所在的命名空间不能使用 `osm namespace ignore` 命令排除。
-- Pod 所在的命名空间不能使用 key 为 `name`，值为 OSM 控制平面所在命名空间名的标签。比如，某个命名空间有标签 `name: osm-system`，而 `osm-system` 是控制平面所在的命名空间名，这个命名空间中的 pod 无法注入 sidecar。
+- Pod 所在的命名空间不能使用 key 为 `name`，值为 osm-edge 控制平面所在命名空间名的标签。比如，某个命名空间有标签 `name: osm-system`，而 `osm-system` 是控制平面所在的命名空间名，这个命名空间中的 pod 无法注入 sidecar。
 - Pod 规格上不能使用 `hostNetwork: true`。如果有，会导致主机网络的路由失败。
 
 Sidecar 注入可以通过如下方式启用：

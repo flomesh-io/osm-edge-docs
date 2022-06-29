@@ -1,25 +1,25 @@
 ---
 title: "Grafana 故障排查"
-description: "如何修复 OSM 中集成的 Grafana 常见的问题"
+description: "如何修复 osm-edge 中集成的 Grafana 常见的问题"
 aliases: "/docs/troubleshooting/observability/grafana"
 type: docs
 ---
 
 ## Grafana 无法访问
 
-如果随 OSM 安装的 Grafana 实例无法访问，执行下面的步骤定位并解决问题
+如果随 osm-edge 安装的 Grafana 实例无法访问，执行下面的步骤定位并解决问题
 
 1. 确认 Grafana 的 Pod 是存在的
 
-    当使用 `osm install --set=osm.deployGrafana=true` 安装 Grafana，在 OSM 控制平面组件所在的 namespace 下 (默认为 `osm-system`)，应当存在一个命名类似 `osm-grafana-7c88b9687d-tlzld` 的 Pod
+    当使用 `osm install --set=osm.deployGrafana=true` 安装 Grafana，在 osm-edge 控制平面组件所在的 namespace 下 (默认为 `osm-system`)，应当存在一个命名类似 `osm-grafana-7c88b9687d-tlzld` 的 Pod
 
-    如果没有找到类似的 Pod，通过 `helm` 安装 OSM Helm chart 时，请确认将 `osm.deployGrafana` 选项设置为 `true`：
+    如果没有找到类似的 Pod，通过 `helm` 安装 osm-edge Helm chart 时，请确认将 `osm.deployGrafana` 选项设置为 `true`：
 
     ```console
     $ helm get values -a <mesh name> -n <OSM namespace>
     ```
 
-    如果选项被设置为 `true` 以外的值，重新使用 `osm install` 安装 OSM，并添加 `--set=osm.deployGrafana=true` 选项。
+    如果选项被设置为 `true` 以外的值，重新使用 `osm install` 安装 osm-edge，并添加 `--set=osm.deployGrafana=true` 选项。
 
 2. 确认 Grafana 的 Pod 处于健康状态
 

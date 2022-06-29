@@ -11,7 +11,7 @@ weight: 10
 
 ## 支持哪些
 
-OSM 实现了[SMI 流量拆分 v1alpha2 版本](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha2/traffic-split.md)。
+osm-edge 实现了[SMI 流量拆分 v1alpha2 版本](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha2/traffic-split.md)。
 
 它支持以下内容：
 
@@ -46,9 +46,9 @@ spec:
 - `spec.service` 和 `spec.backends` 对应 Kubernetes 服务对象
 - 所有后端的总权重必须大于零，并且每个后端的权重必须为正数
 
-创建 `TrafficSplit` 资源时，OSM 应用客户端 sidecar上的配置，根据指定的权重将定向到根服务 (`spec.service`) 的流量拆分到后端 (`spec.backends`)。对于 HTTP 流量，请求中的 `Host/Authority` 标头必须与 `TrafficSplit` 资源中指定的根服务的 FQDN 匹配。在上面的示例中，这意味着客户端发起的 HTTP 请求中的 `Host/Authority` 标头必须与 `default/bookstore` 服务的 Kubernetes 服务 FQDN 匹配才能进行流量拆分。
+创建 `TrafficSplit` 资源时，osm-edge 应用客户端 sidecar上的配置，根据指定的权重将定向到根服务 (`spec.service`) 的流量拆分到后端 (`spec.backends`)。对于 HTTP 流量，请求中的 `Host/Authority` 标头必须与 `TrafficSplit` 资源中指定的根服务的 FQDN 匹配。在上面的示例中，这意味着客户端发起的 HTTP 请求中的 `Host/Authority` 标头必须与 `default/bookstore` 服务的 Kubernetes 服务 FQDN 匹配才能进行流量拆分。
 
-> 注意：OSM 没有为原始 HTTP 请求配置 `Host/Authority` 头重写，因此在 `TrafficSplit` 资源中引用的后端服务必须接受带有原始 HTTP `Host/Authority` 头的请求。
+> 注意：osm-edge 没有为原始 HTTP 请求配置 `Host/Authority` 头重写，因此在 `TrafficSplit` 资源中引用的后端服务必须接受带有原始 HTTP `Host/Authority` 头的请求。
 
 需要注意的是，`TrafficSplit` 资源仅将流量拆分配置到服务，并不授予应用程序相互通信的权限。因此，一个有效的 [TrafficTarget](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-access/v1alpha3/traffic-access.md#traffictarget) 资源必须与`TrafficSplit` 一起配置以实现应用程序之间的流量。
 

@@ -1,25 +1,25 @@
 ---
-title: "OSM 控制平面健康检查"
+title: "osm-edge 控制平面健康检查"
 description: "健康探测工作原理及失败应对"
 aliases: "/docs/control_plane_health_probes"
 type: "docs"
 ---
 
-# OSM 控制平面健康探测
+# osm-edge 控制平面健康探测
 
-OSM控制平面组件利用健康探测来传递整体状态。健康探测通过HTTP端点（Endpoint）实现，使用HTTP状态代码表示成功或失败。
+osm-edge 控制平面组件利用健康探测来传递整体状态。健康探测通过HTTP端点（Endpoint）实现，使用HTTP状态代码表示成功或失败。
 
 Kubernetes使用这些探针来传递控制平面Pod的状态，并自动执行一些行为以提高可用性。关于Kubernetes探针的更多细节可以在[这里](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)找到。
 
-## 带探针的OSM组件
+## 带探针的 osm-edge 组件
 
-有健康探针的OSM控制平面组件如下：
+有健康探针的 osm-edge 控制平面组件如下：
 
 #### osm-controller
 
 osm-controller的9091端口有以下HTTP端点可用：
 
-- `/health/alive`: HTTP 200响应代码表示OSM的聚合发现服务（ADS）正在运行。无响应则表示该服务尚未运行。
+- `/health/alive`: HTTP 200响应代码表示 osm-edge 的聚合发现服务（ADS）正在运行。无响应则表示该服务尚未运行。
 
 - `/health/ready`: HTTP 200响应代码表明ADS可以接受来自代理的gRPC连接。HTTP 503或无响应表示来自代理的gRPC连接将不会成功。
 
@@ -29,9 +29,9 @@ osm-injector上有以下HTTP端点，端口为9090:
 
 - `/healthz`: HTTP 200响应代码表明注入器（injector）可以注入代理sidecar容器。无响应则表示该服务没有正常运行。
 
-## 如何验证OSM健康状态？
+## 如何验证 osm-edge 健康状态？
 
-因为OSM的Kubernetes资源配置了存活和就绪探测，Kubernetes会自动轮询osm-controller和osm-injector Pod上的健康端点。
+因为 osm-edge 的Kubernetes资源配置了存活和就绪探测，Kubernetes会自动轮询osm-controller和osm-injector Pod上的健康端点。
 
 当存活探测失败时，Kubernetes将产生一个事件（通过`kubectl describe pod <pod name>`可见）并重新启动Pod。`kubectl describe`的输出如下：
 
@@ -71,14 +71,14 @@ NAME                              READY   STATUS    RESTARTS   AGE
 osm-controller-5494bcffb6-tn5jv   0/1     Running   0          26s
 ```
 
-Pod的健康探测也可以通过转发Pod的必要端口并使用`curl`或任何其他HTTP客户端发出请求手动调用。例如，为了验证OSM-controller的有效性探测，获取Pod的名称并转发9091端口：
+Pod的健康探测也可以通过转发Pod的必要端口并使用`curl`或任何其他 HTTP 客户端发出请求手动调用。例如，为了验证 osm-controller 有效性探测，获取Pod的名称并转发 9091 端口：
 
 ```shell
 # Assuming OSM is installed in the osm-system namespace
 kubectl port-forward -n osm-system $(kubectl get pods -n osm-system -l app=osm-controller -o jsonpath='{.items[0].metadata.name}') 9091
 ```
 
-然后，在一个单独的终端里，可以使用`curl`来检查端点。下面是一个健康的osm-controller的例子：
+然后，在一个单独的终端里，可以使用`curl`来检查端点。下面是一个健康的 osm-controller 的例子：
 
 ```console
 $ curl -i localhost:9091/health/alive
@@ -96,7 +96,7 @@ Service is alive
 
 1. 确保不健康的osm-controller或osm-injector Pod没有运行Envoy sidecar容器。
 
-    为了验证OSM-controller Pod没有运行Envoy sidecar容器，请验证该Pod的容器镜像中没有一个是Envoy镜像。Envoy镜像的名字里有 "envoyproxy/envoy"。
+    为了验证osm-controller Pod没有运行Envoy sidecar容器，请验证该Pod的容器镜像中没有一个是Envoy镜像。Envoy镜像的名字里有 "envoyproxy/envoy"。
 
     例如，这是一个包含Envoy容器的osm-controller Pod：
 
@@ -107,9 +107,9 @@ Service is alive
     envoyproxy/envoy-alpine:v1.17.2
     ```
 
-    要验证OSM-injector Pod是否在运行Envoy sidecar容器，请确认Pod的容器镜像中没有Envoy镜像。Envoy镜像的名字里有 "envoyproxy/envoy"。
+    要验证osm-edge-injector Pod是否在运行Envoy sidecar容器，请确认Pod的容器镜像中没有Envoy镜像。Envoy镜像的名字里有 "envoyproxy/envoy"。
 
-    例如，这是一个包含Envoy容器的osm-injector Pod：
+    例如，这是一个包含Envoy容器的osm-edge-injector Pod：
 
     ```console
     $ # 假设OSM被安装在osm-system命名空间里:
@@ -118,7 +118,7 @@ Service is alive
     envoyproxy/envoy-alpine:v1.17.2
     ```
 
-    如果任何一个Pod正在运行Envoy容器，它可能已经被这个或另一个OSM实例错误注入。对于每个用`osm mesh list`命令找到的网格，验证不健康的Pod的OSM命名空间是否列在`osm namespace list`输出的任何OSM实例中，通过`osm namespace list`命令可以看到这些命名空间包含 `SIDECAR-INJECTION`"enabled"的标签。
+    如果任何一个Pod正在运行Envoy容器，它可能已经被这个或另一个osm-edge实例错误注入。对于每个用`osm mesh list`命令找到的网格，验证不健康的Pod的osm-edge命名空间是否列在`osm namespace list`输出的任何osm-edge实例中，通过`osm namespace list`命令可以看到这些命名空间包含 `SIDECAR-INJECTION`"enabled"的标签。
 
     例如，对于下列所有网格：
 
@@ -140,7 +140,7 @@ Service is alive
     bookstore    osm2    enabled
     ```
 
-    如果OSM命名空间出现在"osm namespace list "命令中，并且启用了 "SIDECAR-INJECTION "， 则将该名称空间从注入边车的网格中移除。对于上面的例子：
+    如果osm-edge命名空间出现在"osm namespace list "命令中，并且启用了 "SIDECAR-INJECTION "， 则将该名称空间从注入边车的网格中移除。对于上面的例子：
 
     ```console
     $ osm namespace remove osm-system --mesh-name osm2 --osm-namespace osm-system2
@@ -150,7 +150,7 @@ Service is alive
 
     使用`kubectl describe`命令查找关于不健康的Pod近期错误。
 
-    对于osm-controller:
+    对于 osm-controller:
 
     ```console
     $ # 假设OSM被安装在osm-system命名空间里:
@@ -164,7 +164,7 @@ Service is alive
     $ kubectl describe pod -n osm-system $(kubectl get pods -n osm-system -l app=osm-injector -o jsonpath='{.items[0].metadata.name}')
     ```
 
-    解决这些错误并再次验证OSM的健康状态。
+    解决这些错误并再次验证osm-edge的健康状态。
 
 1. 确定Pod是否遇到了一个运行时错误。
 
@@ -177,11 +177,11 @@ Service is alive
     $ kubectl logs -n osm-system $(kubectl get pods -n osm-system -l app=osm-controller -o jsonpath='{.items[0].metadata.name}')
     ```
 
-    对于 osm-injector:
+    对于 osm-edge-injector:
 
     ```console
     $ # Assuming OSM is installed in the osm-system namespace:
     $ kubectl logs -n osm-system $(kubectl get pods -n osm-system -l app=osm-injector -o jsonpath='{.items[0].metadata.name}')
     ```
 
-    解决这些错误并再次验证OSM的健康状态。
+    解决这些错误并再次验证osm-edge的健康状态。

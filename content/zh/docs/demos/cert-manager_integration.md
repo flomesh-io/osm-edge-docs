@@ -5,18 +5,18 @@ type: docs
 weight: 30
 ---
 
-本指南演示了如何使用 [cert-manager][1] 作为证书提供程序在 OSM 中管理和颁发证书。
+本指南演示了如何使用 [cert-manager][1] 作为证书提供程序在 osm-edge 中管理和颁发证书。
 
 ## 先决条件
 
 - Kubernetes 集群版本 {{< param min_k8s_version >}} 或者更高。
 - 使用 `kubectl` 与 API server 交互。
-- 已安装 `osm` 或者 `Helm 3` 命令行工具，用于安装 OSM 和 Contour。
+- 已安装 `osm` 或者 `Helm 3` 命令行工具，用于安装 osm-edge 和 Contour。
 
 
 ## 演示
 
-下面的演示使用 [cert-manager][1] 作为证书提供者，向 OSM 托管服务网格中的通过 `Mutual TLS (mTLS)` 通信的 `curl` 和 `httpbin` 应用颁发证书。
+下面的演示使用 [cert-manager][1] 作为证书提供者，向 osm-edge 托管服务网格中的通过 `Mutual TLS (mTLS)` 通信的 `curl` 和 `httpbin` 应用颁发证书。
 
 1. 安装 `cert-manager`。演示中使用 `cert-manager v1.6.1`。
     ```bash
@@ -33,10 +33,10 @@ weight: 30
     cert-manager-webhook-6668fbb57d-vzm4j     1/1     Running   0          2m33s
     ```
 
-1. 为 `cert-manager` 配置颁发证书所需 `cert-manager` `Issuer` 和 `Certificate` 资源。 这些资源部署在随后安装 OSM 的同一个命名空间中。
-    > 注意：必须先安装 `cert-manager` 并保证 issuer 就绪，随后将 `cert-manager` 作为证书提供者安装 OSM。
+1. 为 `cert-manager` 配置颁发证书所需 `cert-manager` `Issuer` 和 `Certificate` 资源。 这些资源部署在随后安装 osm-edge 的同一个命名空间中。
+    > 注意：必须先安装 `cert-manager` 并保证 issuer 就绪，随后将 `cert-manager` 作为证书提供者安装 osm-edge。
 
-    创建用于安装 OSM 的命名空间。
+    创建用于安装 osm-edge 的命名空间。
     
     ```bash
     export osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
@@ -82,7 +82,7 @@ weight: 30
     EOF
     ```
 
-1. 确保 `cert-manager` 在 OSM 命名空间下创建了 `osm-ca-bundle` secret。
+1. 确保 `cert-manager` 在 osm-edge 命名空间下创建了 `osm-ca-bundle` secret。
 2. 
     ```console
     $ kubectl get secret osm-ca-bundle -n "$osm_namespace"
@@ -90,14 +90,14 @@ weight: 30
     osm-ca-bundle   kubernetes.io/tls   3      84s
     ```
 
-    OSM 在安装时将使用保存在这个 secret 中的 CA 证书来引导其证书提供者程序。
+    osm-edge 在安装时将使用保存在这个 secret 中的 CA 证书来引导其证书提供者程序。
 
-3. 安装 OSM 时，指定其证书提供者为 `cert-manager`。
+3. 安装 osm-edge 时，指定其证书提供者为 `cert-manager`。
     ```bash
     osm install --set osm.certificateProvider.kind="cert-manager"
     ```
 
-    确保 OSM 控制平面 pod 就绪并运行。
+    确保 osm-edge 控制平面 pod 就绪并运行。
     ```console
     $ kubectl get pod -n "$osm_namespace"
     NAME                              READY   STATUS    RESTARTS   AGE
@@ -166,13 +166,11 @@ weight: 30
     ```console
     $ kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -I http://httpbin.httpbin:14001
     HTTP/1.1 200 OK
-    server: envoy
     date: Mon, 15 Mar 2021 22:45:23 GMT
     content-type: text/html; charset=utf-8
     content-length: 9593
     access-control-allow-origin: *
     access-control-allow-credentials: true
-    x-envoy-upstream-service-time: 2
     ```
 
     `200 OK` 相应表明来自 `curl` 客户端发送到 `httpbin` 服务的请求成功了。应用 sidecar 代理间的流量是加密的，并使用 `cert-manager` 证书提供者颁发的证书完成 `双向 TLS（mTLS）`认证。

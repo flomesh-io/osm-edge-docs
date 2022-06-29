@@ -1,6 +1,6 @@
 ---
 title: "How-to 指南"
-description: "学习如何使用开放式服务网格 (OSM)"
+description: "学习如何使用开放边缘服务网格 (osm-edge)"
 type: docs
 weight: 3
 ---

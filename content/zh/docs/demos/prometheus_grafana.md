@@ -1,20 +1,20 @@
 ---
-title: "将 OSM 与 Prometheus 和 Grafana 集成"
-description: "描述如何使用自维护的 Prometheus 和 Grafana 配置 OSM 特定的配置和仪表板"
+title: "将 osm-edge 与 Prometheus 和 Grafana 集成"
+description: "描述如何使用自维护的 Prometheus 和 Grafana 配置 osm-edge 特定的配置和仪表板"
 type: docs
 weight: 25
 ---
 
-# 将 OSM 与自维护的 Prometheus 和 Grafana 集成
+# 将 osm-edge 与自维护的 Prometheus 和 Grafana 集成
 
-本文为你展示如何在集群中创建自维护的 Prometheus 和 Grafana ，并为其配置以实现对 OSM 的可观测性和监控。有关使用 OSM 自动配置 Prometheus 和 Grafana 的示例，请参阅 [Observability](https://docs.openservicemesh.io/docs/getting_started/observability/)  入门指南。
+本文为你展示如何在集群中创建自维护的 Prometheus 和 Grafana ，并为其配置以实现对 osm-edge 的可观测性和监控。有关使用 osm-edge 自动配置 Prometheus 和 Grafana 的示例，请参阅 [Observability](https://docs.openservicemesh.io/docs/getting_started/observability/)  入门指南。
 
 > 重要提示：本文创建的配置不应在生产环境中使用。对于生产级部署，请参阅 [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md) 和 [Deploy Grafana in Kubernetes](https://grafana.com/docs/grafana/latest/installation/kubernetes/)。
 
 ## 先决条件
 
 - Kubernetes 集群版本 {{< param min_k8s_version >}} 或者更高。
-- 集群中已安装 OSM。
+- 集群中已安装 osm-edge。
 - 已安装 `kubectl` 用于访问 API server 。
 - 已安装 `osm` 命令行工具
 - 已安装 `helm` 命令行工具
@@ -40,9 +40,9 @@ stable-prometheus-server.metrics.svc.cluster.local
 
 记下 DNS 名字，后面会用到。
 
-## 为 OSM 配置 Prometheus
+## 为 osm-edge 配置 Prometheus
 
-Prometheus 需要配置为对 OSM 端点进行抓取并正确处理 OSM 的标记、重新标记和端点配置。此配置还有助于在后续步骤中配置的 OSM Grafana 仪表板正确显示从 OSM 抓取的数据。
+Prometheus 需要配置为对 osm-edge 端点进行抓取并正确处理 osm-edge 的标记、重新标记和端点配置。此配置还有助于在后续步骤中配置的 osm-edge Grafana 仪表板正确显示从 osm-edge 抓取的数据。
 
 使用 `kubectl get configmap` 来验证 `stable-prometheus-server` configmap 是否已创建。 例如：
 
@@ -294,7 +294,7 @@ data:
 kubectl apply -f update-prometheus-configmap.yaml
 ```
 
-验证 Prometheus 是否能够通过使用 `kubectl port-forward` 在 Prometheus 管理应用程序和开发机器之间转发流量来抓取 OSM 网格和 API 端点。
+验证 Prometheus 是否能够通过使用 `kubectl port-forward` 在 Prometheus 管理应用程序和开发机器之间转发流量来抓取 osm-edge 网格和 API 端点。
 
 ```
 export POD_NAME=$(kubectl get pods -l "app=prometheus,component=server" -o jsonpath="{.items[0].metadata.name}")
@@ -306,7 +306,7 @@ kubectl port-forward $POD_NAME 9090
 <p align="center">
   <img src="/docs/images/byo_guide/prom_targets.png" width="100%"/>
 </p>
-<center><i>Targets with specific relabeling config established by OSM should be "up"</i></center><br>
+<center><i>Targets with specific relabeling config established by osm-edge should be "up"</i></center><br>
 
 停止端口转发命令。
 
@@ -345,9 +345,9 @@ kubectl port-forward $POD_NAME 3000
 
 选择 `Save and Test` 并确保看到 `Data source is working`。
 
-## Importing OSM Dashboards
+## Importing osm-edge Dashboards
 
-OSM Dashboards 可通过 [OSM GitHub 存储库](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards) 获得，可以在管理应用程序上以 json blobs 方式导入。
+osm-edge Dashboards 可通过 [osm-edge GitHub 存储库](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards) 获得，可以在管理应用程序上以 json blobs 方式导入。
 
 要导入仪表盘：
 * 鼠标放在 `+` 上并点击 `Import`

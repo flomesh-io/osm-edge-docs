@@ -1,18 +1,18 @@
 ---
 title: "日志"
-description: "OSM 控制平面的诊断日志"
+description: "osm-edge 控制平面的诊断日志"
 type: docs
 ---
 
 # 日志
-开放服务网格 (OSM) 控制平面组件将诊断日志输出到了标准输出上，以帮助管理服务网格。
+开放边缘服务网格 (osm-edge) 控制平面组件将诊断日志输出到了标准输出上，以帮助管理服务网格。
 
 在日志中，用户应当能看到如下类型的信息
 一些附加的信息：
 - Kubrentes 资源的元数据，例如名字和命名空间
 - mTLS 证书中的 common names
 
-OSM **不会** 记录敏感信息，例如：
+osm-edge **不会** 记录敏感信息，例如：
 - Kubernetes 的 Secret 数据
 - 完整的 Kubernetes 资源信息
 
@@ -20,7 +20,7 @@ OSM **不会** 记录敏感信息，例如：
 
 日志详尽程度决定了什么样的日志会被记录，例如为了排错记录更多的日志，还是只记录少量的只包含严重级别错误的日志。
 
-OSM 按日志详细程度递增的顺序定义了以下日志级别：
+osm-edge 按日志详细程度递增的顺序定义了以下日志级别：
 
 | Log level | Purpose                                                                                |
 
@@ -40,12 +40,12 @@ OSM 按日志详细程度递增的顺序定义了以下日志级别：
 ## Fluent Bit
 当启用的时候，Fluent Bit 可以收集这些日志，处理并将它们发送到用户指定的目标，例如 Elasticsearch、Azure Log Analytics、BigQuery 等等。
 
-[Fluent Bit](https://fluentbit.io/) 是一个开源的日志处理器和转发器，可以让您收集数据/日志并将他们发送到多个日志存储。它可以和 OSM 集成，通过 Fluent Bit 的输出插件，把 OSM 控制器的日志转发到各式各样的输出/日志消费者。
+[Fluent Bit](https://fluentbit.io/) 是一个开源的日志处理器和转发器，可以让您收集数据/日志并将他们发送到多个日志存储。它可以和 osm-edge 集成，通过 Fluent Bit 的输出插件，把 osm-edge 控制器的日志转发到各式各样的输出/日志消费者。
 
-在安装时，通过使用 `--set=osm.enableFluentbit=true` 参数，来决定将 Fluent Bit sidecar 部署到 OSM 控制平面中，使 OSM 能够进行日志转发。安装后，用户可以通过使用任意可用的 [Fluent Bit 输出插件](https://docs.fluentbit.io/manual/pipeline/outputs)来决定 OSM 的日志应该被转发到何处。
+在安装时，通过使用 `--set=osm.enableFluentbit=true` 参数，来决定将 Fluent Bit sidecar 部署到 osm-edge 控制平面中，使 osm-edge 能够进行日志转发。安装后，用户可以通过使用任意可用的 [Fluent Bit 输出插件](https://docs.fluentbit.io/manual/pipeline/outputs)来决定 osm-edge 的日志应该被转发到何处。
 
 ### 配置 Fluent Bit 日志转发
-默认情况下，Fluent Bit sidecar 被设置成直接把日志输出到 Fluent Bit 容器的标准输出中。 如果您安装 OSM 时同时启用了 Fluent Bit，您可以通过 `kubectl logs -n <osm-namespace> <osm-controller-name> -c fluentbit-logger` 来查看这些日志。如果您想调整您的日志分析和过滤器，这个命令也能够帮助您查看您的日志是如何被格式化输出的。
+默认情况下，Fluent Bit sidecar 被设置成直接把日志输出到 Fluent Bit 容器的标准输出中。 如果您安装 osm-edge 时同时启用了 Fluent Bit，您可以通过 `kubectl logs -n <osm-namespace> <osm-controller-name> -c fluentbit-logger` 来查看这些日志。如果您想调整您的日志分析和过滤器，这个命令也能够帮助您查看您的日志是如何被格式化输出的。
 
 > 注意：`<osm-namespace>` 指安装了 osm 控制平面的命名空间
 
@@ -58,7 +58,7 @@ osm install --set=osm.enableFluentbit=true
 
 当您尝试过这些基础的配置后，为了获得更丰富的输出结果，我们建议您配置日志转发到您首选的日志存储上。
 
-要自定义日志转发到您的日志存储，按照下面的步骤，安装 OSM 并启用 Fluent Bit
+要自定义日志转发到您的日志存储，按照下面的步骤，安装 osm-edge 并启用 Fluent Bit
 
 1. 在[Fluent Bit 文档](https://docs.fluentbit.io/manual/pipeline/outputs)中找到您想使用的输出插件来转发您的日志。在 [`fluentbit-configmap.yaml`](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/templates/fluentbit-configmap.yaml) 里，把 `[OUTPUT]` 替换成相应的值。
 
@@ -73,7 +73,7 @@ osm install --set=osm.enableFluentbit=true
     make build-osm
     ```
 
-2. 一旦您修改了 Fluent Bit 的 Configmap 模板，您可以在安装 OSM 时部署 Fluent Bit，使用命令：
+2. 一旦您修改了 Fluent Bit 的 Configmap 模板，您可以在安装 osm-edge 时部署 Fluent Bit，使用命令：
     ```console
     osm install --set=osm.enableFluentbit=true [--set osm.controllerLogLevel=<期望日志级别>]
     ```
@@ -88,13 +88,13 @@ Fluent Bit 提供了 Azure 输出插件，可以像下面一样，将日志发�
 
 3. 执行上面的步骤 2-5.
 
-4. 当您部署 OSM 并启用了 Fluent Bit，日志会发送到您的 Log Analytics 工作区下的 Logs > Custom Logs 标签页下。在那里，您可以先执行下面的查询语句来查看最新日志：
+4. 当您部署 osm-edge 并启用了 Fluent Bit，日志会发送到您的 Log Analytics 工作区下的 Logs > Custom Logs 标签页下。在那里，您可以先执行下面的查询语句来查看最新日志：
     ```
     fluentbit_CL
     | order by TimeGenerated desc
     ```
 
-5. 查找某个特定 OSM 控制器的 pod 的日志
+5. 查找某个特定 osm-edge 控制器的 pod 的日志
     ```
     | where controller_pod_name_s == "<预期的 osm 控制器的 pod 的名字>"
     ```
@@ -114,7 +114,7 @@ Fluent Bit 提供了 Azure 输出插件，可以像下面一样，将日志发�
 ### 为 Fluent Bit 配置出口代理
 如果您的出口流量需要经过一个代理服务器，您可能需要配置出口代理。有两种配置方式启用代理。
 
-如果您已经通过之前得 MeshConfig 部署了 OSM，您方便地可以通过 OSM CLI 启用代理的支持，在下面的命令中，将参数替换成您环境当中的相应的值：
+如果您已经通过之前得 MeshConfig 部署了 osm-edge，您方便地可以通过 osm-edge CLI 启用代理的支持，在下面的命令中，将参数替换成您环境当中的相应的值：
 ```
 osm install --set=osm.enableFluentbit=true,osm.fluentBit.enableProxySupport=true,osm.fluentBit.httpProxy=<http-代理-主机:端口>,osm.fluentBit.httpsProxy=<https-代理-主机:端口>
 ```
@@ -129,7 +129,7 @@ osm install --set=osm.enableFluentbit=true,osm.fluentBit.enableProxySupport=true
     make build-osm
     ```
 
-4. 安装 OSM 并启用 Fluent Bit：
+4. 安装 osm-edge 并启用 Fluent Bit：
     ```console
     osm install --set=osm.enableFluentbit=true
     ```

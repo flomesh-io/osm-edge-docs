@@ -1,6 +1,6 @@
 ---
 title: "配置健康探测"
-description: "OSM如何处理应用健康探测的工作，以及如果探测失败该如何处理"
+description: "osm-edge如何处理应用健康探测的工作，以及如果探测失败该如何处理"
 aliases: "/docs/application_health_probes"
 type: "docs"
 ---
@@ -11,11 +11,11 @@ type: "docs"
 
 在应用程序中实施[健康探测](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)是Kubernetes自动执行一些任务的好方法，以便在发生错误时提高可用性。
 
-由于OSM重新配置应用Pod，使其通过代理边车重定向所有传入和传出的网络流量，kubelet调用的`httpGet`和`tcpSocket`健康探测会因为代理缺少mTLS要求的上下文而失败。
+由于osm-edge重新配置应用Pod，使其通过代理边车重定向所有传入和传出的网络流量，kubelet调用的`httpGet`和`tcpSocket`健康探测会因为代理缺少mTLS要求的上下文而失败。
 
-OSM增加了配置，通过代理暴露探测端点，并重写新Pod的探测定义，以引用代理暴露的端点，使得`httpGet`健康探测可以在服务网格中工作。原始探针的所有功能仍可用，OSM只是将其与代理前置，以便kubelet能够与之通信。
+osm-edge增加了配置，通过代理暴露探测端点，并重写新Pod的探测定义，以引用代理暴露的端点，使得`httpGet`健康探测可以在服务网格中工作。原始探针的所有功能仍可用，osm-edge只是将其与代理前置，以便kubelet能够与之通信。
 
-需要特殊的配置来支持服务网中的`tcpSocket`健康探针。由于OSM通过Envoy重定向所有网络流量，所有的端口在Pod中都是开放的。这导致所有的TCP连接被路由到注入了Envoy sidecar的Pod，看起来是成功的。为了使 `tcpSocket` 健康探测在网格中正常工作，OSM将探测改写为 `httpGet ` 探测，并添加了一个 `iptables` 命令，以绕过 `osm-healthcheck `暴露端点的Envoy代理。`osm-healthcheck`容器被添加到Pod中，处理来自kubelet的HTTP健康探测请求。处理程序从请求的`Original-Tcp-port`头中获取原始TCP端口，并尝试在指定端口上打开一个socket。`httpGet`探针的响应状态代码反映TCP连接是否成功。
+需要特殊的配置来支持服务网中的`tcpSocket`健康探针。由于osm-edge通过Pipy重定向所有网络流量，所有的端口在Pod中都是开放的。这导致所有的TCP连接被路由到注入了Pipy sidecar的Pod，看起来是成功的。为了使 `tcpSocket` 健康探测在网格中正常工作，osm-edge将探测改写为 `httpGet ` 探测，并添加了一个 `iptables` 命令，以绕过 `osm-healthcheck `暴露端点的Pipy代理。`osm-healthcheck`容器被添加到Pod中，处理来自kubelet的HTTP健康探测请求。处理程序从请求的`Original-Tcp-port`头中获取原始TCP端口，并尝试在指定端口上打开一个socket。`httpGet`探针的响应状态代码反映TCP连接是否成功。
 
 | Probe       | Path                 | Port  |
 | ----------- | -------------------- | ----- |
@@ -30,7 +30,7 @@ OSM增加了配置，通过代理暴露探测端点，并重写新Pod的探测�
 
 ## 例子
 
-下面的例子显示OSM如何处理网格中的Pod的健康探测。
+下面的例子显示osm-edge如何处理网格中的Pod的健康探测。
 
 ### HTTP
 
@@ -44,7 +44,7 @@ livenessProbe:
     scheme: HTTP
 ```
 
-当Pod被创建时，OSM将修改探针为以下内容：
+当Pod被创建时，osm-edge将修改探针为以下内容：
 
 ```yaml
 livenessProbe:
@@ -54,184 +54,42 @@ livenessProbe:
     scheme: HTTP
 ```
 
-该Pod的代理将包含以下Envoy配置。
+该Pod的代理将包含以下Pipy配置。
 
-一个Envoy集群，它映射到原始探针端口14001：
+一个Pipy集群，它映射到原始探针端口14001：
 
 ```json
 {
-  "cluster": {
-    "@type": "type.googleapis.com/envoy.config.cluster.v3.Cluster",
-    "name": "liveness_cluster",
-    "type": "STATIC",
-    "connect_timeout": "1s",
-    "load_assignment": {
-      "cluster_name": "liveness_cluster",
-      "endpoints": [
+  "Probes": {
+      "ReadinessProbes": null,
+      "LivenessProbes": [
         {
-          "lb_endpoints": [
-            {
-              "endpoint": {
-                "address": {
-                  "socket_address": {
-                    "address": "0.0.0.0",
-                    "port_value": 14001
-                  }
-                }
-              }
-            }
-          ]
+          "httpGet": {
+            "path": "/osm-liveness-probe",
+            "port": 15901,
+            "scheme": "HTTP"
+          },
+          "timeoutSeconds": 1,
+          "periodSeconds": 10,
+          "successThreshold": 1,
+          "failureThreshold": 3
         }
-      ]
+      ],
+      "StartupProbes": null
     }
-  },
-  "last_updated": "2021-03-29T21:02:59.086Z"
+  }
 }
 ```
 
 为新的代理暴露的HTTP端点`/osm-liveness-probe`建立监听器，端口为15901，映射到上述集群：
 
-```json
-{
-  "listener": {
-    "@type": "type.googleapis.com/envoy.config.listener.v3.Listener",
-    "name": "liveness_listener",
-    "address": {
-      "socket_address": {
-        "address": "0.0.0.0",
-        "port_value": 15901
-      }
-    },
-    "filter_chains": [
-      {
-        "filters": [
-          {
-            "name": "envoy.filters.network.http_connection_manager",
-            "typed_config": {
-              "@type": "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager",
-              "stat_prefix": "health_probes_http",
-              "route_config": {
-                "name": "local_route",
-                "virtual_hosts": [
-                  {
-                    "name": "local_service",
-                    "domains": [
-                      "*"
-                    ],
-                    "routes": [
-                      {
-                        "match": {
-                          "prefix": "/osm-liveness-probe"
-                        },
-                        "route": {
-                          "cluster": "liveness_cluster",
-                          "prefix_rewrite": "/liveness"
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              "http_filters": [...],
-              "access_log": [...]
-            }
-          }
-        ]
-      }
-    ]
-  },
-  "last_updated": "2021-03-29T21:02:59.092Z"
-}
-```
-
-### HTTPS
-
-假设Pod中的一个容器定义了如下`livenessProbe`探测：
-
-```yaml
-livenessProbe:
-  httpGet:
-    path: /liveness
-    port: 14001
-    scheme: HTTPS
-```
-
-当Pod被创建时，OSM将修改探针为以下内容：
-
-```yaml
-livenessProbe:
-  httpGet:
-    path: /liveness
-    port: 15901
-    scheme: HTTPS
-```
-
-该Pod的代理将包含以下Envoy配置。
-
-一个Envoy集群，它映射到原始探针端口14001：
-
-```json
-{
-  "cluster": {
-    "@type": "type.googleapis.com/envoy.config.cluster.v3.Cluster",
-    "name": "liveness_cluster",
-    "type": "STATIC",
-    "connect_timeout": "1s",
-    "load_assignment": {
-      "cluster_name": "liveness_cluster",
-      "endpoints": [
-        {
-          "lb_endpoints": [
-            {
-              "endpoint": {
-                "address": {
-                  "socket_address": {
-                    "address": "0.0.0.0",
-                    "port_value": 14001
-                  }
-                }
-              }
-            }
-          ]
-        }
-      ]
-    }
-  },
-  "last_updated": "2021-03-29T21:02:59.086Z"
-}
-```
-
-为新的代理暴露的TCP端点提供监听器，端口15901，映射到上述集群：
-
-```json
-{
-  "listener": {
-    "@type": "type.googleapis.com/envoy.config.listener.v3.Listener",
-    "name": "liveness_listener",
-    "address": {
-      "socket_address": {
-        "address": "0.0.0.0",
-        "port_value": 15901
-      }
-    },
-    "filter_chains": [
-      {
-        "filters": [
-          {
-            "name": "envoy.filters.network.tcp_proxy",
-            "typed_config": {
-              "@type": "type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy",
-              "stat_prefix": "health_probes",
-              "cluster": "liveness_cluster",
-              "access_log": [...]
-            }
-          }
-        ]
-      }
-    ]
-  },
-  "last_updated": "2021-04-07T15:09:22.704Z"
-}
+```js
+.listen(probeScheme ? 15901 : 0)
+.link(
+  'http_liveness', () => probeScheme === 'HTTP',
+  'connection_liveness', () => Boolean(probeTarget),
+  'deny_liveness'
+)
 ```
 
 ### `tcpSocket`
@@ -244,7 +102,7 @@ livenessProbe:
     port: 14001
 ```
 
-当Pod被创建时，OSM将修改探针为以下内容：
+当Pod被创建时，osm-edge将修改探针为以下内容：
 
 ```yaml
 livenessProbe:
@@ -253,7 +111,7 @@ livenessProbe:
     - name: Original-Tcp-Port
       value: "14001"
     path: /osm-healthcheck
-    port: 15904
+    port: 15903
     scheme: HTTP
 ```
 
@@ -375,7 +233,7 @@ server: envoy
 
 1. 验证网格中的Pod上的`httpGet`和`tcpSocket`探针是否被修改。
 
-   启动、存活和就绪的`httpGet`探针必须被OSM修改。端口必须被修改为15901、15902和15903，分别适用于存活、就绪和启动`httpGet`探针。只有HTTP（不包括HTTPS）探针的路径将被修改，此外还有`/osm-liveness-probe`、`/osm-readiness-probe`或`/osm-starttup-probe`。
+   启动、存活和就绪的`httpGet`探针必须被osm-edge修改。端口必须被修改为15901、15902和15903，分别适用于存活、就绪和启动`httpGet`探针。只有HTTP（不包括HTTPS）探针的路径将被修改，此外还有`/osm-liveness-probe`、`/osm-readiness-probe`或`/osm-starttup-probe`。
 
    同时，验证Pod的Envoy配置中是否包含修改后的端点的监听。
 

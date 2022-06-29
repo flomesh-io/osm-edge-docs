@@ -10,7 +10,7 @@ weight: 1
 
 ## 安全上下文
 
-* 不要使用 user ID（UID）**1500** 运行应用。这是**保留的**被用于 OSM sidecar 注入器注入的 Envoy 代理 sidecar 容器。
+* 不要使用 user ID（UID）**1500** 运行应用。这是**保留的**被用于 osm-edge sidecar 注入器注入的 Pipy 代理 sidecar 容器。
 * 如果在 pod 层面安全上下文 `runAsNonRoot` 被设置为 `true`，必须为 pod 或者 pod 内的各个容器提供 `runAsUser` 值。例如：
   ```yaml
     securityContext:
@@ -20,7 +20,7 @@ weight: 1
     如果省略 UID，应用容器默认地会尝试使用 root 用户运行，会与 pod 的安全上下文冲突。
 * 不需要其他功能。
 
-> 注意：OSM 的初始化容器需要使用 root 运行并添加 `NET_ADMIN` 特性，因为其需要这些安全上下文来完成调用。应用程序安全上下文不会修改这些值。
+> 注意：osm-edge 的初始化容器需要使用 root 运行并添加 `NET_ADMIN` 特性，因为其需要这些安全上下文来完成调用。应用程序安全上下文不会修改这些值。
 
 ## 端口
 
@@ -28,7 +28,7 @@ weight: 1
 
 | 端口  | 描述                            |
 | ----- | -------------------------------------- |
-| 15000 | Envoy 管理端口                     |
-| 15001 | Envoy 出站监听端口          |
-| 15003 | Envoy 入站监听端口            |
-| 15010 | Envoy Prometheus 入站监听端口 |
+| 15000 | Pipy 管理端口                     |
+| 15001 | Pipy 出站监听端口          |
+| 15003 | Pipy 入站监听端口            |
+| 15010 | Pipy Prometheus 入站监听端口 |

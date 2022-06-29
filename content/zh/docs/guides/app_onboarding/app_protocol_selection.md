@@ -6,15 +6,15 @@ type: docs
 
 # 应用协议选择
 
-OSM 能够以不同的方式路由不同的应用协议，比如 `HTTP`、`TCP` 和 `gRPC`。下面的指南描述了如果配置 service 端口来指定应用协议用于流量过滤和路由。
+osm-edge 能够以不同的方式路由不同的应用协议，比如 `HTTP`、`TCP` 和 `gRPC`。下面的指南描述了如果配置 service 端口来指定应用协议用于流量过滤和路由。
 
 ## 配置应用协议
 
-Kubernetes service 暴露一个或多个端口。提供服务的应用暴露的端口可以提供对应应用协议的服务，比如 HTTP、TCP、gRPC 等等。由于 OSM 使用不同的方式来路由不同的应用协议，有必要对 Kubernetes service 对象进行配置来向 OSM 传达如何将定向到 service 端口的流量进行路由。
+Kubernetes service 暴露一个或多个端口。提供服务的应用暴露的端口可以提供对应应用协议的服务，比如 HTTP、TCP、gRPC 等等。由于 osm-edge 使用不同的方式来路由不同的应用协议，有必要对 Kubernetes service 对象进行配置来向 osm-edge 传达如何将定向到 service 端口的流量进行路由。
 
-为了检测 service 端口使用的应用协议，OSM 期望 service 端口上配置了 `appProtocol` 字段。
+为了检测 service 端口使用的应用协议，osm-edge 期望 service 端口上配置了 `appProtocol` 字段。
 
-OSM 为提供 service 端口提供了如下协议的支持：
+osm-edge 为提供 service 端口提供了如下协议的支持：
 1. `http`：用于基于 HTTP 的流量过滤和路由
 1. `tcp`：用于基于 TCP 的流量过滤和路由
 1. `tcp-server-first`：用于在客户端与服务端首次通信时的基于 TCP 的流量过滤和路由。

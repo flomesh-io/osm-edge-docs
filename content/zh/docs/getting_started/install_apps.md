@@ -32,7 +32,7 @@ aliases: = ["/docs/install/manual_demo/"]
 
 - `bookstore-v2` —— 这是一个相同的容器，就像我们部署的第一个 `bookstore` 一样，但是对于这个示例而言，我们将假设这是一个我们需要升级到的新版本。
 
-`bookbuyer`，`bookthief`，`bookstore` 和 `bookwarehouse` Pod 将被置于独立的 Kubernetes 命名空间，命名空间的名字和它们各自的一样。`mysql` 将被置于 `bookwarehouse` 命名空间。在这个服务网格里面的每一个新的 Pod 都将被注入一个 Envoy 的 sidecar 容器。
+`bookbuyer`，`bookthief`，`bookstore` 和 `bookwarehouse` Pod 将被置于独立的 Kubernetes 命名空间，命名空间的名字和它们各自的一样。`mysql` 将被置于 `bookwarehouse` 命名空间。在这个服务网格里面的每一个新的 Pod 都将被注入一个 Pipy 的 sidecar 容器。
 
 ### 创建命名空间
 
@@ -43,13 +43,13 @@ kubectl create namespace bookthief
 kubectl create namespace bookwarehouse
 ```
 
-### 添加新的命名空间到 OSM 控制平面
+### 添加新的命名空间到 osm-edge 控制平面
 
 ```bash
 osm namespace add bookstore bookbuyer bookthief bookwarehouse
 ```
 
-现在，这四个命名空间的每一个都被标注了 `openservicemesh.io/monitored-by: osm`，并且加了 `openservicemesh.io/sidecar-injection: enabled` 注解。OSM控制器，注意到了这些命名空间上的标注和注解，将开始为这些**新** Pod 注入 Envoy sidecar。
+现在，这四个命名空间的每一个都被标注了 `openservicemesh.io/monitored-by: osm`，并且加了 `openservicemesh.io/sidecar-injection: enabled` 注解。osm-edge 控制器，注意到了这些命名空间上的标注和注解，将开始为这些**新** Pod 注入 Pipy sidecar。
 
 ### 创建 Pod，服务，服务账号
 
@@ -103,7 +103,7 @@ kubectl get pods,deployments,serviceaccounts,services,endpoints -n bookwarehouse
 
 建立客户端端口转发，需按照如下步骤，以访问在 Kubernetes 集群中的应用。我们最好开一个新的终端会话来运行端口转发脚本，以维护这个端口转发会话，同时使用原来的终端继续发送命令。port-forward-all.sh 脚本将寻找一个 `.env` 文件来满足环境变量的需要，从而可以执行该脚本。`.env` 文件创建必要的变量，目标是之前创建的那些命名空间。我们将使用参考文件 `.env.example` 然后运行端口转发脚本。
 
-在一个新的终端会话里，运行下面的命令来使能端口转发进入 Kubernetes 集群，这将从项目根目录开始（https://github.com/openservicemesh/osm 在您的本地的 clone 版本）。
+在一个新的终端会话里，运行下面的命令来使能端口转发进入 Kubernetes 集群，这将从项目根目录开始（https://github.com/openservicemesh/osm-edge 在您的本地的 clone 版本）。
 
 ```bash
 cp .env.example .env

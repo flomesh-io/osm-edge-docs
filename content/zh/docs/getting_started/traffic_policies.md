@@ -27,7 +27,7 @@ kubectl get meshconfig osm-mesh-config -n osm-system -o jsonpath='{.spec.traffic
 # true: permissive traffic policy mode is enabled, SMI policy mode is disabled
 ```
 
-接下来的章节演示了使用带[宽松流量策略模式](#宽松流量策略模式)和 [SMI 流量策略模式](#SMI-流量策略模式)的OSM。
+接下来的章节演示了使用带[宽松流量策略模式](#宽松流量策略模式)和 [SMI 流量策略模式](#SMI-流量策略模式)的 osm-edge。
 
 ## 宽松流量策略模式
 
@@ -43,7 +43,7 @@ kubectl get meshconfig osm-mesh-config -n osm-system -o jsonpath='{.spec.traffic
   kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
   ```
 
-### 验证 OSM 处于宽松流量策略模式
+### 验证 osm-edge 处于宽松流量策略模式
 
 开始行动之前，[验证流量策略模式](#验证流量策略模式)并且确保 `enablePermissiveTrafficPolicyMode` 键在 `osm-mesh-config` `MeshConfig` 资源里面被设置成 `true`。参考上面的章节来使能宽松流量策略模式。
 

@@ -1,6 +1,6 @@
 ---
 title: "流量故障排查"
-description: "OSM 流量故障排查指南"
+description: "osm-edge 流量故障排查指南"
 type: docs
 ---
 

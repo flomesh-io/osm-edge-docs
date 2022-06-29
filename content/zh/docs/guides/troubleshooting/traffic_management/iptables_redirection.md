@@ -6,9 +6,9 @@ type: docs
 
 ## 当流量重定向未按预期工作时
 
-### 1. 确认 pod 已注入 Envoy sidecar 容器
+### 1. 确认 pod 已注入 Pipy sidecar 容器
 
-应用程序 pod 应注入 Envoy 代理 sidecar，使流量重定向按预期工作。通过确保应用程序 pod 正在运行并且 Envoy 代理 sidecar 容器处于就绪状态来确认这一点。
+应用程序 pod 应注入 Pipy 代理 sidecar，使流量重定向按预期工作。通过确保应用程序 pod 正在运行并且 Pipy 代理 sidecar 容器处于就绪状态来确认这一点。
 
 ```console
 $ kubectl get pod test-58d4f8ff58-wtz4f -n test
@@ -16,11 +16,11 @@ NAME                                READY   STATUS    RESTARTS   AGE
 test-58d4f8ff58-wtz4f               2/2     Running   0          32s
 ```
 
-### 2. 确认 OSM 的 init 容器已成功运行
+### 2. 确认 osm-edge 的 init 容器已成功运行
 
-OSM 的初始化容器 `osm-init` 负责使用流量重定向规则初始化服务网格中的单个应用程序 pod，以通过 Envoy 代理 sidecar 来代理应用程序流量。流量重定向规则是使用一组 `iptables` 命令设置的，这些命令在 pod 中的任何应用程序容器运行之前运行。
+osm-edge 的初始化容器 `osm-init` 负责使用流量重定向规则初始化服务网格中的单个应用程序 pod，以通过 Pipy 代理 sidecar 来代理应用程序流量。流量重定向规则是使用一组 `iptables` 命令设置的，这些命令在 pod 中的任何应用程序容器运行之前运行。
 
-通过在应用程序 pod 上运行 `kubectl describe` 来确认 OSM 的初始化容器已成功完成运行，并验证 `osm-init` 容器已终止，退出代码为 0。容器的 `State` 属性提供了此信息。
+通过在应用程序 pod 上运行 `kubectl describe` 来确认 osm-edge 的初始化容器已成功完成运行，并验证 `osm-init` 容器已终止，退出代码为 0。容器的 `State` 属性提供了此信息。
 
 ```console
 $ kubectl describe pod test-58d4f8ff58-wtz4f -n test
@@ -54,7 +54,7 @@ Init Containers:
 
 ## 配置出站 IP 范围排除项时
 
-默认情况下，所有使用 TCP 作为底层传输协议的流量都通过 Envoy 代理 sidecar 容器重定向。这意味着来自应用程序的所有基于 TCP 的出站流量都将通过基于服务网格策略的 Envoy 代理 Sidecar 进行重定向和路由。配置出站 IP 范围排除项后，属于这些 IP 范围的流量将不会被代理到 Envoy sidecar。
+默认情况下，所有使用 TCP 作为底层传输协议的流量都通过 Pipy 代理 sidecar 容器重定向。这意味着来自应用程序的所有基于 TCP 的出站流量都将通过基于服务网格策略的 Pipy 代理 Sidecar 进行重定向和路由。配置出站 IP 范围排除项后，属于这些 IP 范围的流量将不会被代理到 Pipy sidecar。
 
 如果出站 IP 范围配置为排除但仍受服务网格策略的约束，请验证它们是否按预期配置。
 
@@ -72,9 +72,9 @@ $ kubectl get meshconfig osm-mesh-config -n osm-system -o jsonpath='{.spec.traff
 
 ### 2. 确认出站 IP 范围包含在初始化容器规范中
 
-当配置出站 IP 范围排除时，OSM 的 `osm-injector` 服务从 `osm-mesh-config` `MeshConfig` 资源中读取此配置，并编写与这些范围相对应的 `iptables` 规则，以便将它们排除在通过 Envoy sidecar 代理出站流量重定向之外。
+当配置出站 IP 范围排除时，osm-edge 的 `osm-injector` 服务从 `osm-mesh-config` `MeshConfig` 资源中读取此配置，并编写与这些范围相对应的 `iptables` 规则，以便将它们排除在通过 Pipy sidecar 代理出站流量重定向之外。
 
-确认 OSM 的 `osm-init` 初始化容器规范具有与要排除的已配置出站 IP 范围相对应的规则。
+确认 osm-edge 的 `osm-init` 初始化容器规范具有与要排除的已配置出站 IP 范围相对应的规则。
 
 ```console
 $ kubectl describe pod test-58d4f8ff58-wtz4f -n test
@@ -106,7 +106,7 @@ Init Containers:
       /var/run/secrets/kubernetes.io/serviceaccount from frontend-token-5g488 (ro)
 ```
 
-在上面的示例中，以下 `iptables` 命令负责明确忽略配置的出站 IP 范围（`1.1.1.1/32 和 2.2.2.2/24`）被重定向到 Envoy 代理边车。
+在上面的示例中，以下 `iptables` 命令负责明确忽略配置的出站 IP 范围（`1.1.1.1/32 和 2.2.2.2/24`）被重定向到 Pipy 代理边车。
 
 ```console
 iptables -t nat -I PROXY_OUTPUT -d 1.1.1.1/32 -j RETURN
@@ -115,7 +115,7 @@ iptables -t nat -I PROXY_OUTPUT -d 2.2.2.2/24 -j RETURN
 
 ## 配置出站端口排除项时
 
-默认情况下，所有使用 TCP 作为底层传输协议的流量都通过 Envoy 代理 sidecar 容器重定向。 这意味着来自应用程序的所有基于 TCP 的出站流量都将通过基于服务网格策略的 Envoy 代理 Sidecar 进行重定向和路由。配置出站端口排除时，属于这些端口的流量不会被代理到 Envoy sidecar。
+默认情况下，所有使用 TCP 作为底层传输协议的流量都通过 Pipy 代理 sidecar 容器重定向。 这意味着来自应用程序的所有基于 TCP 的出站流量都将通过基于服务网格策略的 Pipy 代理 Sidecar 进行重定向和路由。配置出站端口排除时，属于这些端口的流量不会被代理到 Pipy sidecar。
 
 如果出站端口配置为排除但仍受服务网格策略的约束，请验证它们是否按预期配置。
 
@@ -145,9 +145,9 @@ map[openservicemesh.io/outbound-port-exclusion-list:8080]
 
 ### 3. 确认出站端口包含在初始化容器规范中
 
-当配置了出站端口排除时，OSM 的 `osm-injector` 服务从 `osm-mesh-config` `MeshConfig` 资源和 pod 上的注解中读取此配置，并编写与这些范围相对应的 `iptables` 规则，以便它们被排除在通过 Envoy sidecar 代理进行的出站流量重定向之外。
+当配置了出站端口排除时，osm-edge 的 `osm-injector` 服务从 `osm-mesh-config` `MeshConfig` 资源和 pod 上的注解中读取此配置，并编写与这些范围相对应的 `iptables` 规则，以便它们被排除在通过 Pipy sidecar 代理进行的出站流量重定向之外。
 
-确认 OSM 的 `osm-init` 初始化容器规范具有与配置的出站端口对应的规则以排除。
+确认 osm-edge 的 `osm-init` 初始化容器规范具有与配置的出站端口对应的规则以排除。
 
 ```console
 $ kubectl describe pod test-58d4f8ff58-wtz4f -n test
@@ -179,8 +179,8 @@ Init Containers:
       /var/run/secrets/kubernetes.io/serviceaccount from frontend-token-5g488 (ro)
 ```
 
-In the example above, the following `iptables` commands are responsible for explicitly ignoring the configured outbound ports (`6379, 7070 and 8080`) from being redirected to the Envoy proxy sidecar.
-在上面的示例中，以下 `iptables` 命令负责显式忽略配置的出站端口（`6379，7070 和 8080`）从重定向到 Envoy 代理 sidecar。
+在上面的示例中，以下 `iptables` 命令负责显式忽略配置的出站端口（`6379，7070 和 8080`）从重定向到 Pipy 代理 sidecar。
 
 ```console
 iptables -t nat -I PROXY_OUTPUT -p tcp --match multiport --dports 6379,7070,8080 -j RETURN
+```

@@ -28,7 +28,7 @@ kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"
 kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"useHTTPSIngress":false}}}'  --type=merge
 ```
 
-### 2. 检查 OSM 控制器日志是否有错误
+### 2. 检查 osm-edge 控制器日志是否有错误
 
 ```bash
 # When osm-controller is deployed in the osm-system namespace

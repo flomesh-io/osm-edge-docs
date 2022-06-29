@@ -5,22 +5,22 @@ type: docs
 weight: 11
 ---
 
-本指南将演示如何在使用 [Kubernetes Nginx 入口控制器](https://kubernetes.github.io/ingress-nginx/) 时将 HTTP 和 HTTPS 入口配置到 OSM 托管服务网格的部分服务。
+本指南将演示如何在使用 [Kubernetes Nginx 入口控制器](https://kubernetes.github.io/ingress-nginx/) 时将 HTTP 和 HTTPS 入口配置到 osm-edge 托管服务网格的部分服务。
 
 ## 先决条件
 
 - Kubernetes cluster running Kubernetes {{< param min_k8s_version >}} or greater.
 - Have `kubectl` available to interact with the API server.
-- Have OSM version >= v0.10.0 installed.
+- Have osm-edge version >= v0.10.0 installed.
 - Have Kubernetes Nginx Ingress Controller installed. Refer to the [deployment guide](https://kubernetes.github.io/ingress-nginx/deploy/) to install it.
 - Kubernetes 集群版本 {{< param min_k8s_version >}} 或者更高。
 - 使用 `kubectl` 与 API server 交互。
-- 安装的 OSM 版本不低于 v0.10.0。
+- 安装的 osm-edge 版本不低于 v0.10.0。
 - 已安装 `osm`  命令行工具，用于管理服务网格。
 
 ## 演示
 
-首先，注意 OSM 和 Nginx 入口控制器安装的相关细节：
+首先，注意 osm-edge 和 Nginx 入口控制器安装的相关细节：
 
 ```bash
 osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
@@ -32,7 +32,7 @@ nginx_ingress_host="$(kubectl -n "$nginx_ingress_namespace" get service "$nginx_
 nginx_ingress_port="$(kubectl -n "$nginx_ingress_namespace" get service "$nginx_ingress_service" -o jsonpath='{.spec.ports[?(@.name=="http")].port}')"
 ```
 
-为了将后端的入口流量限制到授权客户端，我们将设置 IngressBackend 配置，以便只有来自 Nginx 入口控制器服务端点的入口流量才能将流量路由到服务后端。为了能够发现该服务的端点，我们需要 OSM 控制器来监控相应的命名空间。 但是，Nginx 正常运行不能注入 Envoy sidecar。
+为了将后端的入口流量限制到授权客户端，我们将设置 IngressBackend 配置，以便只有来自 Nginx 入口控制器服务端点的入口流量才能将流量路由到服务后端。为了能够发现该服务的端点，我们需要 osm-edge 控制器来监控相应的命名空间。 但是，Nginx 正常运行不能注入 Pipy sidecar。
 
 ```bash
 osm namespace add "$nginx_ingress_namespace" --mesh-name "$osm_mesh_name" --disable-sidecar-injection
@@ -115,12 +115,11 @@ Content-Length: 366
 Connection: keep-alive
 access-control-allow-origin: *
 access-control-allow-credentials: true
-x-envoy-upstream-service-time: 2
 ```
 
 ### HTTPS 出口 (mTLS 和 TLS)
 
-为了将连接代理到 HTTPS 后端，我们将在 Ingress 和 IngressBackend 配置中指定使用 `https` 作为后端协议，同时由 OSM 颁发证书，Nginx 将使用该证书作为客户端证书将 HTTPS 连接代理到 TLS 后端。客户端证书和 CA 证书将保存在 Kubernetes secret 中，Nginx 将使用该证书来认证服务网格后端。
+为了将连接代理到 HTTPS 后端，我们将在 Ingress 和 IngressBackend 配置中指定使用 `https` 作为后端协议，同时由 osm-edge 颁发证书，Nginx 将使用该证书作为客户端证书将 HTTPS 连接代理到 TLS 后端。客户端证书和 CA 证书将保存在 Kubernetes secret 中，Nginx 将使用该证书来认证服务网格后端。
 
 需要更新 `osm-mesh-config` `MeshConfig` 资源来为 Nginx 入口 service 颁发证书。
 
@@ -142,7 +141,7 @@ certificate:
 ```
 > 注意：主体备用名称（Subject Alternative Name，SAN）使用类似 `<service-account>.<namespace>.cluster.local` 格式，sevice account 和 namespace 使用 Nginx service 的。
 
-接下来，我们需要创建一个 Ingress 和 IngressBackend 配置以使用 TLS 代理到后端服务，同时通过 mTLS 启用到后端的代理。为此，我们必须创建一个 IngressBackend 资源，指定指向 `httpbin` 服务的 HTTPS 入口流量只能接受来自受信任客户端的流量。OSM 使用 主体备用名称（Subject Alternative Name，SAN）`ingress-nginx.ingress-nginx.cluster.local` 为 Nginx 入口服务提供了一个客户端证书，因此 IngressBackend 配置需要引用相同的 SAN 用于 Nginx 入口服务和 `httpbin` 后端之间的 mTLS 身份验证。
+接下来，我们需要创建一个 Ingress 和 IngressBackend 配置以使用 TLS 代理到后端服务，同时通过 mTLS 启用到后端的代理。为此，我们必须创建一个 IngressBackend 资源，指定指向 `httpbin` 服务的 HTTPS 入口流量只能接受来自受信任客户端的流量。osm-edge 使用 主体备用名称（Subject Alternative Name，SAN）`ingress-nginx.ingress-nginx.cluster.local` 为 Nginx 入口服务提供了一个客户端证书，因此 IngressBackend 配置需要引用相同的 SAN 用于 Nginx 入口服务和 `httpbin` 后端之间的 mTLS 身份验证。
 
 应用配置：
 
@@ -205,7 +204,6 @@ Content-Length: 366
 Connection: keep-alive
 access-control-allow-origin: *
 access-control-allow-credentials: true
-x-envoy-upstream-service-time: 2
 ```
 
 要验证未经授权的客户端无法访问后端，更新 IngressBackend 配置中指定的 `sources`。让我们将主题更新为 Nginx 客户端证书中编码的 SAN 以外的其他内容。
@@ -280,5 +278,4 @@ Content-Length: 364
 Connection: keep-alive
 access-control-allow-origin: *
 access-control-allow-credentials: true
-x-envoy-upstream-service-time: 2
 ```

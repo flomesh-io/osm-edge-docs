@@ -1,11 +1,11 @@
 ---
 title: "错误代码故障排除"
-description: "OSM 控制平面错误代码故障排除指南"
+description: "osm-edge 控制平面错误代码故障排除指南"
 aliases: ["/docs/troubleshooting/observability/errorcodes/"]
 type: docs
 ---
 
-# OSM 控制平面错误代码故障排除指南
+# osm-edge 控制平面错误代码故障排除指南
 
 ## 错误代码描述
 
