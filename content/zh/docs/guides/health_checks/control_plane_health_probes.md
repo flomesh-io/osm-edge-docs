@@ -94,31 +94,31 @@ Service is alive
 
 如果有健康探测持续失败，请执行以下步骤以确定根本原因：
 
-1. 确保不健康的osm-controller或osm-injector Pod没有运行Envoy sidecar容器。
+1. 确保不健康的osm-controller或osm-injector Pod没有运行Pipy sidecar容器。
 
-    为了验证osm-controller Pod没有运行Envoy sidecar容器，请验证该Pod的容器镜像中没有一个是Envoy镜像。Envoy镜像的名字里有 "envoyproxy/envoy"。
+    为了验证osm-controller Pod没有运行Pipy sidecar容器，请验证该Pod的容器镜像中没有一个是Pipy镜像。Pipy镜像的名字里有 "flomesh/pipy"。
 
-    例如，这是一个包含Envoy容器的osm-controller Pod：
+    例如，这是一个包含Pipy容器的osm-controller Pod：
 
     ```console
     $ # 假设OSM被安装在osm-system命名空间里:
     $ kubectl get pod -n osm-system $(kubectl get pods -n osm-system -l app=osm-controller -o jsonpath='{.items[0].metadata.name}') -o jsonpath='{range .spec.containers[*]}{.image}{"\n"}{end}'
     openservicemesh/osm-controller:v0.8.0
-    envoyproxy/envoy-alpine:v1.17.2
+    flomesh/pipy:{{< param pipy_version >}}
     ```
 
-    要验证osm-edge-injector Pod是否在运行Envoy sidecar容器，请确认Pod的容器镜像中没有Envoy镜像。Envoy镜像的名字里有 "envoyproxy/envoy"。
+    要验证osm-edge-injector Pod是否在运行Pipy sidecar容器，请确认Pod的容器镜像中没有Pipy镜像。Pipy镜像的名字里有 "flomesh/mesh"。
 
-    例如，这是一个包含Envoy容器的osm-edge-injector Pod：
+    例如，这是一个包含Pipy容器的osm-edge-injector Pod：
 
     ```console
     $ # 假设OSM被安装在osm-system命名空间里:
     $ kubectl get pod -n osm-system $(kubectl get pods -n osm-system -l app=osm-injector -o jsonpath='{.items[0].metadata.name}') -o jsonpath='{range .spec.containers[*]}{.image}{"\n"}{end}'
     openservicemesh/osm-injector:v0.8.0
-    envoyproxy/envoy-alpine:v1.17.2
+    flomesh/pipy:{{< param pipy_version >}}
     ```
 
-    如果任何一个Pod正在运行Envoy容器，它可能已经被这个或另一个osm-edge实例错误注入。对于每个用`osm mesh list`命令找到的网格，验证不健康的Pod的osm-edge命名空间是否列在`osm namespace list`输出的任何osm-edge实例中，通过`osm namespace list`命令可以看到这些命名空间包含 `SIDECAR-INJECTION`"enabled"的标签。
+    如果任何一个Pod正在运行Pipy容器，它可能已经被这个或另一个osm-edge实例错误注入。对于每个用`osm mesh list`命令找到的网格，验证不健康的Pod的osm-edge命名空间是否列在`osm namespace list`输出的任何osm-edge实例中，通过`osm namespace list`命令可以看到这些命名空间包含 `SIDECAR-INJECTION`"enabled"的标签。
 
     例如，对于下列所有网格：
 
@@ -146,7 +146,7 @@ Service is alive
     $ osm namespace remove osm-system --mesh-name osm2 --osm-namespace osm-system2
     ```
 
-1. 确定Kubernetes在调度或启动Pod时是否遇到错误。
+2. 确定Kubernetes在调度或启动Pod时是否遇到错误。
 
     使用`kubectl describe`命令查找关于不健康的Pod近期错误。
 
@@ -166,7 +166,7 @@ Service is alive
 
     解决这些错误并再次验证osm-edge的健康状态。
 
-1. 确定Pod是否遇到了一个运行时错误。
+3. 确定Pod是否遇到了一个运行时错误。
 
     通过检查容器的日志，寻找可能在容器启动后发生的任何错误。具体来说，寻找任何包含字符串`"level": "error"`的日志。
 

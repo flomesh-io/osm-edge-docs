@@ -115,7 +115,7 @@ livenessProbe:
     scheme: HTTP
 ```
 
-访问15904端口的请求绕过了Envoy代理，被引向`osm-healthcheck`端点。
+访问15904端口的请求绕过了Pipy代理，被引向`osm-healthcheck`端点。
 
 ## 如何在网格中验证POD的健康状态
 
@@ -214,8 +214,6 @@ HTTP/1.1 200 OK
 date: Wed, 31 Mar 2021 16:00:01 GMT
 content-length: 1396
 content-type: text/html; charset=utf-8
-x-envoy-upstream-service-time: 1
-server: envoy
 
 <!doctype html>
 <html itemscope="" itemtype="http://schema.org/WebPage" lang="en">
@@ -235,7 +233,7 @@ server: envoy
 
    启动、存活和就绪的`httpGet`探针必须被osm-edge修改。端口必须被修改为15901、15902和15903，分别适用于存活、就绪和启动`httpGet`探针。只有HTTP（不包括HTTPS）探针的路径将被修改，此外还有`/osm-liveness-probe`、`/osm-readiness-probe`或`/osm-starttup-probe`。
 
-   同时，验证Pod的Envoy配置中是否包含修改后的端点的监听。
+   同时，验证Pod的Pipy配置中是否包含修改后的端点的监听。
 
    为了让 `tcpSocket` 探针在网格中生效，必须将其改写为 `httpGet` 探针。端口必须被修改为15904，以用于存活、就绪和启动探测。路径必须设置为`/osm-healthcheck`。HTTP 头 `Original-TCP-Port`，必须设置为`tcpSocket`探针定义中指定的原始端口。另外，验证 `osm-healthcheck` 容器是否正在运行。检查`osm-healthcheck`日志以获得更多信息。
 

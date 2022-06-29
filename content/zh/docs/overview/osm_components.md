@@ -70,7 +70,7 @@ Sidecar 驱动是 osm-edge 在原 osm 设计的基础上提出的概念，用于
 
 这个章节勾勒了被采纳的约定和 osm-edge 的开发指导。在这个章节被讨论的组件有：
 
-- (A) 代理 [sidecar](https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar) —— Pipy、Envoy 或者其他兼容服务网格的反向代理
+- (A) 代理 [sidecar](https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar) —— Pipy 或者其他兼容服务网格的反向代理
 - (B) [代理证书](#b-代理-tls-证书) —— 特有的 X.509 证书通过[证书管理器](#2-证书管理器)发送到指定的代理
 - (C) 服务 —— 在 SMI Spec 中被引用的 [Kubernetes 服务资源](https://kubernetes.io/docs/concepts/services-networking/service/)
 - (D) [服务证书](#d-服务-tls-证书) —— 发送给服务的 X.509 证书
