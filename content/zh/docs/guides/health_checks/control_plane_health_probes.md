@@ -33,7 +33,7 @@ osm-injector上有以下HTTP端点，端口为9090:
 
 因为 osm-edge 的 Kubernetes 资源配置了存活和就绪探测，Kubernetes 会自动轮询 osm-controller 和 osm-injector Pod 上的健康端点。
 
-当存活探测失败时，Kubernetes将产生一个事件（通过`kubectl describe pod <pod name>`可见）并重新启动Pod。`kubectl describe`的输出如下：
+当存活探测失败时，Kubernetes 将产生一个事件（通过 `kubectl describe pod <pod name>` 可见）并重新启动 Pod。`kubectl describe` 的输出如下：
 
 ```shell
 ...
@@ -71,14 +71,14 @@ NAME                              READY   STATUS    RESTARTS   AGE
 osm-controller-5494bcffb6-tn5jv   0/1     Running   0          26s
 ```
 
-Pod的健康探测也可以通过转发Pod的必要端口并使用`curl`或任何其他 HTTP 客户端发出请求手动调用。例如，为了验证 osm-controller 有效性探测，获取Pod的名称并转发 9091 端口：
+Pod 的健康探测也可以通过转发 Pod 的必要端口并使用 `curl` 或任何其他 HTTP 客户端发出请求手动调用。例如，为了验证 osm-controller 有效性探测，获取 Pod 的名称并转发 9091 端口：
 
 ```shell
 # Assuming OSM is installed in the osm-system namespace
 kubectl port-forward -n osm-system $(kubectl get pods -n osm-system -l app=osm-controller -o jsonpath='{.items[0].metadata.name}') 9091
 ```
 
-然后，在一个单独的终端里，可以使用`curl`来检查端点。下面是一个健康的 osm-controller 的例子：
+然后，在一个单独的终端里，可以使用 `curl` 来检查端点。下面是一个健康的 osm-controller 的例子：
 
 ```console
 $ curl -i localhost:9091/health/alive
@@ -94,11 +94,11 @@ Service is alive
 
 如果有健康探测持续失败，请执行以下步骤以确定根本原因：
 
-1. 确保不健康的osm-controller或osm-injector Pod没有运行Pipy sidecar容器。
+1. 确保不健康的 osm-controller 或 osm-injector Pod 没有运行 Pipy sidecar 容器。
 
-    为了验证osm-controller Pod没有运行Pipy sidecar容器，请验证该Pod的容器镜像中没有一个是Pipy镜像。Pipy镜像的名字里有 "flomesh/pipy"。
+    为了验证 osm-controller Pod 没有运行 Pipy sidecar 容器，请验证该 Pod 的容器镜像中没有一个是 Pipy 镜像。Pipy 镜像的名字里有 "flomesh/pipy"。
 
-    例如，这是一个包含Pipy容器的osm-controller Pod：
+    例如，这是一个包含 Pipy 容器的 osm-controller Pod：
 
     ```console
     $ # 假设OSM被安装在osm-system命名空间里:
