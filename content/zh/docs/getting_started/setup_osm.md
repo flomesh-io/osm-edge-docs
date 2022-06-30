@@ -35,16 +35,6 @@ curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-
 ./${system}-${arch}/osm version
 ```
 
-### Windows
-
-通过 Powershell 下载 64 位 Windows osm-edge {{< param osm_edge_version >}} 二进制文件：
-
-```sh
-wget  https://github.com/openservicemesh/osm/releases/download/{{< param osm_edge_version >}}/osm-{{< param osm_edge_version >}}-windows-amd64.zip -o osm.zip
-unzip osm.zip
-.\windows-amd64\osm.exe version
-```
-
 `osm` CLI 可以根据 [本指南](/docs/guides/cli) 从源代码编译。
 
 ## 在 Kubernetes 上安装 osm-edge
