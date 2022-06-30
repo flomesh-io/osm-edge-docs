@@ -9,9 +9,9 @@ weight: 1
 
 osm-edge 是针对边缘计算环境设计的服务网格，采用 [osm](https://github.com/openservicemesh/osm) 作为控制平面，采用 [pipy](https://github.com/flomesh-io/pipy) 作为数据平面，具有高性能、低资源、简单、易用、易扩展、广泛兼容（支持x86/arm64/龙芯/RISC-V）的特点。
 
-基于osm的控制平面，osm-edge充分支持[SMI](https://github.com/servicemeshinterface/smi-spec)规范；通过搭配使用支持ingress、gateway API、跨集群服务发现的[fsm](https://github.com/flomesh-io/fsm)，"osm+fsm"套件提供了完整的"k8s集群内+多集群"的"东西+南北"流量管理和服务治理能力。
+基于 osm 的控制平面，osm-edge 充分支持 [SMI](https://github.com/servicemeshinterface/smi-spec) 规范；通过搭配使用支持 ingress、gateway API、跨集群服务发现的 [fsm](https://github.com/flomesh-io/fsm)，"osm+fsm" 套件提供了完整的" k8s 集群内+多集群"的"东西+南北"流量管理和服务治理能力。
 
-osm-edge的开发和测试环境采用k3s等流行的边缘计算k8s发行版，目标是osm-edge用户可以快速低成本的在x86、arm、RISC-V、龙芯等硬件平台上部署低资源高性能的服务网格，以更好的支撑微服务架构在低能耗的边缘计算场景运行。
+osm-edge 的开发和测试环境采用k3s等流行的边缘计算 k8s 发行版，目标是 osm-edge 用户可以快速低成本的在 x86、arm、RISC-V、龙芯等硬件平台上部署低资源高性能的服务网格，以更好的支撑微服务架构在低能耗的边缘计算场景运行。
 
 ## 产生的背景
 
