@@ -7,7 +7,7 @@ weight: 10
 
 osm-edge 可以选择使用 [Contour](https://projectcontour.io) 入口控制器和基于 Pipy 的边缘代理来路由外部的流量到服务网格后端。这个指南演示了如何为 osm-edge 服务网格管理的服务配置 HTTP 和 HTTPS ingress。
 
-## 先决条件pipy
+## 先决条件 pipy
 
 - Kubernetes 集群版本 {{< param min_k8s_version >}} 或者更高。
 - 使用 `kubectl` 与 API server 交互。
