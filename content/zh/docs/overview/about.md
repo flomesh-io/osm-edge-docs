@@ -5,7 +5,7 @@ type: docs
 weight: 1
 ---
 
-# 关于osm-edge
+# 关于 osm-edge
 
 osm-edge是针对边缘计算环境设计的服务网格，采用[osm](https://github.com/openservicemesh/osm)作为控制平面，采用[pipy](https://github.com/flomesh-io/pipy)作为数据平面，具有高性能、低资源、简单、易用、易扩展、广泛兼容（支持x86/arm64/龙芯/RISC-V）的特点。
 
