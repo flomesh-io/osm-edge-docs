@@ -287,7 +287,7 @@ annotations:
 osm-edge Service to Service Metrics 面板看起来像这样：
 ![image](https://user-images.githubusercontent.com/59101963/85907233-a604e380-b7c5-11ea-95b5-9190fbc7967f.png)
 
-## osm-edge Grafana 面板
+## osm-edge Grafana 仪表板
 
 osm-edge 提供了一下预制的 Grafana 面板来展示和跟踪 Prometheus 采集的服务相关的信息：
 

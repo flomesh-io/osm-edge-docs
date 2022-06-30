@@ -22,7 +22,7 @@ weight: 1
 
 ```console
 # Specify the OSM version that will be leveraged throughout these instructions
-OSM_VERSION={{< param osm_version >}}
+OSM_VERSION={{< param osm_edge_version >}}
 
 # Linux curl command only
 curl -sL "https://github.com/openservicemesh/osm/releases/download/$OSM_VERSION/osm-$OSM_VERSION-linux-amd64.tar.gz" | tar -vxzf -
@@ -56,7 +56,7 @@ osm version
 
 ```console
 # Specify the OSM version that will be leveraged throughout these instructions
-$OSM_VERSION="{{< param osm_version >}}"
+$OSM_VERSION="{{< param osm_edge_version >}}"
 
 [Net.ServicePointManager]::SecurityProtocol = "tls12"
 $ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -URI "https://github.com/openservicemesh/osm/releases/download/$OSM_VERSION/osm-$OSM_VERSION-windows-amd64.zip" -OutFile "osm-$OSM_VERSION.zip"
