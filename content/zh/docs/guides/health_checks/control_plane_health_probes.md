@@ -9,7 +9,7 @@ type: "docs"
 
 osm-edge 控制平面组件利用健康探测来传递整体状态。健康探测通过 HTTP 端点（Endpoint）实现，使用 HTTP 状态代码表示成功或失败。
 
-Kubernetes使用这些探针来传递控制平面Pod的状态，并自动执行一些行为以提高可用性。关于Kubernetes探针的更多细节可以在[这里](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)找到。
+Kubernetes 使用这些探针来传递控制平面 Pod 的状态，并自动执行一些行为以提高可用性。关于 Kubernetes 探针的更多细节可以在[这里](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)找到。
 
 ## 带探针的 osm-edge 组件
 
