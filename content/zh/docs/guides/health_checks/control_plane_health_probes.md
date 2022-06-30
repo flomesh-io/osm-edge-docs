@@ -31,7 +31,7 @@ osm-injector上有以下HTTP端点，端口为9090:
 
 ## 如何验证 osm-edge 健康状态？
 
-因为 osm-edge 的Kubernetes资源配置了存活和就绪探测，Kubernetes会自动轮询osm-controller和osm-injector Pod上的健康端点。
+因为 osm-edge 的 Kubernetes 资源配置了存活和就绪探测，Kubernetes 会自动轮询 osm-controller 和 osm-injector Pod 上的健康端点。
 
 当存活探测失败时，Kubernetes将产生一个事件（通过`kubectl describe pod <pod name>`可见）并重新启动Pod。`kubectl describe`的输出如下：
 
