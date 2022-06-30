@@ -230,7 +230,7 @@ content-type: text/html; charset=utf-8
 
 如果有健康探测持续失败，请执行以下步骤以确定根本原因：
 
-1. 验证网格中的Pod上的`httpGet`和`tcpSocket`探针是否被修改。
+1. 验证网格中的 Pod 上的 `httpGet` 和 `tcpSocket` 探针是否被修改。
 
    启动、存活和就绪的 `httpGet` 探针必须被 osm-edge 修改。端口必须被修改为 15901、15902 和 15903，分别适用于存活、就绪和启动 `httpGet` 探针。只有 HTTP（不包括 HTTPS）探针的路径将被修改，此外还有 `/osm-liveness-probe`、`/osm-readiness-probe` 或 `/osm-starttup-probe`。
 
