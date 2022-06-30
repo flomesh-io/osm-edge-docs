@@ -118,7 +118,7 @@ livenessProbe:
 
 访问 15904 端口的请求绕过了 Pipy 代理，被引向 `osm-healthcheck` 端点。
 
-## 如何在网格中验证POD的健康状态
+## 如何在网格中验证 POD 的健康状态
 
 Kubernetes将自动轮询配置了启动（startup）、存活（liveness）和就绪（readiness）探测器的Pod的健康检查端点。
 
