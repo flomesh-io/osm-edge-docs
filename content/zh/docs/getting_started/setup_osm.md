@@ -9,36 +9,36 @@ weight: 1
 
 ## 先决条件
 
-这个 osm-edge {{< param osm_version >}} 的演示需要：
-  - 运行 Kubernetes v1.19 或更高版本的集群（使用选择的云提供商、[minikube](https://minikube.sigs.k8s.io/docs/start/) 或类似的）
+这个 osm-edge {{< param osm_edge_version >}} 的演示需要：
+  - 运行 Kubernetes {{< param min_k8s_version >}} 或更高版本的集群（使用选择的云提供商、[minikube](https://minikube.sigs.k8s.io/docs/start/) 或类似的）
   - 能够执行 [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) 脚本的工作站
   - [Kubernetes 命令行工具](https://kubernetes.io/docs/tasks/tools/#kubectl) - `kubectl`
-  - [osm-edge 代码仓库](https://github.com/openservicemesh/osm/) 在本地可用
+  - [osm-edge 代码仓库](https://github.com/flomesh-io/osm-edge) 在本地可用
   
 > 注意：本文档假设你已经在 `~/.kube/config` 中安装了 Kubernetes 集群的凭据，并且 `kubectl cluster-info` 成功执行。
 
 ## 下载并安装 osm-edge 命令行工具
 
 `osm` 命令行工具包含安装和配置 Open Service Mesh 所需的一切。
-该二进制文件可在 [osm-edge GitHub 发布页面](https://github.com/openservicemesh/osm/releases/) 上找到。
+该二进制文件可在 [osm-edge GitHub 发布页面](https://github.com/flomesh-io/osm-edge/releases) 上找到。
 
 ### GNU/Linux 和 macOS
 
-下载 osm-edge {{< param osm_version >}} 的 64 位 GNU/Linux 或 macOS 二进制文件：
+下载 osm-edge {{< param osm_edge_version >}} 的 64 位 GNU/Linux 或 macOS 二进制文件：
 
 ```bash
 system=$(uname -s)
-release={{< param osm_version >}}
+release={{< param osm_edge_version >}}
 curl -L https://github.com/openservicemesh/osm/releases/download/${release}/osm-${release}-${system}-amd64.tar.gz | tar -vxzf -
 ./${system}-amd64/osm version
 ```
 
 ### Windows
 
-通过 Powershell 下载 64 位 Windows osm-edge {{< param osm_version >}} 二进制文件：
+通过 Powershell 下载 64 位 Windows osm-edge {{< param osm_edge_version >}} 二进制文件：
 
 ```powershell
-wget  https://github.com/openservicemesh/osm/releases/download/{{< param osm_version >}}/osm-{{< param osm_version >}}-windows-amd64.zip -o osm.zip
+wget  https://github.com/openservicemesh/osm/releases/download/{{< param osm_edge_version >}}/osm-{{< param osm_edge_version >}}-windows-amd64.zip -o osm.zip
 unzip osm.zip
 .\windows-amd64\osm.exe version
 ```
