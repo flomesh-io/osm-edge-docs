@@ -1,36 +1,36 @@
 ---
 title: "度量"
-description: "使用 Promtheus 对代理以及 OSM 控制平面进行度量"
+description: "使用 Promtheus 对代理以及 osm-edge 控制平面进行度量"
 type: docs
 weight: 1
 ---
 
 # 度量
-开放服务网格（OSM）会生成网格以及 OSM 控制平面所有流量的详细监控指标。这些指标提供了对网格中的应用行为和网格本身的洞察力，帮助用户排除故障、维护和分析其应用。
+开放边缘服务网格（osm-edge）会生成网格以及 osm-edge 控制平面所有流量的详细监控指标。这些指标提供了对网格中的应用行为和网格本身的洞察力，帮助用户排除故障、维护和分析其应用。
 
-OSM 直接从 sidecar 代理（Envoy）中收集监控指标。通过这些指标，用户可以获取关于总体流量、流量中的错误、以及请求的响应耗时的信息。
+osm-edge 直接从 sidecar 代理（Envoy）中收集监控指标。通过这些指标，用户可以获取关于总体流量、流量中的错误、以及请求的响应耗时的信息。
 
-除此之外，OSM 生成了控制平面组件的指标。这些指标可以用来监控服务网格的行为和健康状况。
+除此之外，osm-edge 生成了控制平面组件的指标。这些指标可以用来监控服务网格的行为和健康状况。
 
-OSM 使用 [Prometheus][1] 来收集和存储网格中运行的所有应用程序的持续的流量指标和统计数据。Prometheus 是一个开源的监控和告警工具集，通常用于（但不限于）Kubernetes 和服务网格环境。
+osm-edge 使用 [Prometheus][1] 来收集和存储网格中运行的所有应用程序的持续的流量指标和统计数据。Prometheus 是一个开源的监控和告警工具集，通常用于（但不限于）Kubernetes 和服务网格环境。
 
 每一个网格中的应用都在一个 Pod 中运行，这个 Pod 带有一个 Envoy sidecar，它以 Prometheus 格式暴露指标（代理指标）。此外，在启用了度量功能的命名空间中，每个网格中的 Pod，都带有 Prometheus 注解，这使得 Prometheus 服务器可以动态地采集应用程序指标。每当一个 Pod 被添加到网格中时，这种机制就会让 Prometheus 开始自动采集指标。
 
-OSM 的指标可以在 [Grafana][8] 中查看，这是一个开源的可视化和分析软件。它可以让您查询、可视化、依照指标进行报警、以及浏览您的指标。
+osm-edge 的指标可以在 [Grafana][8] 中查看，这是一个开源的可视化和分析软件。它可以让您查询、可视化、依照指标进行报警、以及浏览您的指标。
 
-Grafana 使用 Prometheus 作为后端的时序数据库。如果在 OSM 安装过程中选择一并部署 Grafana 和 Prometheus，过程中将设置一些必要的规则，以便它们进行交互。相反地，在 “自维护” 或者说 “BYO” 模式下（后续将进一步解释），这些组件将由用户来负责安装。
+Grafana 使用 Prometheus 作为后端的时序数据库。如果在 osm-edge 安装过程中选择一并部署 Grafana 和 Prometheus，过程中将设置一些必要的规则，以便它们进行交互。相反地，在 “自维护” 或者说 “BYO” 模式下（后续将进一步解释），这些组件将由用户来负责安装。
 
 ## 安装度量组件
 
-OSM 可以在安装期间部署 Prometheus 和 Grafana，或者 OSM 也可以连接到一个已经存在的 Prometheus 以及/或者 Grafana 实例上。我们将后一种模式称为 “自维护” 或者 “BYO“。下面的章节描述了如何通过让 OSM 来自动部署度量组件以启用度量功能，也包括 BYO 的方式。
+osm-edge 可以在安装期间部署 Prometheus 和 Grafana，或者 osm-edge 也可以连接到一个已经存在的 Prometheus 以及/或者 Grafana 实例上。我们将后一种模式称为 “自维护” 或者 “BYO“。下面的章节描述了如何通过让 osm-edge 来自动部署度量组件以启用度量功能，也包括 BYO 的方式。
 
 ### 自动化部署
 
 默认情况下，Prometheus 和 Grafana 都被禁用了。
 
-然后，当设置了 `--set=osm.deployPrometheus=true` 参数的时候，OSM 安装过程会部署 Prometheus 实例来采集 sidecar 接口暴露的指标。依据用户的指标采集配置，OSM 将会为那些网格中的 pod 标记必要的指标采集注解，让 Prometheus 能够访问和采集这些 pod 的相关指标。[指标采集的配置文件](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/templates/prometheus-configmap.yaml) 定义了 Prometheus 的默认行为，并设置了 OSM 需要被采集的指标。
+然后，当设置了 `--set=osm.deployPrometheus=true` 参数的时候，osm-edge 安装过程会部署 Prometheus 实例来采集 sidecar 接口暴露的指标。依据用户的指标采集配置，osm-edge 将会为那些网格中的 pod 标记必要的指标采集注解，让 Prometheus 能够访问和采集这些 pod 的相关指标。[指标采集的配置文件](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/templates/prometheus-configmap.yaml) 定义了 Prometheus 的默认行为，并设置了 osm-edge 需要被采集的指标。
 
-使用 `osm install` 命令时，通过 `--set=osm.deployGrafana=true` 参数来安装 Grafana 用于指标可视化。在 [OSM Grafana 面板](#osm-grafana-面板) 小节中，展示了 OSM 提供的一个预先配置好的面板。
+使用 `osm install` 命令时，通过 `--set=osm.deployGrafana=true` 参数来安装 Grafana 用于指标可视化。在 [osm-edge Grafana 面板](#osm-edge-grafana-面板) 小节中，展示了 osm-edge 提供的一个预先配置好的面板。
 
 ```bash
  osm install --set=osm.deployPrometheus=true \
@@ -41,12 +41,12 @@ OSM 可以在安装期间部署 Prometheus 和 Grafana，或者 OSM 也可以连
 
 #### Prometheus
 
-下面的章节记录了让已经在运行的 Prometheus 实例去抓取 OSM 网格接口的所需步骤。
+下面的章节记录了让已经在运行的 Prometheus 实例去抓取 osm-edge 网格接口的所需步骤。
 
 ##### 使用自维护的 Prometheus 的先决条件列表
 
 - 在网格_之外_已经有一个运行的可访问的 Prometheus 实例。
-- 一个运行中的 OSM 控制平面，但没有部署度量组件。
+- 一个运行中的 osm-edge 控制平面，但没有部署度量组件。
 - 我们假设 Grafana 已经可以访问 Prometheus，Prometheus 或者 Grafana 的 web 端口已经对外暴露或者配置了端口转发，并且 Prometheus 访问 Kubernetes API 服务已经配置妥当，否则如下步骤无法指导您完成配置。
 
 ##### 配置
@@ -67,10 +67,10 @@ OSM 可以在安装期间部署 Prometheus 和 Grafana，或者 OSM 也可以连
 ```yaml
 annotations:
   prometheus.io/scrape: "true"
-  prometheus.io/port: "<供 prometheus 采集指标的端口>" # 根据 prometheus deployment 的实际情况配置 - OSM 自动部署的实例默认使用 7070 端口, 可通过 `values.yaml` 来配置
+  prometheus.io/port: "<供 prometheus 采集指标的端口>" # 根据 prometheus deployment 的实际情况配置 - osm-edge 自动部署的实例默认使用 7070 端口, 可通过 `values.yaml` 来配置
 ```
 
-- 修改 Prometheus 的 configmap，让它访问 pod/Envoy 的接口。OSM 自动给 pod 添加端口注解，负责将监听器配置推送给 pod，以供 Prometheus 来访问：
+- 修改 Prometheus 的 configmap，让它访问 pod/Envoy 的接口。osm-edge 自动给 pod 添加端口注解，负责将监听器配置推送给 pod，以供 Prometheus 来访问：
 ```yaml
 - job_name: 'kubernetes-pods'
    kubernetes_sd_configs:
@@ -122,20 +122,20 @@ annotations:
 
 下面的章节假设一个 Prometheus 实例已经配置成已运行的 Grafana 实例的数据源。如何创建和配置一个 Grafana 实例的示例，可以参考 [Prometheus 和 Grafana](/docs/demos/prometheus_grafana) 的演示
 
-##### 导入 OSM 面板
+##### 导入 osm-edge 面板
 
-OSM 面板可以在 [我们的仓库中](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards) 获取，它可以作为 json 数据导入到 web 管理门户。
+osm-edge 面板可以在 [我们的仓库中](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards) 获取，它可以作为 json 数据导入到 web 管理门户。
 
-可以在 [Prometheus 和 Grafana](/docs/demos/prometheus_grafana) 演示中找到导入 OSM 面板的详细指导步骤。[OSM Grafana 面板](#osm-grafana-面板)展示了一个预先配置好的面板概览。
+可以在 [Prometheus 和 Grafana](/docs/demos/prometheus_grafana) 演示中找到导入 osm-edge 面板的详细指导步骤。[osm-edge Grafana 面板](#osm-grafana-面板)展示了一个预先配置好的面板概览。
 
 ## 指标采集
 
-指标采集可以通过 `osm metrics` 命令来配置。默认情况下，OSM **不会** 为网格中的 pod 配置指标采集。指标采集可以在命名空间级别范围内启用或者关闭，以便做了配置的命名空间中的 pod 可以启用或者禁用指标采集。
+指标采集可以通过 `osm metrics` 命令来配置。默认情况下，osm-edge **不会** 为网格中的 pod 配置指标采集。指标采集可以在命名空间级别范围内启用或者关闭，以便做了配置的命名空间中的 pod 可以启用或者禁用指标采集。
 
 对于需要采集的指标，需要符合下面的先决条件：
 
 - 命名空间内必须是网格中的一部分，例如，它必须标记上 `openservicemesh.io/monitored-by` 标签，设置恰当的网格名字。这可以通过 `osm namespace add` 命令来完成。
-- 一个运行中的服务，可以访问 Prometheus 的接口。OSM 为[自动部署的 Prometheus](#自动部署) 提供了相应配置；或者用户可以[自行部署自维护的 Prometheus](#prometheus)。
+- 一个运行中的服务，可以访问 Prometheus 的接口。osm-edge 为[自动部署的 Prometheus](#自动部署) 提供了相应配置；或者用户可以[自行部署自维护的 Prometheus](#prometheus)。
 
 为一个或者多个命名空间启用指标采集：
 
@@ -162,13 +162,13 @@ prometheus.io/path: /stats/prometheus
 
 ## 可用的指标
 
-OSM 提供了关于网格中的流量以及关于控制平面的指标。
+osm-edge 提供了关于网格中的流量以及关于控制平面的指标。
 
 ### 自定义 Envoy 的指标
 
-每一个 Envoy 代理按照 Prometheus 格式生成指标。要进一步了解生成了什么样的指标，请参考[Envoy 的文档](https://www.envoyproxy.io/docs/envoy/v1.17.2/operations/stats_overview)。OSM 默认的 Prometheus 配置只采集代理生成的所有指标中的一部分。
+每一个 Envoy 代理按照 Prometheus 格式生成指标。要进一步了解生成了什么样的指标，请参考[Envoy 的文档](https://www.envoyproxy.io/docs/envoy/v1.17.2/operations/stats_overview)。osm-edge 默认的 Prometheus 配置只采集代理生成的所有指标中的一部分。
 
-为了实现 [SMI 指标规范][7]，OSM 添加了一个自定义的 WebAssembly 插件到每一个 Envoy 代理中，这些代理会生成如下 HTTP 流量的统计信息：
+为了实现 [SMI 指标规范][7]，osm-edge 添加了一个自定义的 WebAssembly 插件到每一个 Envoy 代理中，这些代理会生成如下 HTTP 流量的统计信息：
 
 `osm_request_total`：随每一个代理的请求自增的 counter 指标。通过查询这个指标可以了解网格中的服务的请求成功和失败率。
 
@@ -203,7 +203,7 @@ OSM 提供了关于网格中的流量以及关于控制平面的指标。
 
 ### 控制平面
 
-下面这些是 OSM 控制平面依照 Prometheus 格式生成的指标。`osm-controller` 和 `osm-injector` pod 都有如下 Prometheus 的注解。
+下面这些是 osm-edge 控制平面依照 Prometheus 格式生成的指标。`osm-controller` 和 `osm-injector` pod 都有如下 Prometheus 的注解。
 
 ```yaml
 annotations:
@@ -232,7 +232,7 @@ annotations:
 
 #### 指标中的状态码
 
-当 OSM 控制平面产生一个错误的时候，Prometheus 里这个错误码相关的 ErrCodeCounter 指标会增长。要查看完成错误码列表和它们的描述，请参考 [OSM 控制平面错误码故障排查指南](/docs/guides/troubleshooting/control_plane_error_codes)。
+当 osm-edge 控制平面产生一个错误的时候，Prometheus 里这个错误码相关的 ErrCodeCounter 指标会增长。要查看完成错误码列表和它们的描述，请参考 [osm-edge 控制平面错误码故障排查指南](/docs/guides/troubleshooting/control_plane_error_codes)。
 
 错误码指标的全称是 `osm_error_err_code_count`。
 
@@ -242,7 +242,7 @@ annotations:
 
 ### 在您开始之前
 
-确保您完成了 [OSM 演示][2] 当中的步骤
+确保您完成了 [osm-edge 演示][2] 当中的步骤
 
 ### 查询请求数量相关的代理指标
 
@@ -264,7 +264,7 @@ annotations:
 
 ### 查看 Grafana 面板的先决条件列表
 
-确保您已经完成 [OSM 演示][2] 中的步骤
+确保您已经完成 [osm-edge 演示][2] 中的步骤
 
 ### 查看 Grafana service to service metrics 面板
 
@@ -281,32 +281,32 @@ annotations:
    - username: admin
    - password: admin
 5. 在 Grafana 面板上查看服务间的监控指标
-   - 在 Grafana 面板左上角的导航菜单中，您可以在 OSM Data Plane 的目录里，切换到 OSM Service to Service 面板
+   - 在 Grafana 面板左上角的导航菜单中，您可以在 osm-edge Data Plane 的目录里，切换到 osm-edge Service to Service 面板
    - 或者在浏览器中访问这个链接：[http://localhost:3000/d/OSMs2sMetrics/osm-service-to-service-metrics?orgId=1][6]
 
-OSM Service to Service Metrics 面板看起来像这样：
+osm-edge Service to Service Metrics 面板看起来像这样：
 ![image](https://user-images.githubusercontent.com/59101963/85907233-a604e380-b7c5-11ea-95b5-9190fbc7967f.png)
 
-## OSM Grafana 面板
+## osm-edge Grafana 面板
 
-OSM 提供了一下预制的 Grafana 面板来展示和跟踪 Prometheus 采集的服务相关的信息：
+osm-edge 提供了一下预制的 Grafana 面板来展示和跟踪 Prometheus 采集的服务相关的信息：
 
-1. OSM 数据平面
-   - **OSM Data Plane Performance Metrics**：这个面板供您查看 OSM 数据平面的性能表现
+1. osm-edge 数据平面
+   - **osm-edge Data Plane Performance Metrics**：这个面板供您查看 osm-edge 数据平面的性能表现
      ![image](https://user-images.githubusercontent.com/64559656/138173256-28011b16-cace-4365-b166-db909543472e.png)
-   - **OSM Service to Service Metrics**：这个面板供您查看选定的源服务和目的服务之间的流量指标
+   - **osm-edge Service to Service Metrics**：这个面板供您查看选定的源服务和目的服务之间的流量指标
      ![image](https://user-images.githubusercontent.com/64559656/141853912-10ec3767-3d5b-40e8-8f13-d39a32980183.png)
-   - **OSM Pod to Service Metrics**：这个面板供您查看与一个 pod 相连接的所有服务的流量指标
+   - **osm-edge Pod to Service Metrics**：这个面板供您查看与一个 pod 相连接的所有服务的流量指标
      ![image](https://user-images.githubusercontent.com/64559656/140724337-0568dde0-e6c5-4764-8b6f-c1fcaf144b4e.png)
-   - **OSM Workload to Service Metrics**：这个面板提供了与一个工作负载（deployment、replicaSet）相连接的所有服务的流量指标
+   - **osm-edge Workload to Service Metrics**：这个面板提供了与一个工作负载（deployment、replicaSet）相连接的所有服务的流量指标
      ![image](https://user-images.githubusercontent.com/64559656/140724800-8152cb8b-1617-4866-b008-f12c31f702c2.png)
-   - **OSM Workload to Workload Metrics**：这个面板展示了网格当中工作负载之间请求的延迟情况
+   - **osm-edge Workload to Workload Metrics**：这个面板展示了网格当中工作负载之间请求的延迟情况
      ![image](https://user-images.githubusercontent.com/64559656/140718968-b3999e30-e6d1-4d95-b07b-0043595aca71.png)
 
-2. OSM 控制平面
-   - **OSM Control Plane Metrics**：这个面板提供了选定的服务到 OSM 控制平面的流量指标
+2. osm-edge 控制平面
+   - **osm-edge Control Plane Metrics**：这个面板提供了选定的服务到 osm-edge 控制平面的流量指标
      ![image](https://user-images.githubusercontent.com/64559656/138173115-0a012450-0d91-449d-9c09-975b68fde03d.png)
-   - **Mesh and Envoy Details**：这个面板供您查看 OSM 控制平面的性能表现和工作状态
+   - **Mesh and Envoy Details**：这个面板供您查看 osm-edge 控制平面的性能表现和工作状态
      ![image](https://user-images.githubusercontent.com/64559656/141852750-61da99ac-a431-4251-bd97-8aa4601232c3.png)
 
 [1]: https://prometheus.io/docs/introduction/overview/

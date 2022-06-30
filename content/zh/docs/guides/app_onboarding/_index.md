@@ -7,13 +7,13 @@ weight: 5
 
 # 发布服务
 
-以下指南介绍了如何将 Kubernetes 微服务迁入 OSM 实例。
+以下指南介绍了如何将 Kubernetes 微服务迁入 osm-edge 实例。
 
 1. 在迁入应用之前，参考 [应用要求](/docs/guides/app_onboarding/prereqs) 指南。
 
 2. 配置并安装 [服务网格接口 (Service Mesh Interface，SMI) 策略](https://github.com/servicemeshinterface/smi-spec)。
 
-    OSM 符合 SMI 规范，默认情况下，OSM 禁止 Kubernetes 服务间的通信，除非显式地通过 SMI 策略来允许。这种行为可以通过在 `osm install` 时指定 `--set=osm.enablePermissiveTrafficPolicy=true` 参数来覆盖，允许不执行SMI策略，同时允许流量和服务仍然利用诸如mTLS加密流量、指标和跟踪等功能。。
+    osm-edge 符合 SMI 规范，默认情况下，osm-edge 禁止 Kubernetes 服务间的通信，除非显式地通过 SMI 策略来允许。这种行为可以通过在 `osm install` 时指定 `--set=osm.enablePermissiveTrafficPolicy=true` 参数来覆盖，允许不执行SMI策略，同时允许流量和服务仍然利用诸如mTLS加密流量、指标和跟踪等功能。。
 
     SMI 策略的例子，请参阅以下示例：
     - [demo/deploy-traffic-specs.sh](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/demo/deploy-traffic-specs.sh)
@@ -31,7 +31,7 @@ weight: 5
 
     **方法1：** 将 Kubernetes API server 的地址添加到全局出站 IP 范围进行排除。IP 地址可以是集群 IP 地址或公共 IP 地址，应适当排除来连接到 Kubernetes API server。
     
-    添加这个 IP 到 MeshConfig 使得出站流量可以从 OSM sidecar 的流量劫持中排除：
+    添加这个 IP 到 MeshConfig 使得出站流量可以从 osm-edge sidecar 的流量劫持中排除：
     
     ```console
     $ kubectl patch meshconfig osm-mesh-config -n <osm-namespace> -p '{"spec":{"traffic":{"outboundIPRangeExclusionList":["10.0.0.1/32"]}}}'  --type=merge
@@ -72,9 +72,9 @@ weight: 5
         EOF
         ```  
 
-4. 将 Kubernetes 命名空间迁入 OSM
+4. 将 Kubernetes 命名空间迁入 osm-edge
 
-    如果要将命名空间下的所有应用都纳入 OSM 网格管理，执行 `osm namespace add` 命令：
+    如果要将命名空间下的所有应用都纳入 osm-edge 网格管理，执行 `osm namespace add` 命令：
 
     ```console
     $ osm namespace add <namespace> --mesh-name <mesh-name>
@@ -87,18 +87,18 @@ weight: 5
 
 5.  部署新应用或重新部署已有应用
 
-    默认地，已迁入的命名空间中新部署的应用会自动注入 sidecar。这意味着当在纳入网格的命名空间中创建新 Pod 时，OSM 会自动为其注入 sidecar 代理。
-    已有的应用需要重启来让 OSM 在重建 Pod 时自动为其注入 sidecar 代理。被 Deployment 管理的 Pod 可以使用命令 `kubectl rollout restart deploy` 来重启。
+    默认地，已迁入的命名空间中新部署的应用会自动注入 sidecar。这意味着当在纳入网格的命名空间中创建新 Pod 时，osm-edge 会自动为其注入 sidecar 代理。
+    已有的应用需要重启来让 osm-edge 在重建 Pod 时自动为其注入 sidecar 代理。被 Deployment 管理的 Pod 可以使用命令 `kubectl rollout restart deploy` 来重启。
 
     为了正确地将协议指定的流量路由到服务端口，需要配置应用使用的协议。参考 [应用协议选择指南](/docs/guides/app_onboarding/app_protocol_selection)。
 
 #### 注意：移除命名空间
 
-要从 OSM 网格中移除命名空间，可以使用命令 `osm namespace remove`：
+要从 osm-edge 网格中移除命名空间，可以使用命令 `osm namespace remove`：
 
 ```console
 $ osm namespace remove <namespace>
 ```
 
 > **请注意：**
-> `osm namespace remove` 命令指示告诉 OSM 停止对命名空间中的 sidecar 代理配置应用更新。并**不会**移除 sidecar 代理。这意味着可以继续使用现有的代理配置，但是不会收到 OSM 控制平面的更新。如果想要移除所有 pod 的代理，在使用 CLI 将命名空间从 OSM 网格移除后重新安装所有 pod 负载。
+> `osm namespace remove` 命令指示告诉 osm-edge 停止对命名空间中的 sidecar 代理配置应用更新。并**不会**移除 sidecar 代理。这意味着可以继续使用现有的代理配置，但是不会收到 osm-edge 控制平面的更新。如果想要移除所有 pod 的代理，在使用 CLI 将命名空间从 osm-edge 网格移除后重新安装所有 pod 负载。

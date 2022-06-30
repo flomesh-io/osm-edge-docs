@@ -5,12 +5,12 @@ type: docs
 weight: 20
 ---
 
-本指南演示了使用 OSM 的 TCP 路由功能处理网格中通信的 TCP 客户端和服务端应用。
+本指南演示了使用 osm-edge 的 TCP 路由功能处理网格中通信的 TCP 客户端和服务端应用。
 
 ## 先决条件
 
 - Kubernetes 集群版本 {{< param min_k8s_version >}} 或者更高。
-- 已安装 OSM。
+- 已安装 osm-edge。
 - 使用 `kubectl` 与 API server 交互。
 - 已安装 `osm` 命令行工具，用于管理服务网格。
 
@@ -18,13 +18,13 @@ weight: 20
 
 以下演示了一个 TCP 客户端将数据发送到 tcp-echo 服务器，然后该服务器通过 TCP 连接将数据回显到客户端。
 
-1. 设置安装 OSM 的命名空间。
+1. 设置安装 osm-edge 的命名空间。
 
     ```bash
     osm_namespace=osm-system  # Replace osm-system with the namespace where OSM is installed if different
     ```
 
-2. 在 `tcp-demo` 命名空间下部署 `tcp-demo` 服务。 `tcp-demo` 服务运行在 `9000` 端口上，同时 `appProtocol` 字段设置为 `tcp` 用来告知 OSM 在定向 `tcp-demo` 在 `9000` 端口的流量时使用 TCP路由。
+2. 在 `tcp-demo` 命名空间下部署 `tcp-demo` 服务。 `tcp-demo` 服务运行在 `9000` 端口上，同时 `appProtocol` 字段设置为 `tcp` 用来告知 osm-edge 在定向 `tcp-demo` 在 `9000` 端口的流量时使用 TCP路由。
     ```bash
     # Create the tcp-demo namespace
     kubectl create namespace tcp-demo

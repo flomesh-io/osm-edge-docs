@@ -1,32 +1,26 @@
 title = "Open Service Mesh"
 baseURL = "https://docs.openservicemesh.io/"
-languageCode = "en-us"
-description = "Documentation for Open Service Mesh (OSM)"
+languageCode = "zh"
+description = "Documentation for osm-edge"
 theme = "dosmy"
 RelativeURLs=true
 CanonifyURLs=true
+defaultContentLanguage = "zh"
 
 # Theme General Config
 [languages]
-	[languages.en]
-		title = "Open Service Mesh"
-		contentDir = 'content/en'
-		description = "Documentation for Open Service Mesh (OSM)"
-		languageName ="English"
-		weight = 1
 	[languages.zh]
-		title = "开放服务网格"
+		title = "开放边缘服务网格"
 		contentDir = 'content/zh'
-		description = "Documentation for Open Service Mesh (OSM)"
+		description = "Documentation for osm-edge"
 		languageName ="中文"
-		weight = 2
+		weight = 1
 [services]
 [services.googleAnalytics]
 id = "UA-130516746-13"
 enableRobotsTXT = true
 enableGitInfo = true
 version_menu = "Releases"
-defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 enableMissingTranslationPlaceholders = true
 disableKinds = ["taxonomy", "taxonomyTerm"]
@@ -90,27 +84,12 @@ project_home = "https://openservicemesh.io/"
 # Version params
 osm_branch = "release-v1.1"
 osm_version = "v1.1.1"
-envoy_version = "v1.19.3"
 min_k8s_version = "v1.20.0"
+pipy_version = "0.5.0"
 
 [[params.versions]]
   version = "v1.1 (latest)"
   url = "https://release-v1-1.docs.openservicemesh.io/"
-[[params.versions]]
-  version = "v1.0"
-  url = "https://release-v1-0.docs.openservicemesh.io/"
-[[params.versions]]
-  version = "v0.11"
-  url = "https://release-v0-11.docs.openservicemesh.io/"
-[[params.versions]]
-  version = "v0.10"
-  url = "https://release-v0-10.docs.openservicemesh.io/"
-[[params.versions]]
-  version = "v0.9"
-  url = "https://release-v0-9.docs.openservicemesh.io/"
-[[params.versions]]
-  version = "v0.8"
-  url = "https://release-v0-8.docs.openservicemesh.io/"
 
 [params.ui]
 navbar_logo = true

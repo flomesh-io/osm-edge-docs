@@ -8,7 +8,7 @@ type: docs
 
 ### 1. 确认宽松流量策略模式已开启
 
-在自定义资源 `osm-mesh-config` 中，通过检查 `enablePermissiveTrafficPolicyMode` 配置字段，来确认宽松流量策略模式是否启用。`osm-mesh-config` MeshConfig 位于 OSM 控制平面所在的命名空间（默认为`osm-system`）
+在自定义资源 `osm-mesh-config` 中，通过检查 `enablePermissiveTrafficPolicyMode` 配置字段，来确认宽松流量策略模式是否启用。`osm-mesh-config` MeshConfig 位于 osm-edge 控制平面所在的命名空间（默认为`osm-system`）
 
 ```console
 # 如果宽松流量策略模式已启用，则返回 true
@@ -18,7 +18,7 @@ true
 
 上面的命令一定会返回布尔型的字符串（`true` 或者 `false`），表示宽松流量策略模式是否启用
 
-### 2. 检查 OSM 控制器日志中的错误
+### 2. 检查 osm-edge 控制器日志中的错误
 
 ```bash
 # 如果 osm-controller 被部署到 osm-system 命名空间中
@@ -30,6 +30,6 @@ kubectl logs -n osm-system $(kubectl get pod -n osm-system -l app=osm-controller
 {"level":"error","component":"...","time":"...","file":"...","message":"..."}
 ```
 
-### 3. 确认 Envoy 的配置
+### 3. 确认 Pipy 的配置
 
-在 Envoy 代理在客户端和服务端 Pod 中的配置，确认客户端是允许访问服务端的。请参考 [配置样例](../../../tasks/traffic_management/permissive_traffic_policy_mode#envoy-configurations) 来确认客户端已经设置了合法访问服务端的路由。
+在 Pipy 代理在客户端和服务端 Pod 中的配置，确认客户端是允许访问服务端的。

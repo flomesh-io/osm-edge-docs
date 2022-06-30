@@ -10,7 +10,7 @@ weight: 21
 ## 先决条件
 
 - Kubernetes 集群版本 {{< param min_k8s_version >}} 或者更高。
-- 已安装 OSM。
+- 已安装 osm-edge。
 - 使用 `kubectl` 与 API server 交互。
 - 已安装 `osm`  命令行工具，用于管理服务网格。
 

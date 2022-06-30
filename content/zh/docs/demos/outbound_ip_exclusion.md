@@ -5,14 +5,14 @@ type: docs
 weight: 5
 ---
 
-This guide demonstrates how outbound IP address ranges can be excluded from being intercepted by OSM's proxy sidecar, so as to not subject them to service mesh filtering and routing policies.
+This guide demonstrates how outbound IP address ranges can be excluded from being intercepted by osm-edge's proxy sidecar, so as to not subject them to service mesh filtering and routing policies.
 
-本指南演示如何将出站 IP 地址范围从 OSM 的代理 sidecar 的拦截中排除，以便它们不受服务网格过滤和路由策略的约束。
+本指南演示如何将出站 IP 地址范围从 osm-edge 的代理 sidecar 的拦截中排除，以便它们不受服务网格过滤和路由策略的约束。
 
 ## 先决条件
 
 - Kubernetes 集群版本 {{< param min_k8s_version >}} 或者更高。
-- 已安装 OSM。
+- 已安装 osm-edge。
 - 使用 `kubectl` 与 API server 交互。
 - 已安装 `osm`  命令行工具，用于管理服务网格。
 
@@ -77,9 +77,9 @@ This guide demonstrates how outbound IP address ranges can be excluded from bein
     command terminated with exit code 7
     ```
 
-    上述错误是意料之中的，因为默认情况下，出站流量通过运行在 `curl` 客户端 pod 上的 Envoy 代理 sidecar 重定向，并且代理将此流量遵循不允许此流量的服务网格策略。
+    上述错误是意料之中的，因为默认情况下，出站流量通过运行在 `curl` 客户端 pod 上的 Pipy 代理 sidecar 重定向，并且代理将此流量遵循不允许此流量的服务网格策略。
 
-5. 程序 OSM 排除 IP 地址范围 `54.91.118.50/32`。
+5. 程序 osm-edge 排除 IP 地址范围 `54.91.118.50/32`。
 
     ```bash
     kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"outboundIPRangeExclusionList":["54.91.118.50/32"]}}}'  --type=merge

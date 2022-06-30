@@ -5,15 +5,15 @@ type: docs
 weight: 21
 ---
 
-本指南演示如何为作为 OSM 托管服务网格一部分的目标配置熔断。
+本指南演示如何为作为 osm-edge 托管服务网格一部分的目标配置熔断。
 
 ## 先决条件
 
 - Kubernetes 集群版本 {{< param min_k8s_version >}} 或者更高。
-- 已安装 OSM。
+- 已安装 osm-edge。
 - 使用 `kubectl` 与 API server 交互。
 - 已安装 `osm`  命令行工具，用于管理服务网格。
-- OSM 版本高于 v1.1.0
+- osm-edge 版本高于 v1.1.0
 
 
 ## 演示
@@ -211,7 +211,8 @@ weight: 21
     Code 503 : 29 (58.0 %)
     ```
 
-7. 检查 `Envoy` sidecar 指标发现相关请求的断路器被触发。
+7. 检查 `Pipy` sidecar 指标发现相关请求的断路器被触发。
+   
     ```console
     $ osm proxy get stats "$fortio_pod" -n client | grep 'httpbin.*pending'
     cluster.httpbin/httpbin|14001.circuit_breakers.default.remaining_pending: 1

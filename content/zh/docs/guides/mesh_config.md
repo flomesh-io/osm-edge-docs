@@ -1,17 +1,17 @@
 ---
 title: "网格配置"
-description: "OSM MeshConfig"
+description: "osm-edge MeshConfig"
 type: docs
 aliases: ["/docs/osm_mesh_config/"]
 weight: 7
 ---
 
-# OSM MeshConfig
-OSM 部署一个 MeshConfig 资源 `osm-mesh-config` 作为它的控制平面(同 OSM 控制器 Pod 的在同一命名空间) 的一部分，其能够被网格所有者/操作员在任意时刻更新。这个 MeshConfig 的目的是提供一种能够更新所需的网格配置的能力给网格所有者/运维人员。
+# osm-edge MeshConfig
+osm-edge 部署一个 MeshConfig 资源 `osm-mesh-config` 作为它的控制平面(同 osm-edge 控制器 Pod 的在同一命名空间) 的一部分，其能够被网格所有者/操作员在任意时刻更新。这个 MeshConfig 的目的是提供一种能够更新所需的网格配置的能力给网格所有者/运维人员。
 
-在安装的时候，OSM MeshConfig 从一个现成的 MeshConfig (`preset-mesh-config`) 来部署，其能够在 [charts/osm/templates](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/templates/preset-mesh-config.yaml) 里面找到。
+在安装的时候，osm-edge MeshConfig 从一个现成的 MeshConfig (`preset-mesh-config`) 来部署，其能够在 [charts/osm/templates](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/templates/preset-mesh-config.yaml) 里面找到。
 
-首先，设置一个环境变量来引用 OSM 被安装所在的命名空间。
+首先，设置一个环境变量来引用 osm-edge 被安装所在的命名空间。
 ```bash
 export osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
 ```
@@ -24,7 +24,7 @@ kubectl get meshconfig osm-mesh-config -n "$osm_namespace" -o yaml
 
 *注意：在 MeshConfig `osm-mesh-config` 里面的值被持续更新。*
 
-## 配置 OSM MeshConfig
+## 配置 osm-edge MeshConfig
 ### Kubectl 补丁命令
 修改 `osm-mesh-config`，可以使用 `kubectl patch` 命令。
 ```bash
@@ -41,7 +41,7 @@ The MeshConfig "osm-mesh-config" is invalid: spec.traffic.enableEgress: Invalid 
 ```
 #### 给每一个键类型的 kubectl 补丁命令 
 
-> 注意：`<osm-namespace>` 引用了 OSM Control Plane 被安装所在的命名空间。默认的，OSM 的命名空间是 `osm-system`。
+> 注意：`<osm-namespace>` 引用了 osm-edge Control Plane 被安装所在的命名空间。默认的，osm-edge 的命名空间是 `osm-system`。
 
 | 键                                            | 类型   | 默认值                                | Kubectl 补丁命令例子                                                                                                                                                 |
 | ---------------------------------------------- | ------ | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -59,6 +59,6 @@ The MeshConfig "osm-mesh-config" is invalid: spec.traffic.enableEgress: Invalid 
 | spec.sidecar.enablePrivilegedInitContainer     | bool   | `false`                                      | `kubectl patch meshconfig osm-mesh-config -n $osm_namespace -p '{"spec":{"sidecar":{"enablePrivilegedInitContainer":true}}}'  --type=merge`                                    |
 | spec.sidecar.logLevel                          | string | `"error"`                                    | `kubectl patch meshconfig osm-mesh-config -n $osm_namespace -p '{"spec":{"sidecar":{"logLevel":"error"}}}'  --type=merge`                                                      |
 | spec.sidecar.maxDataPlaneConnections           | int    | `0`                                          | `kubectl patch meshconfig osm-mesh-config -n $osm_namespace -p '{"spec":{"sidecar":{"maxDataPlaneConnections":"error"}}}'  --type=merge`                                       |
-| spec.sidecar.envoyImage                        | string | `"envoyproxy/envoy-alpine:v1.17.2"`          | `kubectl patch meshconfig osm-mesh-config -n $osm_namespace -p '{"spec":{"sidecar":{"envoyImage":"envoyproxy/envoy-alpine:v1.17.2"}}}'  --type=merge`                          |
+| spec.sidecar.sidecarImage                        | string | `"flomesh/pipy:{{< param pipy_version >}}"`          | `kubectl patch meshconfig osm-mesh-config -n $osm_namespace -p '{"spec":{"sidecar":{"sidecarImage":"flomesh/pipy:{{< param pipy_version >}}"}}}'  --type=merge`                          |
 | spec.sidecar.initContainerImage                | string | `"openservicemesh/init:v0.9.2"`              | `kubectl patch meshconfig osm-mesh-config -n $osm_namespace -p '{"spec":{"sidecar":{"initContainerImage":"openservicemesh/init:v0.9.2"}}}' --type=merge`                       |
 | spec.sidecar.configResyncInterval              | string | `"0s"`                                       | `kubectl patch meshconfig osm-mesh-config -n $osm_namespace -p '{"spec":{"sidecar":{"configResyncInterval":"30s"}}}'  --type=merge`                                            |

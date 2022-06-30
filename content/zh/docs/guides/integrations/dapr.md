@@ -1,23 +1,23 @@
 ---
-title: "Dapr 与 OSM 集成"
-description: "将 Dapr 与 OSM 集成的简单演示"
+title: "Dapr 与 osm-edge 集成"
+description: "将 Dapr 与 osm-edge 集成的简单演示"
 aliases: "/docs/integrations/demo_dapr"
 type: docs
 weight: 2
 ---
 
-# Dapr 与 OSM 集成
+# Dapr 与 osm-edge 集成
 
-## Dapr OSM 演练
+## Dapr osm-edge 演练
 
-本文档将引导完成让 Dapr 在 Kubernetes 集群上使用 OSM 的步骤。
+本文档将引导完成让 Dapr 在 Kubernetes 集群上使用 osm-edge 的步骤。
 
 1. 在集群上安装 Dapr 并禁用 mTLS：
 
-   1. Dapr 有一个快速入门存储库，可帮助用户熟悉 dapr 及其功能。对于这个集成演示，我们将使用 [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) 快速入门。由于我们想将此 Dapr 示例与 OSM 集成，因此需要进行一些修改，如下所示：
+   1. Dapr 有一个快速入门存储库，可帮助用户熟悉 dapr 及其功能。对于这个集成演示，我们将使用 [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) 快速入门。由于我们想将此 Dapr 示例与 osm-edge 集成，因此需要进行一些修改，如下所示：
 
-       - [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) 演示安装了启用 mtls 的 Dapr（默认），我们 **不想要来自 Dapr 的 mtls 而是用 OSM 的 mTLS**。因此，在集群上 [安装 Dapr](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-1---setup-dapr-on-your-kubernetes-cluster) 时，请确保在安装过程中通过传递标志来禁用 mtls：`--enable-mtls=false`
-       - 进一步 [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) 设置默认命名空间中的所有内容，**强烈建议**设置整个 hello-kubernetes 在特定命名空间中进行演示（我们稍后会将此命名空间加入到 OSM 的网格中）。出于此集成的目的，我们将命名空间设为 `dapr-test`
+       - [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) 演示安装了启用 mtls 的 Dapr（默认），我们 **不想要来自 Dapr 的 mtls 而是用 osm-edge 的 mTLS**。因此，在集群上 [安装 Dapr](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-1---setup-dapr-on-your-kubernetes-cluster) 时，请确保在安装过程中通过传递标志来禁用 mtls：`--enable-mtls=false`
+       - 进一步 [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) 设置默认命名空间中的所有内容，**强烈建议**设置整个 hello-kubernetes 在特定命名空间中进行演示（我们稍后会将此命名空间加入到 osm-edge 的网格中）。出于此集成的目的，我们将命名空间设为 `dapr-test`
 
         ```console
          $ kubectl create namespace dapr-test
@@ -58,14 +58,14 @@ weight: 2
 
    2. 确保示例应用程序与 Dapr 按预期运行。
 
-2. 安装 OSM：
+2. 安装 osm-edge：
 
    ```console
    $ osm install
    OSM installed successfully in namespace [osm-system] with mesh name [osm]
    ```
 
-3. 在 OSM 中开启宽松流量策略模式：
+3. 在 osm-edge 中开启宽松流量策略模式：
 
    ```console
    $ kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
@@ -74,7 +74,7 @@ weight: 2
 
    这是必要的，以便 hello-kubernetes 示例如常工作，并且从一开始就不需要 SMI 策略。
 
-4. 将 Kubernetes API server IP 地址从 OSM sidecar 拦截中排除：
+4. 将 Kubernetes API server IP 地址从 osm-edge sidecar 拦截中排除：
 
    1. 获取 kubernetes API server 的 集群 IP：
       ```console
@@ -82,17 +82,17 @@ weight: 2
       NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
       kubernetes   ClusterIP   10.0.0.1     <none>        443/TCP   1d
       ```
-   2. 将 IP 添加到 MeshConfig 中以便从 OSM sidecar 的出站流量中排除掉。
+   2. 将 IP 添加到 MeshConfig 中以便从 osm-edge sidecar 的出站流量中排除掉。
       ```console
       $ kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"outboundIPRangeExclusionList":["10.0.0.1/32"]}}}'  --type=merge
       meshconfig.config.openservicemesh.io/osm-mesh-config patched
       ```
 
-   将 Kubernetes API server IP 从 OSM 中排除掉是必要的，因为演示中 Dapr 利用 Kubernetes secrets 来访问 redis 状态存储。
+   将 Kubernetes API server IP 从 osm-edge 中排除掉是必要的，因为演示中 Dapr 利用 Kubernetes secrets 来访问 redis 状态存储。
 
    _注意：如果已经在 Dapr 的组件文件中硬编码了密码，可以跳过这一步。_
 
-5. 在 OSM sidecar 中全局排除端口的流量拦截：
+5. 在 osm-edge sidecar 中全局排除端口的流量拦截：
 
    1. 获取 Dapr placement server 的端口（`dapr-placement-server`）
       ```console
@@ -106,18 +106,18 @@ weight: 2
       ```
    2. 从 [redis.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/redis.yaml) 中获取 redis 状态存储的端口，演示中默认 `6379`
 
-   3. 将这些端口添加到 MeshConfig 中，一遍 OSM sidecar 的出站流量拦截不会拦截这些端口的流量。
+   3. 将这些端口添加到 MeshConfig 中，一遍 osm-edge sidecar 的出站流量拦截不会拦截这些端口的流量。
 
       ```console
       $ kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"outboundPortExclusionList":[50005,8201,6379]}}}'  --type=merge
       meshconfig.config.openservicemesh.io/osm-mesh-config patched
       ```
 
-   从 OSM sidecar 的拦截中排除掉 Dapr placement server（`dapr-placement-server`）的端口是有必要的，因为那些有 Dapr 的 pod 需要与 Dapr 的控制平面通信。Redis 状态存储同样需要被排除，以便 Dapr sidecar 可以路由 redis 的流量，不会被 OSM sidecar 拦截。
+   从 osm-edge sidecar 的拦截中排除掉 Dapr placement server（`dapr-placement-server`）的端口是有必要的，因为那些有 Dapr 的 pod 需要与 Dapr 的控制平面通信。Redis 状态存储同样需要被排除，以便 Dapr sidecar 可以路由 redis 的流量，不会被 osm-edge sidecar 拦截。
 
-    _注意：全局排除端口会导致 OSM 网格中的所有 pod 都不会拦截这些端口的流量。如果只想在部分 pod 上运行 Dapr，需要跳过这一步而执行下面的步骤。_
+    _注意：全局排除端口会导致 osm-edge 网格中的所有 pod 都不会拦截这些端口的流量。如果只想在部分 pod 上运行 Dapr，需要跳过这一步而执行下面的步骤。_
 
-6. 在 pod 级别将端口从 OSM sidecar 拦截中排除：
+6. 在 pod 级别将端口从 osm-edge sidecar 拦截中排除：
 
    1. 获取 Dapr api 和 sentry 的端口（`dapr-sentry` 和 `dapr-api`）
 
@@ -133,9 +133,9 @@ weight: 2
 
    2. 更新 nodeapp （[node.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/node.yaml)）和 pythonapp（[python.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/python.yaml) ）的 pod 声明，加入 `openservicemesh.io/outbound-port-exclusion-list: "80"` 注解。
 
-   为 pod 添加注解可以排除 Dapr 的 api（`dapr-api`） 和 sendtry（`dapr-sentry`） 的端口，防止被 OSM sidecar 拦截。因为这些 pod 需要与 Dapr 的控制平面通信。
+   为 pod 添加注解可以排除 Dapr 的 api（`dapr-api`） 和 sendtry（`dapr-sentry`） 的端口，防止被 osm-edge sidecar 拦截。因为这些 pod 需要与 Dapr 的控制平面通信。
 
-7. 将 Dapr hello-kubernetes 演示所在的命名空间加入到OSM 网格中：
+7. 将 Dapr hello-kubernetes 演示所在的命名空间加入到 osm-edge 网格中：
 
    ```console
    $ osm namespace add dapr-test
@@ -166,7 +166,7 @@ weight: 2
    deployment.apps "pythonapp" created
    ```
 
-   pythonapp 和 nodeapp pod 重启后都会有 3个容器，表示 OSM sidecar 已经成功注入。
+   pythonapp 和 nodeapp pod 重启后都会有 3 个容器，表示 osm-edge sidecar 已经成功注入。
 
    ```console
    $ kubectl get pods -n dapr-test
@@ -186,7 +186,7 @@ weight: 2
 
 10. 应用 SMI 流量策略：
 
-    到目前为止示例演示了 OSM 中的宽松流量策略模式，其中网格内的应用连接由 `osm-controller` 自动配置，因此 pythonapp 和 nodeapp 的通信不需要 SMI 策略。
+    到目前为止示例演示了 osm-edge 中的宽松流量策略模式，其中网格内的应用连接由 `osm-controller` 自动配置，因此 pythonapp 和 nodeapp 的通信不需要 SMI 策略。
 
 
     为了验证演示在 SMI 流量策略下也能正常功能，请按照以下步骤操作：
@@ -299,13 +299,13 @@ weight: 2
        $ dapr uninstall --kubernetes
        ```
 
-    3. 卸载 OSM，运行：
+    3. 卸载 osm-edge，运行：
 
        ```console
        $ osm uninstall mesh
        ```
 
-    4. 在卸载 OSM 后删除集群范围的资源，执行下面的命令。参阅 [卸载指南](/docs/guides/uninstall/) 获取更多信息。
+    4. 在卸载 osm-edge 后删除集群范围的资源，执行下面的命令。参阅 [卸载指南](/docs/guides/uninstall/) 获取更多信息。
 
        ```console
        $ osm uninstall mesh --delete-cluster-wide-resources

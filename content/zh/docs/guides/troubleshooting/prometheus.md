@@ -1,6 +1,6 @@
 ---
 title: "Prometheus 故障排查"
-description: "如何修复 OSM 中集成的 Prometheus 常见的问题"
+description: "如何修复 osm-edge 中集成的 Prometheus 常见的问题"
 aliases: "/docs/troubleshooting/observability/prometheus"
 type: docs
 weight: 2
@@ -8,11 +8,11 @@ weight: 2
 
 ## 无法访问 Prometheus
 
-如果随 OSM 安装的 Prometheus 实例无法访问，执行下面的步骤定位并解决问题
+如果随 osm-edge 安装的 Prometheus 实例无法访问，执行下面的步骤定位并解决问题
 
 1. 确认 Prometheus 的 Pod 是存在的
 
-    当使用 `osm install --set=osm.deployPrometheus=true` 安装 Pormetheus，在 OSM 控制平面组件所在的 namespace 下 (默认为 `osm-system`)，应当存在一个命名类似 `osm-prometheus-5794755b9f-rnvlr` 的 Pod
+    当使用 `osm install --set=osm.deployPrometheus=true` 安装 Pormetheus，在 osm-edge 控制平面组件所在的 namespace 下 (默认为 `osm-system`)，应当存在一个命名类似 `osm-prometheus-5794755b9f-rnvlr` 的 Pod
 
     如果没有找到类似的 Pod，通过 `helm` 安装 OSM Helm chart 时，请确认将 `osm.deployPrometheus` 选项设置为 `true`：
 
@@ -20,7 +20,7 @@ weight: 2
     $ helm get values -a <mesh name> -n <OSM namespace>
     ```
 
-    如果选项被设置为 `true` 以外的值，重新使用 `osm install` 安装 OSM，并添加 `--set=osm.deployPrometheus=true` 选项。
+    如果选项被设置为 `true` 以外的值，重新使用 `osm install` 安装 osm-edge，并添加 `--set=osm.deployPrometheus=true` 选项。
 
 2. 确认 Prometheus 的 Pod 处于健康状态
 
@@ -52,17 +52,17 @@ weight: 2
 
     为了帮助进一步排查这类问题，请查看流量故障排查指南。
 
-2. 确认那些丢失指标的 Pod 已经注入了 Envoy sidecar
+2. 确认那些丢失指标的 Pod 已经注入了 Pipy sidecar
 
-    在预期当中，只有那些注入了 Envoy sidecar 容器的 Pod 的指标，才会被 Prometheus 收集。请确保每一个 Pod 中运行着一个，通过名字上带有 `envoyproxy/envoy` 的镜像启动的容器。
+    在预期当中，只有那些注入了 Pipy sidecar 容器的 Pod 的指标，才会被 Prometheus 收集。请确保每一个 Pod 中运行着一个，通过名字上带有 `flomesh/pipy` 的镜像启动的容器。
 
     ```console
     $ kubectl get po -n <pod namespace> <pod name> -o jsonpath='{.spec.containers[*].image}'
-    mynamespace/myapp:v1.0.0 envoyproxy/envoy-alpine:v1.17.2
+    mynamespace/myapp:v1.0.0 flomesh/pipy:{{< param pipy_version >}}
     ```
 3. 确认被 Prometheus 抓取的代理的接口是按预期运行的
 
-    每一个 Envoy 代理暴露了一个 HTTP 接口，返回代理产生的指标，并被 Prometheus 采集。直接请求这个 HTTP 接口，检查返回的结果中是否有预期的指标出现。
+    每一个 Pipy 代理暴露了一个 HTTP 接口，返回代理产生的指标，并被 Prometheus 采集。直接请求这个 HTTP 接口，检查返回的结果中是否有预期的指标出现。
 
     对于那些丢失了指标的 Pod，通过 `kubectl` 转发其 Evnoy 代理的管理界面的端口，访问并检查其指标：
 
@@ -74,7 +74,7 @@ weight: 2
 
 4. 确认需要的命名空间已被加入到指标收集目标当中
 
-    对于应该被收集指标的 Pod 所在的命名空间，使用 `osm mesh list` 命令，来确认它们被预期的 OSM 实例监控
+    对于应该被收集指标的 Pod 所在的命名空间，使用 `osm mesh list` 命令，来确认它们被预期的 osm-edge 实例监控
 
     下一步，检查和确保命名空间被标注了 `openservicemesh.io/metrics: enabled`：
 
@@ -93,7 +93,7 @@ weight: 2
 
 5. 如果 [自定义指标](/docs/guides/observability/metrics/#custom-metrics) 没有被收集，请检查这些指标是否已被启用。
 
-    自定义指标目前是默认禁用的，当 `osm.featureFlags.enableWASMStats` 参数被设置为 `true` 时被启用。请确认在 `<osm-namespace>` 下，当前名为 `<osm-mesh-name>` 的 OSM 实例设置了该参数：
+    自定义指标目前是默认禁用的，当 `osm.featureFlags.enableWASMStats` 参数被设置为 `true` 时被启用。请确认在 `<osm-namespace>` 下，当前名为 `<osm-mesh-name>` 的 osm-edge 实例设置了该参数：
 
     ```console
     $ helm get values -a <osm-mesh-name> -n <osm-namespace>
@@ -101,4 +101,4 @@ weight: 2
 
    > 注意：请把 `<osm-mesh-name>` 替换成 osm mesh 的名字，把 `<osm-namespace>` 替换成安装了 osm 的命名空间。
 
-    如果 `osm.featureFlags.enableWASMStats` 被设置成了其他值，使用 `osm install` 重新安装 OSM，并带上 `--set osm.featureFlags.enableWASMStats` 参数
+    如果 `osm.featureFlags.enableWASMStats` 被设置成了其他值，使用 `osm install` 重新安装 osm-edge，并带上 `--set osm.featureFlags.enableWASMStats` 参数

@@ -7,11 +7,11 @@ weight: 11
 
 # 熔断
 
-熔断是分布式系统的关键组成部分，也是一种重要的弹性模式。熔断允许应用程序快速失败并尽快向下游施加背压，从而提供限制故障对整个系统的影响的方法。本指南描述了如何在 OSM 中配置熔断。
+熔断是分布式系统的关键组成部分，也是一种重要的弹性模式。熔断允许应用程序快速失败并尽快向下游施加背压，从而提供限制故障对整个系统的影响的方法。本指南描述了如何在 osm-edge 中配置熔断。
 
 ## 配置熔断
 
-OSM 利用其 [UpstreamTrafficSetting API][1] 为定向到上游服务的流量配置断路属性。我们使用术语 `upstream service` 来指代从客户端接收连接和请求并返回响应的服务。该规范允许在连接和请求级别为上游服务配置断路属性。OSM 利用 [Envoy 的熔断功能](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/circuit_break) 为参与网格的应用程序实现熔断。
+osm-edge 利用其 [UpstreamTrafficSetting API][1] 为定向到上游服务的流量配置断路属性。我们使用术语 `upstream service` 来指代从客户端接收连接和请求并返回响应的服务。该规范允许在连接和请求级别为上游服务配置断路属性。osm-edge 利用 [Envoy 的熔断功能](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/circuit_break) 为参与网格的应用程序实现熔断。
 
 每个 `UpstreamTrafficSetting` 配置都针对由 `spec.host` 字段定义的上游主机。对于命名空间 `my-namespace` 中的 Kubernetes 服务 `my-svc`，必须在命名空间 `my-namespace` 中创建 `UpstreamTrafficSetting` 资源，并且 `spec.host` 必须是 `my-svc.my-namespace.svc.cluster.local` 形式的FQDN。当在 [出口策略](/docs/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.EgressSpec) 中指定为匹配项时，`spec.host` 必须与出口策略中指定的主机和 `UpstreamTrafficSetting` 配置必须与 `Egress` 资源属于同一命名空间。
 

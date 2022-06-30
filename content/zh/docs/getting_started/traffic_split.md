@@ -73,4 +73,4 @@ kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< 
 ## 下一步
 
 - [用 Prometheus 和 Grafana 配置可观测性](/docs/getting_started/observability/)
-- [清理示例应用并卸载 OSM](/docs/getting_started/cleanup/)
+- [清理示例应用并卸载 osm-edge](/docs/getting_started/cleanup/)

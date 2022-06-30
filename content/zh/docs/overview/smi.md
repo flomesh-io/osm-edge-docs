@@ -1,12 +1,12 @@
 ---
 title: 服务网格接口 (SMI) 支持
-description: "OSM 的 SMI 实现"
+description: "osm-edge 的 SMI 实现"
 type: docs
 ---
 
 ## 概览
 
-开放式服务网格（OSM）实现了[服务网格接口（SMI）](https://smi-spec.io/)资源。这样就允许 OSM 用户拥有通用服务网格场景的灵活实现。
+开放边缘服务网格（osm-edge）实现了[服务网格接口（SMI）](https://smi-spec.io/)资源。这样就允许 osm-edge 用户拥有通用服务网格场景的灵活实现。
 
 ## 支持的版本
 
