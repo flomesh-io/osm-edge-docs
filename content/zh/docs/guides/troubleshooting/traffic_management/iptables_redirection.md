@@ -106,7 +106,7 @@ Init Containers:
       /var/run/secrets/kubernetes.io/serviceaccount from frontend-token-5g488 (ro)
 ```
 
-在上面的示例中，以下 `iptables` 命令负责明确忽略配置的出站 IP 范围（`1.1.1.1/32 和 2.2.2.2/24`）被重定向到 Pipy 代理边车。
+在上面的示例中，以下 `iptables` 命令负责明确忽略配置的出站 IP 范围（`1.1.1.1/32 和 2.2.2.2/24`）被重定向到 Pipy 代理 sidecar。
 
 ```console
 iptables -t nat -I PROXY_OUTPUT -d 1.1.1.1/32 -j RETURN
