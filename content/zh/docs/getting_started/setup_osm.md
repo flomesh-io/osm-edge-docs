@@ -40,7 +40,7 @@ curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-
 通过 Powershell 下载 64 位 Windows osm-edge {{< param osm_edge_version >}} 二进制文件：
 
 ```sh
-wget  https://github.com/openservicemesh/osm/releases/download/{{< param osm_edge_version >}}/osm-{{< param osm_edge_version >}}-windows-amd64.zip -o osm.zip
+wget  https://github.com/flomesh-io/osm-edge/releases/download/{{< param osm_edge_version >}}/osm-edge-{{< param osm_edge_version >}}-windows-amd64.zip -o osm.zip
 unzip osm.zip
 .\windows-amd64\osm.exe version
 ```
