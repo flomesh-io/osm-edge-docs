@@ -1,6 +1,6 @@
 ---
 title: "配置健康探测"
-description: "osm-edge如何处理应用健康探测的工作，以及如果探测失败该如何处理"
+description: "osm-edge 如何处理应用健康探测的工作，以及如果探测失败该如何处理"
 aliases: "/docs/application_health_probes"
 type: "docs"
 ---
@@ -11,11 +11,12 @@ type: "docs"
 
 在应用程序中实施[健康探测](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)是Kubernetes自动执行一些任务的好方法，以便在发生错误时提高可用性。
 
-由于osm-edge重新配置应用Pod，使其通过代理边车重定向所有传入和传出的网络流量，kubelet调用的`httpGet`和`tcpSocket`健康探测会因为代理缺少mTLS要求的上下文而失败。
+由于 osm-edge 重新配置应用 Pod，使其通过代理 sidecar 重定向所有传入和传出的网络流量，kubelet 调用的 `httpGet` 和 `tcpSocket` 健康探测会因为代理缺少 mTLS 要求的上下文而失败。
 
-osm-edge增加了配置，通过代理暴露探测端点，并重写新Pod的探测定义，以引用代理暴露的端点，使得`httpGet`健康探测可以在服务网格中工作。原始探针的所有功能仍可用，osm-edge只是将其与代理前置，以便kubelet能够与之通信。
+osm-edge 增加了配置，通过代理暴露探测端点，并重写新 Pod 的探测定义，以引用代理暴露的端点，使得 `httpGet` 健康探测可以在服务网格中工作。原始探针的所有功能仍可用，osm-edge 只是将其与代理前置，以便 kubelet 能够与之通信。
 
-需要特殊的配置来支持服务网中的`tcpSocket`健康探针。由于osm-edge通过Pipy重定向所有网络流量，所有的端口在Pod中都是开放的。这导致所有的TCP连接被路由到注入了Pipy sidecar的Pod，看起来是成功的。为了使 `tcpSocket` 健康探测在网格中正常工作，osm-edge将探测改写为 `httpGet ` 探测，并添加了一个 `iptables` 命令，以绕过 `osm-healthcheck `暴露端点的Pipy代理。`osm-healthcheck`容器被添加到Pod中，处理来自kubelet的HTTP健康探测请求。处理程序从请求的`Original-Tcp-port`头中获取原始TCP端口，并尝试在指定端口上打开一个socket。`httpGet`探针的响应状态代码反映TCP连接是否成功。
+需要特殊的配置来支持服务网中的`tcpSocket`健康探针。由于 osm-edge 通过 Pipy 重定向所有网络流量，所有的端口在 Pod 中都是开放的。这导致所有的 TCP 连接被路由到注入了 Pipy sidecar 的 Pod，看起来是成功的。为了使 
+ `tcpSocket` 健康探测在网格中正常工作，osm-edge 将探测改写为 `httpGet ` 探测，并添加了一个 `iptables` 命令，以绕过 `osm-healthcheck` 暴露端点的 Pipy 代理。`osm-healthcheck` 容器被添加到 Pod 中，处理来自 kubelet 的 HTTP 健康探测请求。处理程序从请求的 `Original-Tcp-port` 头中获取原始 TCP 端口，并尝试在指定端口上打开一个 socket。`httpGet` 探针的响应状态代码反映 TCP 连接是否成功。
 
 | Probe       | Path                 | Port  |
 | ----------- | -------------------- | ----- |
@@ -30,7 +31,7 @@ osm-edge增加了配置，通过代理暴露探测端点，并重写新Pod的探
 
 ## 例子
 
-下面的例子显示osm-edge如何处理网格中的Pod的健康探测。
+下面的例子显示 osm-edge 如何处理网格中的 Pod 的健康探测。
 
 ### HTTP
 
@@ -44,7 +45,7 @@ livenessProbe:
     scheme: HTTP
 ```
 
-当Pod被创建时，osm-edge将修改探针为以下内容：
+当 Pod 被创建时，osm-edge 将修改探针为以下内容：
 
 ```yaml
 livenessProbe:
@@ -54,9 +55,9 @@ livenessProbe:
     scheme: HTTP
 ```
 
-该Pod的代理将包含以下Pipy配置。
+该 Pod 的代理将包含以下 Pipy 配置。
 
-一个Pipy集群，它映射到原始探针端口14001：
+一个 Pipy 集群，它映射到原始探针端口 14001：
 
 ```json
 {
@@ -102,7 +103,7 @@ livenessProbe:
     port: 14001
 ```
 
-当Pod被创建时，osm-edge将修改探针为以下内容：
+当 Pod 被创建时，osm-edge 将修改探针为以下内容：
 
 ```yaml
 livenessProbe:
@@ -115,7 +116,7 @@ livenessProbe:
     scheme: HTTP
 ```
 
-访问15904端口的请求绕过了Pipy代理，被引向`osm-healthcheck`端点。
+访问 15904 端口的请求绕过了 Pipy 代理，被引向 `osm-healthcheck` 端点。
 
 ## 如何在网格中验证POD的健康状态
 
@@ -231,9 +232,9 @@ content-type: text/html; charset=utf-8
 
 1. 验证网格中的Pod上的`httpGet`和`tcpSocket`探针是否被修改。
 
-   启动、存活和就绪的`httpGet`探针必须被osm-edge修改。端口必须被修改为15901、15902和15903，分别适用于存活、就绪和启动`httpGet`探针。只有HTTP（不包括HTTPS）探针的路径将被修改，此外还有`/osm-liveness-probe`、`/osm-readiness-probe`或`/osm-starttup-probe`。
+   启动、存活和就绪的 `httpGet` 探针必须被 osm-edge 修改。端口必须被修改为 15901、15902 和 15903，分别适用于存活、就绪和启动 `httpGet` 探针。只有 HTTP（不包括 HTTPS）探针的路径将被修改，此外还有 `/osm-liveness-probe`、`/osm-readiness-probe` 或 `/osm-starttup-probe`。
 
-   同时，验证Pod的Pipy配置中是否包含修改后的端点的监听。
+   同时，验证 Pod 的 Pipy 配置中是否包含修改后的端点的监听。
 
    为了让 `tcpSocket` 探针在网格中生效，必须将其改写为 `httpGet` 探针。端口必须被修改为15904，以用于存活、就绪和启动探测。路径必须设置为`/osm-healthcheck`。HTTP 头 `Original-TCP-Port`，必须设置为`tcpSocket`探针定义中指定的原始端口。另外，验证 `osm-healthcheck` 容器是否正在运行。检查`osm-healthcheck`日志以获得更多信息。
 

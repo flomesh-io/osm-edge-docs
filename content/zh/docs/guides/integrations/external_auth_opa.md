@@ -29,7 +29,7 @@ osm-edge 允许通过 osm-edge MeshConfig 来配置 Envoy 的 [外部授权扩�
 
 以下示例使用单个远程（通过网络）端点来验证所有流量。不建议将此配置用于生产部署。
 
-- 首先，从部署 osm-edge 的 Demo 开始。我们将使用此示例部署来测试外部授权功能。请参考 [osm-edge的自动化Demo](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/demo#how-to-run-the-osm-automated-demo)并按照说明操作。
+- 首先，从部署 osm-edge 的 Demo 开始。我们将使用此示例部署来测试外部授权功能。请参考 [ osm-edge 的自动化 Demo](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/demo#how-to-run-the-osm-automated-demo)并按照说明操作。
 
 ```
 # Assuming OSM repo is available
@@ -44,7 +44,7 @@ kubectl create namespace opa
 kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml
 ```
 
-- 一旦 osm-edge 示例启动并运行，修改 osm-edge MeshConfig  添加网格的外部授权。为此，配置 `inboundExternalAuthorization` 指向远程外部授权端点，如下所示：
+- 一旦 osm-edge 示例启动并运行，修改 osm-edge MeshConfig 添加网格的外部授权。为此，配置 `inboundExternalAuthorization` 指向远程外部授权端点，如下所示：
 
 ```
 kubectl edit meshconfig osm-mesh-config -n osm-system

@@ -19,7 +19,7 @@ Kubernetes 使用这些探针来传递控制平面 Pod 的状态，并自动执�
 
 osm-controller 的 9091 端口有以下 HTTP 端点可用：
 
-- `/health/alive`: HTTP 200响应代码表示 osm-edge 的聚合发现服务（ADS）正在运行。无响应则表示该服务尚未运行。
+- `/health/alive`: HTTP 200 响应代码表示 osm-edge 的聚合发现服务（ADS）正在运行。无响应则表示该服务尚未运行。
 
 - `/health/ready`: HTTP 200响应代码表明ADS可以接受来自代理的gRPC连接。HTTP 503或无响应表示来自代理的gRPC连接将不会成功。
 
@@ -107,9 +107,9 @@ Service is alive
     flomesh/pipy:{{< param pipy_version >}}
     ```
 
-    要验证osm-edge-injector Pod是否在运行Pipy sidecar容器，请确认Pod的容器镜像中没有Pipy镜像。Pipy镜像的名字里有 "flomesh/mesh"。
+    要验证 osm-edge-injector Pod 是否在运行 Pipy sidecar 容器，请确认 Pod 的容器镜像中没有 Pipy 镜像。Pipy 镜像的名字里有 "flomesh/mesh"。
 
-    例如，这是一个包含Pipy容器的osm-edge-injector Pod：
+    例如，这是一个包含 Pipy 容器的 osm-edge-injector Pod：
 
     ```console
     $ # 假设OSM被安装在osm-system命名空间里:
@@ -118,7 +118,7 @@ Service is alive
     flomesh/pipy:{{< param pipy_version >}}
     ```
 
-    如果任何一个Pod正在运行Pipy容器，它可能已经被这个或另一个osm-edge实例错误注入。对于每个用`osm mesh list`命令找到的网格，验证不健康的Pod的osm-edge命名空间是否列在`osm namespace list`输出的任何osm-edge实例中，通过`osm namespace list`命令可以看到这些命名空间包含 `SIDECAR-INJECTION`"enabled"的标签。
+    如果任何一个 Pod 正在运行 Pipy 容器，它可能已经被这个或另一个 osm-edge 实例错误注入。对于每个用 `osm mesh list` 命令找到的网格，验证不健康的 Pod 的 osm-edge 命名空间是否列在 `osm namespace list` 输出的任何 osm-edge 实例中，通过 `osm namespace list` 命令可以看到这些命名空间包含 `SIDECAR-INJECTION` "enabled" 的标签。
 
     例如，对于下列所有网格：
 
@@ -140,13 +140,13 @@ Service is alive
     bookstore    osm2    enabled
     ```
 
-    如果osm-edge命名空间出现在"osm namespace list "命令中，并且启用了 "SIDECAR-INJECTION "， 则将该名称空间从注入边车的网格中移除。对于上面的例子：
+    如果 osm-edge 命名空间出现在 "osm namespace list" 命令中，并且启用了 "SIDECAR-INJECTION "， 则将该名称空间从注入边车的网格中移除。对于上面的例子：
 
     ```console
     $ osm namespace remove osm-system --mesh-name osm2 --osm-namespace osm-system2
     ```
 
-2. 确定Kubernetes在调度或启动Pod时是否遇到错误。
+2. 确定 Kubernetes 在调度或启动 Pod 时是否遇到错误。
 
     使用`kubectl describe`命令查找关于不健康的Pod近期错误。
 
@@ -164,9 +164,9 @@ Service is alive
     $ kubectl describe pod -n osm-system $(kubectl get pods -n osm-system -l app=osm-injector -o jsonpath='{.items[0].metadata.name}')
     ```
 
-    解决这些错误并再次验证osm-edge的健康状态。
+    解决这些错误并再次验证 osm-edge 的健康状态。
 
-3. 确定Pod是否遇到了一个运行时错误。
+3. 确定 Pod 是否遇到了一个运行时错误。
 
     通过检查容器的日志，寻找可能在容器启动后发生的任何错误。具体来说，寻找任何包含字符串`"level": "error"`的日志。
 
@@ -184,4 +184,4 @@ Service is alive
     $ kubectl logs -n osm-system $(kubectl get pods -n osm-system -l app=osm-injector -o jsonpath='{.items[0].metadata.name}')
     ```
 
-    解决这些错误并再次验证osm-edge的健康状态。
+    解决这些错误并再次验证 osm-edge 的健康状态。
