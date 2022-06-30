@@ -10,7 +10,7 @@ weight: 1
 ## 先决条件
 
 这个 osm-edge {{< param osm_edge_version >}} 的演示需要：
-  - 运行 Kubernetes {{< param min_k8s_version >}} 或更高版本的集群（使用选择的云提供商、[minikube](https://minikube.sigs.k8s.io/docs/start/) 或类似的）
+  - 运行 Kubernetes {{< param min_k8s_version >}} 或更高版本的集群（使用选择的云提供商、[k3s](https://k3s.io)、[k8e](https://getk8e.com) 或类似的发行版）
   - 能够执行 [Bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell)) 脚本的工作站
   - [Kubernetes 命令行工具](https://kubernetes.io/docs/tasks/tools/#kubectl) - `kubectl`
   - [osm-edge 代码仓库](https://github.com/flomesh-io/osm-edge) 在本地可用
@@ -27,17 +27,19 @@ weight: 1
 下载 osm-edge {{< param osm_edge_version >}} 的 64 位 GNU/Linux 或 macOS 二进制文件：
 
 ```bash
-system=$(uname -s)
+system=$(uname -s | tr [:upper:] [:lower:])
+arch=$(uname -m)
+[[ $arch = 'x86_64' ]] && arch=amd64
 release={{< param osm_edge_version >}}
-curl -L https://github.com/openservicemesh/osm/releases/download/${release}/osm-${release}-${system}-amd64.tar.gz | tar -vxzf -
-./${system}-amd64/osm version
+curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-edge-${release}-${system}-${arch}.tar.gz | tar -vxzf -
+./${system}-${arch}/osm version
 ```
 
 ### Windows
 
 通过 Powershell 下载 64 位 Windows osm-edge {{< param osm_edge_version >}} 二进制文件：
 
-```powershell
+```sh
 wget  https://github.com/openservicemesh/osm/releases/download/{{< param osm_edge_version >}}/osm-{{< param osm_edge_version >}}-windows-amd64.zip -o osm.zip
 unzip osm.zip
 .\windows-amd64\osm.exe version
@@ -55,7 +57,7 @@ unzip osm.zip
 
 `values.yaml` 文件中的 `osm.enablePermissiveTrafficPolicy` chart 参数指示 osm-edge 忽略任何策略并让流量在 pod 之间自由流动。启用宽松流量策略模式后，新的 Pod 将注入 Pipy，但流量将流经代理，不会被访问控制策略阻止。
 
-> 注意：宽松流量策略模式是 brownfield 部署的一项重要功能，其中可能需要一些时间来制定 SMI 策略。在运营商设计 SMI 策略的同时，现有服务将继续按照安装 osm-edge 之前的方式运行。
+> 注意：宽松流量策略模式是 brownfield 部署的一项重要功能，其中可能需要一些时间来制定 SMI 策略。在运维设计 SMI 策略的同时，现有服务将继续按照安装 osm-edge 之前的方式运行。
 
 ```bash
 export osm_namespace=osm-system # Replace osm-system with the namespace where OSM will be installed
