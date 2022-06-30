@@ -42,11 +42,10 @@ spec:
     spec:
       serviceAccountName: bookstore-v2
       nodeSelector:
-        kubernetes.io/arch: amd64
         kubernetes.io/os: linux
       containers:
         - name: bookstore
-          image: openservicemesh/bookstore:v1.1.0
+          image: flomesh/bookstore:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 14001
