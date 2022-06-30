@@ -236,7 +236,7 @@ content-type: text/html; charset=utf-8
 
    同时，验证 Pod 的 Pipy 配置中是否包含修改后的端点的监听。
 
-   为了让 `tcpSocket` 探针在网格中生效，必须将其改写为 `httpGet` 探针。端口必须被修改为15904，以用于存活、就绪和启动探测。路径必须设置为`/osm-healthcheck`。HTTP 头 `Original-TCP-Port`，必须设置为`tcpSocket`探针定义中指定的原始端口。另外，验证 `osm-healthcheck` 容器是否正在运行。检查`osm-healthcheck`日志以获得更多信息。
+   为了让 `tcpSocket` 探针在网格中生效，必须将其改写为 `httpGet` 探针。端口必须被修改为 15904，以用于存活、就绪和启动探测。路径必须设置为 `/osm-healthcheck`。HTTP 头 `Original-TCP-Port`，必须设置为 `tcpSocket` 探针定义中指定的原始端口。另外，验证 `osm-healthcheck` 容器是否正在运行。检查 `osm-healthcheck` 日志以获得更多信息。
 
    更多细节见[上面的例子](#例子)。
 
