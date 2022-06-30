@@ -17,7 +17,7 @@ Kubernetes 使用这些探针来传递控制平面 Pod 的状态，并自动执�
 
 #### osm-controller
 
-osm-controller的9091端口有以下HTTP端点可用：
+osm-controller 的 9091 端口有以下 HTTP 端点可用：
 
 - `/health/alive`: HTTP 200响应代码表示 osm-edge 的聚合发现服务（ADS）正在运行。无响应则表示该服务尚未运行。
 
