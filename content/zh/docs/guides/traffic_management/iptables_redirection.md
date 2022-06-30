@@ -20,7 +20,7 @@ osm-edge 保留一组端口号来执行流量重定向并提供对 Pipy 代理 s
 
 以下是保留供 osm-edge 使用的端口号：
 
-1. `15000`：被暴露在`localhost`上的Pipy 管理接口，返回 Pipy 当前加载的配置
+1. `15000`：被暴露在`localhost`上的 Pipy 管理接口，返回 Pipy 当前加载的配置
 2. `15001`：Pipy 出站监听器用于接受和代理 pod 内应用程序发送的出站流量
 3. `15003`：Pipy 入站监听器用于接受和代理进入 Pod 发往 Pod 内的应用程序的入站流量，
 4. `15010`：Pipy 入站 Prometheus 侦听器用于接受和代理与抓取 Pipy 的 Prometheus 指标有关的入站流量
