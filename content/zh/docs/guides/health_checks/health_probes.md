@@ -9,7 +9,7 @@ type: "docs"
 
 ## 概述
 
-在应用程序中实施[健康探测](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)是Kubernetes自动执行一些任务的好方法，以便在发生错误时提高可用性。
+在应用程序中实施[健康探测](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/)是 Kubernetes 自动执行一些任务的好方法，以便在发生错误时提高可用性。
 
 由于 osm-edge 重新配置应用 Pod，使其通过代理 sidecar 重定向所有传入和传出的网络流量，kubelet 调用的 `httpGet` 和 `tcpSocket` 健康探测会因为代理缺少 mTLS 要求的上下文而失败。
 
@@ -82,7 +82,7 @@ livenessProbe:
 }
 ```
 
-为新的代理暴露的HTTP端点`/osm-liveness-probe`建立监听器，端口为15901，映射到上述集群：
+为新的代理暴露的 HTTP 端点 `/osm-liveness-probe` 建立监听器，端口为 15901，映射到上述集群：
 
 ```js
 .listen(probeScheme ? 15901 : 0)
