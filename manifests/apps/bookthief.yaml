@@ -26,11 +26,10 @@ spec:
     spec:
       serviceAccountName: bookthief
       nodeSelector:
-        kubernetes.io/arch: amd64
         kubernetes.io/os: linux
       containers:
         - name: bookthief
-          image: openservicemesh/bookthief:v1.1.0
+          image: flomesh/bookthief:latest
           imagePullPolicy: Always
           command: ["/bookthief"]
           env:
