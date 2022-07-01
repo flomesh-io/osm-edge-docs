@@ -7,7 +7,7 @@ weight: 25
 
 # 将 osm-edge 与自维护的 Prometheus 和 Grafana 集成
 
-本文为你展示如何在集群中创建自维护的 Prometheus 和 Grafana ，并为其配置以实现对 osm-edge 的可观测性和监控。有关使用 osm-edge 自动配置 Prometheus 和 Grafana 的示例，请参阅 [Observability](https://docs.openservicemesh.io/docs/getting_started/observability/)  入门指南。
+本文为你展示如何在集群中创建自维护的 Prometheus 和 Grafana ，并为其配置以实现对 osm-edge 的可观测性和监控。有关使用 osm-edge 自动配置 Prometheus 和 Grafana 的示例，请参阅 [Observability](https://osm-edge-docs.flomesh.io/docs/getting_started/observability/)  入门指南。
 
 > 重要提示：本文创建的配置不应在生产环境中使用。对于生产级部署，请参阅 [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md) 和 [Deploy Grafana in Kubernetes](https://grafana.com/docs/grafana/latest/installation/kubernetes/)。
 

@@ -123,7 +123,7 @@ weight: 30
     osm namespace add httpbin
 
     # Deploy httpbin service in the httpbin namespace
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/httpbin/httpbin.yaml -n httpbin
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/httpbin/httpbin.yaml -n httpbin
     ```
 
     确保 `httpbin` 服务和 pod 已经就绪并运行。
@@ -150,7 +150,7 @@ weight: 30
     osm namespace add curl
 
     # Deploy curl client in the curl namespace
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n curl
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n curl
     ```
 
     确认 `client` 客户端 pod 就绪并运行。

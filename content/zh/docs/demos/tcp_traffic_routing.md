@@ -33,7 +33,7 @@ weight: 20
     osm namespace add tcp-demo
 
     # Deploy the service
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/apps/tcp-echo.yaml -n tcp-demo
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/apps/tcp-echo.yaml -n tcp-demo
     ```
 
     Confirm the `tcp-echo` service and pod is up and running.
@@ -57,7 +57,7 @@ weight: 20
     osm namespace add curl
 
     # Deploy curl client in the curl namespace
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n curl
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n curl
     ```
 
     确认 `curl` 客户端 pod 启动并运行。
