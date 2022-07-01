@@ -7,11 +7,11 @@ weight: 4
 
 # 卸载 osm-edge 控制平面和组件
 
-这个指南描述了如何从一个 Kubernetes 集群卸载开放边缘服务网格 (osm-edge。指南假设了有一个单一的 osm-edge 控制平面(网格) 在运行。如果在一个集群上有个多个网格，在这篇指南末尾，卸载任何集群其他资源之前，重复这里所描述的对集群上每一个控制平面的操作。顾及到控制平面和数据平面，这篇指南目标是使用最少的停机时间来卸载掉 osm-edge 的全部残余资源。
+本指南描述了如何从一个 Kubernetes 集群卸载开放边缘服务网格 (osm-edge）。本指南假设了有一个单一的 osm-edge 控制平面(网格) 在运行。如果在一个集群上有个多个网格，在这篇指南末尾，卸载任何集群其他资源之前，重复这里所描述的对集群上每一个控制平面的操作。顾及到控制平面和数据平面，这篇指南目标是使用最少的停机时间来卸载掉 osm-edge 的全部残余资源。
 
 ## 先决条件
 
-- 带 osm-edge 的 Kubernetes 集群已安装
+- 已安装 osm-edge 的 Kubernetes 集群
 - `kubectl` CLI
 - [`osm` CLI](/docs/install/#set-up-the-osm-cli) 或者 Helm 3 CLI
 
@@ -26,7 +26,7 @@ osm-edge Pipy sidecar 和相关的 secret 将按照如下步骤被移除：
 
 ### 禁用自动 Sidecar 注入
 
-osm-edge 自动 Sidecar 注入是最常见的使能功能，它通过 `osm` CLI 添加命名空间到网格来使能。使用 `osm` CLI 来查看哪个命名空间已经使能了 Sidecar 注入。如果有多个 Control Plane 被安装，请确保指定了 `--mesh-name` 标志。
+osm-edge 自动 Sidecar 注入是最常见的使能功能，它通过 `osm` CLI 添加命名空间到网格来启用。使用 `osm` CLI 来查看哪个命名空间已经使能了 Sidecar 注入。如果有多个 Control Plane 被安装，请确保指定了 `--mesh-name` 标志。
 
 查看网格里的命名空间：
 
@@ -62,7 +62,7 @@ $ kubectl delete pod <pod-name> -n namespace
 $ k apply -f <pod-spec> # if pod is not restarted as part of replicaset
 ```
 
-现在，应该没有 osm-edge Pipy Sidecar 容器作为应用的一部分，也是网格的一部分来运行了。流量不再被如上使用带 `mesh-name` 的 osm-edge Control Plane 所管理。在这个过程中，您的应用可能会经历一些停机，这是所有的 Pod 在重启。
+现在，应用中应该没有 osm-edge sidecar 容器。流量不再被如上使用带 `mesh-name` 的 osm-edge 控制平面所管理。在这个过程中，应用可能会经历一些停机，这是所有的 Pod 在重启。
 
 ## 卸载 osm-edge 控制平面和移除用户提供的资源
 
@@ -98,8 +98,7 @@ OSM [mesh name: <mesh-name>] uninstalled
 
 运行 `osm uninstall mesh --help` 以了解更多选项。
 
-Alternatively, if you used Helm to install the control plane, run the following `helm uninstall` command:
-可选择的，如果您使用了 Helm 安装的 Control Plane，运行下面的 `helm uninstall` 命令：
+可选择的，如果使用了 Helm 安装的 Control Plane，运行下面的 `helm uninstall` 命令：
 
 ```console
 $ helm uninstall <mesh name> --namespace <osm namespace>
@@ -140,7 +139,7 @@ $ osm uninstall mesh --delete-namespace
 1. CRD 是集群广泛资源，可能被其他的服务网格或者运行于同一集群的其他资源所使用
 2. 一个 CRD 的删除将造成相对于这个 CRD 的全部定制资源也被删除
 
-要移除 osm-edge 安装的集群广泛资源（例如 MeshConfig，Secret，osm-edge CRD 和 webhook 配置），接下来的命令能够在 osm-edge 卸载时或者之后被运行。
+要移除 osm-edge 安装的集群广泛资源（例如 MeshConfig、Secret、osm-edge CRD 和 webhook 配置），接下来的命令能够在 osm-edge 卸载时或者之后被运行。
 
 ```bash
 osm uninstall mesh --cluster-wide-resources
