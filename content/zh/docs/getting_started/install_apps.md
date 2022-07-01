@@ -118,6 +118,8 @@ BOOKBUYER_LOCAL_PORT=7070 BOOKSTOREv1_LOCAL_PORT=7071 BOOKSTOREv2_LOCAL_PORT=707
 
 在一个浏览器中，打开下面的 URL：
 
+_注意：如果需要从宿主机访问，需要将 `localhost` 替换成虚拟机的 IP 地址；或者在宿主机上运行 `port-forward-all.sh` 脚本。_
+
 - [http://localhost:8080](http://localhost:8080) - **bookbuyer**
 - [http://localhost:8083](http://localhost:8083) - **bookthief**
 - [http://localhost:8084](http://localhost:8084) - **bookstore**

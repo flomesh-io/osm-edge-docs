@@ -22,14 +22,25 @@ weight: 1
 `osm` 命令行工具包含安装和配置 Open Service Mesh 所需的一切。
 该二进制文件可在 [osm-edge GitHub 发布页面](https://github.com/flomesh-io/osm-edge/releases) 上找到。
 
-### GNU/Linux 和 macOS
+### GNU/Linux
 
-下载 osm-edge {{< param osm_edge_version >}} 的 64 位 GNU/Linux 或 macOS 二进制文件：
+下载 osm-edge {{< param osm_edge_version >}} 的 64 位 GNU/Linux 二进制文件：
+
+```bash
+system=$(uname -s | tr [:upper:] [:lower:])
+arch=$(dpkg --print-architecture)
+release={{< param osm_edge_version >}}
+curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-edge-${release}-${system}-${arch}.tar.gz | tar -vxzf -
+./${system}-${arch}/osm version
+```
+
+### macOS
+
+下载 osm-edge {{< param osm_edge_version >}} 的 64 位 macOS 二进制文件：
 
 ```bash
 system=$(uname -s | tr [:upper:] [:lower:])
 arch=$(uname -m)
-[[ $arch = 'x86_64' ]] && arch=amd64
 release={{< param osm_edge_version >}}
 curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-edge-${release}-${system}-${arch}.tar.gz | tar -vxzf -
 ./${system}-${arch}/osm version
