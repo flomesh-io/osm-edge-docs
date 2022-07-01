@@ -9,7 +9,7 @@ weight: 7
 # osm-edge MeshConfig
 osm-edge 部署一个 MeshConfig 资源 `osm-mesh-config` 作为它的控制平面(同 osm-edge 控制器 Pod 的在同一命名空间) 的一部分，其能够被网格所有者/操作员在任意时刻更新。这个 MeshConfig 的目的是提供一种能够更新所需的网格配置的能力给网格所有者/运维人员。
 
-在安装的时候，osm-edge MeshConfig 从一个现成的 MeshConfig (`preset-mesh-config`) 来部署，其能够在 [charts/osm/templates](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/templates/preset-mesh-config.yaml) 里面找到。
+在安装的时候，osm-edge MeshConfig 从一个现成的 MeshConfig (`preset-mesh-config`) 来部署，其能够在 [charts/osm/templates](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/charts/osm/templates/preset-mesh-config.yaml) 里面找到。
 
 首先，设置一个环境变量来引用 osm-edge 被安装所在的命名空间。
 ```bash
@@ -32,7 +32,7 @@ kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traff
 ```
 参考 [Config API reference](/docs/apidocs/config/v1alpha1) 以获取更多信息。
 
-如果一个不正确的值被使用了，在 [MeshConfig CRD](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/crds/meshconfig.yaml) 上的验证将阻止修改并给出一个错误信息来解释为什么这个值是无效的。
+如果一个不正确的值被使用了，在 [MeshConfig CRD](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/charts/osm/crds/meshconfig.yaml) 上的验证将阻止修改并给出一个错误信息来解释为什么这个值是无效的。
 例如，下面的命令显示了如果我们用 `enableEgress` 给一个非布尔值打补丁会发生什么。
 ```bash
 kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"enableEgress":"no"}}}'  --type=merge

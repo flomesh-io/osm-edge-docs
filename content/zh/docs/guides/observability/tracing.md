@@ -86,7 +86,7 @@ kubectl port-forward -n "$K8S_NAMESPACE" "$OSM_POD"  16686:16686
 ## 使用 Jaeger 进行链路追踪的示例
 这一章节将介绍创建一个简单的 Jaeger 实例并在 osm-edge 中启用链路追踪的过程。
 
-1. 完成 [osm-edge 演示](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/demo/README.md) 并部署 Jaeger。您有两种选择：
+1. 完成 [osm-edge 演示](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/demo/README.md) 并部署 Jaeger。您有两种选择：
     - 要自动部署 Jaeger，直接在 `.env` 文件中将 `DEPLOY_JAEGER` 设置为 true
     - 要使用自维护的 Jaeger，您通过下面的命令，部署 [Jaeger 提供的](https://www.jaegertracing.io/docs/1.22/getting-started/#all-in-one) 演示实例。如果您希望在不同的命名空间下部署 Jaeger，确保在下面的步骤进行修改：
 

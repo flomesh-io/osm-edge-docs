@@ -13,7 +13,7 @@ weight: 1
 
 ### 从二进制发布版开始
 
-从[发布页](https://github.com/openservicemesh/osm/releases)下载平台指定的压缩包
+从[发布页](https://github.com/flomesh-io/osm-edge/releases)下载平台指定的压缩包
 解压 `osm-edge` 二进制文件，然后添加它到 `$PATH` 来开启。
 
 #### Linux 和 macOS
@@ -25,10 +25,10 @@ weight: 1
 OSM_VERSION={{< param osm_edge_version >}}
 
 # Linux curl command only
-curl -sL "https://github.com/openservicemesh/osm/releases/download/$OSM_VERSION/osm-$OSM_VERSION-linux-amd64.tar.gz" | tar -vxzf -
+curl -sL "https://github.com/flomesh-io/osm-edge/releases/download/$OSM_VERSION/osm-$OSM_VERSION-linux-amd64.tar.gz" | tar -vxzf -
 
 # macOS curl command only
-curl -sL "https://github.com/openservicemesh/osm/releases/download/$OSM_VERSION/osm-$OSM_VERSION-darwin-amd64.tar.gz" | tar -vxzf -
+curl -sL "https://github.com/flomesh-io/osm-edge/releases/download/$OSM_VERSION/osm-$OSM_VERSION-darwin-amd64.tar.gz" | tar -vxzf -
 ```
 
 `osm` 客户端二进制程序运行在您的客户端机器上，并且允许您在您的 Kubernetes 集群里管理 osm-edge。使用下面的命令在 Linux 或者 [Windows Linux 子系统 (WSL)](https://docs.microsoft.com/windows/wsl/about) 上基于 bash 的 shell 里面来安装 osm-edge `osm` 客户端二进制程序。这些命令复制 `osm` 客户端二进制程序到您 `PATH` 下面的标准用户程序位置里。
@@ -59,7 +59,7 @@ osm version
 $OSM_VERSION="{{< param osm_edge_version >}}"
 
 [Net.ServicePointManager]::SecurityProtocol = "tls12"
-$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -URI "https://github.com/openservicemesh/osm/releases/download/$OSM_VERSION/osm-$OSM_VERSION-windows-amd64.zip" -OutFile "osm-$OSM_VERSION.zip"
+$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -URI "https://github.com/flomesh-io/osm-edge/releases/download/$OSM_VERSION/osm-$OSM_VERSION-windows-amd64.zip" -OutFile "osm-$OSM_VERSION.zip"
 Expand-Archive -Path "osm-$OSM_VERSION.zip" -DestinationPath .
 ```
 
@@ -91,7 +91,7 @@ osm version
 您必须有一个工作的 [Go](https://golang.org/doc/install) 环境。
 
 ```console
-$ git clone git@github.com:openservicemesh/osm.git
+$ git clone git@github.com:flomesh-io/osm-edge.git
 $ cd osm
 $ make build-osm
 ```

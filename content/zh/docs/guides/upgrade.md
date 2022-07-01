@@ -54,7 +54,7 @@ This implies the following are NOT user-facing and incompatible changes are NOT 
 ### CRD 升级
 因为 Helm 不管理在初始化安装之外的 CRD，osm-edge 利用一个在 `osm-bootstrap` Pod 上的初始容器来在升级期间更新现存的和添加新的 CRD。如果一个新的发布包含对现存 CRD 的更新或者添加新的 CRD，在 `osm-bootstrap` Pod 上的 `init-osm-bootstrap` 将更新 CRD。相关联的定制资源将被保留，在升级之前和之后即刻都不需要额外的行动。 
 
-请检查[发布事项](https://github.com/openservicemesh/osm/releases)里面的 `CRD Updates`，来查阅被 osm-edge 使用的 CRD 有任何的更新。如果定制资源的版本在被更新的 CRD 支持版本里面，不需要即刻的行动。osm-edge 为它的 CRD 实现了一个转换网络钩子 (webhook)，确保对更老版本的支持，并提供在以后的一个时间节点更新定制资源的灵活性。
+请检查[发布事项](https://github.com/flomesh-io/osm-edge/releases)里面的 `CRD Updates`，来查阅被 osm-edge 使用的 CRD 有任何的更新。如果定制资源的版本在被更新的 CRD 支持版本里面，不需要即刻的行动。osm-edge 为它的 CRD 实现了一个转换网络钩子 (webhook)，确保对更老版本的支持，并提供在以后的一个时间节点更新定制资源的灵活性。
 
 ### 用 osm-edge CLI 来更新
 
@@ -87,7 +87,7 @@ OSM successfully upgraded mesh osm
 #### osm-edge 配置
 当升级时，任何被用来安装或者运行 osm-edge 的自定义设置都可能被恢复到默认值，这只包含任何矩阵部署。请确保您仔细地遵守了指南来阻止这些值被覆盖。
 
-要阻止任何对您已经做出的对 osm-edge 配置的修改，使用 `helm --values` 标志。创建一个[值文件](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/values.yaml)的副本（确认使用了针对升级的图表的版本），改变任何您希望定制的值。您可以省去所有其他的值。
+要阻止任何对您已经做出的对 osm-edge 配置的修改，使用 `helm --values` 标志。创建一个[values.yaml](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/charts/osm/values.yaml)的副本（确认使用了针对升级的图表的版本），改变任何您希望定制的值。您可以省去所有其他的值。
 
 **注意**：任何进入到 MeshConfig 的配置修改在升级期间将不会被应用，这个值将保留升级之前的。如果您希望更新在 MeshConfig 里面的任何值，您可以通过在升级之后给资源打补丁来完成。
 
@@ -188,4 +188,4 @@ osm mesh upgrade --container-registry $CTR_REGISTRY --osm-image-tag $CTR_TAG --e
 ```
 
 ### 其他问题
-如果您运行中遇到的问题不在上述解决方案之列，请[开一个 GitHub Issue](https://github.com/openservicemesh/osm/issues)。
+如果您运行中遇到的问题不在上述解决方案之列，请[开一个 GitHub Issue](https://github.com/flomesh-io/osm-edge/issues)。

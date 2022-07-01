@@ -39,7 +39,7 @@ data:
   private.key: <base64 encoded private key>
 ```
 
-欲了解细节和被使用的代码，请参阅[osm-controller.go](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/cmd/osm-controller/osm-controller.go#L182-L183)。
+欲了解细节和被使用的代码，请参阅[osm-controller.go](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/cmd/osm-controller/osm-controller.go#L182-L183)。
 
 要阅读根证书 (除 Hashicorp Vault 外)，您可以获取相应的 secret 然后解码它：
 
@@ -95,13 +95,13 @@ kubectl get secrets -n $osm_namespace osm-ca-bundle -o json | jq -r '.data.expir
 
 开放边缘服务网格支持 3 种方法来发布证书：
 
-- 使用一个内部 osm-edge 包，其被称为 [Tresor](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/pkg/certificate/providers/tresor)。对于第一次安装来说，这是默认的方法。
+- 使用一个内部 osm-edge 包，其被称为 [Tresor](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/pkg/certificate/providers/tresor)。对于第一次安装来说，这是默认的方法。
 - 使用 [Hashicorp Vault](https://www.vaultproject.io/)
 - 使用 [cert-manager](https://cert-manager.io)
 
 ### 使用 osm-edge 的 Tresor 证书发行者
 
-开放边缘服务网格包含一个包，[tresor](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/pkg/certificate/providers/tresor)。这是一个 `certificate.Manager` 接口的最小实现。它利用 `crypto` Go 库来发行证书，并把这些证书作为 Kubernetes secret 来存储。
+开放边缘服务网格包含一个包，[tresor](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/pkg/certificate/providers/tresor)。这是一个 `certificate.Manager` 接口的最小实现。它利用 `crypto` Go 库来发行证书，并把这些证书作为 Kubernetes secret 来存储。
 
 - 要在开发期间使用 `tresor` 包，在 repo 的 `.env` 文件中设置 `export CERT_MANAGER=tresor`。
 
@@ -138,7 +138,7 @@ kubectl get secrets -n $osm_namespace osm-ca-bundle -o json | jq -r '.data.expir
 
 Hashi Vault 的安装超出了开放边缘服务网格项目的范围。这属于专属的安全团队的响应能力。关于如何安全地部署 Vault 并使其高度可用的文档在 [Vault 网站](https://learn.hashicorp.com/vault/getting-started/install)。
 
-这个仓库包含一个 [脚本 (deploy-vault.sh)](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/demo/deploy-vault.sh)，该脚本被用来为 CI 做 Hashi Vault 的自动化部署。它被严格地限制仅为开发目的。运行该脚本将部署 Vault 在一个 Kubernetes 命名空间里，该命名空寂被您的 [.env](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/.env.example) 文件里面的 `$K8S_NAMESPACE` 环境变量所定义。这个脚本能够以演示目的而使用。它需要下面的环境变量：
+这个仓库包含一个 [脚本 (deploy-vault.sh)](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/demo/deploy-vault.sh)，该脚本被用来为 CI 做 Hashi Vault 的自动化部署。它被严格地限制仅为开发目的。运行该脚本将部署 Vault 在一个 Kubernetes 命名空间里，该命名空寂被您的 [.env](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/.env.example) 文件里面的 `$K8S_NAMESPACE` 环境变量所定义。这个脚本能够以演示目的而使用。它需要下面的环境变量：
 
 ```
 export K8S_NAMESPACE=osm-system-ns

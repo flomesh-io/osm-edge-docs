@@ -11,4 +11,4 @@ type: docs
 | osm.osmController.resource | object | `{"limits":{"cpu":"1.5","memory":"1G"},"requests":{"cpu":"0.5","memory":"128M"}}` | osm-edge 控制器的容器资源参数。请参阅 https://docs.openservicemesh.io/docs/guides/ha_scale/scale/ 以获取更多细节。|
 | osm.prometheus.resources | object | `{"limits":{"cpu":"1","memory":"2G"},"requests":{"cpu":"0.5","memory":"512M"}}` | Prometheus 的容器资源参数。|
 
-> 注意：这些都是默认值，其可以通过 [values.yaml](https://github.com/openservicemesh/osm/blob/release-v0.11/charts/osm/values.yaml) 来配置。
+> 注意：这些都是默认值，其可以通过 [values.yaml](https://github.com/flomesh-io/osm-edge/blob/release-v0.11/charts/osm/values.yaml) 来配置。
