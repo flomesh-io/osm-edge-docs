@@ -28,7 +28,7 @@ osm-edge 可以在安装期间部署 Prometheus 和 Grafana，或者 osm-edge �
 
 默认情况下，Prometheus 和 Grafana 都被禁用了。
 
-然后，当设置了 `--set=osm.deployPrometheus=true` 参数的时候，osm-edge 安装过程会部署 Prometheus 实例来采集 sidecar 接口暴露的指标。依据用户的指标采集配置，osm-edge 将会为那些网格中的 pod 标记必要的指标采集注解，让 Prometheus 能够访问和采集这些 pod 的相关指标。[指标采集的配置文件](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/templates/prometheus-configmap.yaml) 定义了 Prometheus 的默认行为，并设置了 osm-edge 需要被采集的指标。
+然后，当设置了 `--set=osm.deployPrometheus=true` 参数的时候，osm-edge 安装过程会部署 Prometheus 实例来采集 sidecar 接口暴露的指标。依据用户的指标采集配置，osm-edge 将会为那些网格中的 pod 标记必要的指标采集注解，让 Prometheus 能够访问和采集这些 pod 的相关指标。[指标采集的配置文件](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/charts/osm/templates/prometheus-configmap.yaml) 定义了 Prometheus 的默认行为，并设置了 osm-edge 需要被采集的指标。
 
 使用 `osm install` 命令时，通过 `--set=osm.deployGrafana=true` 参数来安装 Grafana 用于指标可视化。在 [osm-edge Grafana 面板](#osm-edge-grafana-面板) 小节中，展示了 osm-edge 提供的一个预先配置好的面板。
 
@@ -124,7 +124,7 @@ annotations:
 
 ##### 导入 osm-edge 面板
 
-osm-edge 面板可以在 [我们的仓库中](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards) 获取，它可以作为 json 数据导入到 web 管理门户。
+osm-edge 面板可以在 [我们的仓库中](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards) 获取，它可以作为 json 数据导入到 web 管理门户。
 
 可以在 [Prometheus 和 Grafana](/docs/demos/prometheus_grafana) 演示中找到导入 osm-edge 面板的详细指导步骤。[osm-edge Grafana 面板](#osm-grafana-面板)展示了一个预先配置好的面板概览。
 
@@ -310,7 +310,7 @@ osm-edge 提供了一下预制的 Grafana 面板来展示和跟踪 Prometheus �
      ![image](https://user-images.githubusercontent.com/64559656/141852750-61da99ac-a431-4251-bd97-8aa4601232c3.png)
 
 [1]: https://prometheus.io/docs/introduction/overview/
-[2]: https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/demo/README.md
+[2]: https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/demo/README.md
 [3]: https://grafana.com/docs/grafana/latest/getting-started/#what-is-grafana
 [4]: http://localhost:3000
 [5]: http://localhost:7070

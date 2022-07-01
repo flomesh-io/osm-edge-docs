@@ -16,9 +16,9 @@ weight: 5
     osm-edge 符合 SMI 规范，默认情况下，osm-edge 禁止 Kubernetes 服务间的通信，除非显式地通过 SMI 策略来允许。这种行为可以通过在 `osm install` 时指定 `--set=osm.enablePermissiveTrafficPolicy=true` 参数来覆盖，允许不执行SMI策略，同时允许流量和服务仍然利用诸如mTLS加密流量、指标和跟踪等功能。。
 
     SMI 策略的例子，请参阅以下示例：
-    - [demo/deploy-traffic-specs.sh](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/demo/deploy-traffic-specs.sh)
-    - [demo/deploy-traffic-split.sh](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/demo/deploy-traffic-split.sh)
-    - [demo/deploy-traffic-target.sh](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/demo/deploy-traffic-target.sh)
+    - [demo/deploy-traffic-specs.sh](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/demo/deploy-traffic-specs.sh)
+    - [demo/deploy-traffic-split.sh](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/demo/deploy-traffic-split.sh)
+    - [demo/deploy-traffic-target.sh](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/demo/deploy-traffic-target.sh)
 
 3. 网格中的应用如果需要与 Kubernetes API server 通信，用户需要显式地通过使用 IP 地址范围排除或者创建类似下面的出口策略来允许。
 

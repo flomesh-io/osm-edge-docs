@@ -85,7 +85,7 @@ $ k apply -f <pod-spec> # if pod is not restarted as part of replicaset
 1. osm-edge 控制器资源（部署、服务、网格配置和 RBAC）
 2. 被 osm-edge 安装的 Prometheus, Grafana, Jaeger 和 Fluent Bit 资源
 3. 改变 webhook 和验证 webhook
-4. 被 osm-edge 打到 被 osm-edge 安装或者需要的 CRD [给 osm-edge 的 CRD](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/cmd/osm-bootstrap/crds) 上的转换 webhook 域补丁将被拆除。要删除集群广泛资源请参阅[集群广泛资源的移除](#osm-集群广泛资源的移除)来了解更多细节。
+4. 被 osm-edge 打到 被 osm-edge 安装或者需要的 CRD [给 osm-edge 的 CRD](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/cmd/osm-bootstrap/crds) 上的转换 webhook 域补丁将被拆除。要删除集群广泛资源请参阅[集群广泛资源的移除](#osm-集群广泛资源的移除)来了解更多细节。
 
 运行 `osm uninstall mesh`：
 
@@ -128,7 +128,7 @@ $ osm uninstall mesh --delete-namespace
 
 ### osm-edge 集群范围资源的移除
 
-在安装上，osm-edge 确保[这里](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/cmd/osm-bootstrap/crds)提到的所有 CRD 在安装时都存在于集群上。安装过程中，如果它们没有被安装，在余下的控制平面组件运行之前，`osm-bootstrap` Pod 将安装它们。当使用 Helm chart 来安装 osm-edge 时行为是相同的。
+在安装上，osm-edge 确保[这里](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/cmd/osm-bootstrap/crds)提到的所有 CRD 在安装时都存在于集群上。安装过程中，如果它们没有被安装，在余下的控制平面组件运行之前，`osm-bootstrap` Pod 将安装它们。当使用 Helm chart 来安装 osm-edge 时行为是相同的。
 
 在非托管和托管的环境下卸载网格：
 1. 移除 osm-edge 控制平面组件，包括控制平面 Pod。

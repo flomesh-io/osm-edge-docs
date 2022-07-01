@@ -29,7 +29,7 @@ osm-edge 允许通过 osm-edge MeshConfig 来配置 Envoy 的 [外部授权扩�
 
 以下示例使用单个远程（通过网络）端点来验证所有流量。不建议将此配置用于生产部署。
 
-- 首先，从部署 osm-edge 的 Demo 开始。我们将使用此示例部署来测试外部授权功能。请参考 [ osm-edge 的自动化 Demo](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/demo#how-to-run-the-osm-automated-demo)并按照说明操作。
+- 首先，从部署 osm-edge 的 Demo 开始。我们将使用此示例部署来测试外部授权功能。请参考 [ osm-edge 的自动化 Demo](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/demo#how-to-run-the-osm-automated-demo)并按照说明操作。
 
 ```
 # Assuming OSM repo is available

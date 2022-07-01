@@ -41,8 +41,8 @@ Events:
   Type     Reason     Age               From               Message
   ----     ------     ----              ----               -------
   Normal   Scheduled  24s               default-scheduler  Successfully assigned osm-system/osm-controller-85fcb445b-fpv8l to osm-control-plane
-  Normal   Pulling    23s               kubelet            Pulling image "openservicemesh/osm-controller:v0.8.0"
-  Normal   Pulled     23s               kubelet            Successfully pulled image "openservicemesh/osm-controller:v0.8.0" in 562.2444ms
+  Normal   Pulling    23s               kubelet            Pulling image "flomesh-io/osm-edge-controller:v0.8.0"
+  Normal   Pulled     23s               kubelet            Successfully pulled image "flomesh-io/osm-edge-controller:v0.8.0" in 562.2444ms
   Normal   Created    1s (x2 over 23s)  kubelet            Created container osm-controller
   Normal   Started    1s (x2 over 23s)  kubelet            Started container osm-controller
   Warning  Unhealthy  1s (x3 over 21s)  kubelet            Liveness probe failed: HTTP probe failed with statuscode: 503
@@ -57,8 +57,8 @@ Events:
   Type     Reason     Age               From               Message
   ----     ------     ----              ----               -------
   Normal   Scheduled  36s               default-scheduler  Successfully assigned osm-system/osm-controller-5494bcffb6-tn5jv to osm-control-plane
-  Normal   Pulling    36s               kubelet            Pulling image "openservicemesh/osm-controller:latest"
-  Normal   Pulled     35s               kubelet            Successfully pulled image "openservicemesh/osm-controller:v0.8.0" in 746.4323ms
+  Normal   Pulling    36s               kubelet            Pulling image "flomesh-io/osm-edge-controller:latest"
+  Normal   Pulled     35s               kubelet            Successfully pulled image "flomesh-io/osm-edge-controller:v0.8.0" in 746.4323ms
   Normal   Created    35s               kubelet            Created container osm-controller
   Normal   Started    35s               kubelet            Started container osm-controller
   Warning  Unhealthy  4s (x3 over 24s)  kubelet            Readiness probe failed: HTTP probe failed with statuscode: 503
@@ -103,7 +103,7 @@ Service is alive
     ```console
     $ # 假设OSM被安装在osm-system命名空间里:
     $ kubectl get pod -n osm-system $(kubectl get pods -n osm-system -l app=osm-controller -o jsonpath='{.items[0].metadata.name}') -o jsonpath='{range .spec.containers[*]}{.image}{"\n"}{end}'
-    openservicemesh/osm-controller:v0.8.0
+    flomesh/osm-edge-controller:v1.1.0
     flomesh/pipy:{{< param pipy_version >}}
     ```
 
@@ -114,7 +114,7 @@ Service is alive
     ```console
     $ # 假设OSM被安装在osm-system命名空间里:
     $ kubectl get pod -n osm-system $(kubectl get pods -n osm-system -l app=osm-injector -o jsonpath='{.items[0].metadata.name}') -o jsonpath='{range .spec.containers[*]}{.image}{"\n"}{end}'
-    openservicemesh/osm-injector:v0.8.0
+    flomesh-io/osm-edge-injector:v0.8.0
     flomesh/pipy:{{< param pipy_version >}}
     ```
 

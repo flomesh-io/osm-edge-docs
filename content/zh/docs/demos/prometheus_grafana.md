@@ -347,11 +347,11 @@ kubectl port-forward $POD_NAME 3000
 
 ## Importing osm-edge Dashboards
 
-osm-edge Dashboards 可通过 [osm-edge GitHub 存储库](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards) 获得，可以在管理应用程序上以 json blobs 方式导入。
+osm-edge Dashboards 可通过 [osm-edge GitHub 存储库](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards) 获得，可以在管理应用程序上以 json blobs 方式导入。
 
 要导入仪表盘：
 * 鼠标放在 `+` 上并点击 `Import`
-* 从 [osm-mesh-envoy-details dashboard](https://raw.githubusercontent.com/openservicemesh/osm/{{< param osm_branch >}}/charts/osm/grafana/dashboards/osm-mesh-envoy-details.json) 复制 JSON 内容并拷贝到 `Import via panel json`。
+* 从 [osm-mesh-envoy-details dashboard](https://raw.githubusercontent.com/flomesh-io/osm-edge/{{< param osm_branch >}}/charts/osm/grafana/dashboards/osm-mesh-envoy-details.json) 复制 JSON 内容并拷贝到 `Import via panel json`。
 * 选择 `Load`。
 * 选择 `Import`。
 

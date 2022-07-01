@@ -22,7 +22,7 @@ weight: 8
 
 osm-edge 调节的资源是：
 
-- CRD：被 osm-edge 安装/需要的 CRD [osm-edge 的 CRD](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/cmd/osm-bootstrap/crds) 将被调节。既然 osm-edge 管理着它所需要的 CRD 的安装和升级，osm-edge 也将调节它们以确保它们的规范、存储和服务的版本一直在 osm-edge 做需要的状态。
+- CRD：被 osm-edge 安装/需要的 CRD [osm-edge 的 CRD](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/cmd/osm-bootstrap/crds) 将被调节。既然 osm-edge 管理着它所需要的 CRD 的安装和升级，osm-edge 也将调节它们以确保它们的规范、存储和服务的版本一直在 osm-edge 做需要的状态。
 
 - MutatingWebhookConfiguration：一个 MutatingWebhookConfiguration 被部署，以作为 osm-edge Control Plane 的一部分来开启自动 Sidecar 注入。因为对于 Pod 接入网格来说这是非常关键的组件，osm-edge 会调节该资源。
 

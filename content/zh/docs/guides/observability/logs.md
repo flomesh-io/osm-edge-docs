@@ -60,7 +60,7 @@ osm install --set=osm.enableFluentbit=true
 
 要自定义日志转发到您的日志存储，按照下面的步骤，安装 osm-edge 并启用 Fluent Bit
 
-1. 在[Fluent Bit 文档](https://docs.fluentbit.io/manual/pipeline/outputs)中找到您想使用的输出插件来转发您的日志。在 [`fluentbit-configmap.yaml`](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/templates/fluentbit-configmap.yaml) 里，把 `[OUTPUT]` 替换成相应的值。
+1. 在[Fluent Bit 文档](https://docs.fluentbit.io/manual/pipeline/outputs)中找到您想使用的输出插件来转发您的日志。在 [`fluentbit-configmap.yaml`](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/charts/osm/templates/fluentbit-configmap.yaml) 里，把 `[OUTPUT]` 替换成相应的值。
 
 2. 默认的配置中，使用 CRI 日志格式进行分析。如果您正在使用的 kubernetes 发行版用不同的格式输出您的日志，您可能需要添加一个新的解析器到 `[PARSER]` 配置段落中，并在 `[INPUT]` 段落中，将 `parser` 名字修改为[这些](https://github.com/fluent/fluent-bit/blob/master/conf/parsers.conf)预定义解析器中的一个。
 
@@ -133,4 +133,4 @@ osm install --set=osm.enableFluentbit=true,osm.fluentBit.enableProxySupport=true
     ```console
     osm install --set=osm.enableFluentbit=true
     ```
-> 注意：这些特性需要确保 [Fluent Bit 镜像的 tag](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/values.yaml) 是 `1.6.4`或者更高的版本。
+> 注意：这些特性需要确保 [Fluent Bit 镜像的 tag](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/charts/osm/values.yaml) 是 `1.6.4`或者更高的版本。

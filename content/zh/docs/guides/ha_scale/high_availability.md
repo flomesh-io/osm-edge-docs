@@ -17,7 +17,7 @@ osm-edge 的控制平面组件在构建时充分考虑了高可用性和容错�
 
 osm-edge 的控制平面组件不拥有或没有任何需要在运行时保存的状态相关数据；受控例外：
 
-- CA/根证书：当运行多个副本时，多个副本需要使用同一个 CA 根证书。对于需要在 osm-edge 运行前生成/提供根 CA 的[证书管理器](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/DESIGN.md#2-certificate-manager)（Vault、Cert-Manager），root CA 将在所有实例启动时从提供者哪里获取。
+- CA/根证书：当运行多个副本时，多个副本需要使用同一个 CA 根证书。对于需要在 osm-edge 运行前生成/提供根 CA 的[证书管理器](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/DESIGN.md#2-certificate-manager)（Vault、Cert-Manager），root CA 将在所有实例启动时从提供者哪里获取。
   对于其他能够在没有 CA 情况下自动生成 CA 的证书提供者（如 Tresor），在创建过程中保证原子性和同步性，确保所有的实例加载相同的 CA。
 
 除了以上两个例外，其他配置从 Kubernetes 中构建和获取。
