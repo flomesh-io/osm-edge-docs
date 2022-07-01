@@ -36,7 +36,7 @@ weight: 21
     osm namespace add httpbin
 
     # Deploy httpbin service in the httpbin namespace
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/httpbin/httpbin.yaml -n httpbin
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/httpbin/httpbin.yaml -n httpbin
     ```
 
     确认 `httpbin` 服务 pod 启动并运行。
@@ -62,7 +62,7 @@ weight: 21
     osm namespace add client
 
     # Deploy fortio client in the client namespace
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/fortio/fortio.yaml -n client
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/fortio/fortio.yaml -n client
     ```
 
     确认 `fortio` 客户端 pod 启动并运行。

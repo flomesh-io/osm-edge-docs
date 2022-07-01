@@ -37,11 +37,11 @@ cd <PATH_TO_OSM_REPO>
 demo/run-osm-demo.sh  # wait for all services to come up
 ```
 
-- 当 osm-edge 的演示启动并运行时，继续部署 `opa-envoy-plugin`。osm-edge 提供了 [整理好的独立 opa-envoy-plugin 部署 chart](https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml），它通过服务公开 `opa-envoy-plugin` 的 gRPC 端口（默认为 `9191`）。这是 osm-edge 在启用外部授权时将配置代理的端点。下面的代码片段创建了一个 `opa` 命名空间，并在其中部署了 `opa-envoy-plugin`，并使用了最少的 deny-all 配置：
+- 当 osm-edge 的演示启动并运行时，继续部署 `opa-envoy-plugin`。osm-edge 提供了 [整理好的独立 opa-envoy-plugin 部署 chart](https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml），它通过服务公开 `opa-envoy-plugin` 的 gRPC 端口（默认为 `9191`）。这是 osm-edge 在启用外部授权时将配置代理的端点。下面的代码片段创建了一个 `opa` 命名空间，并在其中部署了 `opa-envoy-plugin`，并使用了最少的 deny-all 配置：
 
 ```
 kubectl create namespace opa
-kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml
+kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml
 ```
 
 - 一旦 osm-edge 示例启动并运行，修改 osm-edge MeshConfig 添加网格的外部授权。为此，配置 `inboundExternalAuthorization` 指向远程外部授权端点，如下所示：

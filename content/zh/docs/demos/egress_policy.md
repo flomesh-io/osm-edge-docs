@@ -34,7 +34,7 @@ weight: 15
     osm namespace add curl
 
     # Deploy curl client in the curl namespace
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n curl
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n curl
     ```
 
     确保 `curl` 客户端 pod 启动并运行。
@@ -156,9 +156,9 @@ weight: 15
 
 基于 TCP 的出口流量与出口策略中指定的目的端口和 IP 地址范围匹配。如果没有指定 IP 地址范围，只会匹配与目的端口相同的流量。
 
-1. 确认 `curl` 客户端无法发送 HTTPS 请求 `https://openservicemesh.io:443` 到运行在 `443` 端口的 `openservicemesh.io`。由于 HTTPS 底层使用 TCP 协议，基于 TCP 的路由需要隐式启用访问 HTTP(s) 的任何端口。
+1. 确认 `curl` 客户端无法发送 HTTPS 请求 `https://flomesh.io:443` 到运行在 `443` 端口的 `flomesh.io`。由于 HTTPS 底层使用 TCP 协议，基于 TCP 的路由需要隐式启用访问 HTTP(s) 的任何端口。
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://openservicemesh.io:443
+    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://flomesh.io:443
     command terminated with exit code 7
     ```
 
@@ -183,10 +183,10 @@ weight: 15
     ```
    > 注意：对于像 `MySQL`、`PostgresSQL` 这样的 `server-first` 协议，服务器发起客户端和服务器之间的数据的第一个字节，协议必须设置为 `tcp-server-first` 指示 osm-edge 无需在端口上进行协议检测。协议检测依赖于检测连接的第一个字节，与 `server-first` 协议不兼容。当端口的协议设置为 `tcp-server-first` 时，会跳过该端口的协议检测。同样需要注意的 `server-first` 端口号不得用于需要执行协议检测的其他应用程序端口，这就意味着使用 `server-first` 协议的端口不得使用其他需要执行协议检测的如 `HTTP` 和 `TCP` 的协议。
 
-3. 确认 `curl` 客户端可以成功发送 HTTPS 请求 `https://openservicemesh.io:443`。
+3. 确认 `curl` 客户端可以成功发送 HTTPS 请求 `https://flomesh.io:443`。
 
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://openservicemesh.io:443
+    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://flomesh.io:443
     HTTP/2 200
     cache-control: public, max-age=0, must-revalidate
     content-length: 0
@@ -199,13 +199,13 @@ weight: 15
     x-nf-request-id: 35a4f2dc-5356-45dc-9208-63e6fa162e0f-3350874
     ```
 
-4. 当策略删除后，`curl` 客户端无法再访问 `https://openservicemesh.io:443`。
+4. 当策略删除后，`curl` 客户端无法再访问 `https://flomesh.io:443`。
 
     ```bash
     kubectl delete egress tcp-443 -n curl
     ```
     ```console
-    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://openservicemesh.io:443
+    $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://flomesh.io:443
     command terminated with exit code 7
     ```
 

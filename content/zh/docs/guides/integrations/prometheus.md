@@ -43,10 +43,10 @@ To familiarize yourself on how osm-edge works with Prometheus, try installing a 
 1. 安装示例应用：
 
    ```console
-   $ kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n metrics-demo
+   $ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n metrics-demo
    serviceaccount/curl created
    deployment.apps/curl created
-   $ kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/httpbin/httpbin.yaml -n metrics-demo
+   $ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/httpbin/httpbin.yaml -n metrics-demo
    serviceaccount/httpbin created
    service/httpbin created
    deployment.apps/httpbin created

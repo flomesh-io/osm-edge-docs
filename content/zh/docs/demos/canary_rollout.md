@@ -42,7 +42,7 @@ weight: 21
     osm namespace add curl
 
     # Deploy curl client in the curl namespace
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n curl
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n curl
     ```
 
     确认 `curl` 客户端 pod 启动并运行。
@@ -63,13 +63,13 @@ weight: 21
     osm namespace add httpbin
 
     # Create the httpbin root service and service account
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/canary/httpbin.yaml -n httpbin
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/canary/httpbin.yaml -n httpbin
     ```
 
 4. 部署 `httpbin` 服务的 `v1` 版本。该 service `httpbin-v1` 使用选择器 `app: httpbin, version: v1`，该 deployment `httpbin-v1` 有标签 `app: httpbin, version: v1` ，其匹配了根 service `httpbin` 和 service `httpbin-v1` 的选择器。
 
     ```bash
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/canary/httpbin-v1.yaml -n httpbin
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/canary/httpbin-v1.yaml -n httpbin
     ```
 
 5. 创建 SMI TrafficSplit 资源将流量定向到 `httpbin-v1`。
@@ -120,7 +120,7 @@ weight: 21
 8. 部署 `httpbin` 的 `v2` 版本准备金丝雀发布。该 service `httpbin-v2` 使用选择器 `app: httpbin, version: v2`，该 deployment 的标签 `app: httpbin, version: v2` 匹配根 service `httpbin` 和 service `httpbin-v2` 的选择器。
 
     ```bash
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/canary/httpbin-v2.yaml -n httpbin
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/canary/httpbin-v2.yaml -n httpbin
     ```
 
 9. 执行金丝雀发布，通过更新 SMI TrafficSplit 资源拆分发往 FQDN `httpbin.httpbin.svc.cluster.local` 的流量到 `httpbin-v1` 和 `httpbin-v2` service，分别对应 `httpbin` 的 `v1` 和 `v2` 版本。。
