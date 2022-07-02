@@ -21,7 +21,7 @@ weight: 20
 1. 设置安装 osm-edge 的命名空间。
 
     ```bash
-    osm_namespace=osm-system  # Replace osm-system with the namespace where OSM is installed if different
+    osm_namespace=osm-system  # Replace osm-system with the namespace where osm-edge is installed if different
     ```
 
 2. 在 `tcp-demo` 命名空间下部署 `tcp-demo` 服务。 `tcp-demo` 服务运行在 `9000` 端口上，同时 `appProtocol` 字段设置为 `tcp` 用来告知 osm-edge 在定向 `tcp-demo` 在 `9000` 端口的流量时使用 TCP路由。

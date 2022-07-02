@@ -63,7 +63,7 @@ Init Containers:
 确认要排除的出站 IP 范围设置正确：
 
 ```console
-# Assumes OSM is installed in the osm-system namespace
+# Assumes osm-edge is installed in the osm-system namespace
 $ kubectl get meshconfig osm-mesh-config -n osm-system -o jsonpath='{.spec.traffic.outboundIPRangeExclusionList}{"\n"}'
 ["1.1.1.1/32","2.2.2.2/24"]
 ```
@@ -124,7 +124,7 @@ iptables -t nat -I PROXY_OUTPUT -d 2.2.2.2/24 -j RETURN
 确认要排除的出站端口设置正确：
 
 ```console
-# Assumes OSM is installed in the osm-system namespace
+# Assumes osm-edge is installed in the osm-system namespace
 $ kubectl get meshconfig osm-mesh-config -n osm-system -o jsonpath='{.spec.traffic.outboundPortExclusionList}{"\n"}'
 [6379,7070]
 ```

@@ -33,7 +33,7 @@ osm install --set osm.enablePermissiveTrafficPolicy=true
 在 osm-edge 安装之后：
 
 ```bash
-# Assumes OSM is installed in the osm-system namespace
+# Assumes osm-edge is installed in the osm-system namespace
 kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
 ```
 
@@ -50,7 +50,7 @@ osm install --set osm.enablePermissiveTrafficPolicy=false
 在 osm-edge 安装之后：
 
 ```bash
-# Assumes OSM is installed in the osm-system namespace
+# Assumes osm-edge is installed in the osm-system namespace
 kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":false}}}'  --type=merge
 ```
 

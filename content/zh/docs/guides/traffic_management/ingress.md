@@ -7,7 +7,7 @@ weight: 5
 
 # 入口
 
-## 使用入口管理对群集内服务的外部访问
+## 使用入口管理集群内服务的外部访问
 
 入口是指管理对集群内服务的外部访问，通常是 HTTP/HTTPS 服务。osm-edge 的入口功能允许集群管理员和应用程序所有者使用一组规则将流量从服务网格外部的客户端路由到服务网格后端，具体取决于用于执行入口的机制。
 
@@ -121,7 +121,7 @@ data:
     tls:
       pipy-client-certificate:
         name: osm-contour-pipy-client-cert
-        namespace: osm-system # Namespace where OSM is installed; please check your deployment and set this appropriately
+        namespace: osm-system # Namespace where osm-edge is installed; please check your deployment and set this appropriately
 ```
 
 ```bash

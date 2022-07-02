@@ -73,7 +73,7 @@ osm-edge 提供了一种方法来指定 IP 范围的全局列表，以从适用�
 
 2. 通过修改 `osm-mesh-config` 资源的`outboundIPRangeExclusionList` 字段：
     ```bash
-    ## Assumes OSM is installed in the osm-system namespace
+    ## Assumes osm-edge is installed in the osm-system namespace
     kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"outboundIPRangeExclusionList":["1.1.1.1/32", "2.2.2.2/24"]}}}'  --type=merge
     ```
 
@@ -112,7 +112,7 @@ osm-edge 提供了指定 IP 范围的全局列表的方法，这些 IP 范围包
 2. 通过修改 `osm-mesh-config` 资源的`outboundIPRangeInclusionList` 字段：
 
     ```bash
-    ## Assumes OSM is installed in the osm-system namespace
+    ## Assumes osm-edge is installed in the osm-system namespace
     kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"outboundIPRangeInclusionList":["1.1.1.1/32", "2.2.2.2/24"]}}}'  --type=merge
     ```
 
@@ -151,7 +151,7 @@ osm-edge 提供了一种方法来指定要从出站流量拦截中排除的端�
 2. 通过修改 `osm-mesh-config` 资源的 `outboundPortExclusionList` 字段：
 
     ```bash
-    ## Assumes OSM is installed in the osm-system namespace
+    ## Assumes osm-edge is installed in the osm-system namespace
     kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"outboundPortExclusionList":[6379, 7070]}}}'  --type=merge
     ```
 
@@ -186,7 +186,7 @@ osm-edge 提供了一种方法来指定要从入站流量拦截中排除的端�
 
 2. 修改 `osm-mesh-config` 资源中的 `inboundPortExclusionList` 字段：
     ```bash
-    ## Assumes OSM is installed in the osm-system namespace
+    ## Assumes osm-edge is installed in the osm-system namespace
     kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"inboundPortExclusionList":[6379, 7070]}}}'  --type=merge
     ```
 

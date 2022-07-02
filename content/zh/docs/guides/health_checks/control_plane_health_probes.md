@@ -41,8 +41,8 @@ Events:
   Type     Reason     Age               From               Message
   ----     ------     ----              ----               -------
   Normal   Scheduled  24s               default-scheduler  Successfully assigned osm-system/osm-controller-85fcb445b-fpv8l to osm-control-plane
-  Normal   Pulling    23s               kubelet            Pulling image "flomesh-io/osm-edge-controller:v0.8.0"
-  Normal   Pulled     23s               kubelet            Successfully pulled image "flomesh-io/osm-edge-controller:v0.8.0" in 562.2444ms
+  Normal   Pulling    23s               kubelet            Pulling image "flomesh-io/osm-edge-controller:v1.1.0"
+  Normal   Pulled     23s               kubelet            Successfully pulled image "flomesh-io/osm-edge-controller:v1.1.0" in 562.2444ms
   Normal   Created    1s (x2 over 23s)  kubelet            Created container osm-controller
   Normal   Started    1s (x2 over 23s)  kubelet            Started container osm-controller
   Warning  Unhealthy  1s (x3 over 21s)  kubelet            Liveness probe failed: HTTP probe failed with statuscode: 503
@@ -57,8 +57,8 @@ Events:
   Type     Reason     Age               From               Message
   ----     ------     ----              ----               -------
   Normal   Scheduled  36s               default-scheduler  Successfully assigned osm-system/osm-controller-5494bcffb6-tn5jv to osm-control-plane
-  Normal   Pulling    36s               kubelet            Pulling image "flomesh-io/osm-edge-controller:latest"
-  Normal   Pulled     35s               kubelet            Successfully pulled image "flomesh-io/osm-edge-controller:v0.8.0" in 746.4323ms
+  Normal   Pulling    36s               kubelet            Pulling image "flomesh-io/osm-edge-controller:v1.1.0"
+  Normal   Pulled     35s               kubelet            Successfully pulled image "flomesh-io/osm-edge-controller:v1.1.0" in 746.4323ms
   Normal   Created    35s               kubelet            Created container osm-controller
   Normal   Started    35s               kubelet            Started container osm-controller
   Warning  Unhealthy  4s (x3 over 24s)  kubelet            Readiness probe failed: HTTP probe failed with statuscode: 503
@@ -74,7 +74,7 @@ osm-controller-5494bcffb6-tn5jv   0/1     Running   0          26s
 Pod 的健康探测也可以通过转发 Pod 的必要端口并使用 `curl` 或任何其他 HTTP 客户端发出请求手动调用。例如，为了验证 osm-controller 有效性探测，获取 Pod 的名称并转发 9091 端口：
 
 ```shell
-# Assuming OSM is installed in the osm-system namespace
+# Assuming osm-edge is installed in the osm-system namespace
 kubectl port-forward -n osm-system $(kubectl get pods -n osm-system -l app=osm-controller -o jsonpath='{.items[0].metadata.name}') 9091
 ```
 
@@ -101,7 +101,7 @@ Service is alive
     例如，这是一个包含 Pipy 容器的 osm-controller Pod：
 
     ```console
-    $ # 假设OSM被安装在osm-system命名空间里:
+    $ # 假设osm-edge被安装在osm-system命名空间里:
     $ kubectl get pod -n osm-system $(kubectl get pods -n osm-system -l app=osm-controller -o jsonpath='{.items[0].metadata.name}') -o jsonpath='{range .spec.containers[*]}{.image}{"\n"}{end}'
     flomesh/osm-edge-controller:v1.1.0
     flomesh/pipy:{{< param pipy_version >}}
@@ -112,7 +112,7 @@ Service is alive
     例如，这是一个包含 Pipy 容器的 osm-edge-injector Pod：
 
     ```console
-    $ # 假设OSM被安装在osm-system命名空间里:
+    $ # 假设osm-edge被安装在osm-system命名空间里:
     $ kubectl get pod -n osm-system $(kubectl get pods -n osm-system -l app=osm-injector -o jsonpath='{.items[0].metadata.name}') -o jsonpath='{range .spec.containers[*]}{.image}{"\n"}{end}'
     flomesh-io/osm-edge-injector:v0.8.0
     flomesh/pipy:{{< param pipy_version >}}
@@ -153,14 +153,14 @@ Service is alive
     对于 osm-controller:
 
     ```console
-    $ # 假设OSM被安装在osm-system命名空间里:
+    $ # 假设osm-edge被安装在osm-system命名空间里:
     $ kubectl describe pod -n osm-system $(kubectl get pods -n osm-system -l app=osm-controller -o jsonpath='{.items[0].metadata.name}')
     ```
 
     对于 osm-injector:
 
     ```console
-    $ # 假设OSM被安装在osm-system命名空间里:
+    $ # 假设osm-edge被安装在osm-system命名空间里:
     $ kubectl describe pod -n osm-system $(kubectl get pods -n osm-system -l app=osm-injector -o jsonpath='{.items[0].metadata.name}')
     ```
 
@@ -173,14 +173,14 @@ Service is alive
     对于 osm-controller:
 
     ```console
-    $ # 假设OSM被安装在osm-system命名空间里:
+    $ # 假设osm-edge被安装在osm-system命名空间里:
     $ kubectl logs -n osm-system $(kubectl get pods -n osm-system -l app=osm-controller -o jsonpath='{.items[0].metadata.name}')
     ```
 
     对于 osm-edge-injector:
 
     ```console
-    $ # Assuming OSM is installed in the osm-system namespace:
+    $ # Assuming osm-edge is installed in the osm-system namespace:
     $ kubectl logs -n osm-system $(kubectl get pods -n osm-system -l app=osm-injector -o jsonpath='{.items[0].metadata.name}')
     ```
 

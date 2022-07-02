@@ -213,18 +213,18 @@ annotations:
 | 指标                                | 类型      | 标签                                  | 描述                                                                      |
 | ------------------------------------- | --------- | --------------------------------------- | -------------------------------------------------------------------------------- |
 | osm_k8s_api_event_count               | Count     | type, namespace                         | 从 Kubernetes API Server 接收到的事件的数量                         |
-| osm_proxy_connect_count               | Gauge     |                                         | 连接到 OSM controller 的代理的数量                                   |
+| osm_proxy_connect_count               | Gauge     |                                         | 连接到 osm-edge controller 的代理的数量                                   |
 | osm_proxy_reconnect_count             | Count     |                                         | IngressGateway 定义了一个 ingress gateway 的证书规范 |
 | osm_proxy_response_send_success_count | Count     | common_name, type                       | 成功发送到代理的响应的数量                                 |
 | osm_proxy_response_send_error_count   | Count     | common_name, type                       | 发送到代理的出错的响应的数量                       |
 | osm_proxy_config_update_time          | Histogram | resource_type, success                  | 追踪代理配置消耗时间的直方图                            |
-| osm_proxy_broadcast_event_count       | Count     |                                         | OSM controller 发出的 ProxyBroadcast 事件数量                 |
+| osm_proxy_broadcast_event_count       | Count     |                                         | osm-edge controller 发出的 ProxyBroadcast 事件数量                 |
 | osm_proxy_xds_request_count           | Count     | common_name, type                       | 代理产生的 XDS 请求的数量                                           |
 | osm_proxy_max_connections_rejected    | Count     |                                         | 因为最大连接数限制配置导致的被拒绝的代理连接的数量 |
 | osm_cert_issued_count                 | Count     |                                         | 签发给代理的 XDS 证书的数量                               |
 | osm_cert_issued_time                  | Histogram |                                         | 追踪签发 xds 证书消耗时间的直方图                           |
 | osm_admission_webhook_response_total  | Count     | kind, success                           | admission webhook 的响应次数                            |
-| osm_error_err_code_count              | Count     | err_code                                | OSM 产生的错误的数量                                            |
+| osm_error_err_code_count              | Count     | err_code                                | osm-edge 产生的错误的数量                                            |
 | osm_http_response_total               | Count     | code, method, path                      | 发送 HTTP 响应的数量                                                   |
 | osm_http_response_duration            | Histogram | code, method, path                      | 以秒为单位的统计的，发送的 HTTP 响应时间的直方图                                       |
 | osm_feature_flag_enabled              | Gauge     | feature_flag                            | 表示一个特性标记配置是启用 (1) 还是禁用 (0)                 |
@@ -282,7 +282,7 @@ annotations:
    - password: admin
 5. 在 Grafana 面板上查看服务间的监控指标
    - 在 Grafana 面板左上角的导航菜单中，您可以在 osm-edge Data Plane 的目录里，切换到 osm-edge Service to Service 面板
-   - 或者在浏览器中访问这个链接：[http://localhost:3000/d/OSMs2sMetrics/osm-service-to-service-metrics?orgId=1][6]
+   - 或者在浏览器中访问这个链接：[http://localhost:3000/d/osm-edges2sMetrics/osm-service-to-service-metrics?orgId=1][6]
 
 osm-edge Service to Service Metrics 面板看起来像这样：
 ![image](https://user-images.githubusercontent.com/59101963/85907233-a604e380-b7c5-11ea-95b5-9190fbc7967f.png)

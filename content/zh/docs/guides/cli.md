@@ -18,7 +18,7 @@ weight: 1
 
 #### Linux 和 macOS
 
-在 Linux/macOS 或者 [Windows Linux 子系统 (WSL)](https://docs.microsoft.com/windows/wsl/about) 上的基于 bash 的 shell 环境里，使用 `curl` 来下载 osm-edge 发布版，然后按照如下方式解压 `tar` 包。
+在 Linux/macOS 上的基于 bash 的 shell 环境里，使用 `curl` 来下载 osm-edge 发布版，然后按照如下方式解压 `tar` 包。
 
 ```console
 # Specify the OSM version that will be leveraged throughout these instructions
@@ -48,34 +48,6 @@ sudo mv ./darwin-amd64/osm /usr/local/bin/osm
 
 ```console
 osm version
-```
-
-#### Windows
-
-在 Windows 上基于 PowerShell 的 shell 里面，使用 `Invoke-WebRequest` 来下载 osm-edge 发布版，然后用 `Expand-Archive` 来解压，就像下面这样：
-
-```console
-# Specify the OSM version that will be leveraged throughout these instructions
-$OSM_VERSION="{{< param osm_edge_version >}}"
-
-[Net.ServicePointManager]::SecurityProtocol = "tls12"
-$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -URI "https://github.com/flomesh-io/osm-edge/releases/download/$OSM_VERSION/osm-$OSM_VERSION-windows-amd64.zip" -OutFile "osm-$OSM_VERSION.zip"
-Expand-Archive -Path "osm-$OSM_VERSION.zip" -DestinationPath .
-```
-
-`osm` 客户端二进制程序运行在您的客户端机器上，并且允许您在您的 Kubernetes 集群里来管理 osm-edge 控制器。使用下面的命令来安装 osm-edge `osm` 客户端二进制程序，这个需要在 Windows 上的基于 PowerShell 的 shell 环境来完成。这些命令复制 `osm` 客户端二进制程序到一个 osm-edge 文件夹，然后通过您的 `PATH` 环境变量，使即刻（在当前 shell）和持久（跨 shell 重新启动）环境下 osm-edge 都有效。您不需要提升（管理员）权限来运行这些命令，你也不需要重启您的 shell。
-
-```console
-# Copy osm.exe to C:\OSM
-New-Item -ItemType Directory -Force -Path "C:\OSM"
-Move-Item -Path .\windows-amd64\osm.exe -Destination "C:\OSM\"
-
-# Add C:\OSM to PATH.
-# Make the new PATH permanently available for the current User
-$USER_PATH = [environment]::GetEnvironmentVariable("PATH", "User") + ";C:\OSM\"
-[environment]::SetEnvironmentVariable("PATH", $USER_PATH, "User")
-# Make the new PATH immediately available in the current shell
-$env:PATH += ";C:\OSM\"
 ```
 
 您可以通过下面的命令，来验证已经被正确添加到您的环境里的 `osm` 客户端库和它们的版本号。

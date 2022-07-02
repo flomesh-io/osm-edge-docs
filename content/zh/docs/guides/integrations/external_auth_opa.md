@@ -3,6 +3,7 @@ title: "外部授权"
 description: "通过 MeshConfig 配置外部授权。"
 type: docs
 weight: 1
+draft: true
 ---
 # 外部授权
 
@@ -32,7 +33,7 @@ osm-edge 允许通过 osm-edge MeshConfig 来配置 Envoy 的 [外部授权扩�
 - 首先，从部署 osm-edge 的 Demo 开始。我们将使用此示例部署来测试外部授权功能。请参考 [ osm-edge 的自动化 Demo](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/demo#how-to-run-the-osm-automated-demo)并按照说明操作。
 
 ```
-# Assuming OSM repo is available
+# Assuming osm-edge repo is available
 cd <PATH_TO_OSM_REPO>
 demo/run-osm-demo.sh  # wait for all services to come up
 ```

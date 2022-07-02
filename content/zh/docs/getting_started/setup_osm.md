@@ -61,8 +61,8 @@ curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-
 > 注意：宽松流量策略模式是 brownfield 部署的一项重要功能，其中可能需要一些时间来制定 SMI 策略。在运维设计 SMI 策略的同时，现有服务将继续按照安装 osm-edge 之前的方式运行。
 
 ```bash
-export osm_namespace=osm-system # Replace osm-system with the namespace where OSM will be installed
-export osm_mesh_name=osm # Replace osm with the desired OSM mesh name
+export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge will be installed
+export osm_mesh_name=osm # Replace osm with the desired osm-edge mesh name
 
 osm install \
     --mesh-name "$osm_mesh_name" \

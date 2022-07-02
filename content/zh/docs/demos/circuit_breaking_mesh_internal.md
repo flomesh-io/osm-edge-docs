@@ -22,7 +22,7 @@ weight: 21
 
 1. 简单起见，为了网格内的应用互访无需使用SMI 访问控制策略，启用 [宽松流量策略模式](/docs/guides/traffic_management/permissive_mode)
     ```bash
-    export osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+    export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
     kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
     ```
 

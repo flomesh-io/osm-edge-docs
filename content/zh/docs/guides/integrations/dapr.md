@@ -4,6 +4,7 @@ description: "将 Dapr 与 osm-edge 集成的简单演示"
 aliases: "/docs/integrations/demo_dapr"
 type: docs
 weight: 2
+draft: true
 ---
 
 # Dapr 与 osm-edge 集成
@@ -62,7 +63,7 @@ weight: 2
 
    ```console
    $ osm install
-   OSM installed successfully in namespace [osm-system] with mesh name [osm]
+   osm-edge installed successfully in namespace [osm-system] with mesh name [osm]
    ```
 
 3. 在 osm-edge 中开启宽松流量策略模式：

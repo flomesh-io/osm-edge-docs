@@ -24,7 +24,7 @@ This guide demonstrates how outbound IP address ranges can be excluded from bein
 1. 禁用网格范围的出口直通。
 
     ```bash
-    export osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+    export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
     kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"enableEgress":false}}}'  --type=merge
     ```
 

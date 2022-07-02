@@ -12,8 +12,8 @@ type: docs
 为网格设置环境变量：
 
 ```console
-export osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
-export mesh_name=osm # Replace osm with the OSM mesh name
+export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
+export mesh_name=osm # Replace osm with the osm-edge mesh name
 export osm_version=<osm version>
 export osm_ca_bundle=<osm ca bundle>
 ```
