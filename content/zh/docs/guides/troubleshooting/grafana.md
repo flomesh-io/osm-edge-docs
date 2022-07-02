@@ -16,7 +16,7 @@ type: docs
     如果没有找到类似的 Pod，通过 `helm` 安装 osm-edge Helm chart 时，请确认将 `osm.deployGrafana` 选项设置为 `true`：
 
     ```console
-    $ helm get values -a <mesh name> -n <OSM namespace>
+    $ helm get values -a <mesh name> -n <osm-edge namespace>
     ```
 
     如果选项被设置为 `true` 以外的值，重新使用 `osm install` 安装 osm-edge，并添加 `--set=osm.deployGrafana=true` 选项。
@@ -26,7 +26,7 @@ type: docs
     在上一个步骤中定位的 Grafana Pod 应当处于 Running 状态，并且所有的容器是就绪的，和下面 `kubectl get` 的输出类似：
 
     ```console
-    $ # 假设 OSM 被安装到 osm-system 命名空间下：
+    $ # 假设 osm-edge 被安装到 osm-system 命名空间下：
     $ kubectl get pods -n osm-system -l app=osm-grafana
     NAME                           READY   STATUS    RESTARTS   AGE
     osm-grafana-7c88b9687d-tlzld   1/1     Running   0          58s
@@ -35,7 +35,7 @@ type: docs
     如果 Pod 不是在 Running 状态，或者相关的容器没有就绪，使用 `kubectl describe` 查找其他潜在的问题：
 
     ```console
-    $ # 假设 OSM 被安装到 osm-system 命名空间下：
+    $ # 假设 osm-edge 被安装到 osm-system 命名空间下：
     $ kubectl describe pods -n osm-system -l app=osm-grafana
     ```
 

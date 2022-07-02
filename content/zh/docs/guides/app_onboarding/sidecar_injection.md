@@ -16,10 +16,11 @@ Sidecar 的自动注入可以被以每个命名空间来配置作为注册命名
 ### 启动 sidecar 自动注入
 
 先决条件：
+
 - Pod 所在的命名空间必须是通过 `osm namespace add` 命令注册到网格的。
 - Pod 所在的命名空间不能使用 `osm namespace ignore` 命令排除。
 - Pod 所在的命名空间不能使用 key 为 `name`，值为 osm-edge 控制平面所在命名空间名的标签。比如，某个命名空间有标签 `name: osm-system`，而 `osm-system` 是控制平面所在的命名空间名，这个命名空间中的 pod 无法注入 sidecar。
-- Pod 规格上不能使用 `hostNetwork: true`。如果有，会导致主机网络的路由失败。
+- Pod Spec 上不能使用 `hostNetwork: true`。如果有，会导致主机网络的路由失败。
 
 Sidecar 注入可以通过如下方式启用：
 

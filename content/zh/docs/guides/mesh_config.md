@@ -9,11 +9,11 @@ weight: 7
 # osm-edge MeshConfig
 osm-edge 部署一个 MeshConfig 资源 `osm-mesh-config` 作为它的控制平面(同 osm-edge 控制器 Pod 的在同一命名空间) 的一部分，其能够被网格所有者/操作员在任意时刻更新。这个 MeshConfig 的目的是提供一种能够更新所需的网格配置的能力给网格所有者/运维人员。
 
-在安装的时候，osm-edge MeshConfig 从一个现成的 MeshConfig (`preset-mesh-config`) 来部署，其能够在 [charts/osm/templates](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/charts/osm/templates/preset-mesh-config.yaml) 里面找到。
+在安装的时候，osm-edge MeshConfig 从一个现成的 MeshConfig (`preset-mesh-config`) 来部署，其能够在 [charts/osm/templates](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/cmd/osm-bootstrap/crds/config_meshconfig.yaml) 里面找到。
 
 首先，设置一个环境变量来引用 osm-edge 被安装所在的命名空间。
 ```bash
-export osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
 ```
 
 要在 CLI 里面查阅您的 `osm-mesh-config`，请使用 `kubectl get` 命令。
@@ -25,7 +25,9 @@ kubectl get meshconfig osm-mesh-config -n "$osm_namespace" -o yaml
 *注意：在 MeshConfig `osm-mesh-config` 里面的值被持续更新。*
 
 ## 配置 osm-edge MeshConfig
+
 ### Kubectl 补丁命令
+
 修改 `osm-mesh-config`，可以使用 `kubectl patch` 命令。
 ```bash
 kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"enableEgress":true}}}'  --type=merge
@@ -41,7 +43,7 @@ The MeshConfig "osm-mesh-config" is invalid: spec.traffic.enableEgress: Invalid 
 ```
 #### 给每一个键类型的 kubectl 补丁命令 
 
-> 注意：`<osm-namespace>` 引用了 osm-edge Control Plane 被安装所在的命名空间。默认的，osm-edge 的命名空间是 `osm-system`。
+> 注意：`<osm-namespace>` 引用了 osm-edge 控制平面被安装所在的命名空间。默认的，osm-edge 的命名空间是 `osm-system`。
 
 | 键                                            | 类型   | 默认值                                | Kubectl 补丁命令例子                                                                                                                                                 |
 | ---------------------------------------------- | ------ | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

@@ -23,7 +23,7 @@ weight: 11
 首先，注意 osm-edge 和 Nginx 入口控制器安装的相关细节：
 
 ```bash
-osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
 osm_mesh_name=osm # replace osm with the mesh name (use `osm mesh list` command)
 
 nginx_ingress_namespace=<nginx-namespace> # replace <nginx-namespace> with the namespace where Nginx is installed
@@ -134,7 +134,7 @@ certificate:
   ingressGateway:
     secret:
       name: osm-nginx-client-cert
-      namespace: <osm-namespace> # replace <osm-namespace> with the namespace where OSM is installed
+      namespace: <osm-namespace> # replace <osm-namespace> with the namespace where osm-edge is installed
     subjectAltNames:
     - ingress-nginx.ingress-nginx.cluster.local
     validityDuration: 24h

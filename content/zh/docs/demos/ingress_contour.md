@@ -20,8 +20,8 @@ osm-edge 可以选择使用 [Contour](https://projectcontour.io) 入口控制器
 
 首先，在 `osm-system` 命名空间下安装 osm-edge 和 Contour，并将网格名字命名为 `osm`。
 ```bash
-export osm_namespace=osm-system # Replace osm-system with the namespace where OSM will be installed
-export osm_mesh_name=osm # Replace osm with the desired OSM mesh name
+export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge will be installed
+export osm_mesh_name=osm # Replace osm with the desired osm-edge mesh name
 ```
 
 使用 `osm` 命令行工具：

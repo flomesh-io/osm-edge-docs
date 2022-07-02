@@ -76,7 +76,7 @@ osm-edge 的控制平面生命周期被 Helm 来管理，并且通过 [Helm 升�
 
 ```console
 $ osm mesh upgrade
-OSM successfully upgraded mesh osm
+osm-edge successfully upgraded mesh osm
 ```
 
 这个命令将升级网格，其在默认的 osm-edge 命名空间里面使用默认的网格名称。来自先前发布版的值默认情况下不会被保留到这个新的发布版，但是可以通过在 `osm mesh upgrade` 上独立地使用 `--set` 标志来传递旧值。
@@ -120,7 +120,7 @@ $ helm upgrade <mesh name> osm --repo https://openservicemesh.github.io/osm --ve
 Pipy 版本能够通过修改在 osm-mesh-config 里面的 `sidecarImage` 变量值来更新。当如此做时，推荐指定和 Pipy 版本相关联的镜像摘要来避免供应链攻击。例如，要更新 [Pipy镜像](https://hub.docker.com/r/flomesh/pipy)到 latest（此处仅作为例子，不建议使用 latest 镜像），接下来的命令应该被运行：
 
 ```bash
-export osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
 kubectl patch meshconfig osm-mesh-config -n $osm_namespace -p '{"spec":{"sidecar":{"sidecarImage":"flomesh/pipy:latest"}}}' --type=merge
 ```
 
@@ -131,7 +131,7 @@ kubectl patch meshconfig osm-mesh-config -n $osm_namespace -p '{"spec":{"sidecar
 如果启用，osm-edge 的 Prometheus，Grafana 和 Jaeger 服务会与其他 osm-edge 控制组件组件一起部署。虽然这些第三方的依赖不能够通过像 Pipy 这样的 MeshConfig 来更新，它们的版本仍旧能够在部署中被直接更新。例如，要更新 Prometheus 到 v2.19.1，用户能够运行：
 
 ```bash
-export osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
 kubectl set image deployment/osm-prometheus -n $osm_namespace prometheus="prom/prometheus:v2.19.1"
 ```
 

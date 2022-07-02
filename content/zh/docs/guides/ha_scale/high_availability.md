@@ -59,7 +59,7 @@ osm-edge 的控制平面组件不拥有或没有任何需要在运行时保存�
   <img src="/docs/images/ha/ha3.png" width="450" height="400"/>
 </p>
 
-- If the control plane is brought down entirely, running proxies should continue to operate in headless<sup>[1]</sup> mode till they can reconnect to a running control plane. 如果控制平面全部挂掉，运行中的代理将进入无头模式<sup>[1]</sup>，直到可以重连到运行的控制平面。
+- 如果控制平面全部挂掉，运行中的代理将进入无头模式<sup>[1]</sup>，直到可以重连到运行的控制平面。
 
 [1] 无头：通常在控制平面/数据平面设计范式中提到，是指当两个组件之间存在依赖关系时，允许依赖代理生存并在被依赖者死亡或变得无法访问时以最新状态继续运行的概念。
 
@@ -72,7 +72,7 @@ HPA 会根据目标的平均 CPU 使用率（%）和平均内存使用率（%）
 osm install --set=osm.<control_plane_pod>.autoScale.enable=true
 ```
 
-> 注意：control_plane_pod 可以是 `osmController` 或者 `injector`
+> 注意：control_plane_pod 可以是 `osm-controller` 或者 `injector`
 
 应用于控制平面 Pod deployment 的反亲和性将确保 Pod 跨节点的分布具有更好的弹性。
 
@@ -95,4 +95,4 @@ HPA 的更多参数：
 osm install --set=osm.<control_plane_pod>.enablePodDisruptionBudget=true
 ```
 
-> 注意：control_plane_pod 可以是 `osmController` 或者 `injector`
+> 注意：control_plane_pod 可以是 `osm-controller` 或者 `injector`

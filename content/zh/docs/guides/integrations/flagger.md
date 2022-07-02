@@ -4,6 +4,7 @@ description: "演示如何将 osm-edge 与 Flagger 集成"
 aliases: "/docs/guides/integrations/demo_flagger"
 type: docs
 weight: 4
+draft: true
 ---
 
 # Flagger 与 osm-edge 集成

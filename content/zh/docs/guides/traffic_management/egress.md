@@ -30,7 +30,7 @@ osm-edge 将所有出站流量从网格中的 pod 重定向到 pod 的 sidecar �
 osm-edge 支持使用其 [Egress policy API][1] 为发往外部端点的流量配置细粒度策略。要使用此功能，如果未启用，请启用它：
 
 ```bash
-# Replace osm-system with the namespace where OSM is installed
+# Replace osm-system with the namespace where osm-edge is installed
 kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}'  --type=merge
 ```
 
@@ -53,7 +53,7 @@ kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"featureFlag
     `osm-controller` 从 osm 网格控制平面命名空间（默认为 `osm-system`）中的 `osm-mesh-config` `MeshConfig` 自定义资源中检索出口配置。 使用 `kubectl patch` 将 `osm-mesh-config` 资源中的 `enableEgress` 设置为 `true`。
 
    ```bash
-   # Replace osm-system with the namespace where OSM is installed
+   # Replace osm-system with the namespace where osm-edge is installed
    kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"enableEgress":true}}}' --type=merge
    ```
 
@@ -71,7 +71,7 @@ kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"featureFlag
    使用 `kubectl patch` 将 `osm-mesh-config` 资源中的 `enableEngress` 设置为 `false`。
    
    ```bash
-   # Replace osm-system with the namespace where OSM is installed
+   # Replace osm-system with the namespace where osm-edge is installed
    kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"enableEgress":false}}}'  --type=merge
    ```
 

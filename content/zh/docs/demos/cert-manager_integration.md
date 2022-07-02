@@ -39,7 +39,7 @@ weight: 30
     创建用于安装 osm-edge 的命名空间。
     
     ```bash
-    export osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+    export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
     kubectl create namespace "$osm_namespace"
     ```
 

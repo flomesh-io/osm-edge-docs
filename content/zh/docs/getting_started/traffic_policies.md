@@ -17,7 +17,7 @@ weight: 3
 
 ### 如何检查流量策略模式
 
-检查是否许可流量策略模式被使能，可以通过对在 `osm-mesh-config` `MeshConfig` 资源中的 `enablePermissiveTrafficPolicyMode` 键获取值来看。
+检查是否启用宽松许可流量策略模式，可以通过对在 `osm-mesh-config` `MeshConfig` 资源中的 `enablePermissiveTrafficPolicyMode` 键获取值来看。
 
 ```bash
 # Replace osm-system with osm-controller's namespace if using a non default namespace

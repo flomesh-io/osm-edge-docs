@@ -28,7 +28,7 @@ weight: 21
 1. 启用宽松模式
 
     ```bash
-    osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+    osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
     kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
     ```
 

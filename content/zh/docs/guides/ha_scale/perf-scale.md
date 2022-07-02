@@ -12,7 +12,6 @@ type: docs
 
 ## 过程
 
-The testing mesh contains two types of services. One is a load generator (modified from [wrk2](https://github.com/giltene/wrk2)), which can send requests at specified rate, load balanced among all other services in the mesh. Currently we test HTTP 1 requests only. The load generator serves as the client side of a request. Throughout our test, there will be at most one load generator service. The other type of service is a simple echo application that replies with whatever it receives from an inbound request. It serves as the server side of a request. We can deploy multiple copies of the echo application in the mesh. In short, the mesh topology is a typical 1-to-N service architecture.
 测试网格包含两种类型的服务。一种是负载生成器（修改自 [wrk2](https://github.com/giltene/wrk2)），它可以以指定的速率发送请求，在网格中的所有其他服务之间进行负载平衡。目前我们只测试 HTTP 1 请求。负载生成器充当请求的客户端。在我们的整个测试过程中，最多会有一个负载生成器服务。另一种类型的服务是一个简单的回显应用，它会回复从入站请求中接收到的任何内容。它充当请求的服务器端。我们可以在网格中部署回显应用的多个副本。简而言之，网状拓扑是典型的 1 对 N 服务架构。
 
 <p align="center">

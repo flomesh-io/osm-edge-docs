@@ -14,10 +14,10 @@ weight: 2
 
     当使用 `osm install --set=osm.deployPrometheus=true` 安装 Pormetheus，在 osm-edge 控制平面组件所在的 namespace 下 (默认为 `osm-system`)，应当存在一个命名类似 `osm-prometheus-5794755b9f-rnvlr` 的 Pod
 
-    如果没有找到类似的 Pod，通过 `helm` 安装 OSM Helm chart 时，请确认将 `osm.deployPrometheus` 选项设置为 `true`：
+    如果没有找到类似的 Pod，通过 `helm` 安装 osm-edge Helm chart 时，请确认将 `osm.deployPrometheus` 选项设置为 `true`：
 
     ```console
-    $ helm get values -a <mesh name> -n <OSM namespace>
+    $ helm get values -a <mesh name> -n <osm-edge namespace>
     ```
 
     如果选项被设置为 `true` 以外的值，重新使用 `osm install` 安装 osm-edge，并添加 `--set=osm.deployPrometheus=true` 选项。
@@ -27,7 +27,7 @@ weight: 2
     在上一个步骤中定位的 Prometheus Pod 应当处于 Running 状态，并且所有的容器是就绪的，和下面 `kubectl get` 的输出类似：
 
     ```console
-    $ # 假设 OSM 被安装到 osm-system 命名空间下：
+    $ # 假设 osm-edge 被安装到 osm-system 命名空间下：
     $ kubectl get pods -n osm-system -l app=osm-prometheus
     NAME                              READY   STATUS    RESTARTS   AGE
     osm-prometheus-5794755b9f-67p6r   1/1     Running   0          27m
@@ -36,7 +36,7 @@ weight: 2
     如果 Pod 不是在 Running 状态，或者相关的容器没有就绪，使用 `kubectl describe` 查找其他潜在的问题：
 
     ```console
-    $ # 假设 OSM 被安装到 osm-system 命名空间下：
+    $ # 假设 osm-edge 被安装到 osm-system 命名空间下：
     $ kubectl describe pods -n osm-system -l app=osm-prometheus
     ```
 
@@ -79,7 +79,7 @@ weight: 2
     下一步，检查和确保命名空间被标注了 `openservicemesh.io/metrics: enabled`：
 
     ```console
-    $ # 假设 OSM 被安装到 os-system 命名空间下：
+    $ # 假设 osm-edge 被安装到 os-system 命名空间下：
     $ kubectl get namespace <namespace> -o jsonpath='{.metadata.annotations.openservicemesh\.io/metrics}'
     enabled
     ```

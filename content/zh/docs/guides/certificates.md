@@ -3,6 +3,7 @@ title: "证书管理"
 description: "osm-edge 使用 mTLS 为 Pod 间的数据加密，就像 Pipy 和 服务标识那样"
 type: docs
 weight: 10
+draft: true
 ---
 
 # 证书管理
@@ -59,7 +60,7 @@ kubectl get secret -n $osm_namespace $osm_ca_bundle -o jsonpath='{.data.ca\.crt}
 
 1. 删除在 osm-edge 命名空间里的 `osm-ca-bundle` 证书
    ```console
-   export osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+   export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
    kubectl delete secret osm-ca-bundle -n $osm_namespace
    ```
 
