@@ -23,7 +23,7 @@ weight: 25
 
 在 default 命名空间下使用 `helm` 安装 Prometheus 实例。
 
-```
+```bash
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 helm install stable prometheus-community/prometheus
@@ -51,14 +51,14 @@ $ kubectl get configmap
 
 NAME                             DATA   AGE
 ...
-stable-prometheus-alertmanager   1      18m
-stable-prometheus-server         5      18m
+stable-prometheus-alertmanager   2      29s
+stable-prometheus-server         6      29s
 ...
 ```
 
 使用以下内容创建 `update-prometheus-configmap.yaml`：
 
-```
+```yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -290,13 +290,13 @@ data:
 
 使用 `kubectl apply` 来更新 Prometheus 服务器 configmap。
 
-```
+```bash
 kubectl apply -f update-prometheus-configmap.yaml
 ```
 
 验证 Prometheus 是否能够通过使用 `kubectl port-forward` 在 Prometheus 管理应用程序和开发机器之间转发流量来抓取 osm-edge 网格和 API 端点。
 
-```
+```bash
 export POD_NAME=$(kubectl get pods -l "app=prometheus,component=server" -o jsonpath="{.items[0].metadata.name}")
 kubectl port-forward $POD_NAME 9090
 ```
@@ -314,7 +314,7 @@ kubectl port-forward $POD_NAME 9090
 
 使用 `helm` 部署 Grafana 实例到集群的 default 命名空间中。
 
-```
+```bash
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
 helm install grafana/grafana --generate-name
@@ -322,14 +322,14 @@ helm install grafana/grafana --generate-name
 
 使用 `kubectl get secret` 来显示 Grafana 的管理员密码。
 
-```
+```bash
 export SECRET_NAME=$(kubectl get secret -l "app.kubernetes.io/name=grafana" -o jsonpath="{.items[0].metadata.name}")
 kubectl get secret $SECRET_NAME -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 ```
 
 使用 `kubectl port-forward` 来转发 Grafana 管理应用和开发机器间的流量。
 
-```
+```bash
 export POD_NAME=$(kubectl get pods -l "app.kubernetes.io/name=grafana" -o jsonpath="{.items[0].metadata.name}")
 kubectl port-forward $POD_NAME 3000
 ```

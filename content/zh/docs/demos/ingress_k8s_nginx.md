@@ -9,25 +9,31 @@ weight: 11
 
 ## 先决条件
 
-- Kubernetes cluster running Kubernetes {{< param min_k8s_version >}} or greater.
-- Have `kubectl` available to interact with the API server.
-- Have osm-edge version >= v0.10.0 installed.
-- Have Kubernetes Nginx Ingress Controller installed. Refer to the [deployment guide](https://kubernetes.github.io/ingress-nginx/deploy/) to install it.
 - Kubernetes 集群版本 {{< param min_k8s_version >}} 或者更高。
 - 使用 `kubectl` 与 API server 交互。
-- 安装的 osm-edge 版本不低于 v0.10.0。
+- 安装的 osm-edge 版本不低于 v1.1.0。
 - 已安装 `osm`  命令行工具，用于管理服务网格。
+- 以安装 `helm` 命令行工具，用于安装 Nginx 入口控制器。
 
 ## 演示
 
-首先，注意 osm-edge 和 Nginx 入口控制器安装的相关细节：
+首先，部署 Nginx 入口控制器：
+
+```bash
+nginx_ingress_namespace=ingress-nginx # replace ingress-nginx with the namespace where Nginx will be installed
+helm upgrade --install ingress-nginx ingress-nginx \
+  --repo https://kubernetes.github.io/ingress-nginx \
+  --namespace $nginx_ingress_namespace --create-namespace \
+  --set controller.service.httpPort.port="80"
+```
+
+注意 osm-edge 和 Nginx 入口控制器安装的相关细节：
 
 ```bash
 osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
 osm_mesh_name=osm # replace osm with the mesh name (use `osm mesh list` command)
 
-nginx_ingress_namespace=<nginx-namespace> # replace <nginx-namespace> with the namespace where Nginx is installed
-nginx_ingress_service=<nginx-ingress-controller-service> # replace <nginx-ingress-controller-service> with the name of the nginx ingress controller service
+nginx_ingress_service=ingress-nginx-controller # replace ingress-nginx-controller with the name of the nginx ingress controller service
 nginx_ingress_host="$(kubectl -n "$nginx_ingress_namespace" get service "$nginx_ingress_service" -o jsonpath='{.status.loadBalancer.ingress[0].ip}')"
 nginx_ingress_port="$(kubectl -n "$nginx_ingress_namespace" get service "$nginx_ingress_service" -o jsonpath='{.spec.ports[?(@.name=="http")].port}')"
 ```
@@ -109,9 +115,9 @@ EOF
 ```console
 $ curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
 HTTP/1.1 200 OK
-Date: Wed, 18 Aug 2021 18:12:35 GMT
+Date: Mon, 04 Jul 2022 06:55:26 GMT
 Content-Type: application/json
-Content-Length: 366
+Content-Length: 346
 Connection: keep-alive
 access-control-allow-origin: *
 access-control-allow-credentials: true

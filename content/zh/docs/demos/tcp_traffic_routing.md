@@ -109,10 +109,10 @@ When using SMI traffic policy mode, explicit traffic policies must be configured
     apiVersion: specs.smi-spec.io/v1alpha4
     kind: TCPRoute
     metadata:
-    name: tcp-echo-route
-    namespace: tcp-demo
+      name: tcp-echo-route
+      namespace: tcp-demo
     spec:
-    matches:
+      matches:
         ports:
         - 9000
     ---
@@ -120,19 +120,19 @@ When using SMI traffic policy mode, explicit traffic policies must be configured
     kind: TrafficTarget
     apiVersion: access.smi-spec.io/v1alpha3
     metadata:
-    name: tcp-access
-    namespace: tcp-demo
+      name: tcp-access
+      namespace: tcp-demo
     spec:
-    destination:
+      destination:
         kind: ServiceAccount
         name: tcp-echo
         namespace: tcp-demo
-    sources:
-    - kind: ServiceAccount
+      sources:
+      - kind: ServiceAccount
         name: curl
         namespace: curl
-    rules:
-    - kind: TCPRoute
+      rules:
+      - kind: TCPRoute
         name: tcp-echo-route
     EOF
     ```

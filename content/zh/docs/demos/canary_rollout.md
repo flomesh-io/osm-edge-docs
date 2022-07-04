@@ -94,25 +94,25 @@ weight: 21
     ```console
     for i in {1..10}; do kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -sI http://httpbin.httpbin:14001/json | egrep 'HTTP|pod'; done
     HTTP/1.1 200 OK
-    pod: httpbin-v1-77c99dccc9-q2gvt
+    pod: httpbin-v1-77c99dccc9-r78z7
     HTTP/1.1 200 OK
-    pod: httpbin-v1-77c99dccc9-q2gvt
+    pod: httpbin-v1-77c99dccc9-r78z7
     HTTP/1.1 200 OK
-    pod: httpbin-v1-77c99dccc9-q2gvt
+    pod: httpbin-v1-77c99dccc9-r78z7
     HTTP/1.1 200 OK
-    pod: httpbin-v1-77c99dccc9-q2gvt
+    pod: httpbin-v1-77c99dccc9-r78z7
     HTTP/1.1 200 OK
-    pod: httpbin-v1-77c99dccc9-q2gvt
+    pod: httpbin-v1-77c99dccc9-r78z7
     HTTP/1.1 200 OK
-    pod: httpbin-v1-77c99dccc9-q2gvt
+    pod: httpbin-v1-77c99dccc9-r78z7
     HTTP/1.1 200 OK
-    pod: httpbin-v1-77c99dccc9-q2gvt
+    pod: httpbin-v1-77c99dccc9-r78z7
     HTTP/1.1 200 OK
-    pod: httpbin-v1-77c99dccc9-q2gvt
+    pod: httpbin-v1-77c99dccc9-r78z7
     HTTP/1.1 200 OK
-    pod: httpbin-v1-77c99dccc9-q2gvt
+    pod: httpbin-v1-77c99dccc9-r78z7
     HTTP/1.1 200 OK
-    pod: httpbin-v1-77c99dccc9-q2gvt
+    pod: httpbin-v1-77c99dccc9-r78z7
     ```
 
     上面的输出表明全部 10 个请求都返回了 HTTP 200 OK，这是 `httpbin-v1` pod 的响应。
@@ -145,27 +145,27 @@ weight: 21
 10. 确认流量按照后端服务指定的权重比例拆分。由于 `v1` 和 `v2` 都是 50 的权重，请求应该像下面一样负载均衡到两个版本。
 
     ```console
-    $ for i in {1..10}; do kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -sI http://httpbin.httpbin:14001/json | egrep 'HTTP|pod'; done
+    for i in {1..10}; do kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -sI http://httpbin.httpbin:14001/json | egrep 'HTTP|pod'; done
     HTTP/1.1 200 OK
-    pod: httpbin-v2-6b48697db-cdqld
+    pod: httpbin-v2-6b48697db-hh4vz
     HTTP/1.1 200 OK
-    pod: httpbin-v1-77c99dccc9-q2gvt
+    pod: httpbin-v1-77c99dccc9-r78z7
     HTTP/1.1 200 OK
-    pod: httpbin-v1-77c99dccc9-q2gvt
+    pod: httpbin-v2-6b48697db-hh4vz
     HTTP/1.1 200 OK
-    pod: httpbin-v1-77c99dccc9-q2gvt
+    pod: httpbin-v1-77c99dccc9-r78z7
     HTTP/1.1 200 OK
-    pod: httpbin-v2-6b48697db-cdqld
+    pod: httpbin-v2-6b48697db-hh4vz
     HTTP/1.1 200 OK
-    pod: httpbin-v2-6b48697db-cdqld
+    pod: httpbin-v1-77c99dccc9-r78z7
     HTTP/1.1 200 OK
-    pod: httpbin-v1-77c99dccc9-q2gvt
+    pod: httpbin-v2-6b48697db-hh4vz
     HTTP/1.1 200 OK
-    pod: httpbin-v2-6b48697db-cdqld
+    pod: httpbin-v1-77c99dccc9-r78z7
     HTTP/1.1 200 OK
-    pod: httpbin-v2-6b48697db-cdqld
+    pod: httpbin-v2-6b48697db-hh4vz
     HTTP/1.1 200 OK
-    pod: httpbin-v1-77c99dccc9-q2gvt
+    pod: httpbin-v1-77c99dccc9-r78z7
     ```
 
    上面的结果显示所有 10个请求都收到 HTTP 200 OK 的响应，基于 `TrafficSplit` 中配置的权重 `httpbin-v1` 和 `httpbin-v2` 各响应了 5个请求。
