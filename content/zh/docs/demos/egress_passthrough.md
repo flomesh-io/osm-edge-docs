@@ -49,7 +49,7 @@ weight: 16
     ```console
     $ kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -I https://httpbin.org:443
     HTTP/2 200
-    date: Tue, 16 Mar 2021 22:19:00 GMT
+    date: Mon, 04 Jul 2022 07:56:35 GMT
     content-type: text/html; charset=utf-8
     content-length: 9593
     server: gunicorn/19.9.0
@@ -66,6 +66,6 @@ weight: 16
     ```
     ```console
     $ kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -I https://httpbin.org:443
-	  curl: (7) Failed to connect to httpbin.org port 443 after 3 ms: Connection refused
-	  command terminated with exit code 7
+      curl: (7) Failed to connect to httpbin.org port 443 after 2 ms: Connection refused
+      command terminated with exit code 7
     ```

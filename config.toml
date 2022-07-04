@@ -1,4 +1,4 @@
-title = "Open Service Mesh"
+title = "Open Service Mesh For Edge"
 baseURL = "https://docs.openservicemesh.io/"
 languageCode = "zh"
 description = "Documentation for osm-edge"

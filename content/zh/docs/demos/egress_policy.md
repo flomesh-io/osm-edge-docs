@@ -80,11 +80,13 @@ weight: 15
     ```console
     $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/get
     HTTP/1.1 200 OK
-    date: Thu, 13 May 2021 21:49:35 GMT
+    date: Mon, 04 Jul 2022 07:48:24 GMT
     content-type: application/json
-    content-length: 335
+    content-length: 313
+    server: gunicorn/19.9.0
     access-control-allow-origin: *
     access-control-allow-credentials: true
+    connection: keep-alive
     ```
 
 4. 确认在删除上面的策略之后，`curl` 客户端无法再访问 `http://httpbin.org:80/get`。
@@ -135,9 +137,9 @@ weight: 15
     ```console
     $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI https://httpbin.org:443/get
     HTTP/2 200
-    date: Thu, 13 May 2021 22:09:36 GMT
+    date: Mon, 04 Jul 2022 07:51:00 GMT
     content-type: application/json
-    content-length: 260
+    content-length: 258
     server: gunicorn/19.9.0
     access-control-allow-origin: *
     access-control-allow-credentials: true

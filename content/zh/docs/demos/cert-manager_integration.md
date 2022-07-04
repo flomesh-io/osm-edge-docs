@@ -166,14 +166,16 @@ weight: 30
     ```console
     $ kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -I http://httpbin.httpbin:14001
     HTTP/1.1 200 OK
-    date: Mon, 15 Mar 2021 22:45:23 GMT
+    server: gunicorn/19.9.0
+    date: Mon, 04 Jul 2022 09:34:11 GMT
     content-type: text/html; charset=utf-8
     content-length: 9593
     access-control-allow-origin: *
     access-control-allow-credentials: true
+    connection: keep-alive
     ```
 
-    `200 OK` 相应表明来自 `curl` 客户端发送到 `httpbin` 服务的请求成功了。应用 sidecar 代理间的流量是加密的，并使用 `cert-manager` 证书提供者颁发的证书完成 `双向 TLS（mTLS）`认证。
+    `200 OK` 相应表明来自 `curl` 客户端发送到 `httpbin` 服务的请求成功了。应用 sidecar 代理间的流量是加密的，并使用 `cert-manager` 证书提供者颁发的证书完成 `双向 TLS（mTLS）` 认证。
 
 
 [1]: https://cert-manager.io/

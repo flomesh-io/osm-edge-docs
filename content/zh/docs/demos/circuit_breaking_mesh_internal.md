@@ -3,6 +3,7 @@ title: "网格内服务的熔断"
 description: "为网格内服务配置熔断"
 type: docs
 weight: 21
+draft: true
 ---
 
 本指南演示如何为作为 osm-edge 托管服务网格一部分的目标配置熔断。
