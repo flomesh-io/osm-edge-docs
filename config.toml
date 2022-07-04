@@ -49,27 +49,27 @@ latexDashes = true
 [[menu.main]]
 	name = "Home"
 	weight = 10
-	url = "https://openservicemesh.io"
+	url = "https://osm-edge-docs.flomesh.io"
 [[menu.main]]
 	name = "Docs"
 	weight = 20
-	url = "https://docs.openservicemesh.io"
+	url = "https://osm-edge-docs.flomesh.io"
 [[menu.main]]
 	name = "Github"
 	weight = 30
-	url = "https://github.com/openservicemesh/osm"
-[[menu.main]]
-	name = "Blog"
-	weight = 40
-	url = "https://openservicemesh.io/blog"
-[[menu.main]]
-	name = "Slack"
-	weight = 50
-	url = "https://cloud-native.slack.com/archives/C018794NV1C"
-[[menu.main]]
-	name = "Twitter"
-	weight = 60
-	url = "https://twitter.com/openservicemesh"
+	url = "https://github.com/flomesh-io/osm-edge"
+# [[menu.main]]
+# 	name = "Blog"
+# 	weight = 40
+# 	url = "https://openservicemesh.io/blog"
+# [[menu.main]]
+# 	name = "Slack"
+# 	weight = 50
+# 	url = "https://cloud-native.slack.com/archives/C018794NV1C"
+# [[menu.main]]
+# 	name = "Twitter"
+# 	weight = 60
+# 	url = "https://twitter.com/openservicemesh"
 
 
 # Theme Additional params
@@ -79,7 +79,7 @@ offlineSearch = true
 offlineSearchSummaryLength = 200
 algolia_docsearch = false
 prism_syntax_highlighting = true
-project_home = "https://openservicemesh.io/"
+project_home = "https://github.com/flomesh-io/osm-edge"
 
 # Version params
 osm_branch = "main"
@@ -87,9 +87,9 @@ osm_edge_version = "v1.1.0"
 min_k8s_version = "v1.20.0"
 pipy_version = "0.5.0"
 
-[[params.versions]]
-  version = "v1.1 (latest)"
-  url = "https://release-v1-1.docs.openservicemesh.io/"
+# [[params.versions]]
+#   version = "v1.1 (latest)"
+#   url = "https://release-v1-1.docs.openservicemesh.io/"
 
 [params.ui]
 navbar_logo = true
@@ -100,5 +100,5 @@ ul_show = 1
 
 [params.ui.feedback]
 enable = true
-yes = 'Glad to hear it! Please <a href="https://github.com/openservicemesh/osm/issues/new">tell us how we can improve</a>.'
-no = 'Sorry to hear that. Please <a href="https://github.com/openservicemesh/osm/issues/new">tell us how we can improve</a>.'
+yes = 'Glad to hear it! Please <a href="https://github.com/flomesh-io/osm-edge/issues/new">tell us how we can improve</a>.'
+no = 'Sorry to hear that. Please <a href="https://github.com/flomesh-io/osm-edge/issues/new">tell us how we can improve</a>.'
