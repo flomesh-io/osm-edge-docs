@@ -44,7 +44,7 @@ osm install --set=osm.deployJaeger=true,osm.tracing.enable=true
 
 #### 链路追踪的配置项
 根据您是否已经安装了 osm-edge 或者安装 osm-edge 过程中是否部署了 Jaeger 和启用链路追踪，下面的章节概述了必要的配置修改。无论那种情况，下面提到的 `values.yaml` 中 `tracing` 的配置项将被修改，以指向您的 Jaeger 实例：
-1. `enable`: 设置为 `true` 使 Sidecar connection manager 发送链路追踪数据到一个指定的地址（集群）
+1. `enable`: 设置为 `true` 使 Sidecar 发送链路追踪数据到一个指定的地址（集群）
 2. `address`： 设置为您的 Jaeger 实例所在的目标集群
 3. `port`：设置为您期望使用的目标监听端口
 4. `endpoint`：设置为发送 span 的目标 API 地址或者 collector 接入点
@@ -206,7 +206,6 @@ kubectl logs "${POD}" -n "$BOOKBUYER_的命名空间" -c bookbuyer --tail=100 -f
 * `x-b3-spanid`
 * `x-b3-parentspanid`
 
-查看更多详细信息，请参考 [Sidecar链路追踪文档](https://www.Sidecarproxy.io/docs/Sidecar/latest/intro/arch_overview/observability/tracing)。
 
 ## Jaeger/链路追踪问题排查
 
@@ -224,7 +223,7 @@ true
 ```bash
 kubectl get meshconfig osm-mesh-config -n osm-system -o jsonpath='{.spec.observability.tracing}{"\n"}'
 ```
-检查 `address` 字段，确保 Sidecar 指向了您预期使用的 FQDN 地址。
+检查 `address` 字段，确保指向了您预期使用的 FQDN 地址。
 
 ### 3. 确认Pod是否启用tracing功能（查看环境变量）
 通过环境变量控制 Sidecar 是否启用 tracing 功能。
