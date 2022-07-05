@@ -8,14 +8,14 @@ weight: 4
 # 链路追踪
 开放边缘服务网格（osm-edge）可以选择安装 Jaeger 来进行链路追踪。同样，在安装过程中或着在运行时通过修改自定义资源 `osm-mesh-config` （`values.yaml` 中的 `tracing` 配置段落），来启用和配置链路追踪。任何时候，链路追踪都可以被启用，禁用或者配置，来支持 BYO 场景。
 
-当 osm-edge 部署并启用了链路追踪功能时，osm-edge 的控制平面将会使用 [用户提供的链路追踪信息](#链路追踪的配置项) 来引导 Evnoy 在合适的时候将追踪信息发送到合适的地点。如果链路追踪在启用时，缺少用户提供的配置项，osm-edge 将会使用 `values.yaml` 中的默认值。`tracing-address` 是一个 FQDN，表示那些被 osm-edge 注入的 Envoy 发送追踪信息的目的地。
+当 osm-edge 部署并启用了链路追踪功能时，osm-edge 的控制平面将会使用 [用户提供的链路追踪信息](#链路追踪的配置项) 来引导 Sidecar 在合适的时候将追踪信息发送到合适的地点。如果链路追踪在启用时，缺少用户提供的配置项，osm-edge 将会使用 `values.yaml` 中的默认值。`tracing-address` 是一个 FQDN，表示那些被 osm-edge 注入的 Sidecar 发送追踪信息的目的地。
 
 osm-edge 支持那些使用 Zipkin 协议的应用进行链路追踪。
 
 ## Jaeger
 [Jaeger](https://www.jaegertracing.io/) 是一个开源的分布式链路追踪系统，用于分布式系统的监控和故障排查。它能让您在您的系统中获得细粒度的监控指标和分布式追踪信息，然后您可以观测哪些微服务正在通信、请求发往何处、以及它们花了多少时间。您可以使用它来剖析特定的请求和相应，看看它们是在何时以及如何产生的。
 
-当链路追踪启用时，Jaeger 可以接收来自网格中 Evnoy 的 span，然后在通过端口转发后的 Jaeger 界面上查看和查询它。
+当链路追踪启用时，Jaeger 可以接收来自网格中 Sidecar 的 span，然后在通过端口转发后的 Jaeger 界面上查看和查询它。
 
 osm-edge 命令行提供了安装 osm-edge 同时部署 Jaeger 的能力，但也支持您在安装后，将 osm-edge 的链路追踪配置指向您自行管理的 Jaeger。
 
@@ -44,7 +44,7 @@ osm install --set=osm.deployJaeger=true,osm.tracing.enable=true
 
 #### 链路追踪的配置项
 根据您是否已经安装了 osm-edge 或者安装 osm-edge 过程中是否部署了 Jaeger 和启用链路追踪，下面的章节概述了必要的配置修改。无论那种情况，下面提到的 `values.yaml` 中 `tracing` 的配置项将被修改，以指向您的 Jaeger 实例：
-1. `enable`: 设置为 `true` 使 Envoy connection manager 发送链路追踪数据到一个指定的地址（集群）
+1. `enable`: 设置为 `true` 使 Sidecar connection manager 发送链路追踪数据到一个指定的地址（集群）
 2. `address`： 设置为您的 Jaeger 实例所在的目标集群
 3. `port`：设置为您期望使用的目标监听端口
 4. `endpoint`：设置为发送 span 的目标 API 地址或者 collector 接入点
@@ -206,7 +206,7 @@ kubectl logs "${POD}" -n "$BOOKBUYER_的命名空间" -c bookbuyer --tail=100 -f
 * `x-b3-spanid`
 * `x-b3-parentspanid`
 
-查看更多详细信息，请参考 [Envoy链路追踪文档](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/observability/tracing)。
+查看更多详细信息，请参考 [Sidecar链路追踪文档](https://www.Sidecarproxy.io/docs/Sidecar/latest/intro/arch_overview/observability/tracing)。
 
 ## Jaeger/链路追踪问题排查
 
@@ -224,32 +224,28 @@ true
 ```bash
 kubectl get meshconfig osm-mesh-config -n osm-system -o jsonpath='{.spec.observability.tracing}{"\n"}'
 ```
-检查 `address` 字段，确保 Envoy 指向了您预期使用的 FQDN 地址。
+检查 `address` 字段，确保 Sidecar 指向了您预期使用的 FQDN 地址。
 
-### 3. 确认链路追踪的配置如预期被正确使用
-往深一点调查，您可能也要检查一下 MeshConfig 中的配置值是否被正确使用。使用下面的命令，获取有问题的 pod 的配置，并将输出保存到一个文件当中。
-
+### 3. 确认Pod是否启用tracing功能（查看环境变量）
+通过环境变量控制 Sidecar 是否启用 tracing 功能。
+TRACING_ADDRESS：默认为 'jaeger.osm-system.svc.cluster.local:9411',
+TRACING_ENDPOINT：默认为 '/api/v2/spans',
+可以使用如下命令，查看pod的环境变量情况。
 ```bash
-osm proxy get config_dump -n <pod-namespace> <pod-name> > <file-name>
+kubectl describe pod/<pod-name> -n <pod-namespace> | grep "Environment:" -A 10
 ```
-使用您喜欢的文本编辑器打开文件并搜索 `envoy-tracing-cluster`。您应该可以看到正在使用的链路追踪配置。bookbuyer pod 的样例输出如下：
+样例输出如下：
 ```console
-"name": "envoy-tracing-cluster",
-      "type": "LOGICAL_DNS",
-      "connect_timeout": "1s",
-      "alt_stat_name": "envoy-tracing-cluster",
-      "load_assignment": {
-       "cluster_name": "envoy-tracing-cluster",
-       "endpoints": [
-        {
-         "lb_endpoints": [
-          {
-           "endpoint": {
-            "address": {
-             "socket_address": {
-              "address": "jaeger.osm-system.svc.cluster.local",
-              "port_value": 9411
-        [...]
+Environment:
+      POD_UID:              (v1:metadata.uid)
+      POD_NAME:             bookwarehouse-85bcc46489-7fjzf (v1:metadata.name)
+      POD_NAMESPACE:        bookwarehouse (v1:metadata.namespace)
+      POD_IP:               (v1:status.podIP)
+      TRACING_ADDRESS:      jaeger.osm-system.svc.cluster.local:9411
+      TRACING_ENDPOINT:     /api/v2/spans
+      POD_CONTROLLER_KIND:  Deployment
+      POD_CONTROLLER_NAME:  bookwarehouse
+      SERVICE_ACCOUNT:      (v1:spec.serviceAccountName)
 ```
 
 ### 4. 确认 osm-edge 的控制器已安装且 Jaeger 被自动部署 [可选]
