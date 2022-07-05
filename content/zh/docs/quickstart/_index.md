@@ -45,7 +45,8 @@ osm install \
     --set=osm.enablePermissiveTrafficPolicy=true \
     --set=osm.deployPrometheus=true \
     --set=osm.deployGrafana=true \
-    --set=osm.deployJaeger=true
+    --set=osm.deployJaeger=true \
+    --set=osm.tracing.enable=true
 ```
 ## 部署演示应用
 
