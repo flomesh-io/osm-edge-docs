@@ -119,7 +119,7 @@ Fluent Bit 提供了 Azure 输出插件，可以像下面一样，将日志发�
 osm install --set=osm.enableFluentbit=true,osm.fluentBit.enableProxySupport=true,osm.fluentBit.httpProxy=<http-代理-主机:端口>,osm.fluentBit.httpsProxy=<https-代理-主机:端口>
 ```
 
-或者，您可以在 Helm chat中，和下面一样，通过修改 `values.yaml` 的值来配置：
+或者，您可以在 Helm chart中，和下面一样，通过修改 `values.yaml` 的值来配置：
 1. 修改 `enableProxySupport` 为 `true`
 
 2. 修改 httpProxy 和 httpsProxy 的值为 `"http://<主机>:<端口>"`。如果您的代理服务器需要 basic authentication, 您可以加入代理的用户名和密码，例如：`http://<用户名>:<密码>@<主机>:<端口>`
