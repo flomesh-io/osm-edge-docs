@@ -10,7 +10,7 @@ weight: 3
 
 ## Prometheus 与 osm-edge 集成
 
-To familiarize yourself on how osm-edge works with Prometheus, try installing a new mesh with sample applications to see which metrics are collected. 为了熟悉 osm-edge 如何与 Promethues 工作，试着安装网格和示例应用来看收集了哪些指标。
+为了熟悉 osm-edge 如何与 Promethues 工作，试着安装网格和示例应用来看收集了哪些指标。
 
 1. 安装 osm-edge 并使用你自己的 Prometheus 实例：
 
@@ -18,6 +18,8 @@ To familiarize yourself on how osm-edge works with Prometheus, try installing a 
    $ osm install --set osm.deployPrometheus=true,osm.enablePermissiveTrafficPolicy=true
    OSM installed successfully in namespace [osm-system] with mesh name [osm]
    ```
+   如果需要也可以手工开启OSM的“流量宽松模式”,用于后面的测试。   
+   kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}' --type=merge
 
 1. 为示例工作负载创建命名空间：
 
@@ -68,23 +70,22 @@ To familiarize yourself on how osm-edge works with Prometheus, try installing a 
    ```console
    $ kubectl exec -n metrics-demo -ti "$(kubectl get pod -n metrics-demo -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- sh -c 'while :; do curl -i httpbin.metrics-demo:14001/status/200; sleep 1; done'
    HTTP/1.1 200 OK
-   server: envoy
-   date: Tue, 23 Mar 2021 17:27:44 GMT
+   server: gunicorn/19.9.0
+   date: Wed, 06 Jul 2022 02:53:16 GMT
    content-type: text/html; charset=utf-8
    access-control-allow-origin: *
    access-control-allow-credentials: true
    content-length: 0
-   x-envoy-upstream-service-time: 1
+   connection: keep-alive
 
    HTTP/1.1 200 OK
-   server: envoy
-   date: Tue, 23 Mar 2021 17:27:45 GMT
+   server: gunicorn/19.9.0
+   date: Wed, 06 Jul 2022 02:53:17 GMT
    content-type: text/html; charset=utf-8
    access-control-allow-origin: *
    access-control-allow-credentials: true
    content-length: 0
-   x-envoy-upstream-service-time: 2
-
+   connection: keep-alive
    ...
    ```
 
@@ -101,7 +102,7 @@ To familiarize yourself on how osm-edge works with Prometheus, try installing a 
    在浏览器中访问 http://localhost:7070 查看 Prometheus 用户界面。下面的查询会显示 curl pod 每秒发送多少请求到 httpbin pod，应该是 1:
 
    ```
-   irate(envoy_cluster_upstream_rq_xx{source_service="curl", envoy_cluster_name="metrics-demo/httpbin"}[30s])
+   irate(sidecar_cluster_upstream_rq_xx{source_service="curl", sidecar_cluster_name="metrics-demo/httpbin"}[30s])
    ```
 
    在 Prometheus 用户界面中可随意访问其他的指标。
