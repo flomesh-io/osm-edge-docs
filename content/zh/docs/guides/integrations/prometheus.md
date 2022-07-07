@@ -18,7 +18,8 @@ weight: 3
    $ osm install --set osm.deployPrometheus=true,osm.enablePermissiveTrafficPolicy=true
    OSM installed successfully in namespace [osm-system] with mesh name [osm]
    ```
-   如果需要也可以手工开启OSM的“流量宽松模式”,用于后面的测试。   
+   如果需要也可以手工开启 OSM 的“流量宽松模式”，用于后面的测试。   
+   ```console.
    kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}' --type=merge
 
 1. 为示例工作负载创建命名空间：
