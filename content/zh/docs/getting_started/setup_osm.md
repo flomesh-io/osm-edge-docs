@@ -70,7 +70,8 @@ osm install \
     --set=osm.enablePermissiveTrafficPolicy=true \
     --set=osm.deployPrometheus=true \
     --set=osm.deployGrafana=true \
-    --set=osm.deployJaeger=true
+    --set=osm.deployJaeger=true \
+    --set=osm.tracing.enable=true
 ```
 
 在 [可观察性文档](/docs/guides/observability/) 中阅读有关 osm-edge 与 Prometheus、Grafana 和 Jaeger 集成的更多信息。
