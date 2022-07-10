@@ -111,7 +111,7 @@ data:
         - role: pod
         metric_relabel_configs:
         - source_labels: [__name__]
-          regex: '(envoy_server_live|envoy_cluster_health_check_.*|envoy_cluster_upstream_rq_xx|envoy_cluster_upstream_cx_active|envoy_cluster_upstream_cx_tx_bytes_total|envoy_cluster_upstream_cx_rx_bytes_total|envoy_cluster_upstream_rq_total|envoy_cluster_upstream_cx_destroy_remote_with_active_rq|envoy_cluster_upstream_cx_connect_timeout|envoy_cluster_upstream_cx_destroy_local_with_active_rq|envoy_cluster_upstream_rq_pending_failure_eject|envoy_cluster_upstream_rq_pending_overflow|envoy_cluster_upstream_rq_timeout|envoy_cluster_upstream_rq_rx_reset|^osm.*)'
+          regex: '(sidecar_server_live|sidecar_cluster_health_check_.*|sidecar_cluster_upstream_rq_xx|sidecar_cluster_upstream_cx_active|sidecar_cluster_upstream_cx_tx_bytes_total|sidecar_cluster_upstream_cx_rx_bytes_total|sidecar_cluster_upstream_rq_total|sidecar_cluster_upstream_cx_destroy_remote_with_active_rq|sidecar_cluster_upstream_cx_connect_timeout|sidecar_cluster_upstream_cx_destroy_local_with_active_rq|sidecar_cluster_upstream_rq_pending_failure_eject|sidecar_cluster_upstream_rq_pending_overflow|sidecar_cluster_upstream_rq_timeout|sidecar_cluster_upstream_rq_rx_reset|^osm.*)'
           action: keep
         relabel_configs:
         - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
@@ -135,7 +135,7 @@ data:
         - regex: '(__meta_kubernetes_pod_label_app)'
           action: labelmap
           replacement: source_service
-        - regex: '(__meta_kubernetes_pod_label_osm_envoy_uid|__meta_kubernetes_pod_label_pod_template_hash|__meta_kubernetes_pod_label_version)'
+        - regex: '(__meta_kubernetes_pod_label_osm_sidecar_uid|__meta_kubernetes_pod_label_pod_template_hash|__meta_kubernetes_pod_label_version)'
           action: drop
         # for non-ReplicaSets (DaemonSet, StatefulSet)
         # __meta_kubernetes_pod_controller_kind=DaemonSet
@@ -186,43 +186,43 @@ data:
           target_label: __address__
         metric_relabel_configs:
         - source_labels: [__name__]
-          regex: 'envoy_.*osm_request_(total|duration_ms_(bucket|count|sum))'
+          regex: 'sidecar_.*osm_request_(total|duration_ms_(bucket|count|sum))'
           action: keep
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_(\d{3})_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_(\d{3})_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
           target_label: response_code
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_(.*)_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_(.*)_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
           target_label: source_namespace
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_.*_source_kind_(.*)_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_.*_source_kind_(.*)_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
           target_label: source_kind
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_(.*)_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_(.*)_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
           target_label: source_name
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_(.*)_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_(.*)_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
           target_label: source_pod
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_(.*)_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_(.*)_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
           target_label: destination_namespace
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_(.*)_destination_name_.*_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_(.*)_destination_name_.*_destination_pod_.*_osm_request_total
           target_label: destination_kind
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_(.*)_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_(.*)_destination_pod_.*_osm_request_total
           target_label: destination_name
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_(.*)_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_(.*)_osm_request_total
           target_label: destination_pod
         - source_labels: [__name__]
           action: replace
@@ -231,35 +231,35 @@ data:
 
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_(.*)_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_(.*)_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
           target_label: source_namespace
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_.*_source_kind_(.*)_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_.*_source_kind_(.*)_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
           target_label: source_kind
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_.*_source_kind_.*_source_name_(.*)_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_.*_source_kind_.*_source_name_(.*)_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
           target_label: source_name
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_(.*)_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_(.*)_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
           target_label: source_pod
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_(.*)_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_(.*)_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
           target_label: destination_namespace
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_(.*)_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_(.*)_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
           target_label: destination_kind
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_(.*)_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_(.*)_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
           target_label: destination_name
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_(.*)_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_(.*)_osm_request_duration_ms_(bucket|sum|count)
           target_label: destination_pod
         - source_labels: [__name__]
           action: replace
@@ -351,8 +351,8 @@ osm-edge Dashboards 可通过 [osm-edge GitHub 存储库](https://github.com/flo
 
 要导入仪表盘：
 * 鼠标放在 `+` 上并点击 `Import`
-* 从 [osm-mesh-envoy-details dashboard](https://raw.githubusercontent.com/flomesh-io/osm-edge/{{< param osm_branch >}}/charts/osm/grafana/dashboards/osm-mesh-envoy-details.json) 复制 JSON 内容并拷贝到 `Import via panel json`。
+* 从 [osm-mesh-sidecar-details dashboard](https://raw.githubusercontent.com/flomesh-io/osm-edge/{{< param osm_branch >}}/charts/osm/grafana/dashboards/osm-mesh-sidecar-details.json) 复制 JSON 内容并拷贝到 `Import via panel json`。
 * 选择 `Load`。
 * 选择 `Import`。
 
-确保看到 `Mesh and Envoy Details` 仪表盘创建。
+确保看到 `Mesh and Sidecar Details` 仪表盘创建。
