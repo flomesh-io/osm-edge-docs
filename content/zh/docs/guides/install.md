@@ -47,7 +47,7 @@ _Note: 通过 CLI 安装的 osm-edge 强制部署唯一一个网格在集群里�
 
 可以通过覆盖值文件来配置 osm-edge 安装。
 
-1. 创建一个 [values.yaml 文件](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/values.yaml)的副本（确保使用的针对flomesh-io/osm-edge的版本是要安装的）。
+1. 创建一个 [values.yaml 文件](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/values.yaml)的副本（确保使用的针对flomesh-io/osm-edge的版本是要安装的）。关于 values.yaml 中的参数说明，可以参考 [osm-edge Helm Chart 说明文档](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/charts/osm/README.md)。
 2. 修改任何想要定制的值。可以忽略所有其他的值。
 
    - 要查阅哪些值对应到 MeshConfig 设定，请参阅 [osm-edge MeshConfig 文档](/docs/guides/mesh_config)
