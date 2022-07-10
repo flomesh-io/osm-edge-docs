@@ -26,7 +26,7 @@ type: docs
 | E1004      | The Ingress client created by the osm-controller to monitor Ingress resources    |
 |            | failed to start.                                                                 |
 +------------+----------------------------------------------------------------------------------+
-| E1005      | The Reconciler client to monitor updates and deletes to osm-edge's CRDs and mutating  |
+| E1005      | The Reconciler client to monitor updates and deletes to OSM's CRDs and mutating  |
 |            | webhook failed to start.                                                         |
 +------------+----------------------------------------------------------------------------------+
 | E2000      | An error was encountered while attempting to deduplicate traffic matching        |
@@ -145,37 +145,37 @@ type: docs
 +------------+----------------------------------------------------------------------------------+
 | E5002      | The proxy UUID obtained from parsing the XDS certificate's common name did not   |
 |            | match the osm-proxy-uuid label value for any pod. The pod associated with the    |
-|            | specified Envoy proxy could not be found.                                        |
+|            | specified Sidecar proxy could not be found.                                      |
 +------------+----------------------------------------------------------------------------------+
 | E5003      | A pod in the mesh belongs to more than one service. By Open Service Mesh         |
 |            | convention the number of services a pod can belong to is 1. This is a limitation |
 |            | we set in place in order to make the mesh easy to understand and reason about.   |
-|            | When a pod belongs to more than one service XDS will not program the Envoy       |
+|            | When a pod belongs to more than one service XDS will not program the Sidecar     |
 |            | proxy, leaving it out of the mesh.                                               |
 +------------+----------------------------------------------------------------------------------+
-| E5004      | The Envoy proxy data structure created by ADS to reference an Envoy proxy        |
+| E5004      | The Sidecar proxy data structure created by ADS to reference an Sidecar proxy    |
 |            | sidecar from a pod's osm-proxy-uuid label could not be configured.               |
 +------------+----------------------------------------------------------------------------------+
 | E5005      | A GRPC connection failure occurred and the ADS is no longer able to receive      |
 |            | DiscoveryRequests.                                                               |
 +------------+----------------------------------------------------------------------------------+
-| E5006      | The DiscoveryResponse configured by ADS failed to send to the Envoy proxy.       |
+| E5006      | The DiscoveryResponse configured by ADS failed to send to the Sidecar proxy.     |
 +------------+----------------------------------------------------------------------------------+
 | E5007      | The resources to be included in the DiscoveryResponse could not be generated.    |
 +------------+----------------------------------------------------------------------------------+
 | E5008      | The aggregated resources generated for a DiscoveryResponse failed to be          |
-|            | configured as a new snapshot in the Envoy xDS Aggregate Discovery Services       |
+|            | configured as a new snapshot in the Sidecar xDS Aggregate Discovery Services     |
 |            | cache.                                                                           |
 +------------+----------------------------------------------------------------------------------+
 | E5009      | The ServiceIdentity specified in the XDS certificate CN could not be obtained    |
 |            | when creating SDS DiscoveryRequests corresponding to all types of secrets        |
 |            | associated with the proxy.                                                       |
 +------------+----------------------------------------------------------------------------------+
-| E5010      | The Aggregate Discovery Server (ADS) created by the osm-edge controller failed to     |
+| E5010      | The Aggregate Discovery Server (ADS) created by the OSM controller failed to     |
 |            | start.                                                                           |
 +------------+----------------------------------------------------------------------------------+
-| E5011      | An Envoy proxy data structure representing a newly connected envoy proxy to the  |
-|            | XDS server could not be initialized.                                             |
+| E5011      | An Sidecar proxy data structure representing a newly connected sidecar proxy to  |
+|            | the XDS server could not be initialized.                                         |
 +------------+----------------------------------------------------------------------------------+
 | E5012      | The ServiceAccount referenced in the NodeID does not match the ServiceAccount    |
 |            | specified in the proxy certificate. The proxy was not allowed to be a part of    |
@@ -185,7 +185,7 @@ type: docs
 |            | received. The Stream Agreggated Resource server was terminated for the specified |
 |            | proxy.                                                                           |
 +------------+----------------------------------------------------------------------------------+
-| E5014      | The envoy proxy has not completed the initialization phase and it is not ready   |
+| E5014      | The sidecar proxy has not completed the initialization phase and it is not ready |
 |            | to receive broadcast updates from control plane related changes. New versions    |
 |            | should not be pushed if the first request has not be received. The broadcast     |
 |            | update was ignored for that proxy.                                               |
@@ -194,20 +194,20 @@ type: docs
 +------------+----------------------------------------------------------------------------------+
 | E5016      | The version of the DiscoveryRequest could not be parsed by ADS.                  |
 +------------+----------------------------------------------------------------------------------+
-| E5017      | An Envoy egress cluster which routes traffic to its original destination could   |
-|            | not be configured. When a Host is not specified in the cluster config, the       |
+| E5017      | An Sidecar egress cluster which routes traffic to its original destination       |
+|            | could not be configured. When a Host is not specified in the cluster config, the |
 |            | original destination is used.                                                    |
 +------------+----------------------------------------------------------------------------------+
-| E5018      | An Envoy egress cluster that routes traffic based on the specified Host resolved |
-|            | using DNS could not be configured.                                               |
+| E5018      | An Sidecar egress cluster that routes traffic based on the specified Host        |
+|            | resolved using DNS could not be configured.                                      |
 +------------+----------------------------------------------------------------------------------+
-| E5019      | An Envoy cluster that corresponds to a specified upstream service could not be   |
+| E5019      | An Sidecar cluster that corresponds to a specified upstream service could not be |
 |            | configured.                                                                      |
 +------------+----------------------------------------------------------------------------------+
-| E5020      | The meshed services corresponding a specified Envoy proxy could not be listed.   |
+| E5020      | The meshed services corresponding a specified Sidecar proxy could not be listed. |
 +------------+----------------------------------------------------------------------------------+
-| E5021      | Multiple Envoy clusters with the same name were configured. The duplicate        |
-|            | clusters will not be sent to the Envoy proxy in a ClusterDiscovery response.     |
+| E5021      | Multiple Sidecar clusters with the same name were configured. The duplicate      |
+|            | clusters will not be sent to the Sidecar proxy in a ClusterDiscovery response.   |
 +------------+----------------------------------------------------------------------------------+
 | E5022      | The application protocol specified for a port is not supported for ingress       |
 |            | traffic. The XDS filter chain for ingress traffic to the port was not created.   |

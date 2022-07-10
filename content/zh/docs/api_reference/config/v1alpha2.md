@@ -850,24 +850,24 @@ string
 </tr>
 <tr>
 <td>
-<code>envoyImage</code><br/>
+<code>sidecarImage</code><br/>
 <em>
 string
 </em>
 </td>
 <td>
-<p>EnvoyImage defines the container image used for the Envoy proxy sidecar.</p>
+<p>SidecarImage defines the container image used for the proxy sidecar.</p>
 </td>
 </tr>
 <tr>
 <td>
-<code>envoyWindowsImage</code><br/>
+<code>sideWindowsImage</code><br/>
 <em>
 string
 </em>
 </td>
 <td>
-<p>EnvoyWindowsImage defines the windows container image used for the Envoy proxy sidecar.</p>
+<p>SidecarWindowsImage defines the windows container image used for the proxy sidecar.</p>
 </td>
 </tr>
 <tr>
