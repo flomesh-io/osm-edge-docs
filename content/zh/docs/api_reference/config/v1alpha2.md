@@ -850,6 +850,30 @@ string
 </tr>
 <tr>
 <td>
+<code>sidecarClass</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>SidecarClass defines the class used for the proxy sidecar.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sidecarDrivers</code><br/>
+<em>
+<a href="#config.openservicemesh.io/v1alpha2.SidecarDriverSpec">
+[]SidecarDriverSpec
+</a>
+</em>
+</td>
+<td>
+<p>SidecarDrivers defines the sidecar supported.</p>
+</td>
+</tr>
+<tr>
+<td>
 <code>sidecarImage</code><br/>
 <em>
 string
@@ -958,6 +982,90 @@ string
 </td>
 <td>
 <p>ECDHCurves defines a list of ECDH curves that TLS connection supports. If not specified, the curves are [X25519, P-256] for non-FIPS build and P-256 for builds using BoringSSL FIPS.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.openservicemesh.io/v1alpha2.SidecarDriverSpec">SidecarDriverSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.openservicemesh.io/v1alpha2.MeshConfigSpec">MeshConfigSpec</a>)
+</p>
+<div>
+<p>SidecarDriverSpec is the type to represent OSM's sidecar driver define.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>sidecarName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>SidecarName defines the name of the sidecar driver.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sidecarImage</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>SidecarImage defines the container image used for the proxy sidecar.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sidecarImageWindowsImage</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>SidecarWindowsImage defines the windows container image used for the proxy sidecar.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>initContainerImage</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>InitContainerImage defines the container image used for the init container injected to meshed pods.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>proxyServerPort</code><br/>
+<em>
+uint32
+</em>
+</td>
+<td>
+<p>ProxyServerPort is the port on which the Discovery Service listens for new connections from Sidecars</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sidecarDisabledMTLS</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>SidecarDisabledMTLS defines whether mTLS is disabled.</p>
 </td>
 </tr>
 </tbody>
