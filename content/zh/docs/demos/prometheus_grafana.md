@@ -66,9 +66,9 @@ metadata:
 data:
   prometheus.yml: |
     global:
-      scrape_interval: 10s
-      scrape_timeout: 10s
-      evaluation_interval: 1m
+      scrape_interval: 15s
+      scrape_timeout: 15s
+      evaluation_interval: 30s
 
     scrape_configs:
       - job_name: 'kubernetes-apiservers'
@@ -304,7 +304,7 @@ kubectl port-forward $POD_NAME 9090
 在 web 浏览器中打开 `http://localhost:9090/targets` 来访问 Prometheus 管理应用，并验证端点是否连接、启动和正在执行抓取。
 
 <p align="center">
-  <img src="/docs/images/byo_guide/prom_targets.png" width="100%"/>
+  <img src="../images/byo_guide/prom_targets.png" width="100%"/>
 </p>
 <center><i>Targets with specific relabeling config established by osm-edge should be "up"</i></center><br>
 
@@ -347,11 +347,11 @@ kubectl port-forward $POD_NAME 3000
 
 ## Importing osm-edge Dashboards
 
-osm-edge Dashboards 可通过 [osm-edge GitHub 存储库](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards) 获得，可以在管理应用程序上以 json blobs 方式导入。
+osm-edge Dashboards 可通过 [osm-edge GitHub 存储库](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/charts/osm/grafana/pipy/dashboards) 获得，可以在管理应用程序上以 json blobs 方式导入。
 
 要导入仪表盘：
 * 鼠标放在 `+` 上并点击 `Import`
-* 从 [osm-mesh-sidecar-details dashboard](https://raw.githubusercontent.com/flomesh-io/osm-edge/{{< param osm_branch >}}/charts/osm/grafana/dashboards/osm-mesh-sidecar-details.json) 复制 JSON 内容并拷贝到 `Import via panel json`。
+* 从 [osm-mesh-sidecar-details dashboard](https://raw.githubusercontent.com/flomesh-io/osm-edge/{{< param osm_branch >}}/charts/osm/grafana/pipy/dashboards/osm-mesh-sidecar-details.json) 复制 JSON 内容并拷贝到 `Import via panel json`。
 * 选择 `Load`。
 * 选择 `Import`。
 
