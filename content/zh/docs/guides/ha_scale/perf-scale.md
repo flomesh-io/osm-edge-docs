@@ -1,14 +1,17 @@
 ---
 title: "性能和可扩展性"
-description: "控制平面和数据平面 sidecar 的性能基准测试以及开放边缘服务网格的可扩展性测试"
+description: "osm 的控制平面和数据平面 sidecar 的性能基准测试以及开放边缘服务网格的可扩展性测试"
 type: docs
+weight: 2
 ---
 
-开放边缘服务网格致力于在提供基本的服务网格功能的同时创建高性能的服务网格。本篇描述了如何对 osm-edge 进行性能基准测试和可扩展性测试。
+开放边缘服务网格致力于在提供基本的服务网格功能的同时创建高性能的服务网格。本篇描述了如何对 OSM 进行性能基准测试和可扩展性测试。
+
+此外，我们还进行了 osm-edge 与 osm 的基准测试，详细内容见 [osm-edge 数据平面基准测试](/docs/guides/ha_scale/benchmark)。
 
 ## 测试环境
 
-本测试是在 [Microsoft Azure Kubernetes Service](https://azure.microsoft.com/en-us/services/kubernetes-service/) 配置和管理的 Kubernetes 集群上进行的。集群拥有 100 个 Standard_DS2_v2 节点（每个节点有 2 个 vCPU 和 7GB 内存）。在测试确保只有一个 osm-edge 控制器 pod 使用默认的资源配额运行。osm-edge 配置在非宽松流量模式。
+本测试是在 [Microsoft Azure Kubernetes Service](https://azure.microsoft.com/en-us/services/kubernetes-service/) 配置和管理的 Kubernetes 集群上进行的。集群拥有 100 个 Standard_DS2_v2 节点（每个节点有 2 个 vCPU 和 7GB 内存）。在测试确保只有一个 osm 控制器 pod 使用默认的资源配额运行。osm 配置在非宽松流量模式。
 
 ## 过程
 
@@ -21,11 +24,11 @@ type: docs
 
 ## 性能
 
-在这个测试中，我们关注 osm-edge sidecar 带来的延迟开销和资源消耗。我们目前分别以 100、500、1000、2000 和 4000 RPS 测试每个 pod。
+在这个测试中，我们关注 osm sidecar 带来的延迟开销和资源消耗。我们目前分别以 100、500、1000、2000 和 4000 RPS 测试每个 pod。
 
 ### 延迟
 
-以下是安装和未安装 osm-edge 的不同 RPS 级别的请求延迟。增加的延迟来自客户端和服务器 sidecar。
+以下是安装和未安装 osm 的不同 RPS 级别的请求延迟。增加的延迟来自客户端和服务器 sidecar。
 
 <p align="center">
   <img src="/docs/images/perf/latency-wo-osm.png" width="650"/>
@@ -48,7 +51,7 @@ type: docs
 </thead>
 <tbody>
 <tr>
-<td>P99 latency w/o osm-edge (ms)</td>
+<td>P99 latency w/o osm (ms)</td>
 <td>4.4</td>
 <td>4.3</td>
 <td>4.2</td>
@@ -56,7 +59,7 @@ type: docs
 <td>4.5</td>
 </tr>
 <tr>
-<td>P99 latency w/ osm-edge (ms)</td>
+<td>P99 latency w/ osm (ms)</td>
 <td>9.6</td>
 <td>9.4</td>
 <td>9.7</td>
@@ -66,7 +69,7 @@ type: docs
 </tbody>
 </table>
 
-无论 osm-edge 是否存在，应用程序在测试的不同 RPS 级别上的性能都非常相似。osm-edge 在 99 个百分位延迟上增加了大约 5 毫秒的开销。请注意，我们的测试设置非常简单，只有一个客户端/服务器关系。实际可能会因更复杂的应用程序或网格上设置的不同流量策略而异。
+无论 osm 是否存在，应用程序在测试的不同 RPS 级别上的性能都非常相似。osm 在 99 个百分位延迟上增加了大约 5 毫秒的开销。请注意，我们的测试设置非常简单，只有一个客户端/服务器关系。实际可能会因更复杂的应用程序或网格上设置的不同流量策略而异。
 
 ### 资源消耗
 
