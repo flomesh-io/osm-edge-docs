@@ -18,7 +18,7 @@ export INSTALL_K3S_VERSION=v1.23.8+k3s1
 curl -sfL https://get.k3s.io | sh -s - --disable traefik --write-kubeconfig-mode 644 --write-kubeconfig ~/.kube/config
 ```
 
-> osm-edge支持的最低 Kubernetes 版本为1.20。
+> osm-edge 支持的最低 Kubernetes 版本为 {{< param min_k8s_version >}}。
 
 ## 下载并安装 osm-edge 命令行工具
 
