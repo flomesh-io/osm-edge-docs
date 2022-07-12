@@ -1,5 +1,5 @@
 title = "Open Service Mesh For Edge"
-baseURL = "https://docs.openservicemesh.io/"
+baseURL = "https://osm-edge-docs.flomesh.io/"
 languageCode = "zh"
 description = "Documentation for osm-edge"
 theme = "dosmy"
