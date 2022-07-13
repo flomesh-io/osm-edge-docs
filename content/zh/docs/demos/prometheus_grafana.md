@@ -304,7 +304,7 @@ kubectl port-forward $POD_NAME 9090
 在 web 浏览器中打开 `http://localhost:9090/targets` 来访问 Prometheus 管理应用，并验证端点是否连接、启动和正在执行抓取。
 
 <p align="center">
-  <img src="../images/byo_guide/prom_targets.png" width="100%"/>
+  <img src="/docs/images/byo_guide/prom_targets.png" width="100%"/>
 </p>
 <center><i>Targets with specific relabeling config established by osm-edge should be "up"</i></center><br>
 
