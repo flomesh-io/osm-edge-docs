@@ -28,7 +28,7 @@ OSM_VERSION={{< param osm_edge_version >}}
 curl -sL "https://github.com/flomesh-io/osm-edge/releases/download/$OSM_VERSION/osm-$OSM_VERSION-linux-amd64.tar.gz" | tar -vxzf -
 
 # macOS curl command only
-curl -sL "https://github.com/flomesh-io/osm-edge/releases/download/$OSM_VERSION/osm-$OSM_VERSION-darwin-amd64.tar.gz" | tar -vxzf -
+curl -sL "https://github.com/flomesh-io/osm-edge/releases/download/$OSM_VERSION/osm-edge-$OSM_VERSION-darwin-amd64.tar.gz" | tar -vxzf -
 ```
 
 `osm` 客户端二进制程序运行在您的客户端机器上，并且允许您在您的 Kubernetes 集群里管理 osm-edge。使用下面的命令在 Linux 或者 [Windows Linux 子系统 (WSL)](https://docs.microsoft.com/windows/wsl/about) 上基于 bash 的 shell 里面来安装 osm-edge `osm` 客户端二进制程序。这些命令复制 `osm` 客户端二进制程序到您 `PATH` 下面的标准用户程序位置里。
