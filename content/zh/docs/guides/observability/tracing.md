@@ -163,7 +163,7 @@ kubectl port-forward -n "$K8S_NAMESPACE" "$OSM_POD"  16686:16686
 
     a) 选择一个服务来查看它所有的 span。例如，您选择了 `bookbuyer` 并往回查看一个小时，就可以依照时间顺序查看它和 `bookstore-v1` 和 `bookstore-v2` 的交互。
     <p align="center">
-        <img src="/docs/images/jaeger-search-traces.png" width="100%"/>
+        <img src="../../images/jaeger-search-traces.png" width="100%"/>
     </p>
     <center><i>在 Jaeger 界面上查询 bookbuyer 的追踪记录</i></center><br>
 
@@ -171,13 +171,13 @@ kubectl port-forward -n "$K8S_NAMESPACE" "$OSM_POD"  16686:16686
 
     c) 选择多个项目来对比追踪信息。例如，您可以对比 `bookbuyer` 和 `bookstore-v1` 以及 `bookstore-v2` 某一时刻的的交互：
     <p align="center">
-        <img src="/docs/images/jaeger-compare-traces.png" width="100%"/>
+        <img src="../../images/jaeger-compare-traces.png" width="100%"/>
     </p>
     <center><i>`bookbuyer` 和 `bookstore-v1` 以及 `bookstore-v2` 的交互</i></center><br>
 
     d) 点击 `System Architecture` 标签页，可以看到一张各个应用之间交互/通信的图。它展示了应用之间的流量是如何流转的。
     <p align="center">
-        <img src="/docs/images/jaeger-system-architecture.png" width="40%"/>
+        <img src="../../images/jaeger-system-architecture.png" width="40%"/>
     </p>
     <center><i>bookstore 演示应用交互过程的有向无环图</i></center><br>
 
