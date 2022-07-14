@@ -19,7 +19,7 @@ osm-edge 可以选择使用 [FSM](git@github.com:flomesh-io/fsm.git) 入口控�
 
 ## 演示
 
-首先，在 `osm-system` 命名空间下安装 osm-edge 和 Contour，并将网格名字命名为 `osm`。
+首先，在 `osm-system` 命名空间下安装 osm-edge 和 fsm，并将网格名字命名为 `osm`。
 ```bash
 export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge will be installed
 export osm_mesh_name=osm # Replace osm with the desired osm-edge mesh name
@@ -78,7 +78,7 @@ httpbin   ClusterIP   10.0.22.196   <none>        14001/TCP   11h
 
 ### HTTP Ingress
 
-接下来，创建必要的 HTTPProxy 和 IngressBackend 配置来允许外部客户端访问 `httpbin` 命名空间下 `httpbin` 服务的 `14001` 端口。因为没有使用 TLS，Contour入口网关到 `httpbin` 后端 pod 的链接没有加密。
+接下来，创建必要的 HTTPProxy 和 IngressBackend 配置来允许外部客户端访问 `httpbin` 命名空间下 `httpbin` 服务的 `14001` 端口。因为没有使用 TLS，fsm 入口网关到 `httpbin` 后端 pod 的链接没有加密。
 
 ```bash
 kubectl apply -f - <<EOF
