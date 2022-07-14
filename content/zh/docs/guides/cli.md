@@ -25,7 +25,7 @@ weight: 1
 OSM_VERSION={{< param osm_edge_version >}}
 
 # Linux curl command only
-curl -sL "https://github.com/flomesh-io/osm-edge/releases/download/$OSM_VERSION/osm-$OSM_VERSION-linux-amd64.tar.gz" | tar -vxzf -
+curl -sL "https://github.com/flomesh-io/osm-edge/releases/download/$OSM_VERSION/osm-edge-$OSM_VERSION-linux-amd64.tar.gz" | tar -vxzf -
 
 # macOS curl command only
 curl -sL "https://github.com/flomesh-io/osm-edge/releases/download/$OSM_VERSION/osm-edge-$OSM_VERSION-darwin-amd64.tar.gz" | tar -vxzf -
