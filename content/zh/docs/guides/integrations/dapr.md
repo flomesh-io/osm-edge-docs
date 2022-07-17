@@ -15,17 +15,17 @@ draft: true
 
 1. 在集群上安装 Dapr 并禁用 mTLS：
 
-   1. Dapr 有一个快速入门存储库，可帮助用户熟悉 dapr 及其功能。对于这个集成演示，我们将使用 [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) 快速入门。由于我们想将此 Dapr 示例与 osm-edge 集成，因此需要进行一些修改，如下所示：
+   1. Dapr 有一个快速入门存储库，可帮助用户熟悉 dapr 及其功能。对于这个集成演示，我们将使用 [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes) 快速入门。由于我们想将此 Dapr 示例与 osm-edge 集成，因此需要进行一些修改，如下所示：
 
-       - [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) 演示安装了启用 mtls 的 Dapr（默认），我们 **不想要来自 Dapr 的 mtls 而是用 osm-edge 的 mTLS**。因此，在集群上 [安装 Dapr](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-1---setup-dapr-on-your-kubernetes-cluster) 时，请确保在安装过程中通过传递标志来禁用 mtls：`--enable-mtls=false`
-       - 进一步 [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) 设置默认命名空间中的所有内容，**强烈建议**设置整个 hello-kubernetes 在特定命名空间中进行演示（我们稍后会将此命名空间加入到 osm-edge 的网格中）。出于此集成的目的，我们将命名空间设为 `dapr-test`
+       - [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes) 演示安装了启用 mtls 的 Dapr（默认），我们 **不想要来自 Dapr 的 mtls 而是用 osm-edge 的 mTLS**。因此，在集群上 [安装 Dapr](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes#step-1---setup-dapr-on-your-kubernetes-cluster) 时，请确保在安装过程中通过传递标志来禁用 mtls：`--enable-mtls=false`
+       - 进一步 [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes) 设置默认命名空间中的所有内容，**强烈建议**设置整个 hello-kubernetes 在特定命名空间中进行演示（我们稍后会将此命名空间加入到 osm-edge 的网格中）。出于此集成的目的，我们将命名空间设为 `dapr-test`
 
         ```console
          $ kubectl create namespace dapr-test
          namespace/dapr-test created
         ```
 
-      - [redis 状态存储](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-2---create-and-configure-a-state-store)、[redis. yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/redis.yaml)、[node.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/node.yaml) 和 [python.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/python.yaml) 需要部署在 `dapr-test` 命名空间
+      - [redis 状态存储](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes#step-2---create-and-configure-a-state-store)、[redis. yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/redis.yaml)、[node.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/node.yaml) 和 [python.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/python.yaml) 需要部署在 `dapr-test` 命名空间
        - 由于此演示的资源是在自定义命名空间中设置的。我们需要在集群上添加一个 rbac 规则，以便 Dapr 能够访问这些secret。创建以下角色和角色绑定：
 
         ```bash
@@ -105,7 +105,7 @@ draft: true
       dapr-sentry             ClusterIP   10.0.87.36     <none>        80/TCP               2h
       dapr-sidecar-injector   ClusterIP   10.0.77.47     <none>        443/TCP              2h
       ```
-   2. 从 [redis.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/redis.yaml) 中获取 redis 状态存储的端口，演示中默认 `6379`
+   2. 从 [redis.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/redis.yaml) 中获取 redis 状态存储的端口，演示中默认 `6379`
 
    3. 将这些端口添加到 MeshConfig 中，一遍 osm-edge sidecar 的出站流量拦截不会拦截这些端口的流量。
 
@@ -132,7 +132,7 @@ draft: true
       dapr-sidecar-injector   ClusterIP   10.0.77.47     <none>        443/TCP              2h
       ```
 
-   2. 更新 nodeapp （[node.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/node.yaml)）和 pythonapp（[python.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/python.yaml) ）的 pod 声明，加入 `openservicemesh.io/outbound-port-exclusion-list: "80"` 注解。
+   2. 更新 nodeapp （[node.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/node.yaml)）和 pythonapp（[python.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/python.yaml) ）的 pod 声明，加入 `openservicemesh.io/outbound-port-exclusion-list: "80"` 注解。
 
    为 pod 添加注解可以排除 Dapr 的 api（`dapr-api`） 和 sendtry（`dapr-sentry`） 的端口，防止被 osm-edge sidecar 拦截。因为这些 pod 需要与 Dapr 的控制平面通信。
 
@@ -181,9 +181,9 @@ draft: true
 
 9. 验证 Dapr hello-kubernetes 演示如预期工作：
 
-   1. 使用  [这篇](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-3---deploy-the-nodejs-app-with-the-dapr-sidecar) 文档中的步骤验证 nodeapp 服务。
+   1. 使用  [这篇](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes#step-3---deploy-the-nodejs-app-with-the-dapr-sidecar) 文档中的步骤验证 nodeapp 服务。
 
-   2. 使用[这篇](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-6---observe-messages)文章验证 pythonapp。
+   2. 使用[这篇](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes#step-6---observe-messages)文章验证 pythonapp。
 
 10. 应用 SMI 流量策略：
 
@@ -199,7 +199,7 @@ draft: true
        meshconfig.config.openservicemesh.io/osm-mesh-config patched
        ```
 
-    2. 按照[这篇](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-6---observe-messages)文档验证 pythonapp 不再引起 order ID 自增长。
+    2. 按照[这篇](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes#step-6---observe-messages)文档验证 pythonapp 不再引起 order ID 自增长。
 
     3. 为 nodeapp 和 pythonapp 创建 service account：
 
@@ -282,9 +282,9 @@ draft: true
        EOF
        ```
 
-    6. 更新 nodeapp ([node.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/node.yaml)) 和 pythonapp ([python.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/python.yaml)) pod 声明，加入各自的 service account。删除并重新部署 Dapr hello-kubernetes pod。
+    6. 更新 nodeapp ([node.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/node.yaml)) 和 pythonapp ([python.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/python.yaml)) pod 声明，加入各自的 service account。删除并重新部署 Dapr hello-kubernetes pod。
 
-    7. 验证 Dapr hello-kubernetes 按预期工作，参考[这里](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-6---observe-messages)。
+    7. 验证 Dapr hello-kubernetes 按预期工作，参考[这里](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes#step-6---observe-messages)。
 
 11. 清理
 
