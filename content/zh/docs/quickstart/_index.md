@@ -122,3 +122,60 @@ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/main
 
 通过访问控制，我们成功阻止 `bookthief` 从 `bookstore` 盗窃书籍，而正常的购买不受影响。
 
+## 可观测性
+
+### Metrics
+
+使用下面的命令开启命名空间下的 metrics 采集，否则前面创建的 Pod 产生的 metrics 并不会被采集：
+
+```shell
+osm metrics enable --namespace "bookstore,bookbuyer,bookthief,bookwarehouse"
+```
+
+在执行了端口转发脚本之后，在浏览器中打开 `http://localhost:3000` 可以访问已经安装的 Grafana，默认的用户名和密码分别为 `admin`、`admin`。
+
+osm-edge 内置了多个 dashboard 提供控制平面和数据平面各项指标的可视化展示。比如下图中展示的是 `bookthief` 服务的 pod `http://localhost:3000` 访问其他 `service` 的指标：
+
+![image](https://user-images.githubusercontent.com/2224492/180593501-d73dbf11-40a8-4fe9-9422-ea931da2927f.png)
+
+下图展示的是 `bookthief` 以 `deployment` 为粒度，访问其他 `service` 的指标。与上个图的差别在于，假如 `bookthief` 有多个副本，这里会展示所有副本的汇总数据：
+
+![image](https://user-images.githubusercontent.com/2224492/180593509-9a852bf1-e7e7-4534-9c57-06cf1c890ee3.png)
+
+接下来展示的 osm-edge 组件、以及网格基础信息等的指标：
+
+![image](https://user-images.githubusercontent.com/2224492/180593512-0ac33a0e-2b7a-4e66-b499-f196b5dd729b.png)
+
+### Tracing
+
+在浏览器中输入 `http://localhost:16686/search` 可访问 Jaeger 的仪表板：
+
+![image](https://user-images.githubusercontent.com/2224492/180593520-64b0d2d1-1346-47ac-aab8-a9eaae9f8950.png)
+
+仪表板中可以查询服务相关的 tracing 信息：
+
+![image](https://user-images.githubusercontent.com/2224492/180593525-3bc844c4-f950-48f6-9d72-ff98dc82aa2c.png)
+
+展示服务拓扑图：
+
+![image](https://user-images.githubusercontent.com/2224492/180593530-8d0ed18f-0cac-495f-985f-04feb863ec6d.png)
+
+### Logging
+
+osm-edge 控制平面将诊断日志输出到了标准输出上，用于服务网格的管理，可以通过调整日志的级别来控制日志信息的输出。输出到标准输出上的日志，可以通过日志采集工具采集聚合并存储。
+
+## 卸载服务网格
+
+在完成 osm-edge 的快速体验后，如果要卸载全部与之相关的资源，就需要删除这些示例应用和相关的 SMI 资源，并且卸载掉 osm-edge 控制平面和集群范围内的 osm-edge 资源。
+
+删除示例应用：
+
+```shell
+kubectl delete ns bookbuyer bookthief bookstore bookwarehouse
+```
+
+卸载控制平面：
+
+```shell
+osm uninstall mesh
+```
