@@ -8,7 +8,7 @@ type: docs
 
 ### 1. Confirm egress is enabled
 
-Confirm egress is enabled by verifying the value for the `enableEgress` key in the `osm-mesh-config` `MeshConfig` custom resource. `osm-mesh-config` resides in the namespace OSM control plane namespace (`osm-system` by default).
+Confirm egress is enabled by verifying the value for the `enableEgress` key in the `osm-mesh-config` `MeshConfig` custom resource. `osm-mesh-config` resides in the namespace osm-edge control plane namespace (`osm-system` by default).
 
 ```console
 # Returns true if egress is enabled
@@ -18,7 +18,7 @@ true
 
 The above command must return a boolean string (`true` or `false`) indicating if egress is enabled.
 
-### 2. Inspect OSM controller logs for errors
+### 2. Inspect osm-edge controller logs for errors
 
 ```bash
 # When osm-controller is deployed in the osm-system namespace
@@ -30,6 +30,17 @@ Errors will be logged with the `level` key in the log message set to `error`:
 {"level":"error","component":"...","time":"...","file":"...","message":"..."}
 ```
 
-### 3. Confirm the Envoy configuration
+### 3. Confirm the Pipy configuration
 
-Confirm the Envoy proxy configuration on the client has a default egress filter chain on the outbound listener. Refer to the [sample configurations](../../../tasks/traffic_management/egress#envoy-configurations) to verify that the client is configured to have outbound access to external destinations.
+Check that egress is enabled in the configuration used by the Pod's sidecar.
+
+```json
+{
+  "Spec": {
+    "SidecarLogLevel": "error",
+    "Traffic": {
+      "EnableEgress": true
+    }
+  }
+}
+```

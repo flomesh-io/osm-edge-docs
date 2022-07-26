@@ -5,13 +5,13 @@ type: docs
 weight: 1
 ---
 
-This guide demonstrates a client and server application within the service mesh communicating using OSM's permissive traffic policy mode, which configures application connectivity using service discovery without the need for explicit [SMI traffic access policies](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-access/v1alpha3/traffic-access.md).
+This guide demonstrates a client and server application within the service mesh communicating using osm-edge's permissive traffic policy mode, which configures application connectivity using service discovery without the need for explicit [SMI traffic access policies](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-access/v1alpha3/traffic-access.md).
 
 
 ## Prerequisites
 
 - Kubernetes cluster running Kubernetes {{< param min_k8s_version >}} or greater.
-- Have OSM installed.
+- Have osm-edge installed.
 - Have `kubectl` available to interact with the API server.
 - Have `osm` CLI available for managing the service mesh.
 
@@ -22,7 +22,7 @@ The following demo shows an HTTP `curl` client making HTTP requests to the `http
 
 1. Enable permissive mode if not enabled.
     ```bash
-    export osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+    export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
     kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
     ```
 
@@ -79,13 +79,13 @@ The following demo shows an HTTP `curl` client making HTTP requests to the `http
     ```console
     $ kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -I http://httpbin.httpbin:14001
     HTTP/1.1 200 OK
-    server: envoy
-    date: Mon, 15 Mar 2021 22:45:23 GMT
+    server: gunicorn/19.9.0
+    date: Wed, 29 Jun 2022 08:50:33 GMT
     content-type: text/html; charset=utf-8
     content-length: 9593
     access-control-allow-origin: *
     access-control-allow-credentials: true
-    x-envoy-upstream-service-time: 2
+    connection: keep-alive
     ```
 
     A `200 OK` response indicates the HTTP request from the `curl` client to the `httpbin` service was successful.

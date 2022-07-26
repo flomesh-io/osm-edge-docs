@@ -5,13 +5,13 @@ type: docs
 weight: 20
 ---
 
-This guide demonstrates a TCP client and server application within the service mesh communicating using OSM's TCP routing capability.
+This guide demonstrates a TCP client and server application within the service mesh communicating using osm-edge's TCP routing capability.
 
 
 ## Prerequisites
 
 - Kubernetes cluster running Kubernetes {{< param min_k8s_version >}} or greater.
-- Have OSM installed.
+- Have osm-edge installed.
 - Have `kubectl` available to interact with the API server.
 - Have `osm` CLI available for managing the service mesh.
 
@@ -20,12 +20,12 @@ This guide demonstrates a TCP client and server application within the service m
 
 The following demo shows a TCP client sending data to a `tcp-echo` server, which then echoes back the data to the client over a TCP connection.
 
-1. Set the namespace where OSM is installed.
+1. Set the namespace where osm-edge is installed.
     ```bash
-    osm_namespace=osm-system  # Replace osm-system with the namespace where OSM is installed if different
+    osm_namespace=osm-system  # Replace osm-system with the namespace where osm-edge is installed if different
     ```
 
-1. Deploy the `tcp-echo` service in the `tcp-demo` namespace. The `tcp-echo` service runs on port `9000` with the `appProtocol` field set to `tcp`, which indicates to OSM that TCP routing must be used for traffic directed to the `tcp-echo` service on port `9000`.
+1. Deploy the `tcp-echo` service in the `tcp-demo` namespace. The `tcp-echo` service runs on port `9000` with the `appProtocol` field set to `tcp`, which indicates to osm-edge that TCP routing must be used for traffic directed to the `tcp-echo` service on port `9000`.
     ```bash
     # Create the tcp-demo namespace
     kubectl create namespace tcp-demo

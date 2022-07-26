@@ -7,11 +7,11 @@ weight: 11
 
 # Circuit Breaking
 
-Circuit breaking is a critical component of distributed systems and an important resiliency pattern. Circuit breaking allows applications to fail quickly and apply back pressure downstream as soon as possible, thereby providing the means to limit the impact of failures across the system. This guide describes how circuit breaking can be configured in OSM.
+Circuit breaking is a critical component of distributed systems and an important resiliency pattern. Circuit breaking allows applications to fail quickly and apply back pressure downstream as soon as possible, thereby providing the means to limit the impact of failures across the system. This guide describes how circuit breaking can be configured in osm-edge.
 
 ## Configuring circuit breaking
 
-OSM leverages its [UpstreamTrafficSetting API][1] to configure circuit breaking attributes for traffic directed to an upstream service. We use the term `upstream service` to refer to a service that receives connections and requests from clients and return responses. The specification enables configuring circuit breaking attributes for an upstream service at the connection and request level. OSM leverages [Envoy's circuit breaking functionality](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/circuit_breaking) to implement circuit breaking for applications participating in the mesh.
+osm-edge leverages its [UpstreamTrafficSetting API][1] to configure circuit breaking attributes for traffic directed to an upstream service. We use the term `upstream service` to refer to a service that receives connections and requests from clients and return responses. The specification enables configuring circuit breaking attributes for an upstream service at the connection and request level. osm-edge leverages [Envoy's circuit breaking functionality](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/circuit_breaking) to implement circuit breaking for applications participating in the mesh.
 
 Each `UpstreamTrafficSetting` configuration targets an upstream host defined by the `spec.host` field. For a Kubernetes service `my-svc` in the namespace `my-namespace`, the `UpstreamTrafficSetting` resource must be created in the namespace `my-namespace`, and `spec.host` must be an FQDN of the form `my-svc.my-namespace.svc.cluster.local`. When specified as a match in an [Egress policy](/docs/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.EgressSpec), `spec.host` must correspond to the host specified in the Egress policy and the `UpstreamTrafficSetting` configuration must belong to the same namespace as the `Egress` resource.
 

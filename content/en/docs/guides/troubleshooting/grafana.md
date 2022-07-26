@@ -1,32 +1,32 @@
 ---
 title: "Troubleshoot Grafana"
-description: "How to fix common issues with OSM's Grafana integration"
+description: "How to fix common issues with osm-edge's Grafana integration"
 aliases: "/docs/troubleshooting/observability/grafana"
 type: docs
 ---
 
 ## Grafana is unreachable
 
-If a Grafana instance installed with OSM can't be reached, perform the following steps to identify and resolve any issues.
+If a Grafana instance installed with osm-edge can't be reached, perform the following steps to identify and resolve any issues.
 
 1. Verify a Grafana Pod exists.
 
-    When installed with `osm install --set=osm.deployGrafana=true`, a Grafana Pod named something like `osm-grafana-7c88b9687d-tlzld` should exist in the namespace of the other OSM control plane components which named `osm-system` by default.
+    When installed with `osm install --set=osm.deployGrafana=true`, a Grafana Pod named something like `osm-grafana-7c88b9687d-tlzld` should exist in the namespace of the other osm-edge control plane components which named `osm-system` by default.
 
-    If no such Pod is found, verify the OSM Helm chart was installed with the `osm.deployGrafana` parameter set to `true` with `helm`:
+    If no such Pod is found, verify the osm-edge Helm chart was installed with the `osm.deployGrafana` parameter set to `true` with `helm`:
 
     ```console
-    $ helm get values -a <mesh name> -n <OSM namespace>
+    $ helm get values -a <mesh name> -n <osm-edge namespace>
     ```
 
-    If the parameter is set to anything but `true`, reinstall OSM with the `--set=osm.deployGrafana=true` flag on `osm install`.
+    If the parameter is set to anything but `true`, reinstall osm-edge with the `--set=osm.deployGrafana=true` flag on `osm install`.
 
 1. Verify the Grafana Pod is healthy.
 
     The Grafana Pod identified above should be both in a Running state and have all containers ready, as shown in the `kubectl get` output:
 
     ```console
-    $ # Assuming OSM is installed in the osm-system namespace:
+    $ # Assuming osm-edge is installed in the osm-system namespace:
     $ kubectl get pods -n osm-system -l app=osm-grafana
     NAME                           READY   STATUS    RESTARTS   AGE
     osm-grafana-7c88b9687d-tlzld   1/1     Running   0          58s
@@ -35,7 +35,7 @@ If a Grafana instance installed with OSM can't be reached, perform the following
     If the Pod is not showing as Running or its containers ready, use `kubectl describe` to look for other potential issues:
 
     ```console
-    $ # Assuming OSM is installed in the osm-system namespace:
+    $ # Assuming osm-edge is installed in the osm-system namespace:
     $ kubectl describe pods -n osm-system -l app=osm-grafana
     ```
 

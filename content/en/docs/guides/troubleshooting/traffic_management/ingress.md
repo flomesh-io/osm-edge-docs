@@ -28,7 +28,7 @@ Likewise, to enable HTTP ingress and disable HTTPS ingress, run:
 kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"useHTTPSIngress":false}}}'  --type=merge
 ```
 
-### 2. Inspect OSM controller logs for errors
+### 2. Inspect osm-edge controller logs for errors
 
 ```bash
 # When osm-controller is deployed in the osm-system namespace

@@ -11,12 +11,12 @@ weight: 6
 
 This document describes the steps required to enable access to the Internet and services external to the service mesh, referred to as `Egress` traffic.
 
-OSM redirects all outbound traffic from a pod within the mesh to the pod's sidecar proxy. Outbound traffic can be classified into two categories:
+osm-edge redirects all outbound traffic from a pod within the mesh to the pod's sidecar proxy. Outbound traffic can be classified into two categories:
 
 1. Traffic to services within the mesh cluster, referred to as in-mesh traffic
 2. Traffic to services external to the mesh cluster, referred to as egress traffic
 
-While in-mesh traffic is routed based on L7 traffic policies, egress traffic is routed differently and is not subject to in-mesh traffic policies. OSM supports access to external services as a passthrough without subjecting such traffic to filtering policies.
+While in-mesh traffic is routed based on L7 traffic policies, egress traffic is routed differently and is not subject to in-mesh traffic policies. osm-edge supports access to external services as a passthrough without subjecting such traffic to filtering policies.
 
 ## Configuring Egress
 
@@ -27,10 +27,10 @@ There are two mechanisms to configure Egress:
 
 ## 1. Configuring Egress policies
 
-OSM supports configuring fine grained policies for traffic destined to external endpoints using its [Egress policy API][1]. To use this feature, enable it if not enabled:
+osm-edge supports configuring fine grained policies for traffic destined to external endpoints using its [Egress policy API][1]. To use this feature, enable it if not enabled:
 
 ```bash
-# Replace osm-system with the namespace where OSM is installed
+# Replace osm-system with the namespace where osm-edge is installed
 kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}'  --type=merge
 ```
 
@@ -40,37 +40,37 @@ Refer to the [Egress policy demo](/docs/demos/egress_policy) and [API documentat
 
 ### Enabling mesh-wide Egress passthrough to external destinations
 
-Egress can be enabled mesh-wide during OSM install or post install. When egress is enabled mesh-wide, outbound traffic from pods are allowed to egress the pod as long as the traffic does not match in-mesh traffic policies that otherwise deny the traffic.
+Egress can be enabled mesh-wide during osm-edge install or post install. When egress is enabled mesh-wide, outbound traffic from pods are allowed to egress the pod as long as the traffic does not match in-mesh traffic policies that otherwise deny the traffic.
 
-1. During OSM install (default `osm.enableEgress=false`):
+1. During osm-edge install (default `osm.enableEgress=false`):
 
    ```bash
    osm install --set osm.enableEgress=true
    ```
 
-2. After OSM has been installed:
+2. After osm-edge has been installed:
 
    `osm-controller` retrieves the egress configuration from the `osm-mesh-config` `MeshConfig` custom resource in the osm mesh control plane namespace (`osm-system` by default). Use `kubectl patch` to set `enableEgress` to `true` in the `osm-mesh-config` resource.
 
    ```bash
-   # Replace osm-system with the namespace where OSM is installed
+   # Replace osm-system with the namespace where osm-edge is installed
    kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"enableEgress":true}}}' --type=merge
    ```
 
 ### Disabling mesh-wide Egress passthrough to external destinations
 
-Similar to enabling egress, mesh-wide egress can be disabled during OSM install or post install.
+Similar to enabling egress, mesh-wide egress can be disabled during osm-edge install or post install.
 
-1. During OSM install:
+1. During osm-edge install:
 
    ```bash
    osm install --set osm.enableEgress=false
    ```
 
-2. After OSM has been installed:
+2. After osm-edge has been installed:
    Use `kubectl patch` to set `enableEgress` to `false` in the `osm-mesh-config` resource.
    ```bash
-   # Replace osm-system with the namespace where OSM is installed
+   # Replace osm-system with the namespace where osm-edge is installed
    kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"enableEgress":false}}}'  --type=merge
    ```
 
@@ -78,55 +78,29 @@ With egress disabled, traffic from pods within the mesh will not be able to acce
 
 ### How it works
 
-When egress is enabled mesh-wide, OSM controller programs every Envoy proxy sidecar in the mesh with a wildcard rule that matches outbound destinations that do not correspond to in-mesh services. The wildcard rule that matches such external traffic simply proxies the traffic as is to its original destination without subjecting them to L4 or L7 traffic policies.
+When egress is enabled mesh-wide, osm-edge controller programs every Pipy proxy sidecar in the mesh with a wildcard rule that matches outbound destinations that do not correspond to in-mesh services. The wildcard rule that matches such external traffic simply proxies the traffic as is to its original destination without subjecting them to L4 or L7 traffic policies.
 
-OSM supports egress for traffic that uses TCP as the underlying transport. This includes raw TCP traffic, HTTP, HTTPS, gRPC etc.
+osm-edge supports egress for traffic that uses TCP as the underlying transport. This includes raw TCP traffic, HTTP, HTTPS, gRPC etc.
 
 Since mesh-wide egress is a global setting and operates as a passthrough to unknown destinations, fine grained access control (such as applying TCP or HTTP routing policies) over egress traffic is not possible.
 
 Refer to the [Egress passthrough demo](/docs/demos/egress_passthrough) to learn more.
 
-#### Envoy configurations
+#### Pipy configurations
 
-When egress is globally enabled in the mesh, OSM controller programs each Envoy proxy sidecar to match external or unknown destinations using a default filter chain on the outbound listener configuration. The default filter chain is named `outbound-egress-filter-chain` as seen in the below configuration snippet. Any traffic that matches the default egress filter chain on the outbound listener is proxied to its original destination via the `passthrough-outbound` cluster.
+When egress is enabled globally in the mesh, the osm-edge controller issues the following configuration for each Pipy proxy sidecar.
 
 ```json
 {
-  "name": "outbound-listener",
-  "active_state": {
-    "version_info": "7",
-    "listener": {
-      "@type": "type.googleapis.com/envoy.config.listener.v3.Listener",
-      "name": "outbound-listener",
-      "address": {
-        "socket_address": {
-          "address": "0.0.0.0",
-          "port_value": 15001
-        }
-      },
-      "listener_filters": [
-        {
-          "name": "envoy.filters.listener.original_dst"
-        }
-      ],
-      "traffic_direction": "OUTBOUND",
-      "default_filter_chain": {
-        "filters": [
-          {
-            "name": "envoy.filters.network.tcp_proxy",
-            "typed_config": {
-              "@type": "type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy",
-              "stat_prefix": "passthrough-outbound",
-              "cluster": "passthrough-outbound"
-            }
-          }
-        ],
-        "name": "outbound-egress-filter-chain"
-      }
-    },
-    "last_updated": "2021-03-16T22:26:46.676Z"
+  "Spec": {
+    "SidecarLogLevel": "error",
+    "Traffic": {
+      "EnableEgress": true
+    }
   }
 }
 ```
+
+The Pipy script for `EnableEgress=true` will use the original destination logic to route the request to proxy it to the original destination.
 
 [1]: /docs/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.EgressSpec

@@ -1,18 +1,18 @@
 ---
 title: "Logs"
-description: "Diagnostic logs from the OSM control plane"
+description: "Diagnostic logs from the osm-edge control plane"
 type: docs
 ---
 
 # Logs
-Open Service Mesh (OSM) control plane components log diagnostic messages to stdout to aid in managing a mesh.
+osm-edge control plane components log diagnostic messages to stdout to aid in managing a mesh.
 
 In the logs, users can expect to see the following kinds of information
 alongside messages:
 - Kubernetes resource metadata, like names and namespaces
 - mTLS certificate common names
 
-OSM will **not** log sensitive information, such as:
+osm-edge will **not** log sensitive information, such as:
 - Kubernetes Secret data
 - entire Kubernetes resources
 
@@ -22,7 +22,7 @@ Log verbosity controls when certain log messages are written, for example to
 include more messages for debugging or to include fewer messages that only point
 to critical errors.
 
-OSM defines the following log levels in order of increasing verbosity:
+osm-edge defines the following log levels in order of increasing verbosity:
 
 | Log level | Purpose                                                                                |
 | --------- | -------------------------------------------------------------------------------------- |
@@ -42,12 +42,12 @@ Each of the above log levels can be configured in the MeshConfig at
 ## Fluent Bit
 When enabled, Fluent Bit can collect these logs, process them and send them to an output of the user's choice such as Elasticsearch, Azure Log Analytics, BigQuery, etc.
 
-[Fluent Bit](https://fluentbit.io/) is an open source log processor and forwarder which allows you to collect data/logs and send them to multiple destinations. It can be used with OSM to forward OSM controller logs to a variety of outputs/log consumers by using its output plugins.
+[Fluent Bit](https://fluentbit.io/) is an open source log processor and forwarder which allows you to collect data/logs and send them to multiple destinations. It can be used with osm-edge to forward osm-edge controller logs to a variety of outputs/log consumers by using its output plugins.
 
-OSM provides log forwarding by optionally deploying a Fluent Bit sidecar to the OSM controller using the `--set=osm.enableFluentbit=true` flag during installation. The user can then define where OSM logs should be forwarded using any of the available [Fluent Bit output plugins](https://docs.fluentbit.io/manual/pipeline/outputs).
+osm-edge provides log forwarding by optionally deploying a Fluent Bit sidecar to the osm-edge controller using the `--set=osm.enableFluentbit=true` flag during installation. The user can then define where osm-edge logs should be forwarded using any of the available [Fluent Bit output plugins](https://docs.fluentbit.io/manual/pipeline/outputs).
 
 ### Configuring Log Forwarding with Fluent Bit
-By default, the Fluent Bit sidecar is configured to simply send logs to the Fluent Bit container's stdout. If you have installed OSM with Fluent Bit enabled, you may access these logs using `kubectl logs -n <osm-namespace> <osm-controller-name> -c fluentbit-logger`. This command will also help you find how your logs are formatted in case you need to change your parsers and filters.
+By default, the Fluent Bit sidecar is configured to simply send logs to the Fluent Bit container's stdout. If you have installed osm-edge with Fluent Bit enabled, you may access these logs using `kubectl logs -n <osm-namespace> <osm-controller-name> -c fluentbit-logger`. This command will also help you find how your logs are formatted in case you need to change your parsers and filters.
 
 > Note: `<osm-namespace>` refers to the namespace where the osm control plane is installed.
 
@@ -59,7 +59,7 @@ By default, logs will be filtered to emit info level logs. You may change the lo
 
 Once you have tried out this basic setup, we recommend configuring log forwarding to your preferred output for more informative results.
 
-To customize log forwarding to your output, follow these steps and then reinstall OSM with Fluent Bit enabled.
+To customize log forwarding to your output, follow these steps and then reinstall osm-edge with Fluent Bit enabled.
 
 1. Find the output plugin you would like to forward your logs to in [Fluent Bit documentation](https://docs.fluentbit.io/manual/pipeline/outputs). Replace the `[OUTPUT]` section in [`fluentbit-configmap.yaml`](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/templates/fluentbit-configmap.yaml) with appropriate values.
 
@@ -74,7 +74,7 @@ To customize log forwarding to your output, follow these steps and then reinstal
     make build-osm
     ```
 
-1. Once you have updated the Fluent Bit ConfigMap template, you can deploy Fluent Bit during OSM installation using:
+1. Once you have updated the Fluent Bit ConfigMap template, you can deploy Fluent Bit during osm-edge installation using:
     ```console
     osm install --set=osm.enableFluentbit=true [--set osm.controllerLogLevel=<desired log level>]
     ```
@@ -89,12 +89,12 @@ Fluent Bit has an Azure output plugin that can be used to send logs to an Azure 
 
 3. Run through steps 2-5 above.
 
-4. Once you run OSM with Fluent Bit enabled, logs will populate under the Logs > Custom Logs section in your Log Analytics workspace. There, you may run the following query to view most recent logs first:
+4. Once you run osm-edge with Fluent Bit enabled, logs will populate under the Logs > Custom Logs section in your Log Analytics workspace. There, you may run the following query to view most recent logs first:
     ```
     fluentbit_CL
     | order by TimeGenerated desc
     ```
-5. Refine your log results on a specific deployment of the OSM controller pod:
+5. Refine your log results on a specific deployment of the osm-edge controller pod:
     ```
     | where controller_pod_name_s == "<desired osm controller pod name>"
     ```
@@ -114,7 +114,7 @@ You can now interact with your logs in either of these instances.
 ### Configuring Outbound Proxy Support for Fluent Bit
 You may require outbound proxy support if your egress traffic is configured to go through a proxy server. There are two ways to enable this.
 
-If you have already built OSM with the MeshConfig changes above, you can simply enable proxy support using the OSM CLI, replacing your values in the command below:
+If you have already built osm-edge with the MeshConfig changes above, you can simply enable proxy support using the osm-edge CLI, replacing your values in the command below:
 ```
 osm install --set=osm.enableFluentbit=true,osm.fluentBit.enableProxySupport=true,osm.fluentBit.httpProxy=<http-proxy-host:port>,osm.fluentBit.httpsProxy=<https-proxy-host:port>
 ```
@@ -129,7 +129,7 @@ Alternatively, you may change the values in the Helm chart by updating the follo
     make build-osm
     ```
 
-1. Install OSM with Fluent Bit enabled:
+1. Install osm-edge with Fluent Bit enabled:
     ```console
     osm install --set=osm.enableFluentbit=true
     ```
