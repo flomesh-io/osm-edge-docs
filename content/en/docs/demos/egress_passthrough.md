@@ -5,13 +5,13 @@ type: docs
 weight: 16
 ---
 
-This guide demonstrates a client within the service mesh accessing destinations external to the mesh using OSM's Egress capability to passthrough traffic to unknown destinations without an Egress policy.
+This guide demonstrates a client within the service mesh accessing destinations external to the mesh using osm-edge's Egress capability to passthrough traffic to unknown destinations without an Egress policy.
 
 
 ## Prerequisites
 
 - Kubernetes cluster running Kubernetes {{< param min_k8s_version >}} or greater.
-- Have OSM installed.
+- Have osm-edge installed.
 - Have `kubectl` available to interact with the API server.
 - Have `osm` CLI available for managing the service mesh.
 
@@ -20,7 +20,7 @@ This guide demonstrates a client within the service mesh accessing destinations 
 
 1. Enable global egress passthrough if not enabled:
     ```bash
-    export osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+    export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
     kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"enableEgress":true}}}'  --type=merge
     ```
 
@@ -33,7 +33,7 @@ This guide demonstrates a client within the service mesh accessing destinations 
     osm namespace add curl
 
     # Deploy curl client in the curl namespace
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n curl
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n curl
     ```
 
     Confirm the `curl` client pod is up and running.

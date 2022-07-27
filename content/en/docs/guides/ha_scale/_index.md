@@ -1,6 +1,6 @@
 ---
 title: "High Availability & Scalability"
-description: "Learn how to scale Open Service Mesh (OSM)"
+description: "Learn how to scale osm-edge"
 type: docs
 weight: 12
 ---

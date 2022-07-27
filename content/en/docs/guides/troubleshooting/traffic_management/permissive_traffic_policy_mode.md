@@ -8,7 +8,7 @@ type: docs
 
 ### 1. Confirm permissive traffic policy mode is enabled
 
-Confirm permissive traffic policy mode is enabled by verifying the value for the `enablePermissiveTrafficPolicyMode` key in the `osm-mesh-config` custom resource. `osm-mesh-config` MeshConfig resides in the namespace OSM control plane namespace (`osm-system` by default).
+Confirm permissive traffic policy mode is enabled by verifying the value for the `enablePermissiveTrafficPolicyMode` key in the `osm-mesh-config` custom resource. `osm-mesh-config` MeshConfig resides in the namespace osm-edge control plane namespace (`osm-system` by default).
 
 ```console
 # Returns true if permissive traffic policy mode is enabled
@@ -18,7 +18,7 @@ true
 
 The above command must return a boolean string (`true` or `false`) indicating if permissive traffic policy mode is enabled.
 
-### 2. Inspect OSM controller logs for errors
+### 2. Inspect osm-edge controller logs for errors
 
 ```bash
 # When osm-controller is deployed in the osm-system namespace
@@ -30,6 +30,6 @@ Errors will be logged with the `level` key in the log message set to `error`:
 {"level":"error","component":"...","time":"...","file":"...","message":"..."}
 ```
 
-### 3. Confirm the Envoy configuration
+### 3. Confirm the Pipy configuration
 
-Confirm the Envoy proxy configuration on the client and server pods are allowing the client to access the server. Refer to the [sample configurations](../../../tasks/traffic_management/permissive_traffic_policy_mode#envoy-configurations) to verify that the client has valid routes programmed to access the server.
+Confirm the Pipy proxy configuration on the client and server pods are allowing the client to access the server. 

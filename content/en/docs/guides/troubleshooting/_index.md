@@ -1,6 +1,6 @@
 ---
 title: "Troubleshooting"
-description: "Troubleshooting for Open Service Mesh (OSM)"
+description: "Troubleshooting for osm-edge"
 type: docs
 weight: 15
 ---

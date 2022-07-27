@@ -5,12 +5,12 @@ type: docs
 weight: 5
 ---
 
-This guide demonstrates how outbound IP address ranges can be excluded from being intercepted by OSM's proxy sidecar, so as to not subject them to service mesh filtering and routing policies.
+This guide demonstrates how outbound IP address ranges can be excluded from being intercepted by osm-edge's proxy sidecar, so as to not subject them to service mesh filtering and routing policies.
 
 ## Prerequisites
 
 - Kubernetes cluster running Kubernetes {{< param min_k8s_version >}} or greater.
-- Have OSM installed.
+- Have osm-edge installed.
 - Have `kubectl` available to interact with the API server.
 - Have `osm` CLI available for managing the service mesh.
 
@@ -21,7 +21,7 @@ The following demo shows an HTTP `curl` client making HTTP requests to the `http
 
 1. Disable mesh-wide egress passthrough.
     ```bash
-    export osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+    export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
     kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"enableEgress":false}}}'  --type=merge
     ```
 
@@ -73,9 +73,9 @@ The following demo shows an HTTP `curl` client making HTTP requests to the `http
     command terminated with exit code 7
     ```
 
-    The failure above is expected because by default outbound traffic is redirected via the Envoy proxy sidecar running on the `curl` client's pod, and the proxy subjects this traffic to service mesh policies which does not allow this traffic.
+    The failure above is expected because by default outbound traffic is redirected via the Pipy proxy sidecar running on the `curl` client's pod, and the proxy subjects this traffic to service mesh policies which does not allow this traffic.
 
-1. Program OSM to exclude the IP range `54.91.118.50/32` IP range
+1. Program osm-edge to exclude the IP range `54.91.118.50/32` IP range
     ```bash
     kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"outboundIPRangeExclusionList":["54.91.118.50/32"]}}}'  --type=merge
     ```

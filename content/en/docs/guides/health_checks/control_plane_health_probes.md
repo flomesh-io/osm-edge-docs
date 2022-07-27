@@ -1,25 +1,25 @@
 ---
-title: "OSM Control Plane Health Probes"
-description: "How OSM's health probes work and what to do if they fail"
+title: "osm-edge Control Plane Health Probes"
+description: "How osm-edge's health probes work and what to do if they fail"
 aliases: "/docs/control_plane_health_probes"
 type: "docs"
 ---
 
-# OSM Control Plane Health Probes
+# osm-edge Control Plane Health Probes
 
-OSM control plane components leverage health probes to communicate their overall status. Health probes are implemented as HTTP endpoints which respond to requests with HTTP status codes indicating success or failure.
+osm-edge control plane components leverage health probes to communicate their overall status. Health probes are implemented as HTTP endpoints which respond to requests with HTTP status codes indicating success or failure.
 
 Kubernetes uses these probes to communicate the status of the control plane Pods' statuses and perform some actions automatically to improve availability. More details about Kubernetes probes can be found [here](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/).
 
-## OSM Components with Probes
+## osm-edge Components with Probes
 
-The following OSM control plane components have health probes:
+The following osm-edge control plane components have health probes:
 
 #### osm-controller
 
 The following HTTP endpoints are available on osm-controller on port 9091:
 
-- `/health/alive`: HTTP 200 response code indicates OSM's Aggregated Discovery Service (ADS) is running. No response is sent when the service is not yet running.
+- `/health/alive`: HTTP 200 response code indicates osm-edge's Aggregated Discovery Service (ADS) is running. No response is sent when the service is not yet running.
 
 - `/health/ready`: HTTP 200 response code indicates ADS is ready to accept gRPC connections from proxies. HTTP 503 or no response indicates gRPC connections from proxies will not be successful.
 
@@ -29,9 +29,9 @@ The following HTTP endpoints are available on osm-injector on port 9090:
 
 - `/healthz`: HTTP 200 response code indicates the injector is ready to inject new Pods with proxy sidecar containers. No response is sent otherwise.
 
-## How to Verify OSM Health
+## How to Verify osm-edge Health
 
-Because OSM's Kubernetes resources are configured with liveness and readiness probes, Kubernetes will automatically poll the health endpoints on the osm-controller and osm-injector Pods.
+Because osm-edge's Kubernetes resources are configured with liveness and readiness probes, Kubernetes will automatically poll the health endpoints on the osm-controller and osm-injector Pods.
 
 When a liveness probe fails, Kubernetes will generate an Event (visible by `kubectl describe pod <pod name>`) and restart the Pod. The `kubectl describe` output may look like this:
 
@@ -41,8 +41,8 @@ Events:
   Type     Reason     Age               From               Message
   ----     ------     ----              ----               -------
   Normal   Scheduled  24s               default-scheduler  Successfully assigned osm-system/osm-controller-85fcb445b-fpv8l to osm-control-plane
-  Normal   Pulling    23s               kubelet            Pulling image "openservicemesh/osm-controller:v0.8.0"
-  Normal   Pulled     23s               kubelet            Successfully pulled image "openservicemesh/osm-controller:v0.8.0" in 562.2444ms
+  Normal   Pulling    23s               kubelet            Pulling image "flomesh/osm-controller:v0.8.0"
+  Normal   Pulled     23s               kubelet            Successfully pulled image "flomesh/osm-controller:v0.8.0" in 562.2444ms
   Normal   Created    1s (x2 over 23s)  kubelet            Created container osm-controller
   Normal   Started    1s (x2 over 23s)  kubelet            Started container osm-controller
   Warning  Unhealthy  1s (x3 over 21s)  kubelet            Liveness probe failed: HTTP probe failed with statuscode: 503
@@ -57,8 +57,8 @@ Events:
   Type     Reason     Age               From               Message
   ----     ------     ----              ----               -------
   Normal   Scheduled  36s               default-scheduler  Successfully assigned osm-system/osm-controller-5494bcffb6-tn5jv to osm-control-plane
-  Normal   Pulling    36s               kubelet            Pulling image "openservicemesh/osm-controller:latest"
-  Normal   Pulled     35s               kubelet            Successfully pulled image "openservicemesh/osm-controller:v0.8.0" in 746.4323ms
+  Normal   Pulling    36s               kubelet            Pulling image "flomesh/osm-controller:latest"
+  Normal   Pulled     35s               kubelet            Successfully pulled image "flomesh/osm-controller:v0.8.0" in 746.4323ms
   Normal   Created    35s               kubelet            Created container osm-controller
   Normal   Started    35s               kubelet            Started container osm-controller
   Warning  Unhealthy  4s (x3 over 24s)  kubelet            Readiness probe failed: HTTP probe failed with statuscode: 503
@@ -74,7 +74,7 @@ osm-controller-5494bcffb6-tn5jv   0/1     Running   0          26s
 The Pods' health probes may also be invoked manually by forwarding the Pod's necessary port and using `curl` or any other HTTP client to issue requests. For example, to verify the liveness probe for osm-controller, get the Pod's name and forward port 9091:
 
 ```
-# Assuming OSM is installed in the osm-system namespace
+# Assuming osm-edge is installed in the osm-system namespace
 kubectl port-forward -n osm-system $(kubectl get pods -n osm-system -l app=osm-controller -o jsonpath='{.items[0].metadata.name}') 9091
 ```
 
@@ -94,29 +94,29 @@ Service is alive
 
 If any health probes are consistently failing, perform the following steps to identify the root cause:
 
-1. Ensure the unhealthy osm-controller or osm-injector Pod is not running an Envoy sidecar container.
+1. Ensure the unhealthy osm-controller or osm-injector Pod is not running an Pipy sidecar container.
 
-    To verify The osm-controller Pod is not running an Envoy sidecar container, verify none of the Pod's containers' images is an Envoy image. Envoy images have "envoyproxy/envoy" in their name.
+    To verify The osm-controller Pod is not running an Pipy sidecar container, verify none of the Pod's containers' images is an Pipy image. Pipy images have "flomesh/pipy" in their name.
 
-    For example, an osm-controller Pod that includes an Envoy container:
+    For example, an osm-controller Pod that includes an Pipy container:
     ```console
-    $ # Assuming OSM is installed in the osm-system namespace:
+    $ # Assuming osm-edge is installed in the osm-system namespace:
     $ kubectl get pod -n osm-system $(kubectl get pods -n osm-system -l app=osm-controller -o jsonpath='{.items[0].metadata.name}') -o jsonpath='{range .spec.containers[*]}{.image}{"\n"}{end}'
-    openservicemesh/osm-controller:v0.8.0
-    envoyproxy/envoy-alpine:v1.17.2
+    flomesh/osm-controller:v0.8.0
+    flomesh/pipy:{{< param pipy_version >}}
     ```
 
-    To verify The osm-injector Pod is not running an Envoy sidecar container, verify none of the Pod's containers' images is an Envoy image. Envoy images have "envoyproxy/envoy" in their name.
+    To verify The osm-injector Pod is not running an Pipy sidecar container, verify none of the Pod's containers' images is an Pipy image. Pipy images have "flomesh/pipy" in their name.
 
-    For example, an osm-injector Pod that includes an Envoy container:
+    For example, an osm-injector Pod that includes an Pipy container:
     ```console
-    $ # Assuming OSM is installed in the osm-system namespace:
+    $ # Assuming osm-edge is installed in the osm-system namespace:
     $ kubectl get pod -n osm-system $(kubectl get pods -n osm-system -l app=osm-injector -o jsonpath='{.items[0].metadata.name}') -o jsonpath='{range .spec.containers[*]}{.image}{"\n"}{end}'
-    openservicemesh/osm-injector:v0.8.0
-    envoyproxy/envoy-alpine:v1.17.2
+    flomesh/osm-injector:v0.8.0
+    flomesh/pipy:{{< param pipy_version >}}
     ```
 
-    If either Pod is running an Envoy container, it may have been injected erroneously by this or another another instance of OSM. For each mesh found with the `osm mesh list` command, verify the OSM namespace of the unhealthy Pod is not listed in the `osm namespace list` output with `SIDECAR-INJECTION` "enabled" for any OSM instance found with the `osm mesh list` command.
+    If either Pod is running an Pipy container, it may have been injected erroneously by this or another another instance of osm-edge. For each mesh found with the `osm mesh list` command, verify the osm-edge namespace of the unhealthy Pod is not listed in the `osm namespace list` output with `SIDECAR-INJECTION` "enabled" for any osm-edge instance found with the `osm mesh list` command.
 
     For example, for all of the following meshes:
 
@@ -138,7 +138,7 @@ If any health probes are consistently failing, perform the following steps to id
     bookstore    osm2    enabled
     ```
 
-    If the OSM namespace is found in any `osm namespace list` command with `SIDECAR-INJECTION` enabled, remove the namespace from the mesh injecting the sidecars. For the example above:
+    If the osm-edge namespace is found in any `osm namespace list` command with `SIDECAR-INJECTION` enabled, remove the namespace from the mesh injecting the sidecars. For the example above:
 
     ```console
     $ osm namespace remove osm-system --mesh-name osm2 --osm-namespace osm-system2
@@ -151,18 +151,18 @@ If any health probes are consistently failing, perform the following steps to id
     For osm-controller:
 
     ```console
-    $ # Assuming OSM is installed in the osm-system namespace:
+    $ # Assuming osm-edge is installed in the osm-system namespace:
     $ kubectl describe pod -n osm-system $(kubectl get pods -n osm-system -l app=osm-controller -o jsonpath='{.items[0].metadata.name}')
     ```
 
     For osm-injector:
 
     ```console
-    $ # Assuming OSM is installed in the osm-system namespace:
+    $ # Assuming osm-edge is installed in the osm-system namespace:
     $ kubectl describe pod -n osm-system $(kubectl get pods -n osm-system -l app=osm-injector -o jsonpath='{.items[0].metadata.name}')
     ```
 
-    Resolve any errors and verify OSM's health again.
+    Resolve any errors and verify osm-edge's health again.
 
 1. Determine if the Pod encountered a runtime error.
 
@@ -171,15 +171,15 @@ If any health probes are consistently failing, perform the following steps to id
     For osm-controller:
 
     ```console
-    $ # Assuming OSM is installed in the osm-system namespace:
+    $ # Assuming osm-edge is installed in the osm-system namespace:
     $ kubectl logs -n osm-system $(kubectl get pods -n osm-system -l app=osm-controller -o jsonpath='{.items[0].metadata.name}')
     ```
 
     For osm-injector:
 
     ```console
-    $ # Assuming OSM is installed in the osm-system namespace:
+    $ # Assuming osm-edge is installed in the osm-system namespace:
     $ kubectl logs -n osm-system $(kubectl get pods -n osm-system -l app=osm-injector -o jsonpath='{.items[0].metadata.name}')
     ```
 
-    Resolve any errors and verify OSM's health again.
+    Resolve any errors and verify osm-edge's health again.
