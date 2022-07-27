@@ -5,16 +5,22 @@ description = "Documentation for osm-edge"
 theme = "dosmy"
 RelativeURLs=true
 CanonifyURLs=true
-defaultContentLanguage = "zh"
+defaultContentLanguage = "en"
 
 # Theme General Config
 [languages]
+	[languages.en]
+		title = "Open Service Mesh for Edge"
+		contentDir = 'content/en'
+		description = "Documentation for osm-edge"
+		languageName ="English"
+		weight = 1
 	[languages.zh]
 		title = "开放边缘服务网格"
 		contentDir = 'content/zh'
 		description = "Documentation for osm-edge"
 		languageName ="中文"
-		weight = 1
+		weight = 2
 [services]
 [services.googleAnalytics]
 id = "UA-130516746-13"
