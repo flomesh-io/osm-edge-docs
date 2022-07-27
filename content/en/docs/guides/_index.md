@@ -1,6 +1,6 @@
 ---
 title: "How-to Guides"
-description: "Learn how to use Open Service Mesh (OSM)"
+description: "Learn how to use osm-edge"
 type: docs
-weight: 3
+weight: 4
 ---

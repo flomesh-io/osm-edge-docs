@@ -5,13 +5,13 @@ type: docs
 weight: 15
 ---
 
-This guide demonstrates a client within the service mesh accessing destinations external to the mesh using OSM's Egress policy API.
+This guide demonstrates a client within the service mesh accessing destinations external to the mesh using osm-edge's Egress policy API.
 
 
 ## Prerequisites
 
 - Kubernetes cluster running Kubernetes {{< param min_k8s_version >}} or greater.
-- Have OSM installed.
+- Have osm-edge installed.
 - Have `kubectl` available to interact with the API server.
 - Have `osm` CLI available for managing the service mesh.
 
@@ -20,7 +20,7 @@ This guide demonstrates a client within the service mesh accessing destinations 
 
 1. Enable egress policy if not enabled:
     ```bash
-    export osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+    export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
     kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}'  --type=merge
     ```
 
@@ -33,7 +33,7 @@ This guide demonstrates a client within the service mesh accessing destinations 
     osm namespace add curl
 
     # Deploy curl client in the curl namespace
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n curl
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n curl
     ```
 
     Confirm the `curl` client pod is up and running.
@@ -77,13 +77,13 @@ This guide demonstrates a client within the service mesh accessing destinations 
     ```console
     $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/get
     HTTP/1.1 200 OK
-    date: Thu, 13 May 2021 21:49:35 GMT
+    date: Mon, 04 Jul 2022 07:48:24 GMT
     content-type: application/json
-    content-length: 335
-    server: envoy
+    content-length: 313
+    server: gunicorn/19.9.0
     access-control-allow-origin: *
     access-control-allow-credentials: true
-    x-envoy-upstream-service-time: 168
+    connection: keep-alive
     ```
 
 1. Confirm the `curl` client can no longer make successful HTTP requests to `http://httpbin.org:80/get` when the above policy is removed.
@@ -98,7 +98,7 @@ This guide demonstrates a client within the service mesh accessing destinations 
 
 ## HTTPS Egress
 
-Since HTTPS traffic is encrypted with TLS, OSM routes HTTPS based traffic by proxying it to its original destination as a TCP stream. The Server Name Indication (SNI) indicated by the HTTPS client application in the TLS handshake is matched against hosts specified in the Egress policy.
+Since HTTPS traffic is encrypted with TLS, osm-edge routes HTTPS based traffic by proxying it to its original destination as a TCP stream. The Server Name Indication (SNI) indicated by the HTTPS client application in the TLS handshake is matched against hosts specified in the Egress policy.
 
 1. Confirm the `curl` client is unable make the HTTPS request `https://httpbin.org:443/get` to the `httpbin.org` website on port `443`.
     ```console
@@ -176,7 +176,7 @@ TCP based Egress traffic is matched against the destination port and IP address 
         protocol: tcp
     EOF
     ```
-    > Note: For `server-first` protocols such as `MySQL`, `PostgreSQL`, etc., where the server initiates the first bytes of data between the client and server, the protocol must be set to `tcp-server-first` to indicate to OSM to not perform protocol detection on the port. Protocol detection relies on inspecting the initial bytes of a connection, which is incompatible with `server-first` protocols. When the port's protocol is set to `tcp-server-first`, protocol detection is skipped for that port number. It is also important to note that `server-first` port numbers must not be used for other application ports that require protocol detection to performed, which means the port numbers used for `server-first` protocols must not be used with other protocols such as `HTTP` and `TCP` that require protocol detection to be performed.
+    > Note: For `server-first` protocols such as `MySQL`, `PostgreSQL`, etc., where the server initiates the first bytes of data between the client and server, the protocol must be set to `tcp-server-first` to indicate to osm-edge to not perform protocol detection on the port. Protocol detection relies on inspecting the initial bytes of a connection, which is incompatible with `server-first` protocols. When the port's protocol is set to `tcp-server-first`, protocol detection is skipped for that port number. It is also important to note that `server-first` port numbers must not be used for other application ports that require protocol detection to performed, which means the port numbers used for `server-first` protocols must not be used with other protocols such as `HTTP` and `TCP` that require protocol detection to be performed.
 
 1. Confirm the `curl` client is able to make successful HTTPS requests to `https://openservicemesh.io:443`.
     ```console
@@ -256,22 +256,19 @@ HTTP Egress policies can specify SMI HTTPRouteGroup matches for fine grained tra
     date: Thu, 13 May 2021 21:49:35 GMT
     content-type: application/json
     content-length: 335
-    server: envoy
     access-control-allow-origin: *
     access-control-allow-credentials: true
-    x-envoy-upstream-service-time: 168
     ```
 
-1. Confirm the `curl` client is unable to make successful HTTP requests to `http://httpbin.org:80/status/200`.
+2. Confirm the `curl` client is unable to make successful HTTP requests to `http://httpbin.org:80/status/200`.
     ```console
     $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/status/200
     HTTP/1.1 404 Not Found
     date: Fri, 14 May 2021 17:08:48 GMT
-    server: envoy
     transfer-encoding: chunked
     ```
 
-1. Update the matching SMI HTTPRouteGroup resource to allow requests to HTTP paths matching the regex `/status.*`.
+3. Update the matching SMI HTTPRouteGroup resource to allow requests to HTTP paths matching the regex `/status.*`.
     ```bash
     kubectl apply -f - <<EOF
     apiVersion: specs.smi-spec.io/v1alpha4
@@ -288,15 +285,13 @@ HTTP Egress policies can specify SMI HTTPRouteGroup matches for fine grained tra
     EOF
     ```
 
-1. Confirm the `curl` client can now make successful HTTP requests to `http://httpbin.org:80/status/200`.
+4. Confirm the `curl` client can now make successful HTTP requests to `http://httpbin.org:80/status/200`.
     ```console
     $ kubectl exec $(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}') -n curl -c curl -- curl -sI http://httpbin.org:80/status/200
     HTTP/1.1 200 OK
     date: Fri, 14 May 2021 17:10:48 GMT
     content-type: text/html; charset=utf-8
     content-length: 0
-    server: envoy
     access-control-allow-origin: *
     access-control-allow-credentials: true
-    x-envoy-upstream-service-time: 188
     ```

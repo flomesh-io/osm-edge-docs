@@ -11,7 +11,7 @@ This guide demonstrates how to perform Canary rollouts using the SMI Traffic Spl
 ## Prerequisites
 
 - Kubernetes cluster running Kubernetes {{< param min_k8s_version >}} or greater.
-- Have OSM installed.
+- Have osm-edge installed.
 - Have `kubectl` available to interact with the API server.
 - Have `osm` CLI available for managing the service mesh.
 
@@ -28,7 +28,7 @@ The following steps demonstrate the canary rollout deployment strategy.
 1. Enable permissive mode
 
     ```bash
-    osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+    osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
     kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
     ```
 

@@ -1,20 +1,20 @@
 ---
-title: "Integrate OSM with Prometheus and Grafana"
-description: "Describes how to set up an OSM-specific configuration and dashboards with your own Prometheus and Grafana stack"
+title: "Integrate osm-edge with Prometheus and Grafana"
+description: "Describes how to set up an osm-edge-specific configuration and dashboards with your own Prometheus and Grafana stack"
 type: docs
 weight: 25
 ---
 
-# Integrate OSM with your own Prometheus and Grafana stack
+# Integrate osm-edge with your own Prometheus and Grafana stack
 
-The following article shows you how to create an example bring your own (BYO) Prometheus and Grafana stack on your cluster and configure that stack for observability and monitoring of OSM. For an example using an automatic provisioning of a Prometheus and Grafana stack with OSM, see the [Observability](https://docs.openservicemesh.io/docs/getting_started/observability/) getting started guide.
+The following article shows you how to create an example bring your own (BYO) Prometheus and Grafana stack on your cluster and configure that stack for observability and monitoring of osm-edge. For an example using an automatic provisioning of a Prometheus and Grafana stack with osm-edge, see the [Observability](https://docs.openservicemesh.io/docs/getting_started/observability/) getting started guide.
 
 > IMPORTANT: The configuration created in this article should not be used in production environments. For production-grade deployments, see [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md) and [Deploy Grafana in Kubernetes](https://grafana.com/docs/grafana/latest/installation/kubernetes/).
 
 ## Prerequisites
 
 - Kubernetes cluster running Kubernetes {{< param min_k8s_version >}} or greater.
-- OSM installed on the Kubernetes cluster.
+- osm-edge installed on the Kubernetes cluster.
 - `kubectl` installed and access to the cluster's API server.
 - `osm` CLI installed.
 - `helm` CLI installed.
@@ -40,9 +40,9 @@ stable-prometheus-server.metrics.svc.cluster.local
 
 Record this DNS name for use in a later step.
 
-## Configure Prometheus for OSM
+## Configure Prometheus for osm-edge
 
-Prometheus needs to be configured to scape the OSM endpoints and properly handle OSM's labeling, relabelling, and endpoint configuration. This configuration also helps the OSM Grafana dashboards, which are configured in a later step, properly display the data scraped from OSM.
+Prometheus needs to be configured to scape the osm-edge endpoints and properly handle osm-edge's labeling, relabelling, and endpoint configuration. This configuration also helps the osm-edge Grafana dashboards, which are configured in a later step, properly display the data scraped from osm-edge.
 
 Use `kubectl get configmap` to verify the `stable-prometheus-sever` configmap has been created. For example:
 
@@ -58,7 +58,7 @@ stable-prometheus-server         5      18m
 
 Create `update-prometheus-configmap.yaml` with the following:
 
-```
+```yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -66,9 +66,9 @@ metadata:
 data:
   prometheus.yml: |
     global:
-      scrape_interval: 10s
-      scrape_timeout: 10s
-      evaluation_interval: 1m
+      scrape_interval: 15s
+      scrape_timeout: 15s
+      evaluation_interval: 30s
 
     scrape_configs:
       - job_name: 'kubernetes-apiservers'
@@ -111,7 +111,7 @@ data:
         - role: pod
         metric_relabel_configs:
         - source_labels: [__name__]
-          regex: '(envoy_server_live|envoy_cluster_health_check_.*|envoy_cluster_upstream_rq_xx|envoy_cluster_upstream_cx_active|envoy_cluster_upstream_cx_tx_bytes_total|envoy_cluster_upstream_cx_rx_bytes_total|envoy_cluster_upstream_rq_total|envoy_cluster_upstream_cx_destroy_remote_with_active_rq|envoy_cluster_upstream_cx_connect_timeout|envoy_cluster_upstream_cx_destroy_local_with_active_rq|envoy_cluster_upstream_rq_pending_failure_eject|envoy_cluster_upstream_rq_pending_overflow|envoy_cluster_upstream_rq_timeout|envoy_cluster_upstream_rq_rx_reset|^osm.*)'
+          regex: '(sidecar_server_live|sidecar_cluster_health_check_.*|sidecar_cluster_upstream_rq_xx|sidecar_cluster_upstream_cx_active|sidecar_cluster_upstream_cx_tx_bytes_total|sidecar_cluster_upstream_cx_rx_bytes_total|sidecar_cluster_upstream_rq_total|sidecar_cluster_upstream_cx_destroy_remote_with_active_rq|sidecar_cluster_upstream_cx_connect_timeout|sidecar_cluster_upstream_cx_destroy_local_with_active_rq|sidecar_cluster_upstream_rq_pending_failure_eject|sidecar_cluster_upstream_rq_pending_overflow|sidecar_cluster_upstream_rq_timeout|sidecar_cluster_upstream_rq_rx_reset|^osm.*)'
           action: keep
         relabel_configs:
         - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
@@ -135,7 +135,7 @@ data:
         - regex: '(__meta_kubernetes_pod_label_app)'
           action: labelmap
           replacement: source_service
-        - regex: '(__meta_kubernetes_pod_label_osm_envoy_uid|__meta_kubernetes_pod_label_pod_template_hash|__meta_kubernetes_pod_label_version)'
+        - regex: '(__meta_kubernetes_pod_label_osm_sidecar_uid|__meta_kubernetes_pod_label_pod_template_hash|__meta_kubernetes_pod_label_version)'
           action: drop
         # for non-ReplicaSets (DaemonSet, StatefulSet)
         # __meta_kubernetes_pod_controller_kind=DaemonSet
@@ -186,43 +186,43 @@ data:
           target_label: __address__
         metric_relabel_configs:
         - source_labels: [__name__]
-          regex: 'envoy_.*osm_request_(total|duration_ms_(bucket|count|sum))'
+          regex: 'sidecar_.*osm_request_(total|duration_ms_(bucket|count|sum))'
           action: keep
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_(\d{3})_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_(\d{3})_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
           target_label: response_code
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_(.*)_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_(.*)_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
           target_label: source_namespace
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_.*_source_kind_(.*)_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_.*_source_kind_(.*)_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
           target_label: source_kind
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_(.*)_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_(.*)_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
           target_label: source_name
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_(.*)_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_(.*)_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
           target_label: source_pod
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_(.*)_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_(.*)_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_total
           target_label: destination_namespace
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_(.*)_destination_name_.*_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_(.*)_destination_name_.*_destination_pod_.*_osm_request_total
           target_label: destination_kind
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_(.*)_destination_pod_.*_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_(.*)_destination_pod_.*_osm_request_total
           target_label: destination_name
         - source_labels: [__name__]
           action: replace
-          regex: envoy_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_(.*)_osm_request_total
+          regex: sidecar_response_code_\d{3}_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_(.*)_osm_request_total
           target_label: destination_pod
         - source_labels: [__name__]
           action: replace
@@ -231,35 +231,35 @@ data:
 
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_(.*)_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_(.*)_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
           target_label: source_namespace
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_.*_source_kind_(.*)_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_.*_source_kind_(.*)_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
           target_label: source_kind
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_.*_source_kind_.*_source_name_(.*)_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_.*_source_kind_.*_source_name_(.*)_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
           target_label: source_name
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_(.*)_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_(.*)_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
           target_label: source_pod
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_(.*)_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_(.*)_destination_kind_.*_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
           target_label: destination_namespace
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_(.*)_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_(.*)_destination_name_.*_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
           target_label: destination_kind
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_(.*)_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_(.*)_destination_pod_.*_osm_request_duration_ms_(bucket|sum|count)
           target_label: destination_name
         - source_labels: [__name__]
           action: replace
-          regex: envoy_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_(.*)_osm_request_duration_ms_(bucket|sum|count)
+          regex: sidecar_source_namespace_.*_source_kind_.*_source_name_.*_source_pod_.*_destination_namespace_.*_destination_kind_.*_destination_name_.*_destination_pod_(.*)_osm_request_duration_ms_(bucket|sum|count)
           target_label: destination_pod
         - source_labels: [__name__]
           action: replace
@@ -294,7 +294,7 @@ Use `kubectl apply` to update the Prometheus server configmap.
 kubectl apply -f update-prometheus-configmap.yaml
 ```
 
-Verify Prometheus is able to scrape the OSM mesh and API endpoints by using `kubectl port-forward` to forward the traffic between the Prometheus management application and your development computer.
+Verify Prometheus is able to scrape the osm-edge mesh and API endpoints by using `kubectl port-forward` to forward the traffic between the Prometheus management application and your development computer.
 
 ```
 export POD_NAME=$(kubectl get pods -l "app=prometheus,component=server" -o jsonpath="{.items[0].metadata.name}")
@@ -306,7 +306,7 @@ Open a web browser to `http://localhost:9090/targets` to access the Prometheus m
 <p align="center">
   <img src="/docs/images/byo_guide/prom_targets.png" width="100%"/>
 </p>
-<center><i>Targets with specific relabeling config established by OSM should be "up"</i></center><br>
+<center><i>Targets with specific relabeling config established by osm-edge should be "up"</i></center><br>
 
 Stop the port-forwarding command.
 
@@ -345,14 +345,14 @@ From the management application:
 
 Select `Save and Test` and confirm you see `Data source is working`.
 
-## Importing OSM Dashboards
+## Importing osm-edge Dashboards
 
-OSM Dashboards are available through [OSM GitHub repository](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards), which can be imported as json blobs on the management application.
+osm-edge Dashboards are available through [osm-edge GitHub repository](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards), which can be imported as json blobs on the management application.
 
 To import a dashboard:
 * Hover your cursor over the `+` and select `Import`.
-* Copy the JSON from the [osm-mesh-envoy-details dashboard](https://raw.githubusercontent.com/openservicemesh/osm/{{< param osm_branch >}}/charts/osm/grafana/dashboards/osm-mesh-envoy-details.json) and paste it in `Import via panel json`.
+* Copy the JSON from the [osm-mesh-sidecar-details dashboard](https://raw.githubusercontent.com/flomesh-io/osm-edge/{{< param osm_branch >}}/charts/osm/grafana/pipy/dashboards/osm-mesh-sidecar-details.json) and paste it in `Import via panel json`.
 * Select `Load`.
 * Select `Import`.
 
-Confirm you see a `Mesh and Envoy Details` dashboard created.
+Confirm you see a `Mesh and Sidecar Details` dashboard created.

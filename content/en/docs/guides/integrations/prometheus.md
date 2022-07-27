@@ -1,22 +1,22 @@
 ---
-title: "Integrate Prometheus with OSM"
-description: "A simple demo showing how OSM integrates with Prometheus for metrics"
+title: "Integrate Prometheus with osm-edge"
+description: "A simple demo showing how osm-edge integrates with Prometheus for metrics"
 aliases: "/docs/integrations/demo_prometheus"
 type: docs
 weight: 3
 ---
 
-# Integrate Prometheus with OSM
+# Integrate Prometheus with osm-edge
 
-## Prometheus and OSM Integration
+## Prometheus and osm-edge Integration
 
-To familiarize yourself on how OSM works with Prometheus, try installing a new mesh with sample applications to see which metrics are collected.
+To familiarize yourself on how osm-edge works with Prometheus, try installing a new mesh with sample applications to see which metrics are collected.
 
-1. Install OSM with its own Prometheus instance:
+1. Install osm-edge with its own Prometheus instance:
 
    ```console
    $ osm install --set osm.deployPrometheus=true,osm.enablePermissiveTrafficPolicy=true
-   OSM installed successfully in namespace [osm-system] with mesh name [osm]
+   osm-edge installed successfully in namespace [osm-system] with mesh name [osm]
    ```
 
 1. Create a namespace for sample workloads:
@@ -26,14 +26,14 @@ To familiarize yourself on how OSM works with Prometheus, try installing a new m
    namespace/metrics-demo created
    ```
 
-1. Make the new OSM monitor the new namespace:
+1. Make the new osm-edge monitor the new namespace:
 
    ```console
    $ osm namespace add metrics-demo
    Namespace [metrics-demo] successfully added to mesh [osm]
    ```
 
-1. Configure OSM's Prometheus to scrape metrics from the new namespace:
+1. Configure osm-edge's Prometheus to scrape metrics from the new namespace:
 
    ```console
    $ osm metrics enable --namespace metrics-demo
@@ -68,23 +68,22 @@ To familiarize yourself on how OSM works with Prometheus, try installing a new m
    ```console
    $ kubectl exec -n metrics-demo -ti "$(kubectl get pod -n metrics-demo -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- sh -c 'while :; do curl -i httpbin.metrics-demo:14001/status/200; sleep 1; done'
    HTTP/1.1 200 OK
-   server: envoy
-   date: Tue, 23 Mar 2021 17:27:44 GMT
+   server: gunicorn/19.9.0
+   date: Wed, 06 Jul 2022 02:53:16 GMT
    content-type: text/html; charset=utf-8
    access-control-allow-origin: *
    access-control-allow-credentials: true
    content-length: 0
-   x-envoy-upstream-service-time: 1
+   connection: keep-alive
 
    HTTP/1.1 200 OK
-   server: envoy
-   date: Tue, 23 Mar 2021 17:27:45 GMT
+   server: gunicorn/19.9.0
+   date: Wed, 06 Jul 2022 02:53:17 GMT
    content-type: text/html; charset=utf-8
    access-control-allow-origin: *
    access-control-allow-credentials: true
    content-length: 0
-   x-envoy-upstream-service-time: 2
-
+   connection: keep-alive
    ...
    ```
 
@@ -101,7 +100,7 @@ To familiarize yourself on how OSM works with Prometheus, try installing a new m
    Navigate to http://localhost:7070 in a web browser to view the Prometheus UI. The following query shows how many requests per second are being made from the curl pod to the httpbin pod, which should be about 1:
 
    ```
-   irate(envoy_cluster_upstream_rq_xx{source_service="curl", envoy_cluster_name="metrics-demo/httpbin"}[30s])
+   irate(sidecar_cluster_upstream_rq_xx{source_service="curl", sidecar_cluster_name="metrics-demo/httpbin"}[30s])
    ```
 
    Feel free to explore the other metrics available from within the Prometheus UI.
@@ -115,15 +114,15 @@ To familiarize yourself on how OSM works with Prometheus, try installing a new m
    namespace "metrics-demo" deleted
    ```
 
-   Then, uninstall OSM:
+   Then, uninstall osm-edge:
 
    ```
    $ osm uninstall mesh
-   Uninstall OSM [mesh name: osm] ? [y/n]: y
-   OSM [mesh name: osm] uninstalled
+   Uninstall osm-edge [mesh name: osm] ? [y/n]: y
+   osm-edge [mesh name: osm] uninstalled
    ```
 
-   To remove OSM's cluster wide resources after uninstallation, run the following command. See the [uninstall guide](/docs/guides/uninstall/) for more context and information.
+   To remove osm-edge's cluster wide resources after uninstallation, run the following command. See the [uninstall guide](/docs/guides/uninstall/) for more context and information.
 
    ```console
    $ osm uninstall mesh --delete-cluster-wide-resources

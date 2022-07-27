@@ -34,7 +34,7 @@ To show how to split traffic using SMI Traffic Split, we will deploy an addition
 - `bookstore-v2` - this is the same container as the first `bookstore` we deployed, but for this demo we will assume that it is a new version of the app we need to upgrade to.
 
 The `bookbuyer`, `bookthief`, `bookstore`, and `bookwarehouse` Pods will be in separate Kubernetes Namespaces with
-the same names. `mysql` will be in the `bookwarehouse` namespace. Each new Pod in the service mesh will be injected with an Envoy sidecar container.
+the same names. `mysql` will be in the `bookwarehouse` namespace. Each new Pod in the service mesh will be injected with an Pipy sidecar container.
 
 ### Create the Namespaces
 
@@ -45,46 +45,46 @@ kubectl create namespace bookthief
 kubectl create namespace bookwarehouse
 ```
 
-### Add the new namespaces to the OSM control plane
+### Add the new namespaces to the osm-edge control plane
 
 ```bash
 osm namespace add bookstore bookbuyer bookthief bookwarehouse
 ```
 
 Now each one of the four namespaces is labelled with `openservicemesh.io/monitored-by: osm` and also
-annotated with `openservicemesh.io/sidecar-injection: enabled`. The OSM Controller, noticing the label and annotation
-on these namespaces, will start injecting all **new** pods with Envoy sidecars.
+annotated with `openservicemesh.io/sidecar-injection: enabled`. The osm-edge Controller, noticing the label and annotation
+on these namespaces, will start injecting all **new** pods with Pipy sidecars.
 
 ### Create Pods, Services, ServiceAccounts
 
 Create the `bookbuyer` service account and deployment:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/apps/bookbuyer.yaml
+kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/apps/bookbuyer.yaml
 ```
 
 Create the `bookthief` service account and deployment:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/apps/bookthief.yaml
+kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/apps/bookthief.yaml
 ```
 
 Create the `bookstore` service account, service, and deployment:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/apps/bookstore.yaml
+kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/apps/bookstore.yaml
 ```
 
 Create the `bookwarehouse` service account, service, and deployment:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/apps/bookwarehouse.yaml
+kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/apps/bookwarehouse.yaml
 ```
 
 Create the `mysql` service account, service, and stateful set:
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/apps/mysql.yaml
+kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/apps/mysql.yaml
 ```
 
 ### Checkpoint: What Got Installed?
@@ -107,7 +107,7 @@ In addition, a [Kubernetes Service Account](https://kubernetes.io/docs/tasks/con
 
 Set up client port forwarding with the following steps to access the applications in the Kubernetes cluster. It is best to start a new terminal session for running the port forwarding script to maintain the port forwarding session, while using the original terminal to continue to issue commands. The port-forward-all.sh script will look for a `.env` file for environment variables needed to run the script. The `.env` creates the necessary variables that target the previously created namespaces. We will use the reference `.env.example` file and then run the port forwarding script.
 
-In a new terminal session, run the following commands to enable port forwarding into the Kubernetes cluster from the root of the project directory (your local clone of [upstream OSM](https://github.com/openservicemesh/osm)).
+In a new terminal session, run the following commands to enable port forwarding into the Kubernetes cluster from the root of the project directory (your local clone of [upstream osm-edge](https://github.com/flomesh-io/osm-edge)).
 
 ```bash
 cp .env.example .env
