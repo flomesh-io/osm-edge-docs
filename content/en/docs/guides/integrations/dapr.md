@@ -1,23 +1,23 @@
 ---
-title: "Integrate Dapr with OSM"
-description: "A simple demo showing to integrate Dapr with OSM"
+title: "Integrate Dapr with osm-edge"
+description: "A simple demo showing to integrate Dapr with osm-edge"
 aliases: "/docs/integrations/demo_dapr"
 type: docs
 weight: 2
 ---
 
-# Integrate Dapr with OSM
+# Integrate Dapr with osm-edge
 
-## Dapr OSM Walkthrough
+## Dapr osm-edge Walkthrough
 
-This document walks you through the steps of getting Dapr working with OSM on a Kubernetes cluster.
+This document walks you through the steps of getting Dapr working with osm-edge on a Kubernetes cluster.
 
 1. Install Dapr on your cluster with mTLS disabled:
 
-   1. Dapr has a quickstart repository to help users get familiar with dapr and its features. For this integration demo we will be leveraging the [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) quickstart. As we would like to integrate this Dapr example with OSM, there are a few modifications required and they are as follows:
+   1. Dapr has a quickstart repository to help users get familiar with dapr and its features. For this integration demo we will be leveraging the [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) quickstart. As we would like to integrate this Dapr example with osm-edge, there are a few modifications required and they are as follows:
 
-      - The [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) demo installs Dapr with mtls enabled (by default), we would **not want mtls from Dapr and would like to leverage OSM for this**. Hence while [installing Dapr](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-1---setup-dapr-on-your-kubernetes-cluster) on your cluster, make sure to disable mtls by passing the flag : `--enable-mtls=false` during the installation
-      - Further [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) sets up everything in the default namespace, it is **strongly recommended** to set up the entire hello-kubernetes demo in a specific namespace (we will later join this namespace to OSM's mesh). For the purpose of this integration, we have the namespace as `dapr-test`
+      - The [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) demo installs Dapr with mtls enabled (by default), we would **not want mtls from Dapr and would like to leverage osm-edge for this**. Hence while [installing Dapr](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-1---setup-dapr-on-your-kubernetes-cluster) on your cluster, make sure to disable mtls by passing the flag : `--enable-mtls=false` during the installation
+      - Further [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) sets up everything in the default namespace, it is **strongly recommended** to set up the entire hello-kubernetes demo in a specific namespace (we will later join this namespace to osm-edge's mesh). For the purpose of this integration, we have the namespace as `dapr-test`
 
         ```console
          $ kubectl create namespace dapr-test
@@ -58,14 +58,14 @@ This document walks you through the steps of getting Dapr working with OSM on a 
 
    2. Ensure the sample applications are running with Dapr as desired.
 
-2. Install OSM:
+2. Install osm-edge:
 
    ```console
    $ osm install
-   OSM installed successfully in namespace [osm-system] with mesh name [osm]
+   osm-edge installed successfully in namespace [osm-system] with mesh name [osm]
    ```
 
-3. Enable permissive mode in OSM:
+3. Enable permissive mode in osm-edge:
 
    ```console
    $ kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
@@ -74,7 +74,7 @@ This document walks you through the steps of getting Dapr working with OSM on a 
 
    This is necessary, so that the hello-kubernetes example works as is and no SMI policies are needed from the get go.
 
-4. Exclude kubernetes API server IP from being intercepted by OSM's sidecar:
+4. Exclude kubernetes API server IP from being intercepted by osm-edge's sidecar:
 
    1. Get the kubernetes API server cluster IP:
       ```console
@@ -82,17 +82,17 @@ This document walks you through the steps of getting Dapr working with OSM on a 
       NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
       kubernetes   ClusterIP   10.0.0.1     <none>        443/TCP   1d
       ```
-   2. Add this IP to the MeshConfig so that outbound traffic to it is excluded from interception by OSM's sidecar
+   2. Add this IP to the MeshConfig so that outbound traffic to it is excluded from interception by osm-edge's sidecar
       ```console
       $ kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"outboundIPRangeExclusionList":["10.0.0.1/32"]}}}'  --type=merge
       meshconfig.config.openservicemesh.io/osm-mesh-config patched
       ```
 
-   It is necessary to exclude the Kubernetes API server IP in OSM because Dapr leverages Kubernetes secrets to access the redis state store in this demo.
+   It is necessary to exclude the Kubernetes API server IP in osm-edge because Dapr leverages Kubernetes secrets to access the redis state store in this demo.
 
    _Note: If you have hardcoded the password in the Dapr component file, you may skip this step._
 
-5. Globally exclude ports from being intercepted by OSM's sidecar:
+5. Globally exclude ports from being intercepted by osm-edge's sidecar:
 
    1. Get the ports of Dapr's placement server (`dapr-placement-server`):
       ```console
@@ -106,18 +106,18 @@ This document walks you through the steps of getting Dapr working with OSM on a 
       ```
    2. Get the ports of your redis state store from the [redis.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/redis.yaml), `6379`incase of this demo
 
-   3. Add these ports to the MeshConfig so that outbound traffic to it is excluded from interception by OSM's sidecar
+   3. Add these ports to the MeshConfig so that outbound traffic to it is excluded from interception by osm-edge's sidecar
 
       ```console
       $ kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"outboundPortExclusionList":[50005,8201,6379]}}}'  --type=merge
       meshconfig.config.openservicemesh.io/osm-mesh-config patched
       ```
 
-   It is necessary to globally exclude Dapr's placement server (`dapr-placement-server`) port from being intercepted by OSM's sidecar, as pods having Dapr on them would need to talk to Dapr's control plane. The redis state store also needs to be excluded so that Dapr's sidecar can route the traffic to redis, without being intercepted by OSM's sidecar.
+   It is necessary to globally exclude Dapr's placement server (`dapr-placement-server`) port from being intercepted by osm-edge's sidecar, as pods having Dapr on them would need to talk to Dapr's control plane. The redis state store also needs to be excluded so that Dapr's sidecar can route the traffic to redis, without being intercepted by osm-edge's sidecar.
 
-   _Note: Globally excluding ports would result in all pods in OSM's mesh from not interceting any outbound traffic to the specified ports. If you wish to exclude the ports selectively only on pods that are running Dapr, you may omit this step and follow the step mentioned below._
+   _Note: Globally excluding ports would result in all pods in osm-edge's mesh from not interceting any outbound traffic to the specified ports. If you wish to exclude the ports selectively only on pods that are running Dapr, you may omit this step and follow the step mentioned below._
 
-6. Exclude ports from being intercepted by OSM's sidecar at pod level:
+6. Exclude ports from being intercepted by osm-edge's sidecar at pod level:
 
    1. Get the ports of Dapr's api and sentry (`dapr-sentry` and `dapr-api`):
 
@@ -133,9 +133,9 @@ This document walks you through the steps of getting Dapr working with OSM on a 
 
    2. Update the pod spec in both nodeapp ([node.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/node.yaml)) and pythonapp ([python.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/python.yaml)) to contain the following annotation: `openservicemesh.io/outbound-port-exclusion-list: "80"`
 
-   Adding the annotation to the pod excludes Dapr's api (`dapr-api`) and sentry (`dapr-sentry`) port's from being intercepted by OSM's sidecar, as these pods would need to talk to Dapr's control plane.
+   Adding the annotation to the pod excludes Dapr's api (`dapr-api`) and sentry (`dapr-sentry`) port's from being intercepted by osm-edge's sidecar, as these pods would need to talk to Dapr's control plane.
 
-7. Make OSM monitor the namespace that was used for the Dapr hello-kubernetes demo setup:
+7. Make osm-edge monitor the namespace that was used for the Dapr hello-kubernetes demo setup:
 
    ```console
    $ osm namespace add dapr-test
@@ -166,7 +166,7 @@ This document walks you through the steps of getting Dapr working with OSM on a 
    deployment.apps "pythonapp" created
    ```
 
-   The pythonapp and nodeapp pods on restart will now have 3 containers each, indicating OSM's proxy sidecar has been successfully injected
+   The pythonapp and nodeapp pods on restart will now have 3 containers each, indicating osm-edge's proxy sidecar has been successfully injected
 
    ```console
    $ kubectl get pods -n dapr-test
@@ -186,7 +186,7 @@ This document walks you through the steps of getting Dapr working with OSM on a 
 
 10. Applying SMI Traffic Policies:
 
-    The demo so far illustrated permissive traffic policy mode in OSM whereby application connectivity within the mesh is automatically configured by `osm-controller`, therefore no SMI policy was required for the pythonapp to talk to the nodeapp.
+    The demo so far illustrated permissive traffic policy mode in osm-edge whereby application connectivity within the mesh is automatically configured by `osm-controller`, therefore no SMI policy was required for the pythonapp to talk to the nodeapp.
 
     In order to see the same demo work with an SMI Traffic Policy, follow the steps outlined below:
 
@@ -298,13 +298,13 @@ This document walks you through the steps of getting Dapr working with OSM on a 
        $ dapr uninstall --kubernetes
        ```
 
-    3. To uninstall OSM, run
+    3. To uninstall osm-edge, run
 
        ```console
        $ osm uninstall mesh
        ```
 
-    4. To remove OSM's cluster wide resources after uninstallation, run the following command. See the [uninstall guide](/docs/guides/uninstall/) for more context and information.
+    4. To remove osm-edge's cluster wide resources after uninstallation, run the following command. See the [uninstall guide](/docs/guides/uninstall/) for more context and information.
 
        ```console
        $ osm uninstall mesh --delete-cluster-wide-resources

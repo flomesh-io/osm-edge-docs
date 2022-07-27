@@ -5,15 +5,15 @@ type: docs
 weight: 22
 ---
 
-This guide demonstrates how to configure circuit breaking for destinations that are external to the OSM managed service mesh.
+This guide demonstrates how to configure circuit breaking for destinations that are external to the osm-edge managed service mesh.
 
 ## Prerequisites
 
 - Kubernetes cluster running Kubernetes {{< param min_k8s_version >}} or greater.
-- Have OSM installed.
+- Have osm-edge installed.
 - Have `kubectl` available to interact with the API server.
 - Have `osm` CLI available for managing the service mesh.
-- OSM version >= v1.1.0.
+- osm-edge version >= v1.1.0.
 
 
 ## Demo
@@ -27,7 +27,7 @@ The following demo shows a load-testing client [fortio](https://github.com/forti
     kubectl create namespace httpbin
 
     # Deploy httpbin service in the httpbin namespace
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/httpbin/httpbin.yaml -n httpbin
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/httpbin/httpbin.yaml -n httpbin
     ```
 
     Confirm the `httpbin` service and pods are up and running.
@@ -53,7 +53,7 @@ The following demo shows a load-testing client [fortio](https://github.com/forti
     osm namespace add client
 
     # Deploy fortio client in the client namespace
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/fortio/fortio.yaml -n client
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/fortio/fortio.yaml -n client
     ```
 
     Confirm the `fortio` client pod is up and running.

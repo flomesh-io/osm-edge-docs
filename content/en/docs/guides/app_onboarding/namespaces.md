@@ -1,6 +1,6 @@
 ---
 title: "Namespace addition"
-description: "This section describes how and why OSM monitors Kubernetes namespaces"
+description: "This section describes how and why osm-edge monitors Kubernetes namespaces"
 aliases: "/docs/tasks/namespace_monitoring"
 type: docs
 weight: 2
@@ -10,18 +10,18 @@ weight: 2
 
 ## Overview
 
-When setting up an OSM control plane (also referred to as a "mesh"), one can also enroll a set of Kubernetes namespaces to the mesh. Enrolling a namespace to OSM allows OSM to monitor the resources within that Namespace whether they be applications deployed in Pods, Services, or even traffic policies represented as SMI resources.
+When setting up an osm-edge control plane (also referred to as a "mesh"), one can also enroll a set of Kubernetes namespaces to the mesh. Enrolling a namespace to osm-edge allows osm-edge to monitor the resources within that Namespace whether they be applications deployed in Pods, Services, or even traffic policies represented as SMI resources.
 
-Only one mesh can monitor a namespace, so this is something to watch out for when there are multiple instances of OSM within the same Kubernetes cluster. When applying policies to applications, OSM will only assess resources in either monitored namespaces so it is important to enroll namespaces where your applications are deployed to the correct instance of OSM with the correct mesh name.
-Enrolling a namespace also optionally allows for metrics to be collected for resources in the given namespace and for Pods in the namespace to be automatically injected with sidecar proxy containers. These are all features that help OSM provide functionality for traffic management and observability. Scoping this functionality at the namespace level allows teams to organize which segments of
+Only one mesh can monitor a namespace, so this is something to watch out for when there are multiple instances of osm-edge within the same Kubernetes cluster. When applying policies to applications, osm-edge will only assess resources in either monitored namespaces so it is important to enroll namespaces where your applications are deployed to the correct instance of osm-edge with the correct mesh name.
+Enrolling a namespace also optionally allows for metrics to be collected for resources in the given namespace and for Pods in the namespace to be automatically injected with sidecar proxy containers. These are all features that help osm-edge provide functionality for traffic management and observability. Scoping this functionality at the namespace level allows teams to organize which segments of
 their cluster should be part of which mesh.
 
-Namespace monitoring, automatic sidecar injection, and metrics collection is controlled by adding certain labels and annotations to a Kubernetes namespace. This can be done manually or using the `osm` CLI although using the `osm` CLI is the recommended approach. The presence of the label `openservicemesh.io/monitored-by=<mesh-name>` allows an OSM control plane with the given `mesh-name` to monitor
-all resources within that namespace. The annotation `openservicemesh.io/sidecar-injection=enabled` enables OSM to automatically inject sidecar proxy containers in all Pods created within that namespace. The metrics annotation `openservicemesh.io/metrics=enabled` allows OSM to collect metrics on resources within a Namespace.
+Namespace monitoring, automatic sidecar injection, and metrics collection is controlled by adding certain labels and annotations to a Kubernetes namespace. This can be done manually or using the `osm` CLI although using the `osm` CLI is the recommended approach. The presence of the label `openservicemesh.io/monitored-by=<mesh-name>` allows an osm-edge control plane with the given `mesh-name` to monitor
+all resources within that namespace. The annotation `openservicemesh.io/sidecar-injection=enabled` enables osm-edge to automatically inject sidecar proxy containers in all Pods created within that namespace. The metrics annotation `openservicemesh.io/metrics=enabled` allows osm-edge to collect metrics on resources within a Namespace.
 
-See how to use the OSM CLI to manage namespace monitoring below.
+See how to use the osm-edge CLI to manage namespace monitoring below.
 
-## Adding a Namespace to the OSM Control Plane
+## Adding a Namespace to the osm-edge Control Plane
 
 Add a namespace for monitoring and sidecar injection to the mesh with the following command:
 
@@ -31,7 +31,7 @@ osm namespace add <namespace>
 
 Explicitly disable sidecar injection while adding the namespace using `--disable-sidecar-injection` flag as shown [here](/docs/guides/app_onboarding/sidecar_injection/#explicitly-disabling-automatic-sidecar-injection-on-namespaces).
 
-## Remove a Namespace from the OSM control plane
+## Remove a Namespace from the osm-edge control plane
 
 Remove a namespace from being monitored by the mesh and disable sidecar injection with the following command:
 
@@ -39,7 +39,7 @@ Remove a namespace from being monitored by the mesh and disable sidecar injectio
 osm namespace remove <namespace>
 ```
 
-This command will remove the OSM specific labels and annotations on the namespace thus removing it from the mesh.
+This command will remove the osm-edge specific labels and annotations on the namespace thus removing it from the mesh.
 
 ## Enable Metrics for a Namespace
 
@@ -49,7 +49,7 @@ osm metrics enable --namespace <namespace>
 
 ## Ignore a Namespace
 
-There may be namespaces in a cluster that should never be part of a mesh. To explicity exclude a namespace from OSM:
+There may be namespaces in a cluster that should never be part of a mesh. To explicity exclude a namespace from osm-edge:
 
 ```bash
 osm namespace ignore <namespace>

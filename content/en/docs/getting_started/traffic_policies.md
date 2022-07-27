@@ -27,7 +27,7 @@ kubectl get meshconfig osm-mesh-config -n osm-system -o jsonpath='{.spec.traffic
 # true: permissive traffic policy mode is enabled, SMI policy mode is disabled
 ```
 
-The following sections demonstrate using OSM with [permissive traffic policy mode](#permissive-traffic-policy-mode) and [SMI Traffic Policy Mode](#smi-traffic-policy-mode).
+The following sections demonstrate using osm-edge with [permissive traffic policy mode](#permissive-traffic-policy-mode) and [SMI Traffic Policy Mode](#smi-traffic-policy-mode).
 
 ## Permissive Traffic Policy Mode
 
@@ -43,7 +43,7 @@ In permissive traffic policy mode, application connectivity within the mesh is a
   kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
   ```
 
-### Verify OSM is in permissive traffic policy mode
+### Verify osm-edge is in permissive traffic policy mode
 
 Before proceeding, [verify the traffic policy mode](#verify-the-traffic-policy-mode) and ensure the `enablePermissiveTrafficPolicyMode` key is set to `true` in the `osm-mesh-config` `MeshConfig` resource. Refer to the section above to enable permissive traffic policy mode.
 

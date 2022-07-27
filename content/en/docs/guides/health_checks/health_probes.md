@@ -1,6 +1,6 @@
 ---
 title: "Configure Health Probes"
-description: "How OSM handles application health probes work and what to do if they fail"
+description: "How osm-edge handles application health probes work and what to do if they fail"
 aliases: "/docs/application_health_probes"
 type: "docs"
 ---
@@ -11,11 +11,11 @@ type: "docs"
 
 Implementing [health probes](https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/) in your application is a great way for Kubernetes to automate some tasks to improve availability in the event of an error.
 
-Because OSM reconfigures application Pods to redirect all incoming and outgoing network traffic through the proxy sidecar, `httpGet` and `tcpSocket` health probes invoked by the kubelet will fail due to the lack of any mTLS context required by the proxy.
+Because osm-edge reconfigures application Pods to redirect all incoming and outgoing network traffic through the proxy sidecar, `httpGet` and `tcpSocket` health probes invoked by the kubelet will fail due to the lack of any mTLS context required by the proxy.
 
-For `httpGet` health probes to continue to work as expected from within the mesh, OSM adds configuration to expose the probe endpoint via the proxy and rewrites the probe definitions for new Pods to refer to the proxy-exposed endpoint. All of the functionality of the original probe is still used, OSM simply fronts it with the proxy so the kubelet can communicate with it.
+For `httpGet` health probes to continue to work as expected from within the mesh, osm-edge adds configuration to expose the probe endpoint via the proxy and rewrites the probe definitions for new Pods to refer to the proxy-exposed endpoint. All of the functionality of the original probe is still used, osm-edge simply fronts it with the proxy so the kubelet can communicate with it.
 
-Special configuration is required to support `tcpSocket` health probes in the mesh. Since OSM redirects all network traffic through Envoy, all ports appear open in the Pod. This causes all TCP connections routed to Pod's injected with an Envoy sidecar to appear successful. For `tcpSocket` health probes to work as expected in the mesh, OSM rewrites the probes to be `httpGet` probes and adds an `iptables` command to bypass the Envoy proxy at the `osm-healthcheck` exposed endpoint. The `osm-healthcheck` container is added to the Pod and handles the HTTP health probe requests from kubelet. The handler gets the original TCP port from the request's `Original-Tcp-port` header and attempts to open a socket on the specified port. The response status code for the `httpGet` probe will reflect if the TCP connection was successful.
+Special configuration is required to support `tcpSocket` health probes in the mesh. Since osm-edge redirects all network traffic through Pipy, all ports appear open in the Pod. This causes all TCP connections routed to Pod's injected with an Pipy sidecar to appear successful. For `tcpSocket` health probes to work as expected in the mesh, osm-edge rewrites the probes to be `httpGet` probes and adds an `iptables` command to bypass the Pipy proxy at the `osm-healthcheck` exposed endpoint. The `osm-healthcheck` container is added to the Pod and handles the HTTP health probe requests from kubelet. The handler gets the original TCP port from the request's `Original-Tcp-port` header and attempts to open a socket on the specified port. The response status code for the `httpGet` probe will reflect if the TCP connection was successful.
 
 | Probe       | Path                 | Port  |
 | ----------- | -------------------- | ----- |
@@ -30,7 +30,7 @@ Only predefined `httpGet` and `tcpSocket` probes are modified. If a probe is und
 
 ## Examples
 
-The following examples show how OSM handles health probes for Pods in a mesh.
+The following examples show how osm-edge handles health probes for Pods in a mesh.
 
 ### HTTP
 
@@ -44,7 +44,7 @@ livenessProbe:
     scheme: HTTP
 ```
 
-When the Pod is created, OSM will modify the probe to be the following:
+When the Pod is created, osm-edge will modify the probe to be the following:
 
 ```yaml
 livenessProbe:
@@ -54,184 +54,42 @@ livenessProbe:
     scheme: HTTP
 ```
 
-The Pod's proxy will contain the following Envoy configuration.
+The Pod's proxy will contain the following Pipy configuration.
 
-An Envoy cluster which maps to the original probe port 14001:
+An Pipy cluster which maps to the original probe port 14001:
 
 ```json
 {
-  "cluster": {
-    "@type": "type.googleapis.com/envoy.config.cluster.v3.Cluster",
-    "name": "liveness_cluster",
-    "type": "STATIC",
-    "connect_timeout": "1s",
-    "load_assignment": {
-      "cluster_name": "liveness_cluster",
-      "endpoints": [
+  "Probes": {
+      "ReadinessProbes": null,
+      "LivenessProbes": [
         {
-          "lb_endpoints": [
-            {
-              "endpoint": {
-                "address": {
-                  "socket_address": {
-                    "address": "0.0.0.0",
-                    "port_value": 14001
-                  }
-                }
-              }
-            }
-          ]
+          "httpGet": {
+            "path": "/osm-liveness-probe",
+            "port": 15901,
+            "scheme": "HTTP"
+          },
+          "timeoutSeconds": 1,
+          "periodSeconds": 10,
+          "successThreshold": 1,
+          "failureThreshold": 3
         }
-      ]
+      ],
+      "StartupProbes": null
     }
-  },
-  "last_updated": "2021-03-29T21:02:59.086Z"
+  }
 }
 ```
 
 A listener for the new proxy-exposed HTTP endpoint at `/osm-liveness-probe` on port 15901 mapping to the cluster above:
 
-```json
-{
-  "listener": {
-    "@type": "type.googleapis.com/envoy.config.listener.v3.Listener",
-    "name": "liveness_listener",
-    "address": {
-      "socket_address": {
-        "address": "0.0.0.0",
-        "port_value": 15901
-      }
-    },
-    "filter_chains": [
-      {
-        "filters": [
-          {
-            "name": "envoy.filters.network.http_connection_manager",
-            "typed_config": {
-              "@type": "type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager",
-              "stat_prefix": "health_probes_http",
-              "route_config": {
-                "name": "local_route",
-                "virtual_hosts": [
-                  {
-                    "name": "local_service",
-                    "domains": [
-                      "*"
-                    ],
-                    "routes": [
-                      {
-                        "match": {
-                          "prefix": "/osm-liveness-probe"
-                        },
-                        "route": {
-                          "cluster": "liveness_cluster",
-                          "prefix_rewrite": "/liveness"
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              "http_filters": [...],
-              "access_log": [...]
-            }
-          }
-        ]
-      }
-    ]
-  },
-  "last_updated": "2021-03-29T21:02:59.092Z"
-}
-```
-
-### HTTPS
-
-Consider a Pod spec defining a container with the following `livenessProbe`:
-
-```yaml
-livenessProbe:
-  httpGet:
-    path: /liveness
-    port: 14001
-    scheme: HTTPS
-```
-
-When the Pod is created, OSM will modify the probe to be the following:
-
-```yaml
-livenessProbe:
-  httpGet:
-    path: /liveness
-    port: 15901
-    scheme: HTTPS
-```
-
-The Pod's proxy will contain the following Envoy configuration.
-
-An Envoy cluster which maps to the original probe port 14001:
-
-```json
-{
-  "cluster": {
-    "@type": "type.googleapis.com/envoy.config.cluster.v3.Cluster",
-    "name": "liveness_cluster",
-    "type": "STATIC",
-    "connect_timeout": "1s",
-    "load_assignment": {
-      "cluster_name": "liveness_cluster",
-      "endpoints": [
-        {
-          "lb_endpoints": [
-            {
-              "endpoint": {
-                "address": {
-                  "socket_address": {
-                    "address": "0.0.0.0",
-                    "port_value": 14001
-                  }
-                }
-              }
-            }
-          ]
-        }
-      ]
-    }
-  },
-  "last_updated": "2021-03-29T21:02:59.086Z"
-}
-```
-
-A listener for the new proxy-exposed TCP endpoint on port 15901 mapping to the cluster above:
-
-```json
-{
-  "listener": {
-    "@type": "type.googleapis.com/envoy.config.listener.v3.Listener",
-    "name": "liveness_listener",
-    "address": {
-      "socket_address": {
-        "address": "0.0.0.0",
-        "port_value": 15901
-      }
-    },
-    "filter_chains": [
-      {
-        "filters": [
-          {
-            "name": "envoy.filters.network.tcp_proxy",
-            "typed_config": {
-              "@type": "type.googleapis.com/envoy.extensions.filters.network.tcp_proxy.v3.TcpProxy",
-              "stat_prefix": "health_probes",
-              "cluster": "liveness_cluster",
-              "access_log": [...]
-            }
-          }
-        ]
-      }
-    ]
-  },
-  "last_updated": "2021-04-07T15:09:22.704Z"
-}
+```js
+.listen(probeScheme ? 15901 : 0)
+.link(
+  'http_liveness', () => probeScheme === 'HTTP',
+  'connection_liveness', () => Boolean(probeTarget),
+  'deny_liveness'
+)
 ```
 
 ### `tcpSocket`
@@ -244,7 +102,7 @@ livenessProbe:
     port: 14001
 ```
 
-When the Pod is created, OSM will modify the probe to be the following:
+When the Pod is created, osm-edge will modify the probe to be the following:
 
 ```yaml
 livenessProbe:
@@ -257,7 +115,7 @@ livenessProbe:
     scheme: HTTP
 ```
 
-Requests to port 15904 bypass the Envoy proxy and are directed to the `osm-healthcheck` endpoint.
+Requests to port 15904 bypass the Pipy proxy and are directed to the `osm-healthcheck` endpoint.
 
 ## How to Verify Health of Pods in the Mesh
 
@@ -275,14 +133,14 @@ Events:
   Normal   Created    16s              kubelet            Created container osm-init
   Normal   Started    16s              kubelet            Started container osm-init
   Normal   Pulling    16s              kubelet            Pulling image "openservicemesh/init:v0.8.0"
-  Normal   Pulling    15s              kubelet            Pulling image "envoyproxy/envoy-alpine:v1.17.2"
+  Normal   Pulling    15s              kubelet            Pulling image "flomesh/pipy:0.5.0"
   Normal   Pulling    15s              kubelet            Pulling image "openservicemesh/bookstore:v0.8.0"
   Normal   Pulled     15s              kubelet            Successfully pulled image "openservicemesh/bookstore:v0.8.0" in 319.9863ms
   Normal   Started    15s              kubelet            Started container bookstore-v1
   Normal   Created    15s              kubelet            Created container bookstore-v1
-  Normal   Pulled     14s              kubelet            Successfully pulled image "envoyproxy/envoy-alpine:v1.17.2" in 755.2666ms
-  Normal   Created    14s              kubelet            Created container envoy
-  Normal   Started    14s              kubelet            Started container envoy
+  Normal   Pulled     14s              kubelet            Successfully pulled image "flomesh/pipy:0.5.0" in 755.2666ms
+  Normal   Created    14s              kubelet            Created container pipy
+  Normal   Started    14s              kubelet            Started container pipy
   Warning  Unhealthy  13s              kubelet            Startup probe failed: Get "http://10.244.0.23:15903/osm-startup-probe": dial tcp 10.244.0.23:15903: connect: connection refused
   Warning  Unhealthy  3s (x2 over 8s)  kubelet            Startup probe failed: HTTP probe failed with statuscode: 503
 ```
@@ -299,11 +157,11 @@ Events:
   Normal   Created    58s                kubelet            Created container osm-init
   Normal   Started    58s                kubelet            Started container osm-init
   Normal   Pulled     58s                kubelet            Successfully pulled image "openservicemesh/init:v0.8.0" in 23.415ms
-  Normal   Pulled     57s                kubelet            Successfully pulled image "envoyproxy/envoy-alpine:v1.17.2" in 678.1391ms
+  Normal   Pulled     57s                kubelet            Successfully pulled image "flomesh/pipy:0.5.0" in 678.1391ms
   Normal   Pulled     57s                kubelet            Successfully pulled image "openservicemesh/bookstore:v0.8.0" in 230.3681ms
-  Normal   Created    57s                kubelet            Created container envoy
-  Normal   Pulling    57s                kubelet            Pulling image "envoyproxy/envoy-alpine:v1.17.2"
-  Normal   Started    56s                kubelet            Started container envoy
+  Normal   Created    57s                kubelet            Created container pipy
+  Normal   Pulling    57s                kubelet            Pulling image "flomesh/pipy:0.5.0"
+  Normal   Started    56s                kubelet            Started container pipy
   Normal   Pulled     44s                kubelet            Successfully pulled image "openservicemesh/bookstore:v0.8.0" in 20.6731ms
   Normal   Created    44s (x2 over 57s)  kubelet            Created container bookstore-v1
   Normal   Started    43s (x2 over 57s)  kubelet            Started container bookstore-v1
@@ -328,10 +186,10 @@ Events:
   Normal   Pulled     30s               kubelet            Successfully pulled image "openservicemesh/bookstore:v0.8.0" in 314.3628ms
   Normal   Pulling    30s               kubelet            Pulling image "openservicemesh/bookstore:v0.8.0"
   Normal   Started    30s               kubelet            Started container bookstore-v1
-  Normal   Pulling    30s               kubelet            Pulling image "envoyproxy/envoy-alpine:v1.17.2"
-  Normal   Pulled     29s               kubelet            Successfully pulled image "envoyproxy/envoy-alpine:v1.17.2" in 739.3931ms
-  Normal   Created    29s               kubelet            Created container envoy
-  Normal   Started    29s               kubelet            Started container envoy
+  Normal   Pulling    30s               kubelet            Pulling image "flomesh/pipy:0.5.0"
+  Normal   Pulled     29s               kubelet            Successfully pulled image "flomesh/pipy:0.5.0" in 739.3931ms
+  Normal   Created    29s               kubelet            Created container pipy
+  Normal   Started    29s               kubelet            Started container pipy
   Warning  Unhealthy  0s (x3 over 20s)  kubelet            Readiness probe failed: HTTP probe failed with statuscode: 503
 ```
 
@@ -356,8 +214,8 @@ HTTP/1.1 200 OK
 date: Wed, 31 Mar 2021 16:00:01 GMT
 content-length: 1396
 content-type: text/html; charset=utf-8
-x-envoy-upstream-service-time: 1
-server: envoy
+x-pipy-upstream-service-time: 1
+server: pipy
 
 <!doctype html>
 <html itemscope="" itemtype="http://schema.org/WebPage" lang="en">
@@ -375,18 +233,18 @@ If any health probes are consistently failing, perform the following steps to id
 
 1. Verify `httpGet` and `tcpSocket` probes on Pods in the mesh have been modified.
 
-   Startup, liveness, and readiness `httpGet` probes must be modified by OSM in order to continue to function while in a mesh. Ports must be modified to 15901, 15902, and 15903 for liveness, readiness, and startup `httpGet` probes, respectively. Only HTTP (not HTTPS) probes will have paths modified in addition to be `/osm-liveness-probe`, `/osm-readiness-probe`, or `/osm-startup-probe`.
+   Startup, liveness, and readiness `httpGet` probes must be modified by osm-edge in order to continue to function while in a mesh. Ports must be modified to 15901, 15902, and 15903 for liveness, readiness, and startup `httpGet` probes, respectively. Only HTTP (not HTTPS) probes will have paths modified in addition to be `/osm-liveness-probe`, `/osm-readiness-probe`, or `/osm-startup-probe`.
 
-   Also, verify the Pod's Envoy configuration contains a listener for the modified endpoint.
+   Also, verify the Pod's Pipy configuration contains a listener for the modified endpoint.
 
    For `tcpSocket` probes to function in the mesh, they must be rewritten to `httpGet` probes. The ports must be modified to 15904 for liveness, readiness, and startup probes. The path the must be set to `/osm-healthcheck`. A HTTP header, `Original-Tcp-Port`, must be set to the original port specified in the `tcpSocket` probe definition. Also, verify that the `osm-healthcheck` container is running. Inspect the `osm-healthcheck` logs for more information.
 
    See the [examples above](#examples) for more details.
 
-1. Determine if Kubernetes encountered any other errors while scheduling or starting the Pod.
+2. Determine if Kubernetes encountered any other errors while scheduling or starting the Pod.
 
    Look for any errors that may have recently occurred with `kubectl describe` of the unhealthy Pod. Resolve any errors and verify the Pod's health again.
 
-1. Determine if the Pod encountered a runtime error.
+3. Determine if the Pod encountered a runtime error.
 
    Look for any errors that may have occurred after the container started by inspecting its logs with `kubectl logs`. Resolve any errors and verify the Pod's health again.

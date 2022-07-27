@@ -11,7 +11,7 @@ The [SMI Traffic Split API](https://github.com/servicemeshinterface/smi-spec/blo
 
 ## What is supported
 
-OSM implements the [SMI traffic split v1alpha2 version](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha2/traffic-split.md).
+osm-edge implements the [SMI traffic split v1alpha2 version](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha2/traffic-split.md).
 
 It supports the following:
 
@@ -46,9 +46,9 @@ For a `TrafficSplit` resource to be correctly configured, it is important to ens
 - `spec.service` and `spec.backends` correspond to Kubernetes service objects
 - The total weight of all backends must be greater than zero, and each backend must have a positive weight
 
-When a `TrafficSplit` resource is created, OSM applies the configuration on client sidecars to split traffic directed to the root service (`spec.service`) to the backends (`spec.backends`) based the specified weights. For HTTP traffic, the `Host/Authority` header in the request must match the FQDNs of the root service specified in the `TrafficSplit` resource. In the above example, it implies that the `Host/Authority` header in the HTTP request originated by the client must match the Kubernetes service FQDNs of the `default/bookstore` service for traffic split to work.
+When a `TrafficSplit` resource is created, osm-edge applies the configuration on client sidecars to split traffic directed to the root service (`spec.service`) to the backends (`spec.backends`) based the specified weights. For HTTP traffic, the `Host/Authority` header in the request must match the FQDNs of the root service specified in the `TrafficSplit` resource. In the above example, it implies that the `Host/Authority` header in the HTTP request originated by the client must match the Kubernetes service FQDNs of the `default/bookstore` service for traffic split to work.
 
-> Note: OSM does not configure `Host/Authority` header rewrites for the original HTTP requests, so it is necessary that the backend services referenced in a `TrafficSplit` resource accept requests with the original HTTP `Host/Authority` header.
+> Note: osm-edge does not configure `Host/Authority` header rewrites for the original HTTP requests, so it is necessary that the backend services referenced in a `TrafficSplit` resource accept requests with the original HTTP `Host/Authority` header.
 
 It is important to note that a `TrafficSplit` resource only configures traffic splitting to a service, and does not give applications permission to communicate with each other. Thus, a valid [TrafficTarget](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-access/v1alpha3/traffic-access.md#traffictarget) resource must be configured in conjunction with a `TrafficSplit` configuration to achieve traffic flow between applications as desired.
 

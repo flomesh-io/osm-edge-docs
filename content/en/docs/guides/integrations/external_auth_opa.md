@@ -10,7 +10,7 @@ weight: 1
 External authorization allows offloading authorization of incoming HTTP requests to a remote endpoint not necessarily running inside the proxy's context.
 Proxies supporting external authorization will, for every request, issue a permission check to the remote endpoint. Due to the potential high number of RPS a system can have, external authorization has a number of tuneable settings to allow more or less control at the expense of performance (send HTTP payload or headers only, timeout, default behaviour if authorization fails to reply, etc.).
 
-OSM allows configuring envoy's [External Authorization extension](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/ext_authz_filter) through OSM's MeshConfig.
+osm-edge allows configuring envoy's [External Authorization extension](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/ext_authz_filter) through osm-edge's MeshConfig.
 
 ## Limitations
 Currently, authorization filtering can't be dynamically configured to be installed in subsets or groups of proxies defined by the user, and is instead globally applied for all services in the mesh when enabled.
@@ -18,29 +18,29 @@ Currently, authorization filtering can't be dynamically configured to be install
 Similarly, the filtering direction is to be statically applied to  `inbound` and `ingress` connections within the mesh, affecting any and all HTTP request made towards any service or application in the mesh when enabled.
 
 
-## OSM with OPA plugin external authorization walkthrough
+## osm-edge with OPA plugin external authorization walkthrough
 The following section will document how to configure external authorization in conjunction with `opa-envoy-plugin`.
 
 We strongly suggest to go through [OPA envoy plugin's](https://github.com/open-policy-agent/opa-envoy-plugin) documentation first to further understand their configuration options and deployment models.
 
 The following example uses a single, remote (over the network) endpoint to validate all traffic. This configuration is not recommended for a production deployment.
 
-- First, start by deploying OSM's Demo. We will use this sample deployment to test external authorization capabilities. Please refer to [OSM's Automated Demo](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/demo#how-to-run-the-osm-automated-demo) and follow the instructions.
+- First, start by deploying osm-edge's Demo. We will use this sample deployment to test external authorization capabilities. Please refer to [osm-edge's Automated Demo](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/demo#how-to-run-the-osm-automated-demo) and follow the instructions.
 
 ```
-# Assuming OSM repo is available
+# Assuming osm-edge repo is available
 cd <PATH_TO_OSM_REPO>
 demo/run-osm-demo.sh  # wait for all services to come up
 ```
 
-- When OSM's demo is up and running, proceed to deploy `opa-envoy-plugin`. OSM provides a [curated standalone opa-envoy-plugin deployment chart](https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml) which exposes `opa-envoy-plugin`'s gRPC port (default `9191`) through a service, over the network. This is the endpoint that OSM will configure the proxies with when enabling external authorization. The following snippet creates an `opa` namespace and deploys `opa-envoy-plugin` in it with minimal deny-all configuration:
+- When osm-edge's demo is up and running, proceed to deploy `opa-envoy-plugin`. osm-edge provides a [curated standalone opa-envoy-plugin deployment chart](https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml) which exposes `opa-envoy-plugin`'s gRPC port (default `9191`) through a service, over the network. This is the endpoint that osm-edge will configure the proxies with when enabling external authorization. The following snippet creates an `opa` namespace and deploys `opa-envoy-plugin` in it with minimal deny-all configuration:
 
 ```
 kubectl create namespace opa
 kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml
 ```
 
-- Once OSM's demo is up and running, proceed to edit OSM's MeshConfig to add external authorization to the mesh. For that, configure the `inboundExternalAuthorization` to point to the remote external authorization endpoint as follows:
+- Once osm-edge's demo is up and running, proceed to edit osm-edge's MeshConfig to add external authorization to the mesh. For that, configure the `inboundExternalAuthorization` to point to the remote external authorization endpoint as follows:
 
 ```
 kubectl edit meshconfig osm-mesh-config -n osm-system
@@ -56,7 +56,7 @@ inboundExternalAuthorization:
 ...
 ```
 
-- After this step, OSM should configure all proxies to rely on the external authorization service for authorization decisions. By default, the configuration provided with `opa-envoy-plugin` will deny all requests to any sercices in the mesh. This can be checked on the logs for any of the services on the network, `403 Forbidden` whould be expected:
+- After this step, osm-edge should configure all proxies to rely on the external authorization service for authorization decisions. By default, the configuration provided with `opa-envoy-plugin` will deny all requests to any sercices in the mesh. This can be checked on the logs for any of the services on the network, `403 Forbidden` whould be expected:
 ```
 kubectl logs <bookbuyer_pod> -n bookbuyer bookbuyer
 ```

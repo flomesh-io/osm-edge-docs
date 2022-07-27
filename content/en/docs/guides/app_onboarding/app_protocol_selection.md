@@ -6,15 +6,15 @@ type: docs
 
 # Application Protocol Selection
 
-OSM is capable of routing different application protocols such as `HTTP`, `TCP`, and `gRPC` differently. The following guide describes how to configure service ports to specify the application protocol to use for traffic filtering and routing.
+osm-edge is capable of routing different application protocols such as `HTTP`, `TCP`, and `gRPC` differently. The following guide describes how to configure service ports to specify the application protocol to use for traffic filtering and routing.
 
 ## Configuring the application protocol
 
-Kubernetes services expose one or more ports. A port exposed by an application running the service can serve a specific application protocol such as HTTP, TCP, gRPC etc. Since OSM filters and routes traffic for different application protocols differently, a configuration on the Kubernetes service object is necessary to convey to OSM how traffic directed to a service port must be routed.
+Kubernetes services expose one or more ports. A port exposed by an application running the service can serve a specific application protocol such as HTTP, TCP, gRPC etc. Since osm-edge filters and routes traffic for different application protocols differently, a configuration on the Kubernetes service object is necessary to convey to osm-edge how traffic directed to a service port must be routed.
 
-In order to determine the application protocol served by a service's port, OSM expects the `appProtocol` field on the service's port to be set.
+In order to determine the application protocol served by a service's port, osm-edge expects the `appProtocol` field on the service's port to be set.
 
-OSM supports the following application protocols for service ports:
+osm-edge supports the following application protocols for service ports:
 1. `http`: For HTTP based filtering and routing of traffic
 1. `tcp`: For TCP based filtering and routing of traffic
 1. `tcp-server-first`: For TCP based filtering and routing of traffic where the server initiates communication with a client, such as mySQL, PostgreSQL, and others

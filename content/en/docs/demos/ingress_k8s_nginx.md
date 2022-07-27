@@ -5,21 +5,21 @@ type: docs
 weight: 11
 ---
 
-This guide will demonstrate how to configure HTTP and HTTPS ingress to a service part of an OSM managed service mesh when using [Kubernetes Nginx Ingress Controller](https://kubernetes.github.io/ingress-nginx/).
+This guide will demonstrate how to configure HTTP and HTTPS ingress to a service part of an osm-edge managed service mesh when using [Kubernetes Nginx Ingress Controller](https://kubernetes.github.io/ingress-nginx/).
 
 
 ## Prerequisites
 
 - Kubernetes cluster running Kubernetes {{< param min_k8s_version >}} or greater.
 - Have `kubectl` available to interact with the API server.
-- Have OSM version >= v0.10.0 installed.
+- Have osm-edge version >= v0.10.0 installed.
 - Have Kubernetes Nginx Ingress Controller installed. Refer to the [deployment guide](https://kubernetes.github.io/ingress-nginx/deploy/) to install it.
 
 ## Demo
 
-First, note the details regarding OSM and Nginx installations:
+First, note the details regarding osm-edge and Nginx installations:
 ```bash
-osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
 osm_mesh_name=osm # replace osm with the mesh name (use `osm mesh list` command)
 
 nginx_ingress_namespace=<nginx-namespace> # replace <nginx-namespace> with the namespace where Nginx is installed
@@ -28,7 +28,7 @@ nginx_ingress_host="$(kubectl -n "$nginx_ingress_namespace" get service "$nginx_
 nginx_ingress_port="$(kubectl -n "$nginx_ingress_namespace" get service "$nginx_ingress_service" -o jsonpath='{.spec.ports[?(@.name=="http")].port}')"
 ```
 
-To restrict ingress traffic on backends to authorized clients, we will set up the IngressBackend configuration such that only ingress traffic from the endpoints of the Nginx Ingress Controller service can route traffic to the service backend. To be able to discover the endpoints of this service, we need OSM controller to monitor the corresponding namespace. However, Nginx must NOT be injected with an Envoy sidecar to function properly.
+To restrict ingress traffic on backends to authorized clients, we will set up the IngressBackend configuration such that only ingress traffic from the endpoints of the Nginx Ingress Controller service can route traffic to the service backend. To be able to discover the endpoints of this service, we need osm-edge controller to monitor the corresponding namespace. However, Nginx must NOT be injected with an Pipy sidecar to function properly.
 ```bash
 osm namespace add "$nginx_ingress_namespace" --mesh-name "$osm_mesh_name" --disable-sidecar-injection
 ```
@@ -43,7 +43,7 @@ kubectl create ns httpbin
 osm namespace add httpbin
 
 # Deploy the application
-kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/httpbin/httpbin.yaml -n httpbin
+kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/httpbin/httpbin.yaml -n httpbin
 ```
 
 Confirm the `httpbin` service and pod is up and running:
@@ -103,18 +103,17 @@ Now, we expect external clients to be able to access the `httpbin` service for H
 ```console
 $ curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
 HTTP/1.1 200 OK
-Date: Wed, 18 Aug 2021 18:12:35 GMT
+Date: Mon, 04 Jul 2022 06:55:26 GMT
 Content-Type: application/json
-Content-Length: 366
+Content-Length: 346
 Connection: keep-alive
 access-control-allow-origin: *
 access-control-allow-credentials: true
-x-envoy-upstream-service-time: 2
 ```
 
 ### HTTPS Ingress (mTLS and TLS)
 
-To proxy connections to HTTPS backends, we will configure the Ingress and IngressBackend configurations to use `https` as the backend protocol, and have OSM issue a certificate that Nginx will use as the client certificate to proxy HTTPS connections to TLS backends. The client certificate and CA certificate will be stored in a Kubernetes secret that Nginx will use to authenticate service mesh backends.
+To proxy connections to HTTPS backends, we will configure the Ingress and IngressBackend configurations to use `https` as the backend protocol, and have osm-edge issue a certificate that Nginx will use as the client certificate to proxy HTTPS connections to TLS backends. The client certificate and CA certificate will be stored in a Kubernetes secret that Nginx will use to authenticate service mesh backends.
 
 To issue a client certificate for the Nginx ingress service, update the `osm-mesh-config` `MeshConfig` resource.
 ```bash
@@ -127,14 +126,14 @@ certificate:
   ingressGateway:
     secret:
       name: osm-nginx-client-cert
-      namespace: <osm-namespace> # replace <osm-namespace> with the namespace where OSM is installed
+      namespace: <osm-namespace> # replace <osm-namespace> with the namespace where osm-edge is installed
     subjectAltNames:
     - ingress-nginx.ingress-nginx.cluster.local
     validityDuration: 24h
 ```
 > Note: The Subject Alternative Name (SAN) is of the form `<service-account>.<namespace>.cluster.local`, where the service account and namespace correspond to the Ngnix service.
 
-Next, we need to create an Ingress and IngressBackend configuration to use TLS proxying to the backend service, while enabling proxying to the backend over mTLS. For this to work, we must create an IngressBackend resource that specifies HTTPS ingress traffic directed to the `httpbin` service must only accept traffic from a trusted client. OSM provisioned a client certificate for the Nginx ingress service with the Subject ALternative Name (SAN) `ingress-nginx.ingress-nginx.cluster.local`, so the IngressBackend configuration needs to reference the same SAN for mTLS authentication between the Nginx ingress service and the `httpbin` backend.
+Next, we need to create an Ingress and IngressBackend configuration to use TLS proxying to the backend service, while enabling proxying to the backend over mTLS. For this to work, we must create an IngressBackend resource that specifies HTTPS ingress traffic directed to the `httpbin` service must only accept traffic from a trusted client. osm-edge provisioned a client certificate for the Nginx ingress service with the Subject ALternative Name (SAN) `ingress-nginx.ingress-nginx.cluster.local`, so the IngressBackend configuration needs to reference the same SAN for mTLS authentication between the Nginx ingress service and the `httpbin` backend.
 
 Apply the configurations:
 ```bash
@@ -190,13 +189,12 @@ Now, we expect external clients to be able to access the `httpbin` service for r
 ```console
 $ curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
 HTTP/1.1 200 OK
-Date: Wed, 18 Aug 2021 18:12:35 GMT
+Date: Mon, 04 Jul 2022 06:55:26 GMT
 Content-Type: application/json
-Content-Length: 366
+Content-Length: 346
 Connection: keep-alive
 access-control-allow-origin: *
 access-control-allow-credentials: true
-x-envoy-upstream-service-time: 2
 ```
 
 To verify that unauthorized clients are not allowed to access the backend, update the `sources` specified in the IngressBackend configuration. Let's update the principal to something other than the SAN encoded in the Nginx client's certificate.
@@ -264,11 +262,10 @@ Confirm the requests succeed again since untrusted authenticated principals are 
 ```
 $ curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
 HTTP/1.1 200 OK
-Date: Wed, 18 Aug 2021 18:36:49 GMT
+Date: Mon, 04 Jul 2022 06:55:26 GMT
 Content-Type: application/json
-Content-Length: 364
+Content-Length: 346
 Connection: keep-alive
 access-control-allow-origin: *
 access-control-allow-credentials: true
-x-envoy-upstream-service-time: 2
 ```

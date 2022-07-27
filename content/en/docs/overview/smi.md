@@ -1,12 +1,12 @@
 ---
 title: Service Mesh Interface (SMI) Support
-description: "SMI implementation in OSM"
+description: "SMI implementation in osm-edge"
 type: docs
 ---
 
 ## Overview
 
-Open Service Mesh (OSM) implements [Service Mesh Interface (SMI)](https://smi-spec.io/) resources. This allows OSM users to have flexible implementations of common service mesh scenarios.
+osm-edge implements [Service Mesh Interface (SMI)](https://smi-spec.io/) resources. This allows osm-edge users to have flexible implementations of common service mesh scenarios.
 
 ## Supported versions
 

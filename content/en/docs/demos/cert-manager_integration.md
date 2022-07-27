@@ -5,7 +5,7 @@ type: docs
 weight: 30
 ---
 
-This guide demonstrates the usage of [cert-manager][1] as a certificate provider to manage and issue certificates in OSM.
+This guide demonstrates the usage of [cert-manager][1] as a certificate provider to manage and issue certificates in osm-edge.
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ This guide demonstrates the usage of [cert-manager][1] as a certificate provider
 
 ## Demo
 
-The following demo uses [cert-manager][1] as the certificate provider to issue certificates to the `curl` and `httpbin` applications communicating over `Mutual TLS (mTLS)` in an OSM managed service mesh.
+The following demo uses [cert-manager][1] as the certificate provider to issue certificates to the `curl` and `httpbin` applications communicating over `Mutual TLS (mTLS)` in an osm-edge managed service mesh.
 
 1. Install `cert-manager`. This demo uses `cert-manager v1.6.1`.
     ```bash
@@ -32,12 +32,12 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     cert-manager-webhook-6668fbb57d-vzm4j     1/1     Running   0          2m33s
     ```
 
-1. Configure `cert-manager` `Issuer` and `Certificate` resources required by `cert-manager` to be able to issue certificates in OSM. These resources must be created in the namespace where OSM will be installed later.
-    > Note: `cert-manager` must first be installed, with an issuer ready, before OSM can be installed using `cert-manager` as the certificate provider.
+1. Configure `cert-manager` `Issuer` and `Certificate` resources required by `cert-manager` to be able to issue certificates in osm-edge. These resources must be created in the namespace where osm-edge will be installed later.
+    > Note: `cert-manager` must first be installed, with an issuer ready, before osm-edge can be installed using `cert-manager` as the certificate provider.
 
-    Create the namespace where OSM will be installed.
+    Create the namespace where osm-edge will be installed.
     ```bash
-    export osm_namespace=osm-system # Replace osm-system with the namespace where OSM is installed
+    export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
     kubectl create namespace "$osm_namespace"
     ```
 
@@ -79,21 +79,21 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     EOF
     ```
 
-1. Confirm the `osm-ca-bundle` CA secret is created by `cert-manager` in OSM's namespace.
+1. Confirm the `osm-ca-bundle` CA secret is created by `cert-manager` in osm-edge's namespace.
     ```console
     $ kubectl get secret osm-ca-bundle -n "$osm_namespace"
     NAME            TYPE                DATA   AGE
     osm-ca-bundle   kubernetes.io/tls   3      84s
     ```
 
-    The CA certificate saved in this secret will be used by OSM upon install to bootstrap its ceritifcate provider utility.
+    The CA certificate saved in this secret will be used by osm-edge upon install to bootstrap its ceritifcate provider utility.
 
-1. Install OSM with its certificate provider kind set to `cert-manager`.
+1. Install osm-edge with its certificate provider kind set to `cert-manager`.
     ```bash
     osm install --set osm.certificateProvider.kind="cert-manager"
     ```
 
-    Confirm the OSM control plane pods are ready and running.
+    Confirm the osm-edge control plane pods are ready and running.
     ```console
     $ kubectl get pod -n "$osm_namespace"
     NAME                              READY   STATUS    RESTARTS   AGE
@@ -119,7 +119,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     osm namespace add httpbin
 
     # Deploy httpbin service in the httpbin namespace
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/httpbin/httpbin.yaml -n httpbin
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/httpbin/httpbin.yaml -n httpbin
     ```
 
     Confirm the `httpbin` service and pods are up and running.
@@ -146,7 +146,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     osm namespace add curl
 
     # Deploy curl client in the curl namespace
-    kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n curl
+    kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/curl/curl.yaml -n curl
     ```
 
     Confirm the `curl` client pod is up and running.
@@ -162,13 +162,13 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     ```console
     $ kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -I http://httpbin.httpbin:14001
     HTTP/1.1 200 OK
-    server: envoy
-    date: Mon, 15 Mar 2021 22:45:23 GMT
+    server: gunicorn/19.9.0
+    date: Mon, 04 Jul 2022 09:34:11 GMT
     content-type: text/html; charset=utf-8
     content-length: 9593
     access-control-allow-origin: *
     access-control-allow-credentials: true
-    x-envoy-upstream-service-time: 2
+    connection: keep-alive
     ```
 
     A `200 OK` response indicates the HTTP request from the `curl` client to the `httpbin` service was successful. The traffic between the application sidecar proxies is encrypted and authenticated using `Mutual TLS (mTLS)` by leverging the certificates issued by the `cert-manager` certificate provider.

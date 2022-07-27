@@ -6,27 +6,27 @@ weight: 4
 ---
 
 # Tracing
-Open Service Mesh (OSM) allows optional deployment of Jaeger for tracing. Similarly, tracing can be enabled and customized during installation (`tracing` section in `values.yaml`) or at runtime by editing the `osm-mesh-config` custom resource. Tracing can be enabled, disabled and configured at any time to support BYO scenarios.
+osm-edge allows optional deployment of Jaeger for tracing. Similarly, tracing can be enabled and customized during installation (`tracing` section in `values.yaml`) or at runtime by editing the `osm-mesh-config` custom resource. Tracing can be enabled, disabled and configured at any time to support BYO scenarios.
 
-When OSM is deployed with tracing enabled, the OSM control plane will use the [user-provided tracing information](#tracing-values) to direct the Envoys to send traces when and where appropriate. If tracing is enabled without user-provided values, it will use the defaults in `values.yaml`. The `tracing-address` value tells all Envoys injected by OSM the FQDN to send tracing information to.
+When osm-edge is deployed with tracing enabled, the osm-edge control plane will use the [user-provided tracing information](#tracing-values) to direct the Pipy to send traces when and where appropriate. If tracing is enabled without user-provided values, it will use the defaults in `values.yaml`. The `tracing-address` value tells all Pipy injected by osm-edge the FQDN to send tracing information to.
 
-OSM supports tracing with applications that use Zipkin protocol.
+osm-edge supports tracing with applications that use Zipkin protocol.
 
 ## Jaeger
 [Jaeger](https://www.jaegertracing.io/) is an open source distributed tracing system used for monitoring and troubleshooting distributed systems. It allows you to get fine-grained metrics and distributed tracing information across your setup so that you can observe which microservices are communicating, where requests are going, and how long they are taking. You can use it to inspect for specific requests and responses to see how and when they happen.
 
-When tracing is enabled, Jaeger is capable of receiving spans from Envoys in the mesh that can then be viewed and queried on Jaeger's UI via port-forwarding.
+When tracing is enabled, Jaeger is capable of receiving spans from Pipy in the mesh that can then be viewed and queried on Jaeger's UI via port-forwarding.
 
-OSM CLI offers the capability to deploy a Jaeger instance with OSM's installation, but bringing your own managed Jaeger and configuring OSM's tracing to point to it later is also supported.
+osm-edge CLI offers the capability to deploy a Jaeger instance with osm-edge's installation, but bringing your own managed Jaeger and configuring osm-edge's tracing to point to it later is also supported.
 
 ### Automatically Provision Jaeger
 By default, Jaeger deployment and tracing as a whole is disabled.
 
-A Jaeger instance can be automatically deployed by using the `--set=osm.deployJaeger=true` OSM CLI flag at install time. This will provision a Jaeger pod in the mesh namespace.
+A Jaeger instance can be automatically deployed by using the `--set=osm.deployJaeger=true` osm-edge CLI flag at install time. This will provision a Jaeger pod in the mesh namespace.
 
-Additionally, OSM has to be instructed to enable tracing on the proxies; this is done via the `tracing` section on the MeshConfig.
+Additionally, osm-edge has to be instructed to enable tracing on the proxies; this is done via the `tracing` section on the MeshConfig.
 
-The following command will both deploy Jaeger and configure the tracing parameters according to the address of the newly deployed instance of Jaeger during OSM installation:
+The following command will both deploy Jaeger and configure the tracing parameters according to the address of the newly deployed instance of Jaeger during osm-edge installation:
 ```bash
 osm install --set=osm.deployJaeger=true,osm.tracing.enable=true
 ```
@@ -34,24 +34,24 @@ osm install --set=osm.deployJaeger=true,osm.tracing.enable=true
 This default bring-up uses the [All-in-one Jaeger executable](https://www.jaegertracing.io/docs/1.22/getting-started/#all-in-one) that launches the Jaeger UI, collector, query, and agent.
 
 ### BYO (Bring-your-own)
-This section documents the additional steps needed to allow an already running instance of Jaeger to integrate with your OSM control plane.
-> NOTE: This guide outlines steps specifically for Jaeger but you may use your own tracing application instance with applicable values. OSM supports tracing with applications that use Zipkin protocol
+This section documents the additional steps needed to allow an already running instance of Jaeger to integrate with your osm-edge control plane.
+> NOTE: This guide outlines steps specifically for Jaeger but you may use your own tracing application instance with applicable values. osm-edge supports tracing with applications that use Zipkin protocol
 
 #### Prerequisites
 * A running Jaeger instance
     * [Getting started with Jaeger](https://www.jaegertracing.io/docs/1.22/getting-started/) includes a sample app as a demo
 
 #### Tracing Values
-The sections below outline how to make required updates depending on whether you already already have OSM installed or are deploying tracing and Jaeger during OSM installation. In either case, the following `tracing` values in `values.yaml` are being updated to point to your Jaeger instance:
-1. `enable`: set to `true` to tell the Envoy connection manager to send tracing data to a specific address (cluster)
+The sections below outline how to make required updates depending on whether you already already have osm-edge installed or are deploying tracing and Jaeger during osm-edge installation. In either case, the following `tracing` values in `values.yaml` are being updated to point to your Jaeger instance:
+1. `enable`: set to `true` to tell the Pipy connection manager to send tracing data to a specific address (cluster)
 1. `address`: set to the destination cluster of your Jaeger instance
 1. `port`: set to the destination port for the listener that you intend to use
 1. `endpoint`: set to the destination's API or collector endpoint where the spans will be sent to
 
 
-#### a) Enable tracing after OSM control plane has already been installed
+#### a) Enable tracing after osm-edge control plane has already been installed
 
-If you already have OSM running, `tracing` values must be updated in the OSM MeshConfig using:
+If you already have osm-edge running, `tracing` values must be updated in the osm-edge MeshConfig using:
 
 ```bash
 # Tracing configuration with sample values
@@ -63,9 +63,9 @@ You can verify these changes have been deployed by inspecting the `osm-mesh-conf
 kubectl get meshconfig osm-mesh-config -n osm-system -o jsonpath='{.spec.observability.tracing}{"\n"}'
 ```
 
-#### b) Enable tracing at OSM control plane install time
+#### b) Enable tracing at osm-edge control plane install time
 
-To deploy your own instance of Jaeger during OSM installation, you can use the `--set` flag as shown below to update the values:
+To deploy your own instance of Jaeger during osm-edge installation, you can use the `--set` flag as shown below to update the values:
 
 ```bash
 osm install --set osm.tracing.enable=true,osm.tracing.address=<tracing server hostname>,osm.tracing.port=<tracing server port>,osm.tracing.endpoint=<tracing server endpoint>
@@ -83,9 +83,9 @@ Navigate to `http://localhost:16686/` in a web browser to view the UI.
 
 
 ## Example of Tracing with Jaeger
-This section walks through the process of creating a simple Jaeger instance and enabling tracing with Jaeger in OSM.
+This section walks through the process of creating a simple Jaeger instance and enabling tracing with Jaeger in osm-edge.
 
-1. Run the [OSM Demo](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/demo/README.md) with Jaeger deployed. You have two options:
+1. Run the [osm-edge Demo](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/demo/README.md) with Jaeger deployed. You have two options:
     - For automatic provisioning of Jaeger, simply set `DEPLOY_JAEGER` in your `.env` file to true
     - For bring-your-own, you can deploy the sample instance [provided by Jaeger](https://www.jaegertracing.io/docs/1.22/getting-started/#all-in-one) using the commands below. If you wish to bring up Jaeger in a different namespace, make sure to update it below.
 
@@ -205,8 +205,6 @@ In Open Service Mesh's sidecar proxy configuration, currently Zipkin is used as 
 * `x-b3-spanid`
 * `x-b3-parentspanid`
 
-For more detail, please refer to [Envoy tracing documentation](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/observability/tracing).
-
 ## Troubleshoot Tracing/Jaeger
 
 When tracing is not working as expected.
@@ -223,21 +221,21 @@ If tracing is enabled, you can verify the specific `address`, `port` and `endpoi
 ```bash
 kubectl get meshconfig osm-mesh-config -n osm-system -o jsonpath='{.spec.observability.tracing}{"\n"}'
 ```
-To verify that the Envoys point to the FQDN you intend to use, check the value for the `address` key.
+To verify that the Pipy point to the FQDN you intend to use, check the value for the `address` key.
 
 ### 3. Verify the tracing values being used are as expected
 To dig one level deeper, you may also check whether the values set by the MeshConfig are being correctly used. Use the command below to get the config dump of the pod in question and save the output in a file.
 ```bash
 osm proxy get config_dump -n <pod-namespace> <pod-name> > <file-name>
 ```
-Open the file in your favorite text editor and search for `envoy-tracing-cluster`. You should be able to see the tracing values in use. Example output for the bookbuyer pod:
+Open the file in your favorite text editor and search for `pipy-tracing-cluster`. You should be able to see the tracing values in use. Example output for the bookbuyer pod:
 ```console
-"name": "envoy-tracing-cluster",
+"name": "pipy-tracing-cluster",
       "type": "LOGICAL_DNS",
       "connect_timeout": "1s",
-      "alt_stat_name": "envoy-tracing-cluster",
+      "alt_stat_name": "pipy-tracing-cluster",
       "load_assignment": {
-       "cluster_name": "envoy-tracing-cluster",
+       "cluster_name": "pipy-tracing-cluster",
        "endpoints": [
         {
          "lb_endpoints": [
@@ -250,10 +248,10 @@ Open the file in your favorite text editor and search for `envoy-tracing-cluster
         [...]
 ```
 
-### 4. Verify that the OSM Controller was installed with Jaeger automatically deployed [optional]
+### 4. Verify that the osm-edge Controller was installed with Jaeger automatically deployed [optional]
 If you used automatic bring-up, you can additionally check for the Jaeger service and Jaeger deployment:
 ```bash
-# Assuming OSM is installed in the osm-system namespace:
+# Assuming osm-edge is installed in the osm-system namespace:
 kubectl get services -n osm-system -l app=jaeger
 
 NAME     TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)    AGE
@@ -261,7 +259,7 @@ jaeger   ClusterIP   10.99.2.87   <none>        9411/TCP   27m
 ```
 
 ```bash
-# Assuming OSM is installed in the osm-system namespace:
+# Assuming osm-edge is installed in the osm-system namespace:
 kubectl get deployments -n osm-system -l app=jaeger
 
 NAME     READY   UP-TO-DATE   AVAILABLE   AGE
@@ -270,7 +268,7 @@ jaeger   1/1     1            1           27m
 
 ### 5. Verify Jaeger pod readiness, responsiveness and health
 Check if the Jaeger pod is running in the namespace you have deployed it in:
-> The commands below are specific to OSM's automatic deployment of Jaeger; substitute namespace and label values for your own tracing instance as applicable:
+> The commands below are specific to osm-edge's automatic deployment of Jaeger; substitute namespace and label values for your own tracing instance as applicable:
 ```bash
 kubectl get pods -n osm-system -l app=jaeger
 

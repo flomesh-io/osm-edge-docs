@@ -1,15 +1,15 @@
 ---
 title: "Sidecar Injection"
-description: "This section describes the sidecar injection workflow in OSM."
+description: "This section describes the sidecar injection workflow in osm-edge."
 type: docs
 weight: 3
 ---
 
 # Sidecar Injection
-Services participating in the service mesh communicate via sidecar proxies installed on pods backing the services. The following sections describe the sidecar injection workflow in OSM.
+Services participating in the service mesh communicate via sidecar proxies installed on pods backing the services. The following sections describe the sidecar injection workflow in osm-edge.
 
 ## Automatic Sidecar Injection
-Automatic sidecar injection is currently the only way to inject sidecars into the service mesh. Sidecars can be automatically injected into applicable Kubernetes pods using a mutating webhook admission controller provided by OSM.
+Automatic sidecar injection is currently the only way to inject sidecars into the service mesh. Sidecars can be automatically injected into applicable Kubernetes pods using a mutating webhook admission controller provided by osm-edge.
 
 Automatic sidecar injection can be configured per namespace as a part of enrolling a namespace into the mesh, or later using the Kubernetes API. Automatic sidecar injection can be enabled either on a per namespace or per pod basis by annotating the namespace or pod resource with the sidecar injection annotation. Individual pods and namespaces can be explicitly configured to either enable or disable automatic sidecar injection, giving users the flexibility to control sidecar injection on pods and namespaces.
 
@@ -18,7 +18,7 @@ Automatic sidecar injection can be configured per namespace as a part of enrolli
 Prerequisites:
 - The namespace to which the pods belong must be a monitored namespace that is added to the mesh using the `osm namespace add` command.
 - The namespace to which the pods belong must not be set to be ignored using the `osm namespace ignore` command.
-- The namespace to which the pods belong must not have a label with key `name` and value corresponding to the OSM control plane namespace. For example, a namespace with a label `name: osm-system` where `osm-system` is the control plane namespace cannot have sidecar injection enabled for pods in this namespace.
+- The namespace to which the pods belong must not have a label with key `name` and value corresponding to the osm-edge control plane namespace. For example, a namespace with a label `name: osm-system` where `osm-system` is the control plane namespace cannot have sidecar injection enabled for pods in this namespace.
 - The pod must not have `hostNetwork: true` in the pod spec. Pods with `hostNetwork: true` are not injected with a sidecar since doing so can result in routing failures in the host network.
 
 Automatic Sidecar injection can be enabled in the following ways:

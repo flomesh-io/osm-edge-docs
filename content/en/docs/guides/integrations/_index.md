@@ -1,6 +1,6 @@
 ---
 title: "Integrations"
-description: "Integrations for Open Service Mesh (OSM)"
+description: "Integrations for osm-edge"
 type: docs
 weight: 14
 ---
