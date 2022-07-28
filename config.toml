@@ -50,6 +50,10 @@ latexDashes = true
   [markup.highlight]
       style = "tango"
 
+[sitemap]
+  changefreq = 'always'
+  filename = 'sitemap.xml'
+  priority = 0.5
 
 # OSM top menu (should match main site)
 [[menu.main]]
