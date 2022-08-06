@@ -22,7 +22,7 @@ The benchmark was tested in a Kubernetes cluster running on Tencent Cloud CVM. T
 
 The test application uses the common SpringCloud microservices architecture. The application is taken from [flomesh-bookinfo-demo](https://github.com/flomesh-io/flomesh-bookinfo-demo/), which is a SpringCloud implementation of bookinfo application using SpringCloud. In the tests, not all services are used, but rather the API gateway and the Bookinfo Ratings service are selected.
 
-! [](https://user-images.githubusercontent.com/2224492/178288704-3aa44151-4c57-4538-9a0a-55310bb4f200.png)
+![](https://user-images.githubusercontent.com/2224492/178288704-3aa44151-4c57-4538-9a0a-55310bb4f200.png)
 
 External access to the service is provided through Ingress; the load generator uses the common Apache Jmeter 5.5.
 
@@ -63,27 +63,27 @@ In terms of memory, the memory usage of osm-edge and osm sidecar is 50 MiB and 1
 
 **TPS**
 
-! [](https://user-images.githubusercontent.com/2224492/178294418-d3d63aef-8c54-49e4-a40e-8bacdec26f74.png)
+![](https://user-images.githubusercontent.com/2224492/178294418-d3d63aef-8c54-49e4-a40e-8bacdec26f74.png)
 
 **Latency distribution**
 
-! [](https://user-images.githubusercontent.com/2224492/178294471-b8e1b3c6-a8fd-47cb-872a-0c40418b0da7.png)
+![](https://user-images.githubusercontent.com/2224492/178294471-b8e1b3c6-a8fd-47cb-872a-0c40418b0da7.png)
 
 **API gateway sidecar CPU usage**
 
-! [](https://user-images.githubusercontent.com/2224492/178294732-73aaa9f4-e159-4b8e-ab12-521985313358.png)
+![](https://user-images.githubusercontent.com/2224492/178294732-73aaa9f4-e159-4b8e-ab12-521985313358.png)
 
 **API gateway sidecar memory footprint**
 
-! [](https://user-images.githubusercontent.com/2224492/178294829-9d2f0794-12e7-4cd6-827d-11af8b632db9.png)
+![](https://user-images.githubusercontent.com/2224492/178294829-9d2f0794-12e7-4cd6-827d-11af8b632db9.png)
 
 **Bookinfo Ratings sidecar CPU usage**
 
-! [](https://user-images.githubusercontent.com/2224492/178295086-6380004f-369d-4f6b-afeb-71b48c0e3053.png)
+![](https://user-images.githubusercontent.com/2224492/178295086-6380004f-369d-4f6b-afeb-71b48c0e3053.png)
 
 **Bookinfo Ratings sidecar memory usage**
 
-! [](https://user-images.githubusercontent.com/2224492/178295267-004e7676-04b5-4fef-8e5d-ca196bd7dedc.png)
+![](https://user-images.githubusercontent.com/2224492/178295267-004e7676-04b5-4fef-8e5d-ca196bd7dedc.png)
 
 ### sidecar 1 core
 
@@ -93,27 +93,27 @@ In terms of TPS, osm-edge drops 12% and osm's TPS drops a staggering 65%.
 
 **TPS**!
 
-! [](https://user-images.githubusercontent.com/2224492/178295573-8be92413-d499-476e-b3e1-a23d0bcbcda3.png)
+![](https://user-images.githubusercontent.com/2224492/178295573-8be92413-d499-476e-b3e1-a23d0bcbcda3.png)
 
 **Latency distribution**
 
-! [](https://user-images.githubusercontent.com/2224492/178296728-c7ea9a12-d9d4-4be0-9c8d-32bb91724f36.png)
+![](https://user-images.githubusercontent.com/2224492/178296728-c7ea9a12-d9d4-4be0-9c8d-32bb91724f36.png)
 
 **API gateway sidecar CPU usage**
 
-! [](https://user-images.githubusercontent.com/2224492/178300176-0a76080b-3bcb-48f4-a506-4a105ad8c4a8.png)
+![](https://user-images.githubusercontent.com/2224492/178300176-0a76080b-3bcb-48f4-a506-4a105ad8c4a8.png)
 
 **API gateway sidecar memory footprint**
 
-! [](https://user-images.githubusercontent.com/2224492/178300241-95917e41-5857-4a80-8234-ff6533310ef5.png)
+![](https://user-images.githubusercontent.com/2224492/178300241-95917e41-5857-4a80-8234-ff6533310ef5.png)
 
 **Bookinfo Ratings sidecar CPU usage**
 
-! [](https://user-images.githubusercontent.com/2224492/178300596-2f767c75-6872-4aa5-b943-a3eeae84c55e.png)
+![](https://user-images.githubusercontent.com/2224492/178300596-2f767c75-6872-4aa5-b943-a3eeae84c55e.png)
 
 **Bookinfo Ratings sidecar memory usage**
 
-! [](https://user-images.githubusercontent.com/2224492/178300658-53bdf00d-6f2f-484a-8c3f-0399f9b683ed.png)
+![](https://user-images.githubusercontent.com/2224492/178300658-53bdf00d-6f2f-484a-8c3f-0399f9b683ed.png)
 
 ## Summary
 
