@@ -122,7 +122,7 @@ Content-Length: 11
 Content-Type: text/plain; charset=utf-8
 ```
 
-Execute the following command to create ``IngressBackend``.
+Execute the following command to create `IngressBackend`.
 
 ```shell
 kubectl apply -f - <<EOF
