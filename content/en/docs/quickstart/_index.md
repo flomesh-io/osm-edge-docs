@@ -136,29 +136,29 @@ After running port-forwarding script, open url `http://localhost:3000` in browse
 
 osm-edge has several built-in dashboards to provide visualization of metrics in the control plane and data plane. For example, the following figure shows the metrics of pod `http://localhost:3000` of the `bookthief` service accessing other `services`.
 
-! [image](https://user-images.githubusercontent.com/2224492/180593501-d73dbf11-40a8-4fe9-9422-ea931da2927f.png)
+![image](https://user-images.githubusercontent.com/2224492/180593501-d73dbf11-40a8-4fe9-9422-ea931da2927f.png)
 
 The following figure shows the metrics of `bookthief` accessing other `services` at the granularity of `deployment`. The difference from the previous figure is that if `bookthief` has multiple replicas, the aggregate data for all replicas is shown here: !
 
-! [image](https://user-images.githubusercontent.com/2224492/180593509-9a852bf1-e7e7-4534-9c57-06cf1c890ee3.png)
+![image](https://user-images.githubusercontent.com/2224492/180593509-9a852bf1-e7e7-4534-9c57-06cf1c890ee3.png)
 
 The next metrics for the osm-edge component, and for the mesh base information are shown here.
 
-! [image](https://user-images.githubusercontent.com/2224492/180593512-0ac33a0e-2b7a-4e66-b499-f196b5dd729b.png)
+![image](https://user-images.githubusercontent.com/2224492/180593512-0ac33a0e-2b7a-4e66-b499-f196b5dd729b.png)
 
 ### Tracing
 
 Jaeger's dashboard can be accessed by typing `http://localhost:16686/search` in your browser: !
 
-! [image](https://user-images.githubusercontent.com/2224492/180593520-64b0d2d1-1346-47ac-aab8-a9eaae9f8950.png)
+![image](https://user-images.githubusercontent.com/2224492/180593520-64b0d2d1-1346-47ac-aab8-a9eaae9f8950.png)
 
 The dashboard allows you to look up service-related tracing information: !
 
-! [image](https://user-images.githubusercontent.com/2224492/180593525-3bc844c4-f950-48f6-9d72-ff98dc82aa2c.png)
+![image](https://user-images.githubusercontent.com/2224492/180593525-3bc844c4-f950-48f6-9d72-ff98dc82aa2c.png)
 
 Show service topology diagram.
 
-! [image](https://user-images.githubusercontent.com/2224492/180593530-8d0ed18f-0cac-495f-985f-04feb863ec6d.png)
+![image](https://user-images.githubusercontent.com/2224492/180593530-8d0ed18f-0cac-495f-985f-04feb863ec6d.png)
 
 ### Logging
 
