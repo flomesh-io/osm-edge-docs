@@ -112,7 +112,7 @@ spec:
 EOF
 ```
 
-Using the entry gateway address and port saved earlier to access the service, you should receive a response of `502` at this point. This is normal, because you still need to create ``IngressBackend`` to allow the entry gateway to access the ``httpbin`` service.
+Using the entry gateway address and port saved earlier to access the service, you should receive a response of `502` at this point. This is normal, because you still need to create `IngressBackend` to allow the entry gateway to access the `httpbin` service.
 
 ```shell
 curl -sI http://"$ingress_host":"$ingress_port"/get -H "Host: httpbin.org"
