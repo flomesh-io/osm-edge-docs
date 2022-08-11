@@ -42,7 +42,7 @@ export ingress_host="$(kubectl -n traefik get service traefik -o jsonpath='{.sta
 export ingress_port="$(kubectl -n traefik get service traefik -o jsonpath='{.spec.ports[? (@.name=="web")].port}')"
 ```
 
-### Install osm
+### Install osm-edge
 
 ```shell
 export osm_namespace=osm-system 
