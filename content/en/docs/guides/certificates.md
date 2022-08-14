@@ -141,21 +141,21 @@ Installation of Hashi Vault is out of scope for the Open Service Mesh project. T
 
 This repository does contain a [script (deploy-vault.sh)](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/demo/deploy-vault.sh), which is used to automate the deployment of Hashi Vault for continuous integration. This is strictly for development purposes only. Running the script will deploy Vault in a Kubernetes namespace defined by the `$K8S_NAMESPACE` environment variable in your [.env](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/.env.example) file. This script can be used for demonstration purposes. It requires the following environment variables:
 
-```
+```bash
 export K8S_NAMESPACE=osm-system-ns
 export VAULT_TOKEN=xyz
 ```
 
 Running the `./demo/deploy-vault.sh` script will result in a dev Vault installation:
 
-```
+```console
 NAMESPACE         NAME                                    READY   STATUS    RESTARTS   AGE
 osm-system-ns     vault-5f678c4cc5-9wchj                  1/1     Running   0          28s
 ```
 
 Fetching the logs of the pod will show details on the Vault installation:
 
-```
+```console
 ==> Vault server configuration:
 
              Api Address: http://0.0.0.0:8200
@@ -195,7 +195,7 @@ The outcome of deploying Vault in your system is a URL and a token. For instance
 
 After Vault installation and before we use Helm to deploy osm-edge, the following parameters must be provided provided in the Helm chart:
 
-```
+```bash
 CERT_MANAGER=vault
 VAULT_HOST="vault.${K8S_NAMESPACE}.svc.cluster.local"
 VAULT_PROTOCOL=http
@@ -205,7 +205,7 @@ VAULT_ROLE=openservicemesh
 
 When running osm-edge on your local workstation, use the following `osm install` set options:
 
-```
+```bash
 --set osm.certificateProvider.kind="vault"
 --set osm.vault.host="localhost"  # or the host where Vault is installed
 --set osm.vault.protocol="http"
@@ -222,7 +222,7 @@ When this is set to `vault` osm-edge uses a Vault cert issuer.
 This is a Hashicorp Vault client, which satisfies the `certificate.Manager`
 interface. It provides the following methods:
 
-```
+```console
   - IssueCertificate - issues new certificates
   - GetCertificate - retrieves a certificate given its Common Name (CN)
   - RotateCertificate - rotates expiring certificates

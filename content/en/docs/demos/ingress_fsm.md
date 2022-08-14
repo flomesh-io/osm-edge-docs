@@ -4,7 +4,7 @@ description: "HTTP ingress implemented by the FSM Ingress controller"
 type: docs
 weight: 10
 draft: false
----osm-edge
+---
 
 osm-edge can optionally use the [FSM](git@github.com:flomesh-io/fsm.git) ingress controller and Pipy-based edge proxies to route external traffic to the Service Mesh backend. This guide demonstrates how to configure HTTP ingress for services managed by the osm-edge service mesh.
 
@@ -16,23 +16,25 @@ osm-edge can optionally use the [FSM](git@github.com:flomesh-io/fsm.git) ingress
 - Installed `osm` or `Helm 3` command line tool for installing osm-edge and FSM.
 - osm-edge version >= v1.1.0.
 
-
 ## Demo
 
 First, install osm-edge and fsm under the `osm-system` namespace, and name the grid `osm`.
-``bash
+
+```bash
 export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge will be installed
 export osm_mesh_name=osm # Replace osm with the desired osm-edge mesh name
 ```
 
 Using the `osm` command line tool.
+
 ```bash
 osm install --set fsm.enabled=true \
     --mesh-name "$osm_mesh_name" \
-    --osm-namespace "$osm_namespace" 
+    --osm-namespace "$osm_namespace"
 ```
 
 Using ``Helm`` to install.
+
 ```bash
 helm install "$osm_mesh_name" osm --repo https://flomesh-io.github.io/osm-edge \
     --set fsm.enabled=true
@@ -80,7 +82,7 @@ httpbin ClusterIP 10.0.22.196 <none> 14001/TCP 11h
 
 Next, create the necessary HTTPProxy and IngressBackend configurations to allow external clients to access port `14001` of the `httpbin` service under the `httpbin` namespace. Because TLS is not used, the link from the fsm entry gateway to the `httpbin` backend pod is not encrypted.
 
-``bash
+```bash
 kubectl apply -f - <<EOF
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -99,8 +101,8 @@ spec:
           service:
             name: httpbin
             port:
-              number: 14001      
----kind: IngressBackend
+              number: 14001
+---
 kind: IngressBackend
 apiVersion: policy.openservicemesh.io/v1alpha1
 metadata:

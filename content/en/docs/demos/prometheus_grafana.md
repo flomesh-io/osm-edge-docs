@@ -23,7 +23,7 @@ The following article shows you how to create an example bring your own (BYO) Pr
 
 Use `helm` to deploy a Prometheus instance to your cluster in the default namespace.
 
-```
+```bash
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 helm install stable prometheus-community/prometheus
@@ -31,7 +31,7 @@ helm install stable prometheus-community/prometheus
 
 The output of the `helm install` command contains the DNS name of the Prometheus server. For example:
 
-```
+```console
 ...
 The Prometheus server can be accessed via port 80 on the following DNS name from within your cluster:
 stable-prometheus-server.metrics.svc.cluster.local
@@ -46,7 +46,7 @@ Prometheus needs to be configured to scape the osm-edge endpoints and properly h
 
 Use `kubectl get configmap` to verify the `stable-prometheus-sever` configmap has been created. For example:
 
-```
+```bash
 $ kubectl get configmap
 
 NAME                             DATA   AGE
@@ -290,13 +290,13 @@ data:
 
 Use `kubectl apply` to update the Prometheus server configmap.
 
-```
+```bash
 kubectl apply -f update-prometheus-configmap.yaml
 ```
 
 Verify Prometheus is able to scrape the osm-edge mesh and API endpoints by using `kubectl port-forward` to forward the traffic between the Prometheus management application and your development computer.
 
-```
+```bash
 export POD_NAME=$(kubectl get pods -l "app=prometheus,component=server" -o jsonpath="{.items[0].metadata.name}")
 kubectl port-forward $POD_NAME 9090
 ```
@@ -314,7 +314,7 @@ Stop the port-forwarding command.
 
 Use `helm` to deploy a Grafana instance to your cluster in the default namespace.
 
-```
+```bash
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
 helm install grafana/grafana --generate-name
@@ -322,14 +322,14 @@ helm install grafana/grafana --generate-name
 
 Use `kubectl get secret` to display the administrator password for Grafana.
 
-```
+```bash
 export SECRET_NAME=$(kubectl get secret -l "app.kubernetes.io/name=grafana" -o jsonpath="{.items[0].metadata.name}")
 kubectl get secret $SECRET_NAME -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 ```
 
 Use `kubectl port-forward` to forward the traffic between the Grafana's management application and your development computer.
 
-```
+```bash
 export POD_NAME=$(kubectl get pods -l "app.kubernetes.io/name=grafana" -o jsonpath="{.items[0].metadata.name}")
 kubectl port-forward $POD_NAME 3000
 ```

@@ -27,7 +27,7 @@ The following example uses a single, remote (over the network) endpoint to valid
 
 - First, start by deploying osm-edge's Demo. We will use this sample deployment to test external authorization capabilities. Please refer to [osm-edge's Automated Demo](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/demo#how-to-run-the-osm-automated-demo) and follow the instructions.
 
-```
+```bash
 # Assuming osm-edge repo is available
 cd <PATH_TO_OSM_REPO>
 demo/run-osm-demo.sh  # wait for all services to come up
@@ -35,14 +35,14 @@ demo/run-osm-demo.sh  # wait for all services to come up
 
 - When osm-edge's demo is up and running, proceed to deploy `opa-envoy-plugin`. osm-edge provides a [curated standalone opa-envoy-plugin deployment chart](https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml) which exposes `opa-envoy-plugin`'s gRPC port (default `9191`) through a service, over the network. This is the endpoint that osm-edge will configure the proxies with when enabling external authorization. The following snippet creates an `opa` namespace and deploys `opa-envoy-plugin` in it with minimal deny-all configuration:
 
-```
+```bash
 kubectl create namespace opa
 kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml
 ```
 
 - Once osm-edge's demo is up and running, proceed to edit osm-edge's MeshConfig to add external authorization to the mesh. For that, configure the `inboundExternalAuthorization` to point to the remote external authorization endpoint as follows:
 
-```
+```bash
 kubectl edit meshconfig osm-mesh-config -n osm-system
 ## <scroll to the following section>
 ...
@@ -57,10 +57,10 @@ inboundExternalAuthorization:
 ```
 
 - After this step, osm-edge should configure all proxies to rely on the external authorization service for authorization decisions. By default, the configuration provided with `opa-envoy-plugin` will deny all requests to any sercices in the mesh. This can be checked on the logs for any of the services on the network, `403 Forbidden` whould be expected:
-```
+```bash
 kubectl logs <bookbuyer_pod> -n bookbuyer bookbuyer
 ```
-```
+```console
 ...
 --- bookbuyer:[ 8 ] -----------------------------------------
 
@@ -76,7 +76,7 @@ ERROR: response code for "http://bookstore.bookstore:14001/books-bought" is 403;
 ```
 
 - To further verify that external authorization is at work, verify the logs of the `opa-envoy-plugin` instance. Logs of the instance should contain json blobs which log the evaluation of every request received - key-value `result` should be present on the authorization decision taken by the configuration fed to the `opa-envoy-plugin` instance:
-```
+```bash
 kubectl logs <opa_pod_name> -n opa
 ...
 {"decision_id":"1df154b5-658a-47bf-ac18-be52998605da"
@@ -89,24 +89,24 @@ kubectl logs <opa_pod_name> -n opa
 
 - Once the previous step is verified, proceed to change the OPA policy configuration to authorize all traffic by default:
 
-```
+```bash
 kubectl edit configmap opa-policy -n opa
 ...
 ...
 default allow = false
 ```
 Change the previous line value to `true`:
-```
+```console
 default allow = true
 ```
 
 - Finally, restart `opa-envoy-plugin`. This is a necessary step as the configuration for this deployment is pushed as config, as opposed to the application fetching it.
-```
+```bash
 kubectl rollout restart deployment opa -n opa
 ```
 
 - Verify that requests to `bookbuyer` service are now being authorized:
-```
+```console
 --- bookbuyer:[ 2663 ] -----------------------------------------
 
 Fetching http://bookstore.bookstore:14001/books-bought

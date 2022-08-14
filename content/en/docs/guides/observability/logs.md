@@ -90,12 +90,12 @@ Fluent Bit has an Azure output plugin that can be used to send logs to an Azure 
 3. Run through steps 2-5 above.
 
 4. Once you run osm-edge with Fluent Bit enabled, logs will populate under the Logs > Custom Logs section in your Log Analytics workspace. There, you may run the following query to view most recent logs first:
-    ```
+    ```console
     fluentbit_CL
     | order by TimeGenerated desc
     ```
 5. Refine your log results on a specific deployment of the osm-edge controller pod:
-    ```
+    ```console
     | where controller_pod_name_s == "<desired osm controller pod name>"
     ```
 
@@ -103,7 +103,7 @@ Once logs have been sent to Log Analytics, they can also be consumed by Applicat
 1. [Create a Workspace-based Application Insights instance](https://docs.microsoft.com/en-us/azure/azure-monitor/app/create-workspace-resource).
 
 2. Navigate to your instance in Azure Portal. Go to the Logs section. Run this query to ensure that logs are being picked up from Log Analytics:
-    ```
+    ```console
     workspace("<your-log-analytics-workspace-name>").fluentbit_CL
     ```
 
@@ -115,7 +115,7 @@ You can now interact with your logs in either of these instances.
 You may require outbound proxy support if your egress traffic is configured to go through a proxy server. There are two ways to enable this.
 
 If you have already built osm-edge with the MeshConfig changes above, you can simply enable proxy support using the osm-edge CLI, replacing your values in the command below:
-```
+```bash
 osm install --set=osm.enableFluentbit=true,osm.fluentBit.enableProxySupport=true,osm.fluentBit.httpProxy=<http-proxy-host:port>,osm.fluentBit.httpsProxy=<https-proxy-host:port>
 ```
 
