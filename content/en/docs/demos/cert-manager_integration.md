@@ -163,7 +163,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     curl-54ccc6954c-9rlvp   2/2     Running   0          20s
     ```
 
-9.  Confirm the `curl` client is able to access the `httpbin` service on port `14001`.
+8.  Confirm the `curl` client is able to access the `httpbin` service on port `14001`.
 
     ```console
     $ kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -I http://httpbin.httpbin:14001
