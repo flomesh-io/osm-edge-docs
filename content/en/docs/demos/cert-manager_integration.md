@@ -33,7 +33,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     cert-manager-webhook-6668fbb57d-vzm4j     1/1     Running   0          2m33s
     ```
 
-3. Configure `cert-manager` `Issuer` and `Certificate` resources required by `cert-manager` to be able to issue certificates in osm-edge. These resources must be created in the namespace where osm-edge will be installed later.
+2. Configure `cert-manager` `Issuer` and `Certificate` resources required by `cert-manager` to be able to issue certificates in osm-edge. These resources must be created in the namespace where osm-edge will be installed later.
     > Note: `cert-manager` must first be installed, with an issuer ready, before osm-edge can be installed using `cert-manager` as the certificate provider.
 
     Create the namespace where osm-edge will be installed.
