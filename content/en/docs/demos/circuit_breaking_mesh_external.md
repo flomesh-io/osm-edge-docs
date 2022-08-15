@@ -65,6 +65,7 @@ The following demo shows a load-testing client [fortio](https://github.com/forti
     ```
 
 1. Configure an Egress policy that allows the `fortio` client in the `client` namespace to communicate with the external `httpbin` service. The HTTP requests will be directed to the host `httpbin.httpbin.svc.cluster.local` on port `14001`.
+   
     ```bash
     kubectl apply -f - <<EOF
     kind: Egress
@@ -85,7 +86,8 @@ The following demo shows a load-testing client [fortio](https://github.com/forti
     EOF
     ```
 
-1. Confirm the `fortio` client is able to successfully make HTTP requests to the external host `httpbin.httpbin.svc.cluster.local` service on port `14001`. We call the external service with `5` concurrent connections (`-c 5`) and send `50` requests (`-n 50`).
+2. Confirm the `fortio` client is able to successfully make HTTP requests to the external host `httpbin.httpbin.svc.cluster.local` service on port `14001`. We call the external service with `5` concurrent connections (`-c 5`) and send `50` requests (`-n 50`).
+   
     ```console
     $ export fortio_pod="$(kubectl get pod -n client -l app=fortio -o jsonpath='{.items[0].metadata.name}')"
 
@@ -119,7 +121,8 @@ The following demo shows a load-testing client [fortio](https://github.com/forti
     Code 200 : 50 (100.0 %)
     ```
 
-1. Next, apply a circuit breaker configuration using the `UpstreamTrafficSetting` resource for traffic directed to the external host `httpbin.httpbin.svc.cluster.local` to limit the maximum number of concurrent connections and requests to `1`. When applying an `UpstreamTrafficSetting` configuration for external (egress) traffic, the `UpstreamTrafficSetting` resource must also be specified as a match in the `Egress` configuration and belong to the same namespace as the matching `Egress` resource. This is required to enforce circuit breaking limits for external traffic. Hence, we also update the previously applied `Egress` configuration to specify a `matches` field.
+3. Next, apply a circuit breaker configuration using the `UpstreamTrafficSetting` resource for traffic directed to the external host `httpbin.httpbin.svc.cluster.local` to limit the maximum number of concurrent connections and requests to `1`. When applying an `UpstreamTrafficSetting` configuration for external (egress) traffic, the `UpstreamTrafficSetting` resource must also be specified as a match in the `Egress` configuration and belong to the same namespace as the matching `Egress` resource. This is required to enforce circuit breaking limits for external traffic. Hence, we also update the previously applied `Egress` configuration to specify a `matches` field.
+    
     ```bash
     kubectl apply -f - <<EOF
     apiVersion: policy.openservicemesh.io/v1alpha1
@@ -158,7 +161,8 @@ The following demo shows a load-testing client [fortio](https://github.com/forti
     EOF
     ```
 
-1. Confirm the `fortio` client is unable to make the same amount of successful requests as before due to the connection and request level circuit breaking limits configured above.
+4. Confirm the `fortio` client is unable to make the same amount of successful requests as before due to the connection and request level circuit breaking limits configured above.
+    
     ```console
     $ kubectl exec "$fortio_pod" -c fortio -n client -- /usr/bin/fortio load -c 5 -qps 0 -n 50 -loglevel Warning http://httpbin.httpbin.svc.cluster.local:14001/get
     19:58:48 I logger.go:127> Log level is now 3 Warning (was 2 Info)
@@ -215,7 +219,8 @@ The following demo shows a load-testing client [fortio](https://github.com/forti
     Code 503 : 21 (42.0 %)
     ```
 
-1. Examine the `Envoy` sidecar stats to see statistics pertaining to the requests that tripped the circuit breaker.
+5. Examine the `Envoy` sidecar stats to see statistics pertaining to the requests that tripped the circuit breaker.
+    
     ```console
     $ osm proxy get stats $fortio_pod -n client | grep 'httpbin.*pending'
     cluster.httpbin_httpbin_svc_cluster_local_14001.circuit_breakers.default.remaining_pending: 1

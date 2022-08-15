@@ -24,6 +24,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     ```
 
     Confirm the pods are ready and running in the `cert-manager` namespace.
+
     ```console
     kubectl get pod -n cert-manager
     NAME                                      READY   STATUS    RESTARTS   AGE
@@ -32,16 +33,18 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     cert-manager-webhook-6668fbb57d-vzm4j     1/1     Running   0          2m33s
     ```
 
-1. Configure `cert-manager` `Issuer` and `Certificate` resources required by `cert-manager` to be able to issue certificates in osm-edge. These resources must be created in the namespace where osm-edge will be installed later.
+2. Configure `cert-manager` `Issuer` and `Certificate` resources required by `cert-manager` to be able to issue certificates in osm-edge. These resources must be created in the namespace where osm-edge will be installed later.
     > Note: `cert-manager` must first be installed, with an issuer ready, before osm-edge can be installed using `cert-manager` as the certificate provider.
 
     Create the namespace where osm-edge will be installed.
+
     ```bash
     export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
     kubectl create namespace "$osm_namespace"
     ```
 
     Next, we use a `SelfSigned` issuer to bootstrap a custom root certificate. This will create a `SelfSigned` issuer, issue a root certificate, and use that root as a `CA` issuer for certificates issued to workloads within the mesh.
+
     ```bash
     # Create Issuer and Certificate resources
     kubectl apply -f - <<EOF
@@ -79,7 +82,8 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     EOF
     ```
 
-1. Confirm the `osm-ca-bundle` CA secret is created by `cert-manager` in osm-edge's namespace.
+3. Confirm the `osm-ca-bundle` CA secret is created by `cert-manager` in osm-edge's namespace.
+   
     ```console
     $ kubectl get secret osm-ca-bundle -n "$osm_namespace"
     NAME            TYPE                DATA   AGE
@@ -88,12 +92,14 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
 
     The CA certificate saved in this secret will be used by osm-edge upon install to bootstrap its ceritifcate provider utility.
 
-1. Install osm-edge with its certificate provider kind set to `cert-manager`.
+4. Install osm-edge with its certificate provider kind set to `cert-manager`.
+   
     ```bash
     osm install --set osm.certificateProvider.kind="cert-manager"
     ```
 
     Confirm the osm-edge control plane pods are ready and running.
+    
     ```console
     $ kubectl get pod -n "$osm_namespace"
     NAME                              READY   STATUS    RESTARTS   AGE
@@ -102,14 +108,14 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     osm-injector-5f96468fb7-p77ps     1/1     Running   0          2m52s
     ```
 
-1. Enable permissive traffic policy mode to set up automatic application connectivity.
+5. Enable permissive traffic policy mode to set up automatic application connectivity.
     > Note: this is not a requirement to use `cert-manager` but simplifies the demo by not requiring explicit traffic policies for application connectivity.
 
     ```bash
     kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge
     ```
 
-1. Deploy the `httpbin` service into the `httpbin` namespace after enrolling its namespace to the mesh. The `httpbin` service runs on port `14001`.
+6. Deploy the `httpbin` service into the `httpbin` namespace after enrolling its namespace to the mesh. The `httpbin` service runs on port `14001`.
 
     ```bash
     # Create the httpbin namespace
@@ -136,7 +142,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     httpbin-5b8b94b9-lt2vs   2/2     Running   0          20s
     ```
 
-1. Deploy the `curl` client into the `curl` namespace after enrolling its namespace to the mesh.
+7. Deploy the `curl` client into the `curl` namespace after enrolling its namespace to the mesh.
 
     ```bash
     # Create the curl namespace
@@ -157,7 +163,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     curl-54ccc6954c-9rlvp   2/2     Running   0          20s
     ```
 
-1. Confirm the `curl` client is able to access the `httpbin` service on port `14001`.
+8.  Confirm the `curl` client is able to access the `httpbin` service on port `14001`.
 
     ```console
     $ kubectl exec -n curl -ti "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items[0].metadata.name}')" -c curl -- curl -I http://httpbin.httpbin:14001

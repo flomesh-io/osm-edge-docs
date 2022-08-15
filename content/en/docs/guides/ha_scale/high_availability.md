@@ -68,7 +68,7 @@ In short, no matter what control plane a proxy connects to, a valid certificate,
 HPA will automatically scale up or down control plane pods based on the average target CPU utilization (%) and average target memory utilization (%).
 To enable HPA, use the following command
 
-```
+```bash
 osm install --set=osm.<control_plane_pod>.autoScale.enable=true
 ```
 
@@ -90,7 +90,7 @@ In order to prevent disruptions during planned outages, control plane pods `osm-
 
 To enable PDB, use the following command
 
-```
+```bash
 osm install --set=osm.<control_plane_pod>.enablePodDisruptionBudget=true
 ```
 

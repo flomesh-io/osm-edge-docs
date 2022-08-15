@@ -85,7 +85,7 @@ In terms of memory, the memory usage of osm-edge and osm sidecar is 50 MiB and 1
 
 ![](https://user-images.githubusercontent.com/2224492/178295267-004e7676-04b5-4fef-8e5d-ca196bd7dedc.png)
 
-### sidecar 1 core
+### Sidecar 1 core
 
 The difference is particularly noticeable in tests that limit sidecar to 1 core CPU. At this point, the API Gateway sidecar becomes the performance bottleneck, with both the osm-edge and osm sidecar running out of CPU.
 

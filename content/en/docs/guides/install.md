@@ -53,7 +53,7 @@ You can configure the osm-edge installation by overriding the values file.
    - To see which values correspond to the MeshConfig settings, see the [osm-edge MeshConfig documentation](/docs/guides/mesh_config)
 
    - For example, to set the `logLevel` field in the MeshConfig to `info`, save the following as `override.yaml`:
-     ```
+     ```console
      osm:
        sidecarLogLevel: info
      ```
@@ -75,14 +75,14 @@ Run `helm install --help` for more options.
 To install osm-edge on OpenShift:
 
 1. Enable privileged init containers so that they can properly program iptables. The NET_ADMIN capability is not sufficient on OpenShift.
-   ```shell
+   ```bash
    osm install --set="osm.enablePrivilegedInitContainer=true"
    ```
    - If you have already installed osm-edge without enabling privileged init containers, set `enablePrivilegedInitContainer` to `true` in the [osm-edge MeshConfig](/docs/guides/mesh_config) and restart any pods in the mesh.
 1. Add the `privileged` [security context constraint](https://docs.openshift.com/container-platform/4.7/authentication/managing-security-context-constraints.html) to each service account in the mesh.
    - Install the [oc CLI](https://docs.openshift.com/container-platform/4.7/cli_reference/openshift_cli/getting-started-cli.html).
    - Add the security context constraint to the service account
-     ```shell
+     ```bash
       oc adm policy add-scc-to-user privileged -z <service account name> -n <service account namespace>
      ```
 

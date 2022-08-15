@@ -35,7 +35,7 @@ Because osm-edge's Kubernetes resources are configured with liveness and readine
 
 When a liveness probe fails, Kubernetes will generate an Event (visible by `kubectl describe pod <pod name>`) and restart the Pod. The `kubectl describe` output may look like this:
 
-```
+```console
 ...
 Events:
   Type     Reason     Age               From               Message
@@ -51,7 +51,7 @@ Events:
 
 When a readiness probe fails, Kubernetes will generate an Event (visible with `kubectl describe pod <pod name>`) and ensure no traffic destined for Services the Pod may be backing is routed to the unhealthy Pod. The `kubectl describe` output for a Pod with a failing readiness probe may look like this:
 
-```
+```console
 ...
 Events:
   Type     Reason     Age               From               Message
@@ -66,14 +66,14 @@ Events:
 
 The Pod's `status` will also indicate that it is not ready which is shown in its `kubectl get pod` output. For example:
 
-```
+```console
 NAME                              READY   STATUS    RESTARTS   AGE
 osm-controller-5494bcffb6-tn5jv   0/1     Running   0          26s
 ```
 
 The Pods' health probes may also be invoked manually by forwarding the Pod's necessary port and using `curl` or any other HTTP client to issue requests. For example, to verify the liveness probe for osm-controller, get the Pod's name and forward port 9091:
 
-```
+```bash
 # Assuming osm-edge is installed in the osm-system namespace
 kubectl port-forward -n osm-system $(kubectl get pods -n osm-system -l app=osm-controller -o jsonpath='{.items[0].metadata.name}') 9091
 ```

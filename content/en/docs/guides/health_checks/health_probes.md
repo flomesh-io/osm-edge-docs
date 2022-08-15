@@ -123,7 +123,7 @@ Kubernetes will automatically poll the health endpoints of Pods configured with 
 
 When a startup probe fails, Kubernetes will generate an Event (visible by `kubectl describe pod <pod name>`) and restart the Pod. The `kubectl describe` output may look like this:
 
-```
+```console
 ...
 Events:
   Type     Reason     Age              From               Message
@@ -147,7 +147,7 @@ Events:
 
 When a liveness probe fails, Kubernetes will generate an Event (visible by `kubectl describe pod <pod name>`) and restart the Pod. The `kubectl describe` output may look like this:
 
-```
+```console
 ...
 Events:
   Type     Reason     Age                From               Message
@@ -172,7 +172,7 @@ Events:
 
 When a readiness probe fails, Kubernetes will generate an Event (visible with `kubectl describe pod <pod name>`) and ensure no traffic destined for Services the Pod may be backing is routed to the unhealthy Pod. The `kubectl describe` output for a Pod with a failing readiness probe may look like this:
 
-```
+```console
 ...
 Events:
   Type     Reason     Age               From               Message
@@ -195,14 +195,14 @@ Events:
 
 The Pod's `status` will also indicate that it is not ready which is shown in its `kubectl get pod` output. For example:
 
-```
+```console
 NAME                            READY   STATUS    RESTARTS   AGE
 bookstore-v1-5848999cb6-hp6qg   1/2     Running   0          85s
 ```
 
 The Pods' health probes may also be invoked manually by forwarding the Pod's necessary port and using `curl` or any other HTTP client to issue requests. For example, to verify the liveness probe for the bookstore-v1 demo Pod, forward port 15901:
 
-```
+```bash
 kubectl port-forward -n bookstore deployment/bookstore-v1 15901
 ```
 

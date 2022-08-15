@@ -26,6 +26,7 @@ The binary is available on the [osm-edge GitHub releases page](https://github.co
 ### GNU/Linux
 
 Download the 64-bit GNU/Linux or macOS binary of osm-edge {{< param osm_edge_version >}}:
+
 ```bash
 system=$(uname -s)
 release={{< param osm_edge_version >}}

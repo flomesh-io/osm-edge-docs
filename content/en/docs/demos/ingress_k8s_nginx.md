@@ -18,6 +18,7 @@ This guide will demonstrate how to configure HTTP and HTTPS ingress to a service
 ## Demo
 
 First, note the details regarding osm-edge and Nginx installations:
+
 ```bash
 osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
 osm_mesh_name=osm # replace osm with the mesh name (use `osm mesh list` command)
@@ -29,6 +30,7 @@ nginx_ingress_port="$(kubectl -n "$nginx_ingress_namespace" get service "$nginx_
 ```
 
 To restrict ingress traffic on backends to authorized clients, we will set up the IngressBackend configuration such that only ingress traffic from the endpoints of the Nginx Ingress Controller service can route traffic to the service backend. To be able to discover the endpoints of this service, we need osm-edge controller to monitor the corresponding namespace. However, Nginx must NOT be injected with an Pipy sidecar to function properly.
+
 ```bash
 osm namespace add "$nginx_ingress_namespace" --mesh-name "$osm_mesh_name" --disable-sidecar-injection
 ```
@@ -47,6 +49,7 @@ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< 
 ```
 
 Confirm the `httpbin` service and pod is up and running:
+
 ```console
 $ kubectl get pods -n httpbin
 NAME                       READY   STATUS    RESTARTS   AGE
@@ -100,6 +103,7 @@ EOF
 ```
 
 Now, we expect external clients to be able to access the `httpbin` service for HTTP requests:
+
 ```console
 $ curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
 HTTP/1.1 200 OK
@@ -116,11 +120,13 @@ access-control-allow-credentials: true
 To proxy connections to HTTPS backends, we will configure the Ingress and IngressBackend configurations to use `https` as the backend protocol, and have osm-edge issue a certificate that Nginx will use as the client certificate to proxy HTTPS connections to TLS backends. The client certificate and CA certificate will be stored in a Kubernetes secret that Nginx will use to authenticate service mesh backends.
 
 To issue a client certificate for the Nginx ingress service, update the `osm-mesh-config` `MeshConfig` resource.
+
 ```bash
 kubectl edit meshconfig osm-mesh-config -n "$osm_namespace"
 ```
 
 Add the `ingressGateway` field under `spec.certificate`:
+
 ```yaml
 certificate:
   ingressGateway:
@@ -136,6 +142,7 @@ certificate:
 Next, we need to create an Ingress and IngressBackend configuration to use TLS proxying to the backend service, while enabling proxying to the backend over mTLS. For this to work, we must create an IngressBackend resource that specifies HTTPS ingress traffic directed to the `httpbin` service must only accept traffic from a trusted client. osm-edge provisioned a client certificate for the Nginx ingress service with the Subject ALternative Name (SAN) `ingress-nginx.ingress-nginx.cluster.local`, so the IngressBackend configuration needs to reference the same SAN for mTLS authentication between the Nginx ingress service and the `httpbin` backend.
 
 Apply the configurations:
+
 ```bash
 kubectl apply -f - <<EOF
 apiVersion: networking.k8s.io/v1
@@ -186,6 +193,7 @@ EOF
 ```
 
 Now, we expect external clients to be able to access the `httpbin` service for requests with HTTPS proxying over mTLS between the ingress gateway and service backend:
+
 ```console
 $ curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
 HTTP/1.1 200 OK
@@ -224,6 +232,7 @@ EOF
 ```
 
 Confirm the requests are rejected with an `HTTP 403 Forbidden` response:
+
 ```console
 $ curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
 HTTP/1.1 403 Forbidden
@@ -234,6 +243,7 @@ Connection: keep-alive
 ```
 
 Next, we demonstrate support for disabling client certificate validation on the service backend if necessary, by updating our IngressBackend configuration to set `skipClientCertValidation: true`, while still using an untrusted client:
+
 ```bash
 kubectl apply -f - <<EOF
 apiVersion: policy.openservicemesh.io/v1alpha1
@@ -259,7 +269,8 @@ EOF
 ```
 
 Confirm the requests succeed again since untrusted authenticated principals are allowed to connect to the backend:
-```
+
+```console
 $ curl -sI http://"$nginx_ingress_host":"$nginx_ingress_port"/get
 HTTP/1.1 200 OK
 Date: Mon, 04 Jul 2022 06:55:26 GMT
