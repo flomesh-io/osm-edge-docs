@@ -142,7 +142,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     httpbin-5b8b94b9-lt2vs   2/2     Running   0          20s
     ```
 
-8. Deploy the `curl` client into the `curl` namespace after enrolling its namespace to the mesh.
+7. Deploy the `curl` client into the `curl` namespace after enrolling its namespace to the mesh.
 
     ```bash
     # Create the curl namespace
