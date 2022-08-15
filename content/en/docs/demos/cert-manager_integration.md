@@ -92,7 +92,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
 
     The CA certificate saved in this secret will be used by osm-edge upon install to bootstrap its ceritifcate provider utility.
 
-5. Install osm-edge with its certificate provider kind set to `cert-manager`.
+4. Install osm-edge with its certificate provider kind set to `cert-manager`.
    
     ```bash
     osm install --set osm.certificateProvider.kind="cert-manager"
