@@ -82,7 +82,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     EOF
     ```
 
-4. Confirm the `osm-ca-bundle` CA secret is created by `cert-manager` in osm-edge's namespace.
+3. Confirm the `osm-ca-bundle` CA secret is created by `cert-manager` in osm-edge's namespace.
    
     ```console
     $ kubectl get secret osm-ca-bundle -n "$osm_namespace"
