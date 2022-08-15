@@ -108,7 +108,7 @@ The following demo uses [cert-manager][1] as the certificate provider to issue c
     osm-injector-5f96468fb7-p77ps     1/1     Running   0          2m52s
     ```
 
-6. Enable permissive traffic policy mode to set up automatic application connectivity.
+5. Enable permissive traffic policy mode to set up automatic application connectivity.
     > Note: this is not a requirement to use `cert-manager` but simplifies the demo by not requiring explicit traffic policies for application connectivity.
 
     ```bash
