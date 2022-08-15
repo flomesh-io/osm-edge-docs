@@ -19,7 +19,6 @@ This guide demonstrates the usage of [cert-manager][1] as a certificate provider
 The following demo uses [cert-manager][1] as the certificate provider to issue certificates to the `curl` and `httpbin` applications communicating over `Mutual TLS (mTLS)` in an osm-edge managed service mesh.
 
 1. Install `cert-manager`. This demo uses `cert-manager v1.6.1`.
-2. 
     ```bash
     kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.1/cert-manager.yaml
     ```
