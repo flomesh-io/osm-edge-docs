@@ -16,7 +16,7 @@ osm-edge 部署一个 MeshConfig 资源 `osm-mesh-config` 作为它的控制平�
 export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
 ```
 
-要在 CLI 里面查阅您的 `osm-mesh-config`，请使用 `kubectl get` 命令。
+要在 CLI 里面查阅 `osm-mesh-config`，请使用 `kubectl get` 命令。
 
 ```bash
 kubectl get meshconfig osm-mesh-config -n "$osm_namespace" -o yaml

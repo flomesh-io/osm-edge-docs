@@ -7,7 +7,7 @@ weight: 5
 
 # 用 Prometheus 和 Grafana 来配置可观测性
 
-接下来的文章向您展示了如何安装自带 Prometheus 和 Grafana 栈的 osm-edge，从而具备可观测性和监视能力。对于使用在您的集群上自有的 Prometheus 和 Grafana 栈协同 osm-edge 的例子，请参阅[集成 osm-edge 到 Prometheus 和 Grafana](/docs/demos/prometheus_grafana/)示例。
+接下来的文章展示了如何安装自带 Prometheus 和 Grafana 栈的 osm-edge，从而具备可观测性和监视能力。对于使用在集群上自有的 Prometheus 和 Grafana 栈协同 osm-edge 的例子，请参阅[集成 osm-edge 到 Prometheus 和 Grafana](/docs/demos/prometheus_grafana/)示例。
 
 在这篇文章中所创建的配置不应该被用于生产环境。对于生产级的部署，请参阅 [Prometheus 运维](https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md)和[在 Kubernetes 中部署 Grafana](https://grafana.com/docs/grafana/latest/installation/kubernetes/)。
 

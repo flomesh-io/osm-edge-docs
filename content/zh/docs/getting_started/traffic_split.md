@@ -35,7 +35,7 @@ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< 
 
 _注意：根服务可以是任何 Kubernetes 服务。它没有任何标签选择器。它也不需要和任何在流量拆分资源里指定的后端服务发生重叠。在 SMI 流量拆分里，根服务能够被引用作为有或者没有 `.<namespace>` 后缀服务的名称。_
 
-对于书籍销售的计数，从 `bookstore-v2` 浏览器窗口看应该保持在 0。这是因为当前的流量拆分策略是当前权重 100 是给了 `bookstore`，另外 `bookbuyer` 正发送流量到 `bookstore` 服务而没有应用发送请求到 `bookstore-v2` 服务。您可以通过运行下面命令并同时观察**后端**的属性来验证流量拆分策略。
+对于书籍销售的计数，从 `bookstore-v2` 浏览器窗口看应该保持在 0。这是因为当前的流量拆分策略是当前权重 100 是给了 `bookstore`，另外 `bookbuyer` 正发送流量到 `bookstore` 服务而没有应用发送请求到 `bookstore-v2` 服务。可以通过运行下面命令并同时观察**后端**的属性来验证流量拆分策略。
 
 ```bash
 kubectl describe trafficsplit bookstore-split -n bookstore
@@ -49,7 +49,7 @@ kubectl describe trafficsplit bookstore-split -n bookstore
 kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/split/traffic-split-50-50.yaml
 ```
 
-等待变更的传播，并且在您的浏览器窗口里观察 `bookstore` 和 `bookstore-v2` 计数器增长。两个计数器都应该增长：
+等待变更的传播，并且在浏览器窗口里观察 `bookstore` 和 `bookstore-v2` 计数器增长。两个计数器都应该增长：
 
 
 - [http://localhost:8084](http://localhost:8084) - **bookstore**

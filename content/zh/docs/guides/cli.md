@@ -31,7 +31,7 @@ curl -sL "https://github.com/flomesh-io/osm-edge/releases/download/$OSM_VERSION/
 curl -sL "https://github.com/flomesh-io/osm-edge/releases/download/$OSM_VERSION/osm-edge-$OSM_VERSION-darwin-amd64.tar.gz" | tar -vxzf -
 ```
 
-`osm` 客户端二进制程序运行在您的客户端机器上，并且允许您在您的 Kubernetes 集群里管理 osm-edge。使用下面的命令在 Linux 或者 [Windows Linux 子系统 (WSL)](https://docs.microsoft.com/windows/wsl/about) 上基于 bash 的 shell 里面来安装 osm-edge `osm` 客户端二进制程序。这些命令复制 `osm` 客户端二进制程序到您 `PATH` 下面的标准用户程序位置里。
+`osm` 客户端二进制程序运行在客户端机器上，并且允许在 Kubernetes 集群里管理 osm-edge。使用下面的命令在 Linux 或者 [Windows Linux 子系统 (WSL)](https://docs.microsoft.com/windows/wsl/about) 上基于 bash 的 shell 里面来安装 osm-edge `osm` 客户端二进制程序。这些命令复制 `osm` 客户端二进制程序到操作系统 `PATH` 下面的标准用户程序位置里。
 
 
 ```console
@@ -44,13 +44,7 @@ sudo mv ./linux-amd64/osm /usr/local/bin/osm
 sudo mv ./darwin-amd64/osm /usr/local/bin/osm
 ```
 
-您可以通过下面的命令来验证那些已经正确地添加到您环境的 `osm` 客户端库和它们的版本号。
-
-```console
-osm version
-```
-
-您可以通过下面的命令，来验证已经被正确添加到您的环境里的 `osm` 客户端库和它们的版本号。
+可以通过下面的命令，来验证已经被正确添加到环境里的 `osm` 客户端库和它们的版本号。
 
 ```console
 osm version
@@ -60,7 +54,7 @@ osm version
 
 从源码来构建 osm-edge 需要更多的步骤，但是这是最好的方式用来在一个开发环境里测试最近的变更和有用的东西。
 
-您必须有一个工作的 [Go](https://golang.org/doc/install) 环境。
+必须有一个工作的 [Go](https://golang.org/doc/install) 环境。
 
 ```console
 $ git clone git@github.com:flomesh-io/osm-edge.git
@@ -68,7 +62,7 @@ $ cd osm
 $ make build-osm
 ```
 
-`make build-osm` 将拉取任何被需要的依赖，编译 `osm`，然后把它放置于 `bin/osm`。添加 `bin/osm` 到 `$PATH`，这样您就可以轻松地使用 `osm` 了。
+`make build-osm` 将拉取任何被需要的依赖，编译 `osm`，然后把它放置于 `bin/osm`。添加 `bin/osm` 到 `$PATH`，这样就可以轻松地使用 `osm` 了。
 
 ## 安装 osm-edge
 
