@@ -42,7 +42,7 @@ data:
 
 欲了解细节和被使用的代码，请参阅[osm-controller.go](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/cmd/osm-controller/osm-controller.go#L182-L183)。
 
-要阅读根证书 (除 Hashicorp Vault 外)，您可以获取相应的 secret 然后解码它：
+要阅读根证书 (除 Hashicorp Vault 外)，可以获取相应的 secret 然后解码它：
 
 ```console
 kubectl get secret -n $osm_namespace $osm_ca_bundle -o jsonpath='{.data.ca\.crt}' |
@@ -71,7 +71,7 @@ kubectl get secret -n $osm_namespace $osm_ca_bundle -o jsonpath='{.data.ca\.crt}
    kubectl rollout restart deploy osm-bootstrap -n $osm_namespace
    ```
 
-当组件得到了重新部署，您应该可以在 `$osm_namespace` 里面最终看到新的 `osm-ca-bundle` secret。
+当组件得到了重新部署，应该可以在 `$osm_namespace` 里面最终看到新的 `osm-ca-bundle` secret。
 
 ```console
 kubectl get secrets -n $osm_namespace
@@ -106,7 +106,7 @@ kubectl get secrets -n $osm_namespace osm-ca-bundle -o json | jq -r '.data.expir
 
 - 要在开发期间使用 `tresor` 包，在 repo 的 `.env` 文件中设置 `export CERT_MANAGER=tresor`。
 
-- 在您的 Kubernetes 集群中要使用这个包，在之前部署的 Helm chart 中设置 `CERT_MANAGER=tresor` 变量。
+- 在 Kubernetes 集群中要使用这个包，在之前部署的 Helm chart 中设置 `CERT_MANAGER=tresor` 变量。
 
 此外：
 
@@ -139,7 +139,7 @@ kubectl get secrets -n $osm_namespace osm-ca-bundle -o json | jq -r '.data.expir
 
 Hashi Vault 的安装超出了开放边缘服务网格项目的范围。这属于专属的安全团队的响应能力。关于如何安全地部署 Vault 并使其高度可用的文档在 [Vault 网站](https://learn.hashicorp.com/vault/getting-started/install)。
 
-这个仓库包含一个 [脚本 (deploy-vault.sh)](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/demo/deploy-vault.sh)，该脚本被用来为 CI 做 Hashi Vault 的自动化部署。它被严格地限制仅为开发目的。运行该脚本将部署 Vault 在一个 Kubernetes 命名空间里，该命名空寂被您的 [.env](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/.env.example) 文件里面的 `$K8S_NAMESPACE` 环境变量所定义。这个脚本能够以演示目的而使用。它需要下面的环境变量：
+这个仓库包含一个 [脚本 (deploy-vault.sh)](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/demo/deploy-vault.sh)，该脚本被用来为 CI 做 Hashi Vault 的自动化部署。它被严格地限制仅为开发目的。运行该脚本将部署 Vault 在一个 Kubernetes 命名空间里，该命名空寂被 [.env](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/.env.example) 文件里面的 `$K8S_NAMESPACE` 环境变量所定义。这个脚本能够以演示目的而使用。它需要下面的环境变量：
 
 ```
 export K8S_NAMESPACE=osm-system-ns
@@ -188,7 +188,7 @@ Development mode should NOT be used in production installations!
 ...
 ```
 
-在您的系统里面部署 Vault 的可以得到一个 URL 和一个令牌。Vault 的 URL 实例应该是 `http://vault.<osm-namespace>.svc.cluster.local` 和令牌 `xxx`。
+在系统里面部署 Vault 的可以得到一个 URL 和一个令牌。Vault 的 URL 实例应该是 `http://vault.<osm-namespace>.svc.cluster.local` 和令牌 `xxx`。
 > 注意：`<osm-namespace>` 引用了 osm-edge Control Plane 被安装的命名空间。
 
 #### 配置带 Vault 的 osm-edge
@@ -203,7 +203,7 @@ VAULT_TOKEN=xyz
 VAULT_ROLE=openservicemesh
 ```
 
-当在您的本地工作站运行 osm-edge，使用下面的 `osm install` 设置选项：
+当在本地工作站运行 osm-edge，使用下面的 `osm install` 设置选项：
 
 ```
 --set osm.certificateProvider.kind="vault"
@@ -277,11 +277,11 @@ osm-edge 控制平面提供 Vault 安装详实的操作 log。
 
 ### 为 osm-edge 签名配置 cert-manager
 
-在 osm-edge 使用 cert-manager 作为证书提供者能够被安装之前，cert-manager 必须首先被安装，并带一个可用的发行者。您可以在[这里](https://cert-manager.io/docs/installation/)找到 cert-manager 的安装文档。
+在 osm-edge 使用 cert-manager 作为证书提供者能够被安装之前，cert-manager 必须首先被安装，并带一个可用的发行者。可以在[这里](https://cert-manager.io/docs/installation/)找到 cert-manager 的安装文档。
 
 一旦 cert-manager 被安装，配置一个[发行者资源](https://cert-manager.io/docs/configuration/)来服务证书请求。推荐使用一个 `Issuer` 资源类 (而不是一个 `ClusterIssuer`)，其应该居于 osm-edge 命名空间 (默认是 `osm-system`)。
 
-一旦就绪，它被要求在 `ca.crt` 键上 osm-edge 命名空间 (默认是 `osm-system` ) 里存储您的发行者根 CA 证书，以作为一个 Kubernetes Secret。目标 CA Secret 名称能够在 osm-edge 上使用 `osm install --set osm.caBundleSecretName=my-secret-name` (典型的是 `osm-ca-bundle`) 来配置。
+一旦就绪，它被要求在 `ca.crt` 键上 osm-edge 命名空间 (默认是 `osm-system` ) 里存储发行者根 CA 证书，以作为一个 Kubernetes Secret。目标 CA Secret 名称能够在 osm-edge 上使用 `osm install --set osm.caBundleSecretName=my-secret-name` (典型的是 `osm-ca-bundle`) 来配置。
 
 ```bash
 kubectl create secret -n osm-system generic osm-ca-bundle --from-file ca.crt

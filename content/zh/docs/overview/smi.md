@@ -11,7 +11,7 @@ weight: 4
 
 ## 支持的版本
 
-要找到什么样的 SMI 资源版本在您的网格中被支持，您可以运行 `osm mesh list`。这里是一段摘录，来自于示例输出：
+要找到什么样的 SMI 资源版本在网格中被支持，可以运行 `osm mesh list`。这里是一段摘录，来自于示例输出：
 
 ```
 MESH NAME   MESH NAMESPACE   SMI SUPPORTED

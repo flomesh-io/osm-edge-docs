@@ -87,7 +87,7 @@ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< 
 
 一个 Kubernetes 部署，为每个 `bookbuyer`，`bookthief`，`bookstore` 和 `bookwarehouse` 分配的 Pod，还有一个给 `mysql` 的状态集。同样，还有给 `bookstore`，`bookwarehouse` 和 `mysql` 的 Kubernetes 服务和端点。
 
-要在您的集群上查阅这些资源，请运行下面的命令：
+要在集群上查阅这些资源，请运行下面的命令：
 
 ```bash
 kubectl get pods,deployments,serviceaccounts -n bookbuyer
@@ -126,7 +126,7 @@ _注意：如果需要从宿主机访问，需要将 `localhost` 替换成虚拟
 - [http://localhost:8082](http://localhost:8082) - **bookstore-v2**
   - _注意：示例中的这个页面在当前阶段还不可用。在配置 SMI TrafficSplit 期间，它将可用。_
 
-置放好窗口，您将可以同时看到全部四个。网页顶端的页眉指示了应用和其版本。
+置放好窗口，将可以同时看到全部四个。网页顶端的页眉指示了应用和其版本。
 
 ## 下一步
 

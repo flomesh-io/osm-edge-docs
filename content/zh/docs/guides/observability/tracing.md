@@ -13,11 +13,11 @@ weight: 4
 osm-edge 支持那些使用 Zipkin 协议的应用进行链路追踪。
 
 ## Jaeger
-[Jaeger](https://www.jaegertracing.io/) 是一个开源的分布式链路追踪系统，用于分布式系统的监控和故障排查。它能让您在您的系统中获得细粒度的监控指标和分布式追踪信息，然后您可以观测哪些微服务正在通信、请求发往何处、以及它们花了多少时间。您可以使用它来剖析特定的请求和相应，看看它们是在何时以及如何产生的。
+[Jaeger](https://www.jaegertracing.io/) 是一个开源的分布式链路追踪系统，用于分布式系统的监控和故障排查。它能让在系统中获得细粒度的监控指标和分布式追踪信息，然后可以观测哪些微服务正在通信、请求发往何处、以及它们花了多少时间。可以使用它来剖析特定的请求和相应，看看它们是在何时以及如何产生的。
 
 当链路追踪启用时，Jaeger 可以接收来自网格中 Pipy 的 span，然后在通过端口转发后的 Jaeger 界面上查看和查询它。
 
-osm-edge 命令行提供了安装 osm-edge 同时部署 Jaeger 的能力，但也支持您在安装后，将 osm-edge 的链路追踪配置指向您自行管理的 Jaeger。
+osm-edge 命令行提供了安装 osm-edge 同时部署 Jaeger 的能力，但也支持在安装后，将 osm-edge 的链路追踪配置指向自行管理的 Jaeger。
 
 ### 自动部署 Jaeger
 默认情况下，Jaeger 的部署和链路追踪都是一起被禁用的。
@@ -35,7 +35,7 @@ osm install --set=osm.deployJaeger=true,osm.tracing.enable=true
 
 ### BYO (自维护)
 这一章节记录了将一个已经运行的 Jaeger 实例集成到 osm-edge 控制平面所需要的额外步骤。
-> 注意：这份指南概括了针对使用 Jaeger 的步骤，但是您也可以通过适当的参数来使用您自己的链路追踪应用。osm-edge 支持那些使用 Zipkin 协议的应用进行链路追踪
+> 注意：这份指南概括了针对使用 Jaeger 的步骤，但是也可以通过适当的参数来使用自己的链路追踪应用。osm-edge 支持那些使用 Zipkin 协议的应用进行链路追踪
 
 #### 先决条件
 * 一个运行的 Jaeger 实例
@@ -43,37 +43,37 @@ osm install --set=osm.deployJaeger=true,osm.tracing.enable=true
     * [开始使用 Jaeger](https://www.jaegertracing.io/docs/1.22/getting-started/) 包含了单个示例应用的演示
 
 #### 链路追踪的配置项
-根据您是否已经安装了 osm-edge 或者安装 osm-edge 过程中是否部署了 Jaeger 和启用链路追踪，下面的章节概述了必要的配置修改。无论那种情况，下面提到的 `values.yaml` 中 `tracing` 的配置项将被修改，以指向您的 Jaeger 实例：
+根据是否已经安装了 osm-edge 或者安装 osm-edge 过程中是否部署了 Jaeger 和启用链路追踪，下面的章节概述了必要的配置修改。无论那种情况，下面提到的 `values.yaml` 中 `tracing` 的配置项将被修改，以指向 Jaeger 实例：
 1. `enable`: 设置为 `true` 使 Pipy 发送链路追踪数据到一个指定的地址（集群）
-2. `address`： 设置为您的 Jaeger 实例所在的目标集群
-3. `port`：设置为您期望使用的目标监听端口
+2. `address`： 设置为 Jaeger 实例所在的目标集群
+3. `port`：设置为期望使用的目标监听端口
 4. `endpoint`：设置为发送 span 的目标 API 地址或者 collector 接入点
 
 
 #### a) 在安装 osm-edge 控制平面安装完毕后启用链路追踪
 
-如果您已经安装了 osm-edge，osm-edge 的 MeshConfig 当中的 `tracing` 配置项必须修改，通过命令：
+如果已经安装了 osm-edge，osm-edge 的 MeshConfig 当中的 `tracing` 配置项必须修改，通过命令：
 
 ```bash
 # 使用样例值的链路追踪配置
 kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"observability":{"tracing":{"enable":true,"address": "jaeger.osm-system.svc.cluster.local","port":9411,"endpoint":"/api/v2/spans"}}}}'  --type=merge
 ```
 
-您可以通过检查 `osm-mesh-config` 资源来确认这些变更是否已经生效：
+可以通过检查 `osm-mesh-config` 资源来确认这些变更是否已经生效：
 ```bash
 kubectl get meshconfig osm-mesh-config -n osm-system -o jsonpath='{.spec.observability.tracing}{"\n"}'
 ```
 
 #### b) 在 osm-edge 控制平面安装期间启用链路追踪
 
-在安装过程中部署您自管理的 Jaeger 实例，您可以像下面一样，使用 `--set` 参数来修改配置项
+在安装过程中部署自管理的 Jaeger 实例，可以像下面一样，使用 `--set` 参数来修改配置项
 
 ```bash
 osm install --set osm.tracing.enable=true,osm.tracing.address=<链路追踪系统的主机名>,osm.tracing.port=<链路追踪系统的端口>,osm.tracing.endpoint=<链路追踪系统接入点>
 ```
 
 ## 通过端口转发来访问 Jaeger 界面
-Jaeger 的界面运行在 16686 端口上。要访问 Web 界面，您可以使用 `kubectl port-forward` 命令：
+Jaeger 的界面运行在 16686 端口上。要访问 Web 界面，可以使用 `kubectl port-forward` 命令：
 
 ```bash
 OSM_POD=$(kubectl get pods -n "$K8S_NAMESPACE" --no-headers  --selector app=jaeger | awk 'NR==1{print $1}')
@@ -86,9 +86,9 @@ kubectl port-forward -n "$K8S_NAMESPACE" "$OSM_POD"  16686:16686
 ## 使用 Jaeger 进行链路追踪的示例
 这一章节将介绍创建一个简单的 Jaeger 实例并在 osm-edge 中启用链路追踪的过程。
 
-1. 完成 [osm-edge 演示](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/demo/README.md) 并部署 Jaeger。您有两种选择：
+1. 完成 [osm-edge 演示](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/demo/README.md) 并部署 Jaeger。有两种选择：
     - 要自动部署 Jaeger，直接在 `.env` 文件中将 `DEPLOY_JAEGER` 设置为 true
-    - 要使用自维护的 Jaeger，您通过下面的命令，部署 [Jaeger 提供的](https://www.jaegertracing.io/docs/1.22/getting-started/#all-in-one) 演示实例。如果您希望在不同的命名空间下部署 Jaeger，确保在下面的步骤进行修改：
+    - 要使用自维护的 Jaeger，通过下面的命令，部署 [Jaeger 提供的](https://www.jaegertracing.io/docs/1.22/getting-started/#all-in-one) 演示实例。如果希望在不同的命名空间下部署 Jaeger，确保在下面的步骤进行修改：
 
         创建 Jaeger service。
         ```yaml
@@ -151,7 +151,7 @@ kubectl port-forward -n "$K8S_NAMESPACE" "$OSM_POD"  16686:16686
         EOF
         ```
 
-2. 使用合适的配置来启用链路追踪。如果您已经在其它命名空间下安装了 Jaeger，在下面步骤中替换 `osm-system` 成相应的值
+2. 使用合适的配置来启用链路追踪。如果已经在其它命名空间下安装了 Jaeger，在下面步骤中替换 `osm-system` 成相应的值
 
     ```bash
     kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"observability":{"tracing":{"enable":true,"address": "jaeger.osm-system.svc.cluster.local","port":9411,"endpoint":"/api/v2/spans"}}}}'  --type=merge
@@ -159,9 +159,9 @@ kubectl port-forward -n "$K8S_NAMESPACE" "$OSM_POD"  16686:16686
 
 3. 参考[上面的](#通过端口转发来访问-Jaeger-界面)指导，通过端口转发访问 web 界面
 
-4. 在浏览器中，您应该可以看到一个 `Service` 下拉菜单，能够让您选择在 bookstore 演示中部署的各种应用。
+4. 在浏览器中，应该可以看到一个 `Service` 下拉菜单，能够让选择在 bookstore 演示中部署的各种应用。
 
-    a) 选择一个服务来查看它所有的 span。例如，您选择了 `bookbuyer` 并往回查看一个小时，就可以依照时间顺序查看它和 `bookstore-v1` 和 `bookstore-v2` 的交互。
+    a) 选择一个服务来查看它所有的 span。例如，选择了 `bookbuyer` 并往回查看一个小时，就可以依照时间顺序查看它和 `bookstore-v1` 和 `bookstore-v2` 的交互。
     <p align="center">
         <img src="../../images/jaeger-search-traces.png" width="100%"/>
     </p>
@@ -169,7 +169,7 @@ kubectl port-forward -n "$K8S_NAMESPACE" "$OSM_POD"  16686:16686
 
     b) 点击任一项目来查看详情
 
-    c) 选择多个项目来对比追踪信息。例如，您可以对比 `bookbuyer` 和 `bookstore-v1` 以及 `bookstore-v2` 某一时刻的的交互：
+    c) 选择多个项目来对比追踪信息。例如，可以对比 `bookbuyer` 和 `bookstore-v1` 以及 `bookstore-v2` 某一时刻的的交互：
     <p align="center">
         <img src="../../images/jaeger-compare-traces.png" width="100%"/>
     </p>
@@ -181,7 +181,7 @@ kubectl port-forward -n "$K8S_NAMESPACE" "$OSM_POD"  16686:16686
     </p>
     <center><i>bookstore 演示应用交互过程的有向无环图</i></center><br>
 
-如果您在 Jaeger 界面上没有看到 bookstore 演示应用，跟踪 `bookbuyer` 的日志，确保应用之间交互式正常的。
+如果在 Jaeger 界面上没有看到 bookstore 演示应用，跟踪 `bookbuyer` 的日志，确保应用之间交互式正常的。
 
 ```bash
 POD="$(kubectl get pods -n "$BOOKBUYER_的命名空间" --show-labels --selector app=bookbuyer --no-headers | grep -v 'Terminating' | awk '{print $1}' | head -n1)"
@@ -193,9 +193,9 @@ kubectl logs "${POD}" -n "$BOOKBUYER_的命名空间" -c bookbuyer --tail=100 -f
 ```bash
 "MAESTRO! THIS TEST SUCCEEDED!"
 ```
-这表明问题不是因为您的 Jaeger 或者链路追踪配置导致的。
+这表明问题不是因为 Jaeger 或者链路追踪配置导致的。
 
-## 在您的应用当中集成 Jaeger 链路追踪
+## 在应用当中集成 Jaeger 链路追踪
 
 使用 Jaeger 链路追踪并不是没有成本的。为了让 Jaeger 能够自动关联请求和追踪信息，应用应当正确地发送追踪信息。
 
@@ -219,11 +219,11 @@ true
 ```
 
 ### 2. 确认链路追踪的配置如预期被设置
-如果链路追踪已经启用，您可以在 `osm-mesh-config` 资源中检查用于追踪的特定的 `address`, `port` 和 `endpoint`：
+如果链路追踪已经启用，可以在 `osm-mesh-config` 资源中检查用于追踪的特定的 `address`, `port` 和 `endpoint`：
 ```bash
 kubectl get meshconfig osm-mesh-config -n osm-system -o jsonpath='{.spec.observability.tracing}{"\n"}'
 ```
-检查 `address` 字段，确保指向了您预期使用的 FQDN 地址。
+检查 `address` 字段，确保指向了预期使用的 FQDN 地址。
 
 ### 3. 确认Pod是否启用tracing功能（查看环境变量）
 通过环境变量控制 Pipy 是否启用 tracing 功能。
@@ -248,7 +248,7 @@ Environment:
 ```
 
 ### 4. 确认 osm-edge 的控制器已安装且 Jaeger 被自动部署 [可选]
-如果您使用自动部署，您可以额外检查 Jaeger 服务和 Jaeger 的部署：
+如果使用自动部署，可以额外检查 Jaeger 服务和 Jaeger 的部署：
 ```bash
 # 假设 osm-edge 被安装到了 osm-system 命名空间：
 kubectl get services -n osm-system -l app=jaeger
@@ -266,8 +266,8 @@ jaeger   1/1     1            1           27m
 ```
 
 ### 5. 确认 Jaeger pod 的就绪、响应、以及健康状况
-检查 Jaeger pod 是否在您选择部署的命名空间中运行
-> 下面的命令针对的是 osm-edge 自动部署的 Jaeger；按需将命名空间和标签值替换成您自己链路追踪实例的值：
+检查 Jaeger pod 是否在选择部署的命名空间中运行
+> 下面的命令针对的是 osm-edge 自动部署的 Jaeger；按需将命名空间和标签值替换成自己链路追踪实例的值：
 ```bash
 kubectl get pods -n osm-system -l app=jaeger
 

@@ -16,7 +16,7 @@ osm-edge 使用 [Prometheus][1] 来收集和存储网格中运行的所有应用
 
 每一个网格中的应用都在一个 Pod 中运行，这个 Pod 带有一个 Pipy sidecar，它以 Prometheus 格式暴露指标（代理指标）。此外，在启用了度量功能的命名空间中，每个网格中的 Pod，都带有 Prometheus 注解，这使得 Prometheus 服务器可以动态地采集应用程序指标。每当一个 Pod 被添加到网格中时，这种机制就会让 Prometheus 开始自动采集指标。
 
-osm-edge 的指标可以在 [Grafana][8] 中查看，这是一个开源的可视化和分析软件。它可以让您查询、可视化、依照指标进行报警、以及浏览您的指标。
+osm-edge 的指标可以在 [Grafana][8] 中查看，这是一个开源的可视化和分析软件。它可以让查询、可视化、依照指标进行报警、以及浏览指标。
 
 Grafana 使用 Prometheus 作为后端的时序数据库。如果在 osm-edge 安装过程中选择一并部署 Grafana 和 Prometheus，过程中将设置一些必要的规则，以便它们进行交互。相反地，在 “自维护” 或者说 “BYO” 模式下（后续将进一步解释），这些组件将由用户来负责安装。
 
@@ -47,7 +47,7 @@ osm-edge 可以在安装期间部署 Prometheus 和 Grafana，或者 osm-edge �
 
 - 在网格_之外_已经有一个运行的可访问的 Prometheus 实例。
 - 一个运行中的 osm-edge 控制平面，但没有部署度量组件。
-- 我们假设 Grafana 已经可以访问 Prometheus，Prometheus 或者 Grafana 的 web 端口已经对外暴露或者配置了端口转发，并且 Prometheus 访问 Kubernetes API 服务已经配置妥当，否则如下步骤无法指导您完成配置。
+- 我们假设 Grafana 已经可以访问 Prometheus，Prometheus 或者 Grafana 的 web 端口已经对外暴露或者配置了端口转发，并且 Prometheus 访问 Kubernetes API 服务已经配置妥当，否则如下步骤无法指导完成配置。
 
 ##### 配置
 
@@ -63,7 +63,7 @@ osm-edge 可以在安装期间部署 Prometheus 和 Grafana，或者 osm-edge �
    verbs: ["get"]
 ```
 
-- 如果需要，您可以通过 Prometheus Service 配置，让 Prometheus 采集自己的指标：
+- 如果需要，可以通过 Prometheus Service 配置，让 Prometheus 采集自己的指标：
 ```yaml
 annotations:
   prometheus.io/scrape: "true"
@@ -231,18 +231,18 @@ annotations:
 
 ## 从 Prometheus 查询指标
 
-### 在您开始之前
+### 在开始之前
 
-确保您完成了 [osm-edge 演示][2] 当中的步骤
+确保完成了 [osm-edge 演示][2] 当中的步骤
 
 ### 查询请求数量相关的代理指标
 
-1. 确认在您的集群中，Prometheus 服务是运行的
+1. 确认在集群中，Prometheus 服务是运行的
    - 在 Kubernetes，执行这条命令：`kubectl get svc osm-prometheus -n <osm-namespace>`。
      ![image](https://user-images.githubusercontent.com/59101963/85906800-478b3580-b7c4-11ea-8eb2-63bd83647e5f.png)
    - 注意：`<osm-namespace>`指的是安装了 osm 控制平面的命名空间。
 2. 打开 Prometheus 界面
-   - 确认您在仓库的根路径下，执行这条的命令：`./scripts/port-forward-prometheus.sh`
+   - 确认在仓库的根路径下，执行这条的命令：`./scripts/port-forward-prometheus.sh`
    - 在浏览器访问这个链接 [http://localhost:7070][5]
 3. 执行 Prometheus 查询
    - 在网页顶部的 "Expression" 输入框内，输入语句：`sidecar_cluster_upstream_rq_xx{sidecar_response_code_class="2"}` 并点击 execute 按钮
@@ -252,24 +252,24 @@ annotations:
 
 ### 查看 Grafana 面板的先决条件列表
 
-确保您已经完成 [osm-edge 演示][2] 中的步骤
+确保已经完成 [osm-edge 演示][2] 中的步骤
 
 ### 查看 Grafana service to service metrics 面板
 
-1. 确认 Prometheus 服务已经在您的集群中运行
+1. 确认 Prometheus 服务已经在集群中运行
    - 在 Kubernetes 中，执行这条命令：`kubectl get svc osm-prometheus -n <osm-namespace>`
      ![image](https://user-images.githubusercontent.com/59101963/85906800-478b3580-b7c4-11ea-8eb2-63bd83647e5f.png)
-2. 确认 Grafana 服务已经运行在您的集群中
+2. 确认 Grafana 服务已经运行在集群中
    - 在 Kubernetes 中，执行这条命令：`kubectl get svc osm-grafana -n <osm-namespace>`
      ![image](https://user-images.githubusercontent.com/59101963/85906847-70abc600-b7c4-11ea-853d-f4c9b188ab9f.png)
 3. 打开 Grafana 界面
-   - 确保您在当前仓库的根路径下，并执行这个脚本：`./scripts/port-forward-grafana.sh`
+   - 确保在当前仓库的根路径下，并执行这个脚本：`./scripts/port-forward-grafana.sh`
    - 在浏览器访问这个链接 [http://localhost:3000][4]
-4. Grafana 界面需要您提供登录鉴权信息，使用如下默认口令：
+4. Grafana 界面需要提供登录鉴权信息，使用如下默认口令：
    - username: admin
    - password: admin
 5. 在 Grafana 面板上查看服务间的监控指标
-   - 在 Grafana 面板左上角的导航菜单中，您可以在 osm-edge Data Plane 的目录里，切换到 osm-edge Service to Service 面板
+   - 在 Grafana 面板左上角的导航菜单中，可以在 osm-edge Data Plane 的目录里，切换到 osm-edge Service to Service 面板
    - 或者在浏览器中访问这个链接：[http://localhost:3000/d/osm-edges2sMetrics/osm-service-to-service-metrics?orgId=1][6]
 
 osm-edge Service to Service Metrics 面板看起来像这样：
@@ -280,11 +280,11 @@ osm-edge Service to Service Metrics 面板看起来像这样：
 osm-edge 提供了一下预制的 Grafana 面板来展示和跟踪 Prometheus 采集的服务相关的信息：
 
 1. osm-edge 数据平面
-   - **osm-edge Data Plane Performance Metrics**：这个面板供您查看 osm-edge 数据平面的性能表现
+   - **osm-edge Data Plane Performance Metrics**：这个面板供查看 osm-edge 数据平面的性能表现
      ![image](https://user-images.githubusercontent.com/64559656/138173256-28011b16-cace-4365-b166-db909543472e.png)
-   - **osm-edge Service to Service Metrics**：这个面板供您查看选定的源服务和目的服务之间的流量指标
+   - **osm-edge Service to Service Metrics**：这个面板供查看选定的源服务和目的服务之间的流量指标
      ![image](https://user-images.githubusercontent.com/64559656/141853912-10ec3767-3d5b-40e8-8f13-d39a32980183.png)
-   - **osm-edge Pod to Service Metrics**：这个面板供您查看与一个 pod 相连接的所有服务的流量指标
+   - **osm-edge Pod to Service Metrics**：这个面板供查看与一个 pod 相连接的所有服务的流量指标
      ![image](https://user-images.githubusercontent.com/64559656/140724337-0568dde0-e6c5-4764-8b6f-c1fcaf144b4e.png)
    - **osm-edge Workload to Service Metrics**：这个面板提供了与一个工作负载（deployment、replicaSet）相连接的所有服务的流量指标
      ![image](https://user-images.githubusercontent.com/64559656/140724800-8152cb8b-1617-4866-b008-f12c31f702c2.png)
@@ -294,7 +294,7 @@ osm-edge 提供了一下预制的 Grafana 面板来展示和跟踪 Prometheus �
 2. osm-edge 控制平面
    - **osm-edge Control Plane Metrics**：这个面板提供了选定的服务到 osm-edge 控制平面的流量指标
      ![image](https://user-images.githubusercontent.com/64559656/138173115-0a012450-0d91-449d-9c09-975b68fde03d.png)
-   - **Mesh and Sidecar Details**：这个面板供您查看 osm-edge 控制平面的性能表现和工作状态
+   - **Mesh and Sidecar Details**：这个面板供查看 osm-edge 控制平面的性能表现和工作状态
      ![image](https://user-images.githubusercontent.com/64559656/141852750-61da99ac-a431-4251-bd97-8aa4601232c3.png)
 
 [1]: https://prometheus.io/docs/introduction/overview/
