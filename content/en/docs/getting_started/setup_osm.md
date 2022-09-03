@@ -30,7 +30,7 @@ Download the 64-bit GNU/Linux or macOS binary of osm-edge {{< param osm_edge_ver
 ```bash
 system=$(uname -s)
 release={{< param osm_edge_version >}}
-curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-${release}-${system}-amd64.tar.gz | tar -vxzf -
+curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-edge-${release}-${system}-amd64.tar.gz | tar -vxzf -
 ./${system}-amd64/osm version
 ```
 
