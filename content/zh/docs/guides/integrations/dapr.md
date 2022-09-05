@@ -25,7 +25,7 @@ draft: true
          namespace/dapr-test created
         ```
 
-      - [redis 状态存储](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes#step-2---create-and-configure-a-state-store)、[redis. yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/redis.yaml)、[node.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/node.yaml) 和 [python.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/python.yaml) 需要部署在 `dapr-test` 命名空间
+      - [redis 状态存储](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes#step-2---create-and-configure-a-state-store)、[redis.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/redis.yaml)、[node.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/node.yaml) 和 [python.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/python.yaml) 需要部署在 `dapr-test` 命名空间
        - 由于此演示的资源是在自定义命名空间中设置的。我们需要在集群上添加一个 rbac 规则，以便 Dapr 能够访问这些secret。创建以下角色和角色绑定：
 
         ```bash
