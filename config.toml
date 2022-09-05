@@ -93,7 +93,8 @@ project_home = "https://github.com/flomesh-io/osm-edge"
 
 # Version params
 osm_branch = "main"
-osm_edge_version = "v1.1.1"
+osm_edge_version = "v1.1.2"
+fsm_version = "0.1.7"
 min_k8s_version = "v1.19.0"
 pipy_version = "0.50.0-25"
 

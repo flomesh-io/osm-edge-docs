@@ -63,7 +63,7 @@ kubectl create ns httpbin
 osm namespace add httpbin
 
 # Deploy the application
-kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/httpbin/httpbin. yaml -n httpbin
+kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/samples/httpbin/httpbin.yaml -n httpbin
 ```
 
 Ensure that the `httpbin` service and pod are up and running properly by
