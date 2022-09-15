@@ -21,6 +21,12 @@ defaultContentLanguage = "en"
 		description = "Documentation for osm-edge"
 		languageName ="中文"
 		weight = 2
+	[languages.jp]
+		title = "シンプルで整ったスタンドアロンサービスメッシュ"
+		contentDir = 'content/jp'
+		description = "osm-edgeドキュメント"
+		languageName ="日本語"
+		weight = 3
 [services]
 [services.googleAnalytics]
 id = "UA-130516746-13"
