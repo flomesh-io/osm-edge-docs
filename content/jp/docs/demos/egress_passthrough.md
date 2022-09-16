@@ -1,7 +1,7 @@
 ---
 title: "不明な宛先へのエグレスパススルー"
 description: "エグレスポリシーのない外部サービスへのアクセス"
-type: ドキュメント
+type: docs
 weight: 16
 ---
 

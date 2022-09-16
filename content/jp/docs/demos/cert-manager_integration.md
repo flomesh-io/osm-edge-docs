@@ -1,7 +1,7 @@
 ---
 title: "Cert-manager 証明書プロバイダー"
 description: "cert-manager を証明書プロバイダーとして使用する"
-type: ドキュメント
+type: docs
 weight: 30
 ---
 

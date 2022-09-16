@@ -1,7 +1,7 @@
 ---
 title: "osm-edge を Prometheus および Grafana と統合する"
 description: "独自の Prometheus および Grafana スタックを使用して、osm-edge 固有の設定とダッシュボードをセットアップする方法について説明する"
-type: ドキュメント
+type: docs
 weight: 25
 ---
 

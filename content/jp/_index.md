@@ -1,7 +1,7 @@
 ---
 title: "osm-edgeドキュメント"
 description: ""
-type: ドキュメント
+type: docs
 
 ---
 

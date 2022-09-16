@@ -1,7 +1,7 @@
 ---
 title: "SMIトラフィック分割を使用したカナリアロールアウト"
 description: "SMIトラフィック分割を使用したカナリアロールアウトの管理"
-type: ドキュメント
+type: docs
 weight: 21
 ---
 

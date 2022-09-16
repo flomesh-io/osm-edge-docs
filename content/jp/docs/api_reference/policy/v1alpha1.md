@@ -1,7 +1,7 @@
 ---
 title: "ポリシー v1alpha1 API リファレンス"
 description: "ポリシー v1alpha1 API リファレンス ドキュメント。"
-type: ドキュメント
+type: docs
 ---
 
 <p>パッケージ:</p>

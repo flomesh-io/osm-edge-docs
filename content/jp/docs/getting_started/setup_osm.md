@@ -1,7 +1,7 @@
 ---
 title: "osm-edgeをセットアップする"
 description: "osm-edge CLI を使用して osm-edge コントロール プレーンをインストールする"
-type: ドキュメント
+type: docs
 weight: 1
 ---
 

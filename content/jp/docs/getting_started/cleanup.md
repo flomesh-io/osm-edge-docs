@@ -1,7 +1,7 @@
 ---
 title: "osm-edgeをアンインストールする"
 description: "osm-edgeとbookstoreアプリケーションをアンインストールする"
-type: ドキュメント
+type: docs
 weight: 6
 ---
 

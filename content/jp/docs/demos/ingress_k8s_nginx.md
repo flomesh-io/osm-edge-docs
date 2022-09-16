@@ -1,7 +1,7 @@
 ---
 title: "Kubernetes Nginx イングレス コントローラーを使用したイングレス"
 description: "Kubernetes Nginx イングレス コントローラーを使用した HTTP および HTTPS イングレス"
-type: ドキュメント
+type: docs
 weight: 11
 ---
 
