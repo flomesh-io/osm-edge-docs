@@ -1,7 +1,7 @@
 ---
 title: "エグレスポリシー"
 description: "エグレスポリシーを使用した外部サービスへのアクセス"
-type: ドキュメント
+type: docs
 weight: 15
 ---
 

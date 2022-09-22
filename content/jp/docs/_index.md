@@ -1,5 +1,5 @@
 ---
 title: "コンテント"
-type: ドキュメント
+type: docs
 weight: 1
 ---

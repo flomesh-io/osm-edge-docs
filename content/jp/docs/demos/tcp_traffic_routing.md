@@ -1,7 +1,7 @@
 ---
 title: "TCPトラフィックルーティング"
 description: "TCPトラフィックルーティングをセットアップする"
-type: ドキュメント
+type: docs
 weight: 20
 ---
 

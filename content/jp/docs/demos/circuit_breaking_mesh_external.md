@@ -1,7 +1,7 @@
 ---
 title: "メッシュ外部の宛先の回路遮断"
 description: "メッシュ外部の宛先の回路遮断の設定"
-type: ドキュメント
+type: docs
 weight: 22
 ---
 

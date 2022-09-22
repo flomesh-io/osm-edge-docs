@@ -1,7 +1,7 @@
 ---
 title: "サンプルアプリケーションをデプロイする"
 description: "サンプル書店アプリケーションをデプロイする"
-type: ドキュメント
+type: docs
 weight: 2
 aliases: = ["/docs/install/manual_demo/"]
 ---

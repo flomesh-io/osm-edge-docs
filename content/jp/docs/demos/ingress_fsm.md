@@ -1,7 +1,7 @@
 ---
 title: "FSM付きのイングレス"
 description: "FSM イングレス コントローラーによって実装された HTTP イングレス"
-type: ドキュメント
+type: docs
 weight: 10
 draft: false
 ---

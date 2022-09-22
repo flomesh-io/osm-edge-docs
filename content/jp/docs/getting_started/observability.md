@@ -1,7 +1,7 @@
 ---
 title: "Prometheus と Grafana でobservabilityを設定する"
 description: "Prometheus および Grafanaとのosm-edgeのobservability統合を使用して、書店アプリケーション間のトラフィックを検査する"
-type: ドキュメント
+type: docs
 weight: 5
 ---
 

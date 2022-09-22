@@ -1,7 +1,7 @@
 ---
 title: "Traefikを使用したイングレス"
 description: "Traefikイングレスコントローラーを使用したKubernetesイングレス"
-type: ドキュメント
+type: docs
 weight: 12
 draft: false
 ---

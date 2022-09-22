@@ -1,7 +1,7 @@
 ---
 title: "トラフィックスプリットの設定"
 description: "SMI Traffic Split APIによるサービス間のトラフィックバランス調整"
-type: ドキュメント
+type: docs
 weight: 4
 ---
 

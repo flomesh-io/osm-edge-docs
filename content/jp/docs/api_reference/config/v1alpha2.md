@@ -1,7 +1,7 @@
 ---
 title: "構成v1アルファ２APIリファレンス"
 description: "構成v1アルファ２APIリファレンスドキュメンテーション"
-type: ドキュメント
+type: docs
 ---
 
 <p>Packages:</p>
