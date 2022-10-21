@@ -9,7 +9,7 @@ weight: 11
 
  サーキット ブレーカーは、分散システムの重要なコンポーネントであり、重要な回復パターンです。 サーキット ブレーカーを使用すると、アプリケーションがすぐに失敗し、できるだけ早くダウンストリームにバック プレッシャーを適用できるようになります。これにより、システム全体の障害の影響を制限する手段が提供されます。 このガイドでは、osm-edge でサーキット ブレーカーを構成する方法について説明します。
 ## 回路遮断の構成
-osm-edge は、その [UpstreamTrafficSetting API][1] を利用して、アップストリーム サービスに向けられたトラフィックのサーキット ブレーカー属性を構成します。 「アップストリーム サービス」という用語は、クライアントからの接続と要求を受け取り、応答を返すサービスを指すために使用します。 この仕様では、接続および要求レベルでアップストリーム サービスのサーキット ブレーカー属性を構成できます。 osm-edge は [Envoy's circuit breaking functionality](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/circuit_breaking) を活用して、メッシュに参加するアプリケーションのサーキット ブレーカーを実装します。
+osm-edge は、その [UpstreamTrafficSetting API][1] を利用して、アップストリーム サービスに向けられたトラフィックのサーキット ブレーカー属性を構成します。 「アップストリーム サービス」という用語は、クライアントからの接続と要求を受け取り、応答を返すサービスを指すために使用します。 この仕様では、接続および要求レベルでアップストリーム サービスのサーキット ブレーカー属性を構成できます。
 
 各「UpstreamTrafficSetting」構成は、「spec.host」フィールドで定義されたアップストリーム ホストを対象としています。 名前空間「my-namespace」の Kubernetes サービス「my-svc」の場合、名前空間「my-namespace」に「UpstreamTrafficSetting」リソースを作成する必要があり、「spec.host」は「my」形式の FQDN である必要があります。 -svc.my-namespace.svc.cluster.local`．[Egress policy](/docs/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.EgressSpec)　で一致として指定された場合、「spec.host」は Egress ポリシーで指定されたホストに対応している必要があります。 「UpstreamTrafficSetting」構成は、「Egress」リソースと同じ名前空間に属している必要があります。
 

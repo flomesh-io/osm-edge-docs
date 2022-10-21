@@ -596,24 +596,47 @@ string
 </tr>
 <tr>
 <td>
-<code>envoyImage</code><br/>
+<code>sidecarClass</code><br/>
 <em>
 string
 </em>
 </td>
 <td>
-<p>EnvoyImage defines the container image used for the Envoy proxy sidecar.</p>
+<p>SidecarClass defines the class used for the proxy sidecar.</p>
 </td>
 </tr>
 <tr>
 <td>
-<code>envoyWindowsImage</code><br/>
+<code>sidecarDrivers</code><br/>
+<em>
+<a href="#config.openservicemesh.io/v1alpha2.SidecarDriverSpec">
+[]SidecarDriverSpec
+</em>
+</td>
+<td>
+<p>SidecarDrivers defines the sidecar supported.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sidecarImage</code><br/>
 <em>
 string
 </em>
 </td>
 <td>
-<p>EnvoyWindowsImage defines the windows container image used for the Envoy proxy sidecar.</p>
+<p>SidecarImage defines the container image used for the proxy sidecar.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sideWindowsImage</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>SidecarWindowsImage defines the windows container image used for the proxy sidecar.</p>
 </td>
 </tr>
 <tr>
