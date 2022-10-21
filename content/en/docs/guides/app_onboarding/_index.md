@@ -15,9 +15,9 @@ The following guide describes how to onboard a Kubernetes microservice to an osm
     osm-edge conforms to the SMI specification. By default, osm-edge denies all traffic communications between Kubernetes services unless explicitly allowed by SMI policies. This behavior can be overridden with the `--set=osm.enablePermissiveTrafficPolicy=true` flag on the `osm install` command, allowing SMI policies not to be enforced while allowing traffic and services to still take advantage of features such as mTLS-encrypted traffic, metrics, and tracing.
 
     For example SMI policies, please see the following examples:
-    - [demo/deploy-traffic-specs.sh](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/demo/deploy-traffic-specs.sh)
-    - [demo/deploy-traffic-split.sh](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/demo/deploy-traffic-split.sh)
-    - [demo/deploy-traffic-target.sh](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/demo/deploy-traffic-target.sh)
+    - [demo/deploy-traffic-specs.sh](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/demo/deploy-traffic-specs.sh)
+    - [demo/deploy-traffic-split.sh](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/demo/deploy-traffic-split.sh)
+    - [demo/deploy-traffic-target.sh](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/demo/deploy-traffic-target.sh)
 
 3. If an application in the mesh needs to communicate with the Kubernetes API server, the user needs to explicitly allow this either by using IP range exclusion or by creating an egress policy as outlined below.
 

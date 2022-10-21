@@ -1,11 +1,12 @@
 ---
-title: "Uninstall Troubleshooting"
-description: "osm-edge Mesh Uninstall Troubleshooting Guide"
+title: "Uninstall"
+description: "Troubleshooting osm-edge uninstall"
 aliases: ["/docs/troubleshooting/uninstall"]
 type: docs
+weight: 20
 ---
 
-# osm-edge Mesh Uninstall Troubleshooting Guide
+# Troubleshooting osm-edge Uninstall
 
 If for any reason, `osm uninstall mesh` (as documented in the [uninstall guide](/docs/guides/uninstall/)) fails, you may manually delete osm-edge resources as detailed below.
 

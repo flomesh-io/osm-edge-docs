@@ -23,7 +23,7 @@ More information on observability can be found in the [Observability Guide](/doc
 
 ## Prometheus
 
-When configured with the `--set=osm.deployPrometheus=true` flag, osm-edge installation will deploy a Prometheus instance to scrape the sidecar and osm-edge control plane's metrics endpoints. The [scraping configuration file](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/templates/prometheus-configmap.yaml) defines the default Prometheus behavior and the set of metrics collected by osm-edge.
+When configured with the `--set=osm.deployPrometheus=true` flag, osm-edge installation will deploy a Prometheus instance to scrape the sidecar and osm-edge control plane's metrics endpoints. The [scraping configuration file](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/charts/osm/templates/prometheus-configmap.yaml) defines the default Prometheus behavior and the set of metrics collected by osm-edge.
 
 ## Grafana
 
@@ -46,8 +46,6 @@ The osm-edge Grafana dashboards can be viewed with the following command:
 ```bash
 osm dashboard
 ```
-
-> Note: If you still have the additional terminal still running the `./scripts/port-forward-all.sh` script, go ahead and `CTRL+C` to terminate the port forwarding. The `osm dashboard` port redirection will not work simultaneously with the port forwarding script still running.
 
 Navigate to http://localhost:3000 to access the Grafana dashboards. The default user name is `admin` and the default password is `admin`. On the Grafana homepage click on the **Home** icon, you will see a folder containing dashboards for both osm-edge Control Plane and osm-edge Data Plane.
 

@@ -43,9 +43,10 @@ spec:
     spec:
       serviceAccountName: bookwarehouse
       nodeSelector:
+        kubernetes.io/arch: amd64
         kubernetes.io/os: linux
       containers:
         - name: bookwarehouse
-          image: flomesh/bookwarehouse:latest
+          image: openservicemesh/bookwarehouse:latest-main
           imagePullPolicy: Always
           command: ["/bookwarehouse"]

@@ -19,7 +19,7 @@ Since upgrades may include redeploying the osm-controller with the new version, 
 
 Already existing SMI resources will be unaffected, this means that the data plane (which includes the Pipy sidecar configs) will also be unaffected by upgrading.
 
-Data plane interruptions are expected if the upgrade includes CRD changes. Streamlining data plane upgrades is being tracked in issue [#512](https://github.com/openservicemesh/osm/issues/512).
+Data plane interruptions are expected if the upgrade includes CRD changes. Streamlining data plane upgrades is being tracked in issue [#512](https://github.com/flomesh-io/osm-edge/issues/512).
 
 ## Policy
 
