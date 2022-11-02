@@ -8,9 +8,9 @@ This is the contribution guide for the [openservicemesh.io](https://openservicem
 
 The following sections describe how to contribute code by opening a pull request.
 
-### 1. Fork the [Open Service Mesh Docs](https://github.com/openservicemesh/osm-docs) repository
+### 1. Fork the [osm-edge Docs](https://github.com/flomesh-io/osm-edge-docs) repository
 
-1. Visit `https://github.com/openservicemesh/osm-docs`.
+1. Visit `https://github.com/flomesh-io/osm-edge-docs`.
 1. Click the `Fork` button.
 
 ### 2. Clone the new fork to your workstation
@@ -24,10 +24,10 @@ export GITHUB_USERNAME=<github username>
 Clone and set up your fork:
 
 ```sh
-git clone git@github.com:$GITHUB_USERNAME/osm-docs.git
+git clone git@github.com:$GITHUB_USERNAME/osm-edge-docs.git
 
 cd osm
-git remote add upstream git@github.com:openservicemesh/osm-docs.git
+git remote add upstream git@github.com:flomesh-io/osm-edge-docs.git
 
 # Block accidental pushes to upstream's main branch
 git remote set-url --push upstream no_push
@@ -85,7 +85,7 @@ git push -f <remote name> <branch name>
 
 ### 6. Open a pull request
 
-1. Visit your fork at `https://github.com/$GITHUB_USERNAME/osm-docs`.
+1. Visit your fork at `https://github.com/$GITHUB_USERNAME/osm-edge-docs`.
 1. Open a pull request from your `feature` branch using the `Compare & Pull Request` button.
 1. Fill the pull request template and provide enough description so that it can be reviewed.
 
@@ -226,15 +226,15 @@ automated DCO check.
 
 ## Roadmap
 
-We use [GitHub Project Boards](https://github.com/openservicemesh/osm-docs/projects) to help give a high level overview and track what work is going on and what stage it is in.
+We use [GitHub Project Boards](https://github.com/flomesh-io/osm-edge-docs/projects) to help give a high level overview and track what work is going on and what stage it is in.
 
 ## Issues
 
-If a bug is found, need clarification, or want to propose a feature, submit an issue using [GitHub issues](https://github.com/openservicemesh/osm-docs/issues).
+If a bug is found, need clarification, or want to propose a feature, submit an issue using [GitHub issues](https://github.com/oflomesh-io/osm-edge-docs/issues).
 
 ## Semantic Versioning
 
-OSM and the OSM documentation releases will follow [semantic versioning](https://semver.org/) for labeling releases to maintain backwards compatibility. OSM features and functionality may be added in major (x.0.0) and minor (0.x.0) releases. OSM bug fixes may be added in patch releases (0.0.x). We will follow semantic versioning to guarantee features, flags, functionality, public APIs will be backwards compatible as the versioning scheme suggests. OSM documentation will be released as part of an OSM release.
+osm-edge and the osm-edge documentation releases will follow [semantic versioning](https://semver.org/) for labeling releases to maintain backwards compatibility. osm-edge features and functionality may be added in major (x.0.0) and minor (0.x.0) releases. osm-edge bug fixes may be added in patch releases (0.0.x). We will follow semantic versioning to guarantee features, flags, functionality, public APIs will be backwards compatible as the versioning scheme suggests. osm-edge documentation will be released as part of an osm-edge release.
 
 ## Attribution
 
