@@ -25,7 +25,7 @@ We strongly suggest to go through [OPA envoy plugin's](https://github.com/open-p
 
 The following example uses a single, remote (over the network) endpoint to validate all traffic. This configuration is not recommended for a production deployment.
 
-- First, start by deploying osm-edge's Demo. We will use this sample deployment to test external authorization capabilities. Please refer to [osm-edge's Automated Demo](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/demo#how-to-run-the-osm-automated-demo) and follow the instructions.
+- First, start by deploying osm-edge's Demo. We will use this sample deployment to test external authorization capabilities. Please refer to [osm-edge's Automated Demo](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/demo#how-to-run-the-osm-automated-demo) and follow the instructions.
 
 ```bash
 # Assuming osm-edge repo is available

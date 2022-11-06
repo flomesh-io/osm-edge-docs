@@ -1,21 +1,21 @@
-# Open Service Mesh Docs
+# osm-edge Docs
 
-:book: This section contains the [OSM Docs](https://github.com/openservicemesh/osm-docs)
+:book: This section contains the [osm-edge Docs](https://github.com/flomesh-io/osm-edge-docs)
 
 :ship: Also the website config to generate [docs.openservicemesh.io](https://docs.openservicemesh.io)
 
-:link: Looking for the main OSM website? Visit [osm-www](https://github.com/openservicemesh/osm-www)
+:link: Looking for the main osm-edge website? Visit [osm-edge](https://github.com/flomesh-io/osm-edge-docs)
 
 
 ## Editing Content
 
 docs.openservicemesh.io is a static site. The documentation content needs to be located at `content/docs/`.
 
-The content served on [https://docs.openservicemesh.io](https://docs.openservicemesh.io) is served from the latest release on this repo. Most updates should be made only in main and can be previewed at [https://main--osm-docs.netlify.app/](https://main--osm-docs.netlify.app/).
+The content served on [https://osm-edge-docs.flomesh.io](https://osm-edge-docs.flomesh.io) is served from the latest release on this repo. Most updates should be made only in main and can be previewed at [https://osm-edge-docs.flomesh.io/](https://osm-edge-docs.flomesh.io/).
 
 If it's necessary to change published release-specific docs, those changes should be made in the release-specific branch serving those docs. Once configured as described in [Adding release-specific docs](#adding-release-specific-docs), PRs to that branch will auto-build just like PRs to main.
 
-References to the osm branch, osm version, and envoy version should be parameterized unless they are in a sample output. For example, a reference to OSM's `constants.go` should be parameterized as `https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/pkg/constants/constants.go`.
+References to the osm branch, osm version, and envoy version should be parameterized unless they are in a sample output. For example, a reference to osm-edge's `constants.go` should be parameterized as `https://github.com/flomesh-io/osm-edge-docs/blob/{{< param osm_branch >}}/pkg/constants/constants.go`.
 
 To ensure the docs content renders correctly in the theme, each page will need to have [front matter](https://gohugo.io/content-management/front-matter/) metadata. Example front matter:
 
@@ -23,7 +23,7 @@ To ensure the docs content renders correctly in the theme, each page will need t
 ---
 title: "Docs Home"
 linkTitle: "Home"
-description: "OSM Docs Home"
+description: "osm-edge Docs Home"
 weight: 1
 type: docs
 ---
@@ -38,7 +38,7 @@ type: docs
 
 ### Create a release branch
 
-Look for a branch in the upstream repo named `release-vX.Y`, where `X` and `Y` correspond to the major and minor version of the new release. For example, [release-v0.8](https://github.com/openservicemesh/osm-docs/tree/release-v0.8). If the branch already exists, move to the next step.
+Look for a branch in the upstream repo named `release-vX.Y`, where `X` and `Y` correspond to the major and minor version of the new release. For example, [release-v0.8](https://github.com/flomesh-io/osm-edge-docs/tree/release-v0.8). If the branch already exists, move to the next step.
 
 Identify the base commit in the main branch for the release and cut a release branch off main.
 
@@ -61,7 +61,7 @@ Netlify will auto-deploy the branch to a url like [https://release-v0-8--osm-doc
 Proceed with the following steps once the release branch has been created in the OSM repo.
 
 1. Create a new branch off of the release branch to maintain updates specific to the new version. Let's call it the patch branch. The patch branch should not be created in the upstream repo.
-2. On the patch branch, update the `osm_branch`, `osm_version`, and `envoy_version` in [config.toml](https://github.com/openservicemesh/osm-docs/blob/main/config.toml) to the new release versions.
+2. On the patch branch, update the `osm_branch`, `osm_version`, and `envoy_version` in [config.toml](https://github.com/flomesh-io/osm-edge-docs/blob/main/config.toml) to the new release versions.
 
     ```toml
     osm_branch = "release-v0.8"
@@ -70,17 +70,17 @@ Proceed with the following steps once the release branch has been created in the
     ```
 3. Create a pull request from the patch branch to the release branch. Proceed to the next step once the pull request is approved and merged.
 
-### After cutting the OSM release
+### After cutting the osm-edge release
 
 1. Open an issue in this repo asking for a new DNS record be added to the site (via Netlify), to assign a subdomain to the deployed branch.
-2. When published, the newly-added branch will function like [https://release-v0-8.docs.openservicemesh.io/](https://release-v0-8.docs.openservicemesh.io/)
+2. When published, the newly-added branch will function like [https://osm-edge-docs.flomesh.io/](https://rosm-edge-docs.flomesh.io/)
 
 ### After publishing the new release-specific docs
 
 #### Update the release branch
 
 1. Create another patch branch off of the release branch (or use the existing patch branch after fetching and rebasing on the release branch).
-2. On the patch branch, add the new release as a version parameter in [config.toml](https://github.com/openservicemesh/osm-docs/blob/main/config.toml) with the `latest` tag. The version parameters represent all currently supported versions of OSM and are used to populate the Release drop down menu on the site. The url for the new release is formatted `https://release-vX-Y.docs.openservicemesh.io/`.
+2. On the patch branch, add the new release as a version parameter in [config.toml](https://github.com/flomesh-io/osm-edge-docs/blob/main/config.toml) with the `latest` tag. The version parameters represent all currently supported versions of OSM and are used to populate the Release drop down menu on the site. The url for the new release is formatted `https://release-vX-Y.docs.openservicemesh.io/`.
 
     ```toml
     [[params.versions]]
@@ -92,22 +92,60 @@ Proceed with the following steps once the release branch has been created in the
 
 #### Update main and previous release branches
 
-1. Update the `redirects` in `netlify.toml` on the main branch to redirect `https://docs.openservicemesh.io/` to `https//release-vX-Y.docs.openservicemesh.io/` where `release-vX-Y` is the newest release.
-2. Each previous release-specific site that is still supported needs to be able to access the latest release from the Release drop down. On the previous release branches, update the [config.toml](https://github.com/openservicemesh/osm-docs/blob/main/config.toml) to list the new release version as shown above.
+1. Update the `redirects` in `netlify.toml` on the main branch to redirect `https://osm-edge-docs.flomesh.io/` to `https//release-vX-Y.docs.openservicemesh.io/` where `release-vX-Y` is the newest release.
+2. Each previous release-specific site that is still supported needs to be able to access the latest release from the Release drop down. On the previous release branches, update the [config.toml](https://github.com/flomesh-io/osm-edge-docs/blob/main/config.toml) to list the new release version as shown above.
 3. The `latest` tag must be removed from all previous versions. For example, the `latest` tag must be removed from `v0.7 (latest)` on the `release-v0.7` branch.
-4. Add the [banner](https://github.com/openservicemesh/osm-docs/blob/release-v0.9/themes/dosmy/layouts/partials/banner.html) to a previous release specific site if it has not been configured.
-5. Add or update the version banner parameter in `config.toml` to enable the banner at the top of each previous release-specific site that will tell visitors which version they are looking at. For example, the version banner for `release-v0-7` would be configured as follows:
-
+4. Add the [banner](https://github.com/flomesh-io/osm-edge-docs/blob/release-v0.9/themes/dosmy/layouts/partials/banner.html) to a previous release specific site if it has not been configured.
+5. Update the version banner parameter in `config.toml` to enable the banner at the top of each previous release-specific site that will tell visitors which version they are looking at. For example, the version banner for `release-v0-7` would be configured as follows:
     ```toml
     [params.versionbanner]
 	    show = true
 	    archive = "v0.7"
 	    latest = "https://release-v0-8.docs.openservicemesh.io/"
     ```
-
+6. Update `content/docs/releases/docs.md` to include the new release and update the inactive releases list.
+7. 
 ### Update the release support matrix
 
 Once a new OSM version has been released, update the [OSM and Kubernetes support matrix](./content/docs/guides/install.md#kubernetes-support). The Kubernetes version support will be the [current releases of Kubernetes](https://kubernetes.io/releases/) at the time of the OSM release.
+
+### Copy files for localization
+
+Copy entire directory structure under `content/en` to each other localization directory, such as `content/zh`. Each file in each localization must be individually translated for a given release. For more details on the translation process, see [Localization](#localization).
+
+## Localization
+
+The OSM docs can be translated into multiple localizations. To ensure the most accurate content, each localization must be translated for every release and each file should be manually translated for a given localization. When a new release is published, the English version of every content file for that release is copied to each localization. Those temporary English files can then be individually translated.
+
+**If you find a technical error in the content, file a PR to the English version of the content file in the `main` branch so that the fix is carried forward into future releases. Localized content for a release is not carried forward into the next release so any fixes applied directly to localized content will be lost.**
+
+### Localizing a file
+
+To localize one or more files:
+
+- Create a new branch off of the latest release branch, such as `release-v1.1`.
+- Translate the temporary English version of the file(s) in the existing localization directory, such as `content/zh/_index.md`.
+- File a PR targeting the latest release branch.
+
+### Adding a new localization
+
+When you add a new localization, you need to create *BOTH* an initial translation for the latest release as well as the scaffold for the new localization in the `main` branch. 
+
+To create the initial translation for the latest release:
+
+- Create a branch based on the latest release branch, such as `release-v1.1`.
+- Add a new localization directory to the `content/` directory.
+- Copy the entire directory structure under `content/en` to the new localization directory.
+- Add a new language to `config.toml` in the `[languages]` section.
+- Optionally, you can begin translating one or more files in the new localization directory.
+- File a PR targeting the latest release branch.
+
+To create the scaffold for the new localization:
+
+- Create a branch based on `main`.
+- Add the same localization directory to the `content/` directory, but only containing a `.gitkeep` file.
+- Copy the new language configuration to `config.toml` in the `[languages]` section, but comment it out.
+- File a PR targeting the `main` branch.
 
 # Site Development
 

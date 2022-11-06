@@ -1,8 +1,11 @@
 ---
-title: "Permissive Traffic Policy Mode Troubleshooting"
-description: "Permissive Traffic Policy Mode Troubleshooting Guide"
+title: "Permissive Traffic Policy Mode"
+description: "Troubleshooting permissive traffic policy"
 type: docs
+weight: 2
 ---
+
+# Troubleshooting Permissive Traffic Policy Mode
 
 ## When permissive traffic policy mode is not working as expected
 
@@ -32,4 +35,17 @@ Errors will be logged with the `level` key in the log message set to `error`:
 
 ### 3. Confirm the Pipy configuration
 
-Confirm the Pipy proxy configuration on the client and server pods are allowing the client to access the server. 
+Use the `osm verify connectivity` command to validate that the pods can communicate using a Kubernetes service.
+
+For example, to verify if the pod `curl-7bb5845476-zwxbt` in the namespace `curl` can direct traffic to the pod `httpbin-69dc7d545c-n7pjb` in the `httpbin` namespace using the `httpbin` Kubernetes service:
+
+```console
+$ osm verify connectivity --from-pod curl/curl-7bb5845476-zwxbt --to-pod httpbin/httpbin-69dc7d545c-n7pjb --to-service httpbin
+---------------------------------------------
+[+] Context: Verify if pod "curl/curl-7bb5845476-zwxbt" can access pod "httpbin/httpbin-69dc7d545c-n7pjb" for service "httpbin/httpbin"
+Status: Success
+
+---------------------------------------------
+```
+
+The `Status` field in the output will indicate `Success` when the verification succeeds.

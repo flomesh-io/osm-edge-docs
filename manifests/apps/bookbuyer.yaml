@@ -27,10 +27,11 @@ spec:
     spec:
       serviceAccountName: bookbuyer
       nodeSelector:
+        kubernetes.io/arch: amd64
         kubernetes.io/os: linux
       containers:
         - name: bookbuyer
-          image: flomesh/bookbuyer:latest
+          image: openservicemesh/bookbuyer:latest-main
           imagePullPolicy: Always
           command: ["/bookbuyer"]
           env:

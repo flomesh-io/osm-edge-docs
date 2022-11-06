@@ -30,7 +30,7 @@ to automatically provision the metrics components and with the BYO method.
 
 By default, both Prometheus and Grafana are disabled.
 
-However, when configured with the `--set=osm.deployPrometheus=true` flag, osm-edge installation will deploy a Prometheus instance to scrape the sidecar's metrics endpoints. Based on the metrics scraping configuration set by the user, osm-edge will annotate pods part of the mesh with necessary metrics annotations to have Prometheus reach and scrape the pods to collect relevant metrics. The [scraping configuration file](https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/charts/osm/templates/prometheus-configmap.yaml) defines the default Prometheus behavior and the set of metrics collected by osm-edge.
+However, when configured with the `--set=osm.deployPrometheus=true` flag, osm-edge installation will deploy a Prometheus instance to scrape the sidecar's metrics endpoints. Based on the metrics scraping configuration set by the user, osm-edge will annotate pods part of the mesh with necessary metrics annotations to have Prometheus reach and scrape the pods to collect relevant metrics. The [scraping configuration file](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/charts/osm/templates/prometheus-configmap.yaml) defines the default Prometheus behavior and the set of metrics collected by osm-edge.
 
 To install Grafana for metrics visualization, pass the `--set=osm.deployGrafana=true` flag to the `osm install` command. osm-edge provides a pre-configured dashboard that is documented in [osm-edge Grafana dashboards](#osm-grafana-dashboards).
 
@@ -128,7 +128,7 @@ The following section assumes a Prometheus instance has already been configured 
 
 ##### Importing osm-edge Dashboards
 
-osm-edge Dashboards are available through [our repository](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards), which can be imported as json blobs on the web admin portal.
+osm-edge Dashboards are available through [our repository](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards), which can be imported as json blobs on the web admin portal.
 
 Detailed instructions for importing osm-edge dashboards can be found in the [Prometheus and Grafana](/docs/demos/prometheus_grafana) demo. Refer to [osm-edge Grafana dashboard](#osm-grafana-dashboards) for an overview of the pre-configured dashboards.
 
@@ -210,11 +210,11 @@ annotations:
 | osm_k8s_api_event_count               | Count     | type, namespace                         | Number of events received from the Kubernetes API Server                         |
 | osm_proxy_connect_count               | Gauge     |                                         | Number of proxies connected to osm-edge controller                                    |
 | osm_proxy_reconnect_count             | Count     |                                         | IngressGateway defines the certificate specification for an ingress gateway      |
-| osm_proxy_response_send_success_count | Count     | common_name, type                       | Number of responses successfully sent to proxies                                 |
-| osm_proxy_response_send_error_count   | Count     | common_name, type                       | Number of responses that errored when being set to proxies                       |
+| osm_proxy_response_send_success_count | Count     | proxy_uuid, identity, type              | Number of responses successfully sent to proxies                                 |
+| osm_proxy_response_send_error_count   | Count     | proxy_uuid, identity, type              | Number of responses that errored when being set to proxies                       |
 | osm_proxy_config_update_time          | Histogram | resource_type, success                  | Histogram to track time spent for proxy configuration                            |
 | osm_proxy_broadcast_event_count       | Count     |                                         | Number of ProxyBroadcast events published by the osm-edge controller                  |
-| osm_proxy_xds_request_count           | Count     | common_name, type                       | Number of XDS requests made by proxies                                           |
+| osm_proxy_xds_request_count           | Count     | proxy_uuid, identity, type              | Number of XDS requests made by proxies                                           |
 | osm_proxy_max_connections_rejected    | Count     |                                         | Number of proxy connections rejected due to the configured max connections limit |
 | osm_cert_issued_count                 | Count     |                                         | Total number of XDS certificates issued to proxies                               |
 | osm_cert_issued_time                  | Histogram |                                         | Histogram to track time spent to issue xds certificate                           |
@@ -224,6 +224,8 @@ annotations:
 | osm_http_response_duration            | Histogram | code, method, path                      | Duration in seconds of HTTP responses sent                                       |
 | osm_feature_flag_enabled              | Gauge     | feature_flag                            | Represents whether a feature flag is enabled (1) or disabled (0)                 |
 | osm_conversion_webhook_resource_total | Count     | kind, success, from_version, to_version | Number of resources converted by conversion webhooks                             |
+| osm_events_queued                     | Gauge     |                                         | Number of events seen but not yet processed by the control plane                 |
+| osm_reconciliation_total              | Count     | kind                                    | Counter of resource reconciliations invoked                                      |
 
 #### Error Code Metrics
 
@@ -305,7 +307,7 @@ osm-edge provides some pre-cooked Grafana dashboards to display and track servic
      ![image](https://user-images.githubusercontent.com/64559656/141852750-61da99ac-a431-4251-bd97-8aa4601232c3.png)
 
 [1]: https://prometheus.io/docs/introduction/overview/
-[2]: https://github.com/openservicemesh/osm/blob/{{< param osm_branch >}}/demo/README.md
+[2]: https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/demo/README.md
 [3]: https://grafana.com/docs/grafana/latest/getting-started/#what-is-grafana
 [4]: http://localhost:3000
 [5]: http://localhost:7070

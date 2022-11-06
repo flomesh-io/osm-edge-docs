@@ -5,13 +5,15 @@ metadata:
   name: bookstore-v2
   namespace: bookstore
   labels:
-    app: bookstore-v2
+    app: bookstore
+    version: v2
 spec:
   ports:
   - port: 14001
     name: bookstore-port
   selector:
-    app: bookstore-v2
+    app: bookstore
+    version: v2
 
 ---
 
@@ -34,18 +36,21 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bookstore-v2
+      app: bookstore
+      version: v2
   template:
     metadata:
       labels:
-        app: bookstore-v2
+        app: bookstore
+        version: v2
     spec:
       serviceAccountName: bookstore-v2
       nodeSelector:
+        kubernetes.io/arch: amd64
         kubernetes.io/os: linux
       containers:
         - name: bookstore
-          image: flomesh/bookstore:latest
+          image: openservicemesh/bookstore:latest-main
           imagePullPolicy: Always
           ports:
             - containerPort: 14001
@@ -80,25 +85,3 @@ spec:
   - kind: ServiceAccount
     name: bookbuyer
     namespace: bookbuyer
-
----
-
-kind: TrafficTarget
-apiVersion: access.smi-spec.io/v1alpha3
-metadata:
-  name: bookstore-v2-access-bookwarehouse
-  namespace: bookwarehouse
-spec:
-  destination:
-    kind: ServiceAccount
-    name: bookwarehouse
-    namespace: bookwarehouse
-  rules:
-  - kind: HTTPRouteGroup
-    name: bookwarehouse-service-routes
-    matches:
-    - restock-books
-  sources:
-  - kind: ServiceAccount
-    name: bookstore-v2
-    namespace: bookstore

@@ -347,7 +347,7 @@ Select `Save and Test` and confirm you see `Data source is working`.
 
 ## Importing osm-edge Dashboards
 
-osm-edge Dashboards are available through [osm-edge GitHub repository](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards), which can be imported as json blobs on the management application.
+osm-edge Dashboards are available through [osm-edge GitHub repository](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards), which can be imported as json blobs on the management application.
 
 To import a dashboard:
 * Hover your cursor over the `+` and select `Import`.
