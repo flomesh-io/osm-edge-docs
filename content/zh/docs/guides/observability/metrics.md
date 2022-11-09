@@ -206,11 +206,11 @@ annotations:
 | osm_k8s_api_event_count               | Count     | type, namespace                         | 从 Kubernetes API Server 接收到的事件的数量                         |
 | osm_proxy_connect_count               | Gauge     |                                         | 连接到 osm-edge controller 的代理的数量                                   |
 | osm_proxy_reconnect_count             | Count     |                                         | IngressGateway 定义了一个 ingress gateway 的证书规范 |
-| osm_proxy_response_send_success_count | Count     | common_name, type                       | 成功发送到代理的响应的数量                                 |
-| osm_proxy_response_send_error_count   | Count     | common_name, type                       | 发送到代理的出错的响应的数量                       |
+| osm_proxy_response_send_success_count | Count     | proxy_uuid, identity, type              | 成功发送到代理的响应的数量                                 |
+| osm_proxy_response_send_error_count   | Count     | proxy_uuid, identity, type              | 发送到代理的出错的响应的数量                       |
 | osm_proxy_config_update_time          | Histogram | resource_type, success                  | 追踪代理配置消耗时间的直方图                            |
 | osm_proxy_broadcast_event_count       | Count     |                                         | osm-edge controller 发出的 ProxyBroadcast 事件数量                 |
-| osm_proxy_xds_request_count           | Count     | common_name, type                       | 代理产生的 XDS 请求的数量                                           |
+| osm_proxy_xds_request_count           | Count     | proxy_uuid, identity, type              | 代理产生的 XDS 请求的数量                                           |
 | osm_proxy_max_connections_rejected    | Count     |                                         | 因为最大连接数限制配置导致的被拒绝的代理连接的数量 |
 | osm_cert_issued_count                 | Count     |                                         | 签发给代理的 XDS 证书的数量                               |
 | osm_cert_issued_time                  | Histogram |                                         | 追踪签发 xds 证书消耗时间的直方图                           |
@@ -220,6 +220,8 @@ annotations:
 | osm_http_response_duration            | Histogram | code, method, path                      | 以秒为单位的统计的，发送的 HTTP 响应时间的直方图                                       |
 | osm_feature_flag_enabled              | Gauge     | feature_flag                            | 表示一个特性标记配置是启用 (1) 还是禁用 (0)                 |
 | osm_conversion_webhook_resource_total | Count     | kind, success, from_version, to_version | 被 conversion webhooks 处理过的资源的数量                            |
+| osm_events_queued                     | Gauge     |                                         | Number of events seen but not yet processed by the control plane                 |
+| osm_reconciliation_total              | Count     | kind                                    | Counter of resource reconciliations invoked                                      |
 
 #### 指标中的状态码
 

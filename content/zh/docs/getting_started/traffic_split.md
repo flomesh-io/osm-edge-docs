@@ -7,7 +7,7 @@ weight: 4
 
 # 配置两个服务之间的流量拆分
 
-我们将演示如何均衡两个 Kubernetes 服务之间的流量，通常这被叫做流量拆分。我们将在后端 `bookstore` 服务和 `bookstore-v2` 服务之间来拆分原来定向到根 `bookstore` 服务的流量。
+我们将演示如何均衡两个 Kubernetes 服务之间的流量，通常这被叫做流量拆分。我们将在后端 `bookstore` 服务和 `bookstore-v2` 服务之间来拆分原来定向到根 `bookstore` 服务的流量。`bookstore` 服务和 `bookstore-v2` 服务也被看做叶服务。了解更多关于如何为流量拆分配置服务请参阅[流量拆分 How-To 指南](/docs/guides/traffic_management/traffic_split.md)。
 
 ### 部署 bookstore v2 应用
 
@@ -19,23 +19,35 @@ weight: 4
 kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/apps/bookstore-v2.yaml
 ```
 
-等待 `bookstore-v2` pod 在 `bookstore` 命名空间里运行起来，退出并重新启动 `./scripts/port-forward-all.sh` 脚本以可以访问 bookstore-v2。
+等待 `bookstore-v2` pod 在 `bookstore` 命名空间里运行起来，退出并重新启动 port-forward 脚本以可以访问 bookstore-v2。
+
+```bash
+bash <<EOF
+./scripts/port-forward-bookbuyer-ui.sh &
+./scripts/port-forward-bookstore-ui.sh &
+./scripts/port-forward-bookstore-ui-v2.sh &
+./scripts/port-forward-bookthief-ui.sh &
+wait
+EOF
+```
 
 - [http://localhost:8082](http://localhost:8082) - **bookstore-v2**
 
-计数器 _不_ 应该增长，因为还没有流量进入 `bookstore-v2` 服务。
+`bookstore-v2` 计数器应该增长，因为到根 `bookstore` 服务的流量使用了一个标签选择器来配置，该选择器选择了包括 `bookstore-v1` 和 `bookstore-v2` 后端 pod 在内的端点。
 
 ### 创建 SMI Traffic Split
 
-部署 SMI 流量拆分策略来定向发送到根 `bookstore` 服务 100% 的流量到 `bookstore` 服务后端。
+部署 SMI 流量拆分策略来定向发送到根 `bookstore` 服务 100% 的流量到 `bookstore` 服务后端。这一点是必须的，以确保定向到 `bookstore` 的流量只被定向到 bookstore 应用的 `version v1`，其包括了支持 `bookstore-v1` 服务的 pod。`TrafficSplit` 配置随后将被更新为定向一部分百分比的流量给使用 `bookstore-v2` 叶服务的 bookstore 服务 `version v2`
+
+基于这个原因，很重要的一点是如果需要流量拆分，就要确保客户端应用一直保持和根服务通信。如若不然，当流量拆分被需要时，客户端应用就要更新为和根服务通信。
 
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/split/traffic-split-v1.yaml
 ```
 
-_注意：根服务可以是任何 Kubernetes 服务。它没有任何标签选择器。它也不需要和任何在流量拆分资源里指定的后端服务发生重叠。在 SMI 流量拆分里，根服务能够被引用作为有或者没有 `.<namespace>` 后缀服务的名称。_
+_注意：根服务是一个 Kubernetes 服务，它的选择器需要匹配支持叶服务的 pod。在这个演示中，根服务 `bookstore` 有选择器 `app:bookstore`，其分别匹配了在 `bookstore (v1)` 和 `bookstore-v2` 部署上的标签 `app:bookstore,version:v1` 和 `app:bookstore,version=v2`。该根服务能够被按照带或者不带 `.<namespace>.svc.cluster.local` 后缀的服务名称来引用 SMI 流量拆分中的资源。_
 
-对于书籍销售的计数，从 `bookstore-v2` 浏览器窗口看应该保持在 0。这是因为当前的流量拆分策略是当前权重 100 是给了 `bookstore`，另外 `bookbuyer` 正发送流量到 `bookstore` 服务而没有应用发送请求到 `bookstore-v2` 服务。可以通过运行下面命令并同时观察**后端**的属性来验证流量拆分策略。
+对于书籍销售的计数，从 `bookstore-v2` 浏览器窗口看应该停止增长。这是因为当前的流量拆分策略把权重 100 给了 `bookstore-v1` 而排除了支持 `bookstore-v2` 服务的 pod。可以通过运行下面命令并同时观察**后端**的属性来验证流量拆分策略。
 
 ```bash
 kubectl describe trafficsplit bookstore-split -n bookstore

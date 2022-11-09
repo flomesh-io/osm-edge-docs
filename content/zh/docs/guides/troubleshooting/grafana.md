@@ -1,9 +1,12 @@
 ---
-title: "Grafana 故障排查"
-description: "如何修复 osm-edge 中集成的 Grafana 常见的问题"
+title: "Grafana"
+description: "Grafana 集成的故障排查"
 aliases: "/docs/troubleshooting/observability/grafana"
 type: docs
+weight: 16
 ---
+
+# Grafana 集成的故障排查
 
 ## Grafana 无法访问
 

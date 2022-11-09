@@ -48,8 +48,6 @@ osm-edge Grafana 仪表板能够通过如下命令来查看：
 osm dashboard
 ```
 
-> 注意：如果依旧有额外的终端在运行着 `./scripts/port-forward-all.sh` 脚本，请前往那里然后用 `CTRL+C` 终止端口转发。`osm dashboard` 端口重定向将不能够与运行着的端口转发同时工作。
-
 导航到 [http://localhost:3000](http://localhost:3000) 来访问 Grafana 仪表板。默认的用户名是 `admin`，默认的密码是 `admin`。在 Grafana 主页上点击 **Home** 图标，将看到一个文件夹，里面包含了 osm-edge 控制平面和数据平面的仪表板。
 
 ## 下一步

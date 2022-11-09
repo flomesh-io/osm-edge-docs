@@ -1,8 +1,11 @@
 ---
-title: "Iptables 重定向故障排查"
-description: "Iptables 重定向故障排查指南"
+title: "Iptables 重定向"
+description: "Iptables 拦截和重定向故障排查"
 type: docs
+weight: 1
 ---
+
+# Iptables 拦截和重定向故障排查
 
 ## 当流量重定向未按预期工作时
 
@@ -39,7 +42,36 @@ Init Containers:
       /bin/sh
     Args:
       -c
-      iptables -t nat -N PROXY_INBOUND && iptables -t nat -N PROXY_IN_REDIRECT && iptables -t nat -N PROXY_OUTPUT && iptables -t nat -N PROXY_REDIRECT && iptables -t nat -A PROXY_REDIRECT -p tcp -j REDIRECT --to-port 15001 && iptables -t nat -A PROXY_REDIRECT -p tcp --dport 15000 -j ACCEPT && iptables -t nat -A OUTPUT -p tcp -j PROXY_OUTPUT && iptables -t nat -A PROXY_OUTPUT -m owner --uid-owner 1500 -j RETURN && iptables -t nat -A PROXY_OUTPUT -d 127.0.0.1/32 -j RETURN && iptables -t nat -A PROXY_OUTPUT -j PROXY_REDIRECT && iptables -t nat -A PROXY_IN_REDIRECT -p tcp -j REDIRECT --to-port 15003 && iptables -t nat -A PREROUTING -p tcp -j PROXY_INBOUND && iptables -t nat -A PROXY_INBOUND -p tcp --dport 15010 -j RETURN && iptables -t nat -A PROXY_INBOUND -p tcp --dport 15901 -j RETURN && iptables -t nat -A PROXY_INBOUND -p tcp --dport 15902 -j RETURN && iptables -t nat -A PROXY_INBOUND -p tcp --dport 15903 -j RETURN && iptables -t nat -A PROXY_INBOUND -p tcp -j PROXY_IN_REDIRECT
+      iptables-restore --noflush <<EOF
+      # OSM sidecar interception rules
+      *nat
+      :OSM_PROXY_INBOUND - [0:0]
+      :OSM_PROXY_IN_REDIRECT - [0:0]
+      :OSM_PROXY_OUTBOUND - [0:0]
+      :OSM_PROXY_OUT_REDIRECT - [0:0]
+      -A OSM_PROXY_IN_REDIRECT -p tcp -j REDIRECT --to-port 15003
+      -A PREROUTING -p tcp -j OSM_PROXY_INBOUND
+      -A OSM_PROXY_INBOUND -p tcp --dport 15010 -j RETURN
+      -A OSM_PROXY_INBOUND -p tcp --dport 15901 -j RETURN
+      -A OSM_PROXY_INBOUND -p tcp --dport 15902 -j RETURN
+      -A OSM_PROXY_INBOUND -p tcp --dport 15903 -j RETURN
+      -A OSM_PROXY_INBOUND -p tcp --dport 15904 -j RETURN
+      -A OSM_PROXY_INBOUND -p tcp -j OSM_PROXY_IN_REDIRECT
+      -I OSM_PROXY_INBOUND -i net1 -j RETURN
+      -I OSM_PROXY_INBOUND -i net2 -j RETURN
+      -A OSM_PROXY_OUT_REDIRECT -p tcp -j REDIRECT --to-port 15001
+      -A OSM_PROXY_OUT_REDIRECT -p tcp --dport 15000 -j ACCEPT
+      -A OUTPUT -p tcp -j OSM_PROXY_OUTBOUND
+      -A OSM_PROXY_OUTBOUND -o lo ! -d 127.0.0.1/32 -m owner --uid-owner 1500 -j OSM_PROXY_IN_REDIRECT
+      -A OSM_PROXY_OUTBOUND -o lo -m owner ! --uid-owner 1500 -j RETURN
+      -A OSM_PROXY_OUTBOUND -m owner --uid-owner 1500 -j RETURN
+      -A OSM_PROXY_OUTBOUND -d 127.0.0.1/32 -j RETURN
+      -A OSM_PROXY_OUTBOUND -o net1 -j RETURN
+      -A OSM_PROXY_OUTBOUND -o net2 -j RETURN
+      -A OSM_PROXY_OUTBOUND -j OSM_PROXY_OUT_REDIRECT
+      COMMIT
+      EOF
+      
     State:          Terminated
       Reason:       Completed
       Exit Code:    0

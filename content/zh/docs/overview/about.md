@@ -64,7 +64,4 @@ k8s 向边缘侧的演进，在一定程度上解决了边缘计算的难点，�
 
 ![diagram](https://user-images.githubusercontent.com/2224492/176060685-8504c433-c91b-4f9e-9754-f9ccb6c28a87.png)
 
-从控制平面的视角，对于熟悉 osm 架构的用户，osm-edge 在 osm 基础上扩展、替换、增加了如下组件
-* sidecar driver。该组件实现了sidecar和控制平面接口标准化，用户可以选择不同的 sidecar proxy 实现。该组件默认采用 [pipy proxy](https://github.com/flomesh-io)
-* pipy sidecar。该组件替换了标准 osm 的 envoy proxy；同时作为兼容，用户可以通过 sidecar driver 配置使用 envoy 或者其他的 sidecar proxy
-* ingress。该组件来源于 [fsm](https://github.com/flomesh-io/fsm)，提供了标准的 ingress 和 Gateway API
+为了打破 Pipy 上的紧耦合性，给第三方敞开一扇大门来开发和利用他们的数据平面或者 sidecar 代理，我们重构了 `OSM v1.2.0` 代码库来使之更通用并提供可扩展点。我们深信并强烈支持开源，我们针对这一重构的 [proposal](https://github.com/openservicemesh/osm/issues/4874) 已经被提交到上游来审核，讨论和（或）使用。

@@ -36,11 +36,8 @@ metadata:
       namespace: osm-system
 data:
   ca.crt: <base64 encoded root cert>
-  expiration: <base64 encoded ISO 8601 certificate expiration date; for example: 2031-01-11T23:15:09.299Z>
   private.key: <base64 encoded private key>
 ```
-
-欲了解细节和被使用的代码，请参阅[osm-controller.go](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/cmd/osm-controller/osm-controller.go#L182-L183)。
 
 要阅读根证书 (除 Hashicorp Vault 外)，可以获取相应的 secret 然后解码它：
 
@@ -54,7 +51,13 @@ kubectl get secret -n $osm_namespace $osm_ca_bundle -o jsonpath='{.data.ca\.crt}
 
 这个将提供有价值的证书信息，例如过期日期和发行者。
 
-### 轮换根证书 (Tresor)
+### 根证书轮换
+
+#### Tresor
+
+>  警告：轮换根证书，当服务转换它们的 mTLS 证书从一个发行者到下一个的时候，将会导致服务间的停机。
+
+我们当前正力争实现一个根证书转换零停机机制，这也是我们期待在即将来临的发行版中所要宣布的。
 
 自签名根证书，其通过 osm-edge 内的 Tresor 包来创建，将在一个十年后过期。要轮换该根证书，下面的步骤应该被遵循：
 
@@ -85,10 +88,14 @@ osm-ca-bundle                  Opaque                                3      74m
 新的过期日期可以通过下面的命令来获取：
 
 ```console
-kubectl get secrets -n $osm_namespace osm-ca-bundle -o json | jq -r '.data.expiration' | base64 -d
+kubectl get secret -n $osm_namespace $osm_ca_bundle -o jsonpath='{.data.ca\.crt}' |
+    base64 -d |
+    openssl x509 -noout -dates
 ```
 
-#### 其他证书发行者
+对于 Sidecar 服务和要轮换的验证证书，数据平面组件必须重新启动。
+
+#### Hashicorp Vault 和 Certmanager
 
 对于 Tresor 之外的证书提供商，轮换根证书的过程将会是不同的。对于 Hashicorp Vault 和 cert-manager.io，用户将需要在 osm-edge 之外自己轮换根证书。
 
@@ -127,9 +134,14 @@ kubectl get secrets -n $osm_namespace osm-ca-bundle -o json | jq -r '.data.expir
 - `--set osm.certificateProvider.kind=vault` —— 设置为 `vault`
 - `--set osm.vault.host` —— Vault 服务器的主机名 (例如：`vault.contoso.com`)
 - `--set osm.vault.protocol` —— Vault 连接的协议 (`http` 或者 `https`)
-- `--set osm.vault.token` —— 被 osm-edge 使用的令牌来连接到 Vault (这个在 Vault 服务器上为特定角色发放)
 - `--set osm.vault.role` —— 角色创建在 Vault 服务器上并且专属于开放边缘服务网格 (例如：`openservicemesh`)
 - `--set osm.certificateProvider.serviceCertValidityDuration` —— 每一个为服务到服务通信所发放的新证书有效的周期。它用一串十进制数带可选的小数和一个单位后缀来表达，例如 1h 表示 1 小时，30m 表示 30 分钟，1.5h 或者 1h30m 表示 1 小时 30 分钟。
+
+Vault 令牌必须提供给 osm-edge，这样它才能连接到 Vault。该令牌可以被配置为一个设置选项或者存储在 osm-edge 安装的命名空间中的一个 Kubernetes secret 里。如果 `osm.vault.token` 选项没有被设置，`osm.vault.secret.name` 和 `osm.vault.secret.key` 选项就必须被配置。
+
+- `--set osm.vault.token` —— 被 osm-edge 使用的令牌来连接到 Vault (这个在 Vault 服务器上为特定角色发放)
+- `--set osm.vault.secret.name` —— 存储 Vault 令牌的 Kubernetes secret 字符串名称
+- `--set osm.vault.secret.key` —— 在 Kubernetes secret 里面的 Vault 令牌秘钥
 
 此外：
 
