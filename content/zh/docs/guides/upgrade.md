@@ -20,7 +20,7 @@ osm-edge 的控制平面生命周期被 Helm 来管理，并且通过 [Helm 升�
 
 已经存在的 SMI 资源将不被影响，这就意味着数据平面(包含  Pipy sidecar 配置)也将不受升级的影响。
 
-如果升级包括了 CRD 修改，那么数据平面的暂停是预期中的。精简的数据平面升级在问题 [#512](https://github.com/flomesh-io/osm-edge/issues/512) 里面被追踪。
+如果升级包括了 CRD 修改，那么数据平面的中断是预期中的。精简的数据平面升级在 Issue [#512](https://github.com/flomesh-io/osm-edge/issues/512) 里面被追踪。
 
 ## 策略
 
