@@ -137,7 +137,7 @@ kubectl get secret -n $osm_namespace $osm_ca_bundle -o jsonpath='{.data.ca\.crt}
 - `--set osm.vault.role` —— 角色创建在 Vault 服务器上并且专属于开放边缘服务网格 (例如：`openservicemesh`)
 - `--set osm.certificateProvider.serviceCertValidityDuration` —— 每一个为服务到服务通信所发放的新证书有效的周期。它用一串十进制数带可选的小数和一个单位后缀来表达，例如 1h 表示 1 小时，30m 表示 30 分钟，1.5h 或者 1h30m 表示 1 小时 30 分钟。
 
-Vault 令牌必须提供给 osm-edge，这样它才能连接到 Vault。该令牌可以被配置为一个设置选项或者存储在 osm-edge 安装的命名空间中的一个 Kubernetes secret 里。如果 `osm.vault.token` 选项没有被设置，`osm.vault.secret.name` 和 `osm.vault.secret.key` 选项就必须被配置。
+必须为 osm-edge 提供 Vault 令牌，这样它才能连接到 Vault。该令牌可以通过设置选项或者存储在 osm-edge 安装的命名空间中的 Kubernetes secret 进行配置。如果没有设置 `osm.vault.token` 选项，必须配置 `osm.vault.secret.name` 和 `osm.vault.secret.key` 选项。
 
 - `--set osm.vault.token` —— 被 osm-edge 使用的令牌来连接到 Vault (这个在 Vault 服务器上为特定角色发放)
 - `--set osm.vault.secret.name` —— 存储 Vault 令牌的 Kubernetes secret 字符串名称
