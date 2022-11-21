@@ -7,7 +7,7 @@ weight: 4
 
 # 配置两个服务之间的流量拆分
 
-我们将演示如何均衡两个 Kubernetes 服务之间的流量，通常这被叫做流量拆分。我们将在后端 `bookstore` 服务和 `bookstore-v2` 服务之间来拆分原来定向到根 `bookstore` 服务的流量。`bookstore` 服务和 `bookstore-v2` 服务也被看做叶服务。了解更多关于如何为流量拆分配置服务请参阅[流量拆分 How-To 指南](/docs/guides/traffic_management/traffic_split.md)。
+我们将演示如何均衡两个 Kubernetes 服务之间的流量，通常叫做流量拆分。我们将在后端 `bookstore` 服务和 `bookstore-v2` 服务之间来拆分原来定向到根 `bookstore` 服务的流量。`bookstore` 服务和 `bookstore-v2` 服务也被看做叶子服务。了解更多关于如何为流量拆分配置服务请参阅[流量拆分 How-To 指南](/docs/guides/traffic_management/traffic_split.md)。
 
 ### 部署 bookstore v2 应用
 
