@@ -33,7 +33,7 @@ EOF
 
 - [http://localhost:8082](http://localhost:8082) - **bookstore-v2**
 
-`bookstore-v2` 计数器应该增长，因为到根 `bookstore` 服务的流量使用了一个标签选择器来配置，该选择器选择了包括 `bookstore-v1` 和 `bookstore-v2` 后端 pod 在内的端点。
+`bookstore-v2` 计数器应该增长，因为到根 `bookstore` 服务的流量是通过标签选择器配置的，该选择器选择了包括 `bookstore-v1` 和 `bookstore-v2` 后端 pod 在内的端点。
 
 ### 创建 SMI Traffic Split
 
