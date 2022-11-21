@@ -37,7 +37,7 @@ EOF
 
 ### 创建 SMI Traffic Split
 
-部署 SMI 流量拆分策略来定向发送到根 `bookstore` 服务 100% 的流量到 `bookstore` 服务后端。这一点是必须的，以确保定向到 `bookstore` 的流量只被定向到 bookstore 应用的 `version v1`，其包括了支持 `bookstore-v1` 服务的 pod。`TrafficSplit` 配置随后将被更新为定向一部分百分比的流量给使用 `bookstore-v2` 叶服务的 bookstore 服务 `version v2`
+部署 SMI 流量拆分策略将发送到根 `bookstore` 服务的流量全都定向到 `bookstore` 服务后端。这一点是必须的，以确保定向到 `bookstore` 的流量只被定向到 bookstore 应用的 `version v1`，其包括了支持 `bookstore-v1` 服务的 pod。`TrafficSplit` 配置随后将被更新为定向一定百分比的流量给使用 `bookstore-v2` 叶子服务的 bookstore 服务 `version v2`
 
 基于这个原因，很重要的一点是如果需要流量拆分，就要确保客户端应用一直保持和根服务通信。如若不然，当流量拆分被需要时，客户端应用就要更新为和根服务通信。
 
