@@ -40,7 +40,7 @@ spec:
 
 For a `TrafficSplit` resource to be correctly configured, it is important to ensure the following conditions are met:
 
-- `metadata.namespace` is a [namespace added to the mesh](/docs/guides/app_onboarding/namespaces/)
+- `metadata.namespace` is a [namespace added to the mesh](docs/guides/app_onboarding/namespaces/)
 - `metadata.namespace`, `spec.service`, and `spec.backends` all belong to the same namespace
 - `spec.service` specifies an [FQDN of a Kubernetes service](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#services)
 - `spec.service` and `spec.backends` correspond to Kubernetes service objects
@@ -52,4 +52,4 @@ When a `TrafficSplit` resource is created, osm-edge applies the configuration on
 
 It is important to note that a `TrafficSplit` resource only configures traffic splitting to a service, and does not give applications permission to communicate with each other. Thus, a valid [TrafficTarget](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-access/v1alpha3/traffic-access.md#traffictarget) resource must be configured in conjunction with a `TrafficSplit` configuration to achieve traffic flow between applications as desired.
 
-Refer to a demo on [Canary rollouts using SMI Traffic Split](/docs/demos/canary_rollout) to learn more.
+Refer to a demo on [Canary rollouts using SMI Traffic Split](docs/demos/canary_rollout) to learn more.

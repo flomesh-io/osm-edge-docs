@@ -7,7 +7,7 @@ weight: 5
 
 # Prometheus と Grafana を使用してobservabilityを設定する
 
-次の記事では、オブザーバビリティとモニタリングのために Prometheus と Grafana スタックの自動プロビジョニングを使用して osm-edge をインストールする方法を示す。osm-edge を使用してクラスターで独自の (BYO) Prometheus および Grafana スタックを使用する例については、 [Integrate osm-edge with Prometheus and Grafana](/docs/demos/prometheus_grafana/)デモを参照してください。
+次の記事では、オブザーバビリティとモニタリングのために Prometheus と Grafana スタックの自動プロビジョニングを使用して osm-edge をインストールする方法を示す。osm-edge を使用してクラスターで独自の (BYO) Prometheus および Grafana スタックを使用する例については、 [Integrate osm-edge with Prometheus and Grafana](docs/demos/prometheus_grafana/)デモを参照してください。
 
 この記事で作成した設定は、本番環境では使用しないでください。本番レベルのデプロイについては、[Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md)  および [Deploy Grafana in Kubernetes](https://grafana.com/docs/grafana/latest/installation/kubernetes/) を参照してください。
 
@@ -19,7 +19,7 @@ osm のインストール時に、Prometheus および/または Grafana イン�
  osm install --set=osm.deployPrometheus=true \
              --set=osm.deployGrafana=true
 ```
-observabilityの詳細については、[Observability Guide](/docs/guides/observability)を参照してください。
+observabilityの詳細については、[Observability Guide](docs/guides/observability)を参照してください。
 
 ## Prometheus
 
@@ -27,7 +27,7 @@ observabilityの詳細については、[Observability Guide](/docs/guides/obser
 
 ## Grafana
 
-osm-edge は、osm install で --set=osm.deployGrafana=true フラグを使用して [Grafana](https://grafana.com/grafana/) インスタンスをデプロイするように設定できる。osm-edge は、オブザーバビリティ ガイドの  [osm-edge Grafana dashboards](/docs/guides/observability/metrics/#osm-grafana-dashboards) セクションに記載されている事前設定済みのダッシュボードを提供する。
+osm-edge は、osm install で --set=osm.deployGrafana=true フラグを使用して [Grafana](https://grafana.com/grafana/) インスタンスをデプロイするように設定できる。osm-edge は、オブザーバビリティ ガイドの  [osm-edge Grafana dashboards](docs/guides/observability/metrics/#osm-grafana-dashboards) セクションに記載されている事前設定済みのダッシュボードを提供する。
 
 ## メトリクス スクレイピングを有効にする
 
@@ -53,4 +53,4 @@ http://localhost:3000 に移動して、Grafana ダッシュボードにアク�
 
 ## 次のステップ
 
-[Cleanup sample applications and uninstall osm-edge](/docs/getting_started/cleanup/).
+[Cleanup sample applications and uninstall osm-edge](docs/getting_started/cleanup/).

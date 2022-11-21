@@ -40,7 +40,7 @@ spec:
 
 要正确配置 `TrafficSplit` 资源，确保满足以下条件很重要：
 
-- `metadata.namespace` 是 [添加到网格的命名空间](/docs/guides/app_onboarding/namespaces/)
+- `metadata.namespace` 是 [添加到网格的命名空间](docs/guides/app_onboarding/namespaces/)
 - `metadata.namespace`、`spec.service` 和 `spec.backends` 都属于同一个命名空间
 - `spec.service` 指定 [Kubernetes 服务的 FQDN](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#services)
 - `spec.service` 和 `spec.backends` 对应 Kubernetes 服务对象
@@ -52,4 +52,4 @@ spec:
 
 需要注意的是，`TrafficSplit` 资源仅将流量拆分配置到服务，并不授予应用程序相互通信的权限。因此，一个有效的 [TrafficTarget](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-access/v1alpha3/traffic-access.md#traffictarget) 资源必须与`TrafficSplit` 一起配置以实现应用程序之间的流量。
 
-请参阅有关 [使用 SMI 流量拆分的金丝雀部署](/docs/demos/canary_rollout) 的演示以了解更多信息。
+请参阅有关 [使用 SMI 流量拆分的金丝雀部署](docs/demos/canary_rollout) 的演示以了解更多信息。

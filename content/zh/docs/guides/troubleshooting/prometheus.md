@@ -93,7 +93,7 @@ weight: 15
     Metrics successfully enabled in namespace [<namespace>]
     ```
 
-5. 如果 [自定义指标](/docs/guides/observability/metrics/#custom-metrics) 没有被收集，请检查这些指标是否已被启用。
+5. 如果 [自定义指标](docs/guides/observability/metrics/#custom-metrics) 没有被收集，请检查这些指标是否已被启用。
 
     自定义指标目前是默认禁用的，当 `osm.featureFlags.enableWASMStats` 参数被设置为 `true` 时被启用。请确认在 `<osm-namespace>` 下，当前名为 `<osm-mesh-name>` 的 osm-edge 实例设置了该参数：
 

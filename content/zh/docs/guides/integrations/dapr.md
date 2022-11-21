@@ -306,7 +306,7 @@ draft: true
        $ osm uninstall mesh
        ```
 
-    4. 在卸载 osm-edge 后删除集群范围的资源，执行下面的命令。参阅 [卸载指南](/docs/guides/uninstall/) 获取更多信息。
+    4. 在卸载 osm-edge 后删除集群范围的资源，执行下面的命令。参阅 [卸载指南](docs/guides/uninstall/) 获取更多信息。
 
        ```console
        $ osm uninstall mesh --delete-cluster-wide-resources

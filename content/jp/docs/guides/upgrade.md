@@ -60,7 +60,7 @@ Helm は初期インストールを超えて CRD を管理しないため、osm-
 **前提条件**
 
 - osm-edge コントロール プレーンがインストールされた Kubernetes クラスター
-     - Kubernetes クラスターに、新しい osm-edge チャートで必要な最小の Kubernetes バージョンがあることを確認します。 これは、[インストールの前提条件](/docs/getting_started/install#Pre-requisites) にあります。
+     - Kubernetes クラスターに、新しい osm-edge チャートで必要な最小の Kubernetes バージョンがあることを確認します。 これは、[インストールの前提条件](docs/getting_started/install#Pre-requisites) にあります。
 - `osm` CLI をインストール
    - デフォルトでは、`osm` CLI は、インストールしたものと同じチャート バージョンにアップグレードします。 例えば `osm` CLI の v0.9.2 は、osm-edge Helm チャートの v0.9.2 にアップグレードされます。 CLI に一致するバージョン以外のバージョンの Helm チャートにアップグレードしても機能する可能性がありますが、これらのシナリオはテストされておらず、発生した問題が報告されても修正されない場合があります。
 

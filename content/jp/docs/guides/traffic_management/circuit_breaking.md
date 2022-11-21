@@ -11,7 +11,7 @@ weight: 11
 ## 回路遮断の構成
 osm-edge は、その [UpstreamTrafficSetting API][1] を利用して、アップストリーム サービスに向けられたトラフィックのサーキット ブレーカー属性を構成します。 「アップストリーム サービス」という用語は、クライアントからの接続と要求を受け取り、応答を返すサービスを指すために使用します。 この仕様では、接続および要求レベルでアップストリーム サービスのサーキット ブレーカー属性を構成できます。
 
-各「UpstreamTrafficSetting」構成は、「spec.host」フィールドで定義されたアップストリーム ホストを対象としています。 名前空間「my-namespace」の Kubernetes サービス「my-svc」の場合、名前空間「my-namespace」に「UpstreamTrafficSetting」リソースを作成する必要があり、「spec.host」は「my」形式の FQDN である必要があります。 -svc.my-namespace.svc.cluster.local`．[Egress policy](/docs/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.EgressSpec)　で一致として指定された場合、「spec.host」は Egress ポリシーで指定されたホストに対応している必要があります。 「UpstreamTrafficSetting」構成は、「Egress」リソースと同じ名前空間に属している必要があります。
+各「UpstreamTrafficSetting」構成は、「spec.host」フィールドで定義されたアップストリーム ホストを対象としています。 名前空間「my-namespace」の Kubernetes サービス「my-svc」の場合、名前空間「my-namespace」に「UpstreamTrafficSetting」リソースを作成する必要があり、「spec.host」は「my」形式の FQDN である必要があります。 -svc.my-namespace.svc.cluster.local`．[Egress policy](docs/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.EgressSpec)　で一致として指定された場合、「spec.host」は Egress ポリシーで指定されたホストに対応している必要があります。 「UpstreamTrafficSetting」構成は、「Egress」リソースと同じ名前空間に属している必要があります。
 
 サーキット ブレーカーは、TCP と HTTP の両方のレベルで適用でき、「UpstreamTrafficSetting」リソースの「connectionSettings」属性を使用して構成できます。 TCP トラフィック設定は TCP トラフィックと HTTP トラフィックの両方に適用されますが、HTTP 設定は HTTP トラフィックにのみ適用されます。
 
@@ -29,7 +29,7 @@ osm-edge は、その [UpstreamTrafficSetting API][1] を利用して、アッ�
 
 
 サーキット ブレーカーの構成の詳細については、次のデモ ガイドを参照してください。
-- [Circuit breaking for destinations within the mesh](/docs/demos/circuit_breaking_mesh_internal)
-- [Circuit breaking for destinations external to the mesh](/docs/demos/circuit_breaking_mesh_external)
+- [Circuit breaking for destinations within the mesh](docs/demos/circuit_breaking_mesh_internal)
+- [Circuit breaking for destinations external to the mesh](docs/demos/circuit_breaking_mesh_external)
 
 [1]: /docs/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.UpstreamTrafficSettingSpec

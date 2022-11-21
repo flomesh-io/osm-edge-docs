@@ -18,7 +18,7 @@ This guide demonstrates how to configure circuit breaking for destinations that 
 
 ## Demo
 
-The following demo shows a load-testing client [fortio](https://github.com/fortio/fortio) sending traffic to the `httpbin` service that is external to the service mesh. Traffic external to the mesh is treated as [Egress](/docs/guides/traffic_management/egress) traffic, and will be authorized using an [Egress traffic policy](/docs/guides/traffic_management/egress/#1-configuring-egress-policies). We will see how applying circuit breakers for traffic to the external `httpbin` service impacts the `fortio` client when the configured circuit breaking limits trip.
+The following demo shows a load-testing client [fortio](https://github.com/fortio/fortio) sending traffic to the `httpbin` service that is external to the service mesh. Traffic external to the mesh is treated as [Egress](docs/guides/traffic_management/egress) traffic, and will be authorized using an [Egress traffic policy](docs/guides/traffic_management/egress/#1-configuring-egress-policies). We will see how applying circuit breakers for traffic to the external `httpbin` service impacts the `fortio` client when the configured circuit breaking limits trip.
 
 1. Deploy the `httpbin` service into the `httpbin` namespace. The `httpbin` service runs on port `14001` and is not added to the mesh, so it is considered to be a destination external to the mesh.
 

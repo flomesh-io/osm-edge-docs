@@ -58,7 +58,7 @@ kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"
 
 启用宽松流量策略模式后，osm-edge 控制器会发现属于网格的所有服务，并在每个 Pipy 代理 sidecar 上编写通配符流量路由规则，以访问网格中的所有其他服务。此外，与服务相关联的每个代理前端工作负载都配置为接受以服务为目标的所有流量。根据服务的应用协议（HTTP、TCP、gRPC 等），在 Pipy sidecar 上配置适当的流量路由规则，以允许该特定类型的所有流量。
 
-参考[宽松流量策略模式演示](/docs/demos/permissive_traffic_mode) 了解更多。
+参考[宽松流量策略模式演示](docs/demos/permissive_traffic_mode) 了解更多。
 
 ### Pipy 配置
 

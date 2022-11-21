@@ -7,7 +7,7 @@ weight: 2
 
 # osm-edge quick start guide
 
-This guide shows how to download, install, and run osm-edge, deploy a demo application, and complete SMI standard functionality like link encryption, access control, and traffic splitting in less than 5 minutes. This demo assumes you are running Ubuntu 21 on x86 architecture, running the k3s version 'V1.23.8 + K3S1'. For more version and platform support, please refer to the complete [Beginner's Guide](/docs/getting_started/).
+This guide shows how to download, install, and run osm-edge, deploy a demo application, and complete SMI standard functionality like link encryption, access control, and traffic splitting in less than 5 minutes. This demo assumes you are running Ubuntu 21 on x86 architecture, running the k3s version 'V1.23.8 + K3S1'. For more version and platform support, please refer to the complete [Beginner's Guide](docs/getting_started/).
 
 ## Pre-requisites
 

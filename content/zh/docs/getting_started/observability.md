@@ -7,7 +7,7 @@ weight: 5
 
 # 用 Prometheus 和 Grafana 来配置可观测性
 
-接下来的文章展示了如何安装自带 Prometheus 和 Grafana 栈的 osm-edge，从而具备可观测性和监视能力。对于使用在集群上自有的 Prometheus 和 Grafana 栈协同 osm-edge 的例子，请参阅[集成 osm-edge 到 Prometheus 和 Grafana](/docs/demos/prometheus_grafana/)示例。
+接下来的文章展示了如何安装自带 Prometheus 和 Grafana 栈的 osm-edge，从而具备可观测性和监视能力。对于使用在集群上自有的 Prometheus 和 Grafana 栈协同 osm-edge 的例子，请参阅[集成 osm-edge 到 Prometheus 和 Grafana](docs/demos/prometheus_grafana/)示例。
 
 在这篇文章中所创建的配置不应该被用于生产环境。对于生产级的部署，请参阅 [Prometheus 运维](https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md)和[在 Kubernetes 中部署 Grafana](https://grafana.com/docs/grafana/latest/installation/kubernetes/)。
 
@@ -19,7 +19,7 @@ weight: 5
  osm install --set=osm.deployPrometheus=true \
              --set=osm.deployGrafana=true
 ```
-更多可观测性信息在[可观测性指南](/docs/guides/observability)。
+更多可观测性信息在[可观测性指南](docs/guides/observability)。
 
 ## Prometheus
 
@@ -27,7 +27,7 @@ weight: 5
 
 ## Grafana
 
-在 `osm install` 上，osm-edge 能够被配置为通过使用 `--set=osm.deployGrafana=true` 标记来部署一个 [Grafana](https://grafana.com/grafana/) 实例。osm-edge 提供预配置的仪表板，这些在可观测性指南的[osm-edge Grafana 仪表板](/docs/guides/observability/metrics/#osm-edge-grafana-仪表板)章节有描述。
+在 `osm install` 上，osm-edge 能够被配置为通过使用 `--set=osm.deployGrafana=true` 标记来部署一个 [Grafana](https://grafana.com/grafana/) 实例。osm-edge 提供预配置的仪表板，这些在可观测性指南的[osm-edge Grafana 仪表板](docs/guides/observability/metrics/#osm-edge-grafana-仪表板)章节有描述。
 
 ## 启动指标抓取
 
@@ -52,4 +52,4 @@ osm dashboard
 
 ## 下一步
 
-[清除示例应用并卸载 osm-edge](/docs/getting_started/cleanup/).
+[清除示例应用并卸载 osm-edge](docs/getting_started/cleanup/).

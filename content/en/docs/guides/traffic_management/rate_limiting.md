@@ -33,7 +33,7 @@ The following attributes nested under `spec.rateLimit.local.tcp` define the rate
 
 - `burst`: The number of connections above the baseline rate that are allowed in a short period of time.
 
-Refer to the [TCP local rate limiting API](/docs/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.TCPLocalRateLimitSpec) for additional information regarding API usage.
+Refer to the [TCP local rate limiting API](docs/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.TCPLocalRateLimitSpec) for additional information regarding API usage.
 
 ### Rate limiting HTTP requests
 
@@ -56,7 +56,7 @@ The following rate limiting attributes can be configured for HTTP traffic:
 ## Demos
 
 To learn more about configuring rate limting, refer to the following demo guides:
-- [Local rate limiting of TCP connections](/docs/demos/local_rate_limit_connections)
-- [Local rate limiting of HTTP requests](/docs/demos/local_rate_limit_http)
+- [Local rate limiting of TCP connections](docs/demos/local_rate_limit_connections)
+- [Local rate limiting of HTTP requests](docs/demos/local_rate_limit_http)
 
 [1]: /docs/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.UpstreamTrafficSettingSpec

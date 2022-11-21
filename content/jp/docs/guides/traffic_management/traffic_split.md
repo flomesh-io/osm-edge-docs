@@ -40,7 +40,7 @@ spec:
 
 「TrafficSplit」リソースを正しく構成するには、次の条件が満たされていることを確認することが重要です。
 
-- `metadata.namespace` は [namespace added to the mesh](/docs/guides/app_onboarding/namespaces/)
+- `metadata.namespace` は [namespace added to the mesh](docs/guides/app_onboarding/namespaces/)
 - `metadata.namespace`、`spec.service`、`spec.backend` はすべて同じ名前空間に属します
 - `spec.service` は [FQDN of a Kubernetes service](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#services) を指定します 
 - `spec.service` と `spec.backends` は Kubernetes サービス オブジェクトに対応します
@@ -51,4 +51,4 @@ spec:
 
 「TrafficSplit」リソースはサービスへのトラフィック分割のみを構成し、アプリケーションに相互通信の許可を与えないことに注意することが重要です。 したがって、有効な [TrafficTarget](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-access/v1alpha3/traffic-access.md#traffictarget) リソースを、 必要に応じてアプリケーション間のトラフィック フローを実現するための「TrafficSplit」構成。
 
-詳細については、[Canary rollouts using SMI Traffic Split](/docs/demos/canary_rollout) のデモを参照してください。
+詳細については、[Canary rollouts using SMI Traffic Split](docs/demos/canary_rollout) のデモを参照してください。
