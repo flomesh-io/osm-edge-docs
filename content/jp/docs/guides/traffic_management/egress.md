@@ -34,7 +34,7 @@ osm-edge は、その [Egress policy API][1] を使用して、外部エンド�
 kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}'  --type=merge
 ```
 
-さまざまなプロトコルの送信トラフィックをルーティングするためのポリシーを構成する方法については、[Egress policy demo](/docs/demos/egress_policy) と [API documentation][1] を参照してください。
+さまざまなプロトコルの送信トラフィックをルーティングするためのポリシーを構成する方法については、[Egress policy demo](docs/demos/egress_policy) と [API documentation][1] を参照してください。
 
 ## 2. メッシュ全体の Egress パススルーの構成
 
@@ -84,7 +84,7 @@ osm-edge は、基礎となるトランスポートとして TCP を使用する
 
 メッシュ全体の送信はグローバル設定であり、不明な宛先へのパススルーとして動作するため、送信トラフィックに対するきめ細かいアクセス制御 (TCP または HTTP ルーティング ポリシーの適用など) は不可能です。
 
-詳細については、[Egress passthrough demo](/docs/demos/egress_passthrough) を参照してください。
+詳細については、[Egress passthrough demo](docs/demos/egress_passthrough) を参照してください。
 
 #### ピピー構成
 

@@ -7,7 +7,7 @@ type: docs
 
 # osm-edge メッシュ アンインストール トラブルシューティング ガイド
 
-何らかの理由で「osm uninstall mesh」([アンインストール ガイド](/docs/guides/uninstall/) に記載されている) が失敗した場合は、以下で説明するように osm-edge リソースを手動で削除できます。
+何らかの理由で「osm uninstall mesh」([アンインストール ガイド](docs/guides/uninstall/) に記載されている) が失敗した場合は、以下で説明するように osm-edge リソースを手動で削除できます。
 
 メッシュの環境変数を設定します。
 ```console

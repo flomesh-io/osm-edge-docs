@@ -19,11 +19,11 @@ weight: 21
 
 在此演示中，我们将部署一个 HTTP 应用程序并执行金丝雀发布，其中会部署新版本的应用程序，以对一定百分比的流量提供服务。
 
-为了拆分流量到多个服务后端，需要使用 [SMI 流量拆分 API](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha2/traffic-split.md) 。关于 API 使用的更多说明，可以查看 [流量拆分指南](/docs/guides/traffic_management/traffic_split)。为了将客户端流量透明地拆分到多个服务后端，需要注意客户端需要使用 `TrafficSplit` 资源中指定的根服务的 FQDN 来发送流量。在该演示中，`curl` 客户端发送流量到根服务 `httpbin.org`，该服务初始有 `v1` 版本的服务，然后执行金丝雀发布将部分流量定向到 `v2` 版本的服务中。
+为了拆分流量到多个服务后端，需要使用 [SMI 流量拆分 API](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha2/traffic-split.md) 。关于 API 使用的更多说明，可以查看 [流量拆分指南](docs/guides/traffic_management/traffic_split)。为了将客户端流量透明地拆分到多个服务后端，需要注意客户端需要使用 `TrafficSplit` 资源中指定的根服务的 FQDN 来发送流量。在该演示中，`curl` 客户端发送流量到根服务 `httpbin.org`，该服务初始有 `v1` 版本的服务，然后执行金丝雀发布将部分流量定向到 `v2` 版本的服务中。
 
 以下步骤演示了金丝雀发布的部署策略。
 
-> 注意：启用[宽松流量策略模式](/docs/guides/traffic_management/permissive_mode) 无需显式地创建访问控制策略。
+> 注意：启用[宽松流量策略模式](docs/guides/traffic_management/permissive_mode) 无需显式地创建访问控制策略。
 
 1. 启用宽松模式
 

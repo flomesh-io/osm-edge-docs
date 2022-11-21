@@ -13,7 +13,7 @@ This guide describes how to uninstall osm-edge from a Kubernetes cluster. This g
 
 - Kubernetes cluster with osm-edge installed
 - The `kubectl` CLI
-- The [`osm` CLI](/docs/install/#set-up-the-osm-cli) or the Helm 3 CLI
+- The [`osm` CLI](docs/install/#set-up-the-osm-cli) or the Helm 3 CLI
 
 ## Remove Pipy Sidecars from Application Pods and Pipy Secrets
 
@@ -108,7 +108,7 @@ Run `helm uninstall --help` for more options.
 
 If any resources were provided or created for osm-edge at install time, they can be deleted at this point.
 
-For example, if [Hashicorp Vault](/docs/guides/certificates/#installing-hashi-vault) was deployed for the sole purpose of managing certificates for osm-edge, all related resources can be deleted.
+For example, if [Hashicorp Vault](docs/guides/certificates/#installing-hashi-vault) was deployed for the sole purpose of managing certificates for osm-edge, all related resources can be deleted.
 
 ### Delete osm-edge Namespace
 
@@ -146,4 +146,4 @@ osm uninstall mesh --delete-cluster-wide-resources
 
 > Warning: Deletion of a CRD will cause all custom resources corresponding to that CRD to also be deleted.
 
-To troubleshoot osm-edge uninstallation, refer to the [uninstall troubleshooting section](/docs/guides/troubleshooting/uninstall/)
+To troubleshoot osm-edge uninstallation, refer to the [uninstall troubleshooting section](docs/guides/troubleshooting/uninstall/)

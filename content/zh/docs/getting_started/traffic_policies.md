@@ -47,7 +47,7 @@ kubectl get meshconfig osm-mesh-config -n osm-system -o jsonpath='{.spec.traffic
 
 开始下一步之前，验证流量策略模式并且确保 `enablePermissiveTrafficPolicyMode` 键在 `MeshConfig` 资源 `osm-mesh-config` 里面被设置成 `true`。参考上面的章节来启用宽松流量策略模式。
 
-在步骤[部署书店应用](/docs/getting_started/install_apps/)里面，我们已经部署了应用，并按照宽松流量策略模式来验证流量的流转。为了演示我们将之前部署的 `bookstore` 服务编码为 `bookstore-v1` 的标识，在[部署清单](https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/apps/bookstore.yaml)里面可以找到。这个标识反映了在 `bookbuyer` 和 `bookthief` UI 中谁的计数在增长，在 `bookstore` UI 中显示的标识。
+在步骤[部署书店应用](docs/getting_started/install_apps/)里面，我们已经部署了应用，并按照宽松流量策略模式来验证流量的流转。为了演示我们将之前部署的 `bookstore` 服务编码为 `bookstore-v1` 的标识，在[部署清单](https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/apps/bookstore.yaml)里面可以找到。这个标识反映了在 `bookbuyer` 和 `bookthief` UI 中谁的计数在增长，在 `bookstore` UI 中显示的标识。
 
 在 `bookbuyer`、`bookthief` UI 中的计数分别对应了购买和盗窃的书籍数量，而在 `bookstore-v1` 中这些都应该在增加：
 
@@ -186,4 +186,4 @@ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< 
 
 ## 下一步
 
-学习通过[配置流量拆分](/docs/getting_started/traffic_split/)来如何平衡服务们之间的流量。
+学习通过[配置流量拆分](docs/getting_started/traffic_split/)来如何平衡服务们之间的流量。

@@ -8,7 +8,7 @@ weight: 20
 
 # Troubleshooting osm-edge Uninstall
 
-If for any reason, `osm uninstall mesh` (as documented in the [uninstall guide](/docs/guides/uninstall/)) fails, you may manually delete osm-edge resources as detailed below.
+If for any reason, `osm uninstall mesh` (as documented in the [uninstall guide](docs/guides/uninstall/)) fails, you may manually delete osm-edge resources as detailed below.
 
 Set environment variables for your mesh:
 ```console

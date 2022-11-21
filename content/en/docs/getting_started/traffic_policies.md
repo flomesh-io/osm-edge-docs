@@ -186,4 +186,4 @@ The counter in the `bookthief` window will stop incrementing.
 
 ## Next Steps
 
-Learn how to balance traffic between services by [configuring traffic split](/docs/getting_started/traffic_split/).
+Learn how to balance traffic between services by [configuring traffic split](docs/getting_started/traffic_split/).

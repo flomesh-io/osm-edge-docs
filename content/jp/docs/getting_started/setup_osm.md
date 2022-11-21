@@ -44,7 +44,7 @@ curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-
 . /${system}-${arch}/osm version
 ```
 
-osm CLI は、 [this guide](/docs/guides/cli)に従ってソースからコンパイルできる。
+osm CLI は、 [this guide](docs/guides/cli)に従ってソースからコンパイルできる。
 
 ## Kubernetes に osm-edge をインストールする
 
@@ -67,8 +67,8 @@ osm install \
     --set=osm.deployJaeger=true
 ```
 
-osm-edge の Prometheus、Grafana、および Jaeger との統合の詳細については、[observability documentation](/docs/guides/observability/)を参照してください。
+osm-edge の Prometheus、Grafana、および Jaeger との統合の詳細については、[observability documentation](docs/guides/observability/)を参照してください。
 
 ## 次のステップ
 
-osm-edge コントロールプレーンが起動して実行されるようになったので、 [add applications](/docs/getting_started/install_apps/)をメッシュに追加する。
+osm-edge コントロールプレーンが起動して実行されるようになったので、 [add applications](docs/getting_started/install_apps/)をメッシュに追加する。

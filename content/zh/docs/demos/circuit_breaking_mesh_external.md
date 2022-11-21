@@ -19,7 +19,7 @@ draft: true
 
 ## 演示
 
-下面的演示展示了适用负载测试客户端 [fortio](https://github.com/fortio/fortio) 发送流量到网格外部的 `httpbin` 服务。发送到网格外部的流量被认为是 [出口](/docs/guides/traffic_management/egress) 流量。我们将看下为外部的 `httpbin` 服务配置断路器并触发后如何影响 `fortio` 客户端。
+下面的演示展示了适用负载测试客户端 [fortio](https://github.com/fortio/fortio) 发送流量到网格外部的 `httpbin` 服务。发送到网格外部的流量被认为是 [出口](docs/guides/traffic_management/egress) 流量。我们将看下为外部的 `httpbin` 服务配置断路器并触发后如何影响 `fortio` 客户端。
 
 1. 部署 `httpbin` 服务到 `httpbin` 命名空间。`httpbin` 服务运行在 `14001` 端口，且没有纳入网格管理，可以看成是网格外部的服务。
 

@@ -33,4 +33,4 @@ osm uninstall mesh
 osm uninstall mesh --delete-cluster-wide-resources
 ```
 
-关于卸载 osm-edge 的更多细节，请参阅 [卸载指南](/docs/guides/uninstall/)
+关于卸载 osm-edge 的更多细节，请参阅 [卸载指南](docs/guides/uninstall/)

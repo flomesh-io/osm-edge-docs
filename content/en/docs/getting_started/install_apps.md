@@ -141,4 +141,4 @@ Position the windows so that you can see all of them at the same time. The heade
 
 ## Next Steps
 
-Now that the sample applications are running, [configure traffic policies](/docs/getting_started/traffic_policies/) between the applications.
+Now that the sample applications are running, [configure traffic policies](docs/getting_started/traffic_policies/) between the applications.

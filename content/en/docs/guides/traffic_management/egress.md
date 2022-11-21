@@ -34,7 +34,7 @@ osm-edge supports configuring fine grained policies for traffic destined to exte
 kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}'  --type=merge
 ```
 
-Refer to the [Egress policy demo](/docs/demos/egress_policy) and [API documentation][1] on how to configure policies for routing egress traffic for various protocols.
+Refer to the [Egress policy demo](docs/demos/egress_policy) and [API documentation][1] on how to configure policies for routing egress traffic for various protocols.
 
 ## 2. Configuring mesh-wide Egress passthrough
 
@@ -84,7 +84,7 @@ osm-edge supports egress for traffic that uses TCP as the underlying transport. 
 
 Since mesh-wide egress is a global setting and operates as a passthrough to unknown destinations, fine grained access control (such as applying TCP or HTTP routing policies) over egress traffic is not possible.
 
-Refer to the [Egress passthrough demo](/docs/demos/egress_passthrough) to learn more.
+Refer to the [Egress passthrough demo](docs/demos/egress_passthrough) to learn more.
 
 #### Pipy configurations
 

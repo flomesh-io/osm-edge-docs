@@ -23,7 +23,7 @@ The following retry configurations are supported:
 
 - `Retry On`: Specifies the policy for when a failed request will be retried. Multiple policies can be specified by using a `,` delimited list.
 
-To learn more about configuring retry, refer to the [Retry policy demo](/docs/demos/retry_policy) and [API documentation][1].
+To learn more about configuring retry, refer to the [Retry policy demo](docs/demos/retry_policy) and [API documentation][1].
 
 ### Examples
 If requests from the bookbuyer service to bookstore-v1 service or bookstore-v2 service receive responses with a status code 5xx, then bookbuyer will retry the request 3 times. If an attempted retry takes longer than 3s it's considered a failed attempt. Each retry has a delay period (backoff) before it is attempted [calculated above](#configuring-retry). The backoff for all retries is capped at 10s.

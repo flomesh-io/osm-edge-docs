@@ -13,7 +13,7 @@ weight: 4
 
 - 已安装 osm-edge 的 Kubernetes 集群
 - `kubectl` CLI
-- [`osm` CLI](/docs/install/#set-up-the-osm-cli) 或者 Helm 3 CLI
+- [`osm` CLI](docs/install/#set-up-the-osm-cli) 或者 Helm 3 CLI
 
 ## 从应用 Pod 和 Pipy Secret 上移除 Pipy Sidecar
 
@@ -110,7 +110,7 @@ $ helm uninstall <mesh name> --namespace <osm namespace>
 
 如果任何资源在安装时为 osm-edge 做提供或者创建，那么它们能够在此处被删除。
 
-例如，如果 [Hashicorp Vault](/docs/guides/certificates/#installing-hashi-vault) 为了对 osm-edge 管理证书的单独目的而被部署，那么全部相关的资源都能被删除。
+例如，如果 [Hashicorp Vault](docs/guides/certificates/#installing-hashi-vault) 为了对 osm-edge 管理证书的单独目的而被部署，那么全部相关的资源都能被删除。
 
 ### 删除 osm-edge 命名空间
 
@@ -147,4 +147,4 @@ osm uninstall mesh --cluster-wide-resources
 
 > 警告：一个 CRD 的删除将造成和该 CRD 对应的全部定制资源也被删除。
 
-对于 osm-edge 卸载的问题解决，请参阅[卸载问题解决章节](/docs/guides/troubleshooting/uninstall/)
+对于 osm-edge 卸载的问题解决，请参阅[卸载问题解决章节](docs/guides/troubleshooting/uninstall/)

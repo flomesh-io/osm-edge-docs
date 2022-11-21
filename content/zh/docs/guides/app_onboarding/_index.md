@@ -9,7 +9,7 @@ weight: 5
 
 以下指南介绍了如何将 Kubernetes 微服务迁入 osm-edge 实例。
 
-1. 在迁入应用之前，参考 [应用要求](/docs/guides/app_onboarding/prereqs) 指南。
+1. 在迁入应用之前，参考 [应用要求](docs/guides/app_onboarding/prereqs) 指南。
 
 2. 配置并安装 [服务网格接口 (Service Mesh Interface，SMI) 策略](https://github.com/servicemeshinterface/smi-spec)。
 
@@ -83,14 +83,14 @@ weight: 5
     默认情况下，`osm namespace add` 为命名空间下的 pod 开启自动的 sidecar 注入。
 
     如果要禁用 sidecar 的自动注入，在将命名空间注册到网格时使用命令 `osm namespace add <namespace> --disable-sidecar-injection`。
-    一旦命名空间迁入，注册到网格的 pod 将自动注入 sidecar。参考文档 [Sidecar 注入](/docs/guides/app_onboarding/sidecar_injection) 获取更多详细信息。
+    一旦命名空间迁入，注册到网格的 pod 将自动注入 sidecar。参考文档 [Sidecar 注入](docs/guides/app_onboarding/sidecar_injection) 获取更多详细信息。
 
 5.  部署新应用或重新部署已有应用
 
     默认地，已迁入的命名空间中新部署的应用会自动注入 sidecar。这意味着当在纳入网格的命名空间中创建新 Pod 时，osm-edge 会自动为其注入 sidecar 代理。
     已有的应用需要重启来让 osm-edge 在重建 Pod 时自动为其注入 sidecar 代理。被 Deployment 管理的 Pod 可以使用命令 `kubectl rollout restart deploy` 来重启。
 
-    为了正确地将协议指定的流量路由到服务端口，需要配置应用使用的协议。参考 [应用协议选择指南](/docs/guides/app_onboarding/app_protocol_selection)。
+    为了正确地将协议指定的流量路由到服务端口，需要配置应用使用的协议。参考 [应用协议选择指南](docs/guides/app_onboarding/app_protocol_selection)。
 
 #### 注意：移除命名空间
 

@@ -47,7 +47,7 @@ Grafana ダッシュボードにデータが表示されない場合は、次の
 
 1. Prometheus がインストールされ、正常であることを確認します。
 
-     Grafana は Prometheus にデータを照会するため、Prometheus が期待どおりに動作していることを確認します。 詳細については、[Prometheus troubleshooting guide](/docs/troubleshooting/observability/prometheus/) を参照してください。
+     Grafana は Prometheus にデータを照会するため、Prometheus が期待どおりに動作していることを確認します。 詳細については、[Prometheus troubleshooting guide](docs/troubleshooting/observability/prometheus/) を参照してください。
 
 1. Grafana が Prometheus と通信できることを確認します。
 

@@ -46,7 +46,7 @@ curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-
 . /${system}-${arch}/osm version
 ```
 
-The `osm` CLI can be compiled from source according to [this guide](/docs/guides/cli).
+The `osm` CLI can be compiled from source according to [this guide](docs/guides/cli).
 
 ## Installing osm-edge on Kubernetes
 
@@ -76,8 +76,8 @@ osm install \
     --set=osm.deployJaeger=true
 ```
 
-Read more on osm-edge's integrations with Prometheus, Grafana, and Jaeger in the [observability documentation](/docs/guides/observability/).
+Read more on osm-edge's integrations with Prometheus, Grafana, and Jaeger in the [observability documentation](docs/guides/observability/).
 
 ## Next Steps
 
-Now that the osm-edge control plane is up and running, [add applications](/docs/getting_started/install_apps/) to the mesh.
+Now that the osm-edge control plane is up and running, [add applications](docs/getting_started/install_apps/) to the mesh.

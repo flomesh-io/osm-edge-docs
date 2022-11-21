@@ -33,4 +33,4 @@ To uninstall osm-edge cluster-wide resources, use `osm uninstall mesh --delete-c
 osm uninstall mesh --delete-cluster-wide-resources
 ```
 
-For more details about uninstalling osm-edge, see the [uninstallation guide](/docs/guides/uninstall/).
+For more details about uninstalling osm-edge, see the [uninstallation guide](docs/guides/uninstall/).

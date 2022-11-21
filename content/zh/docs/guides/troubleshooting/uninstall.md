@@ -8,7 +8,7 @@ weight: 20
 
 # 卸载 osm-edge 的故障排查
 
-不论何种原因导致的 `osm uninstall mesh`（如 [卸载指南](/docs/guides/uninstall/) 中所述）失败，可以按照下面的操作手动删除 osm-edge 资源。
+不论何种原因导致的 `osm uninstall mesh`（如 [卸载指南](docs/guides/uninstall/) 中所述）失败，可以按照下面的操作手动删除 osm-edge 资源。
 
 为网格设置环境变量：
 

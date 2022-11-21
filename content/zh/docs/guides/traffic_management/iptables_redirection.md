@@ -79,7 +79,7 @@ osm-edge 提供了一种方法来指定 IP 范围的全局列表，以从适用�
 
    如果将 IP 范围设置为安装后排除，请确保重新启动受监视命名空间中的 Pod，以使此更改生效。
 
-全局排除的 IP 范围存储在 `osm-mesh-config` `MeshConfig` 自定义资源中，并在 `osm-injector` 注入 sidecar 时读取。这些动态可配置的 IP 范围由初始化容器以及用于通过 Pipy 代理 sidecar 拦截和重定向流量的静态规则进行编程。排除的 IP 范围不会被拦截以将流量重定向到 Pipy 代理 sidecar。请参阅[出站 IP 范围排除演示](/docs/demos/outbound_ip_exclusion) 了解更多信息。
+全局排除的 IP 范围存储在 `osm-mesh-config` `MeshConfig` 自定义资源中，并在 `osm-injector` 注入 sidecar 时读取。这些动态可配置的 IP 范围由初始化容器以及用于通过 Pipy 代理 sidecar 拦截和重定向流量的静态规则进行编程。排除的 IP 范围不会被拦截以将流量重定向到 Pipy 代理 sidecar。请参阅[出站 IP 范围排除演示](docs/demos/outbound_ip_exclusion) 了解更多信息。
 
 ### 2. Pod 范围的出站 IP 范围排除项
 

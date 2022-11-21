@@ -52,7 +52,7 @@ kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"
 ## How it works
 When permissive traffic policy mode is enabled, osm-edge controller discovers all services that are a part of the mesh and programs wildcard traffic routing rules on each Pipy proxy sidecar to reach every other service in the mesh. Additionally, each proxy fronting workloads that are associated with a service is configured to accept all traffic destined to the service. Depending on the application protocol of the service (HTTP, TCP, gRPC etc.), appropriate traffic routing rules are configured on the Pipy sidecar to allow all traffic for that particular type.
 
-Refer to the [Permissive traffic policy mode demo](/docs/demos/permissive_traffic_mode) to learn more.
+Refer to the [Permissive traffic policy mode demo](docs/demos/permissive_traffic_mode) to learn more.
 
 ### Pipy configurations
 In permissive mode, osm-edge controller programs wildcard routes for client applications to communicate with services. Following are the Pipy inbound and outbound filter and route configuration snippets from the `curl` and `httpbin` sidecar proxies.

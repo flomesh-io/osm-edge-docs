@@ -8,7 +8,7 @@ weight: 5
 # Onboard Services
 The following guide describes how to onboard a Kubernetes microservice to an osm-edge instance.
 
-1. Refer to the [application requirements](/docs/guides/app_onboarding/prereqs) guide before onboarding applications.
+1. Refer to the [application requirements](docs/guides/app_onboarding/prereqs) guide before onboarding applications.
 
 2. Configure and Install [Service Mesh Interface (SMI) policies](https://github.com/servicemeshinterface/smi-spec)
 
@@ -80,14 +80,14 @@ The following guide describes how to onboard a Kubernetes microservice to an osm
     By default, the `osm namespace add` command enables automatic sidecar injection for pods in the namespace.
 
     To disable automatic sidecar injection as a part of enrolling a namespace into the mesh, use `osm namespace add <namespace> --disable-sidecar-injection`.
-    Once a namespace has been onboarded, pods can be enrolled in the mesh by configuring automatic sidecar injection. See the [Sidecar Injection](/docs/guides/app_onboarding/sidecar_injection) document for more details.
+    Once a namespace has been onboarded, pods can be enrolled in the mesh by configuring automatic sidecar injection. See the [Sidecar Injection](docs/guides/app_onboarding/sidecar_injection) document for more details.
 
 5.  Deploy new applications or redeploy existing applications
 
     By default, new deployments in onboarded namespaces are enabled for automatic sidecar injection. This means that when a new Pod is created in a managed namespace, osm-edge will automatically inject the sidecar proxy to the Pod.
     Existing deployments need to be restarted so that osm-edge can automatically inject the sidecar proxy upon Pod re-creation. Pods managed by a Deployment can be restarted using the `kubectl rollout restart deploy` command.
 
-    In order to route protocol specific traffic correctly to service ports, configure the application protocol to use. Refer to the [application protocol selection guide](/docs/guides/app_onboarding/app_protocol_selection) to learn more.
+    In order to route protocol specific traffic correctly to service ports, configure the application protocol to use. Refer to the [application protocol selection guide](docs/guides/app_onboarding/app_protocol_selection) to learn more.
 
 #### Note: Removing Namespaces
 Namespaces can be removed from the osm-edge mesh with the `osm namespace remove` command:

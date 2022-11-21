@@ -32,4 +32,4 @@ osm-edgeクラスター全体のリソースをアンインストールするに
 osm uninstall mesh --delete-cluster-wide-resources
 ```
 
-osm-edge のアンインストールの詳細については、[uninstallation guide](/docs/guides/uninstall/)を参照してください。
+osm-edge のアンインストールの詳細については、[uninstallation guide](docs/guides/uninstall/)を参照してください。

@@ -71,7 +71,7 @@ The following demo shows a TCP client sending data to a `tcp-echo` server, which
 
 ### Using Permissive Traffic Policy Mode
 
-We will enable service discovery using [permissive traffic policy mode](/docs/guides/traffic_management/permissive_mode), which allows application connectivity to be established without the need for explicit SMI policies.
+We will enable service discovery using [permissive traffic policy mode](docs/guides/traffic_management/permissive_mode), which allows application connectivity to be established without the need for explicit SMI policies.
 
 1. Enable permissive traffic policy mode
     ```bash

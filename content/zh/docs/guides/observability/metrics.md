@@ -120,13 +120,13 @@ annotations:
 
 #### Grafana
 
-下面的章节假设一个 Prometheus 实例已经配置成已运行的 Grafana 实例的数据源。如何创建和配置一个 Grafana 实例的示例，可以参考 [Prometheus 和 Grafana](/docs/demos/prometheus_grafana) 的演示
+下面的章节假设一个 Prometheus 实例已经配置成已运行的 Grafana 实例的数据源。如何创建和配置一个 Grafana 实例的示例，可以参考 [Prometheus 和 Grafana](docs/demos/prometheus_grafana) 的演示
 
 ##### 导入 osm-edge 面板
 
 osm-edge 面板可以在 [我们的仓库中](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards) 获取，它可以作为 json 数据导入到 web 管理门户。
 
-可以在 [Prometheus 和 Grafana](/docs/demos/prometheus_grafana) 演示中找到导入 osm-edge 面板的详细指导步骤。[osm-edge Grafana 面板](#osm-grafana-面板)展示了一个预先配置好的面板概览。
+可以在 [Prometheus 和 Grafana](docs/demos/prometheus_grafana) 演示中找到导入 osm-edge 面板的详细指导步骤。[osm-edge Grafana 面板](#osm-grafana-面板)展示了一个预先配置好的面板概览。
 
 ## 指标采集
 
@@ -225,7 +225,7 @@ annotations:
 
 #### 指标中的状态码
 
-当 osm-edge 控制平面产生一个错误的时候，Prometheus 里这个错误码相关的 ErrCodeCounter 指标会增长。要查看完成错误码列表和它们的描述，请参考 [osm-edge 控制平面错误码故障排查指南](/docs/guides/troubleshooting/control_plane_error_codes)。
+当 osm-edge 控制平面产生一个错误的时候，Prometheus 里这个错误码相关的 ErrCodeCounter 指标会增长。要查看完成错误码列表和它们的描述，请参考 [osm-edge 控制平面错误码故障排查指南](docs/guides/troubleshooting/control_plane_error_codes)。
 
 错误码指标的全称是 `osm_error_err_code_count`。
 
