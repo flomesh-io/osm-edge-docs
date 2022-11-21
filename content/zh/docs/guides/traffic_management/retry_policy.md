@@ -27,7 +27,7 @@ osm-edge 使用它的 [重试策略 API][1] 来准许在从一个指定的源（
 如果想了解更多关于配置重试的信息，请参阅[重试策略演示](/docs/demos/retry_policy)和 [API 文档][1]
 
 ### 示例
-如果从 bookbuyer 服务到 bookstore-v1 服务或者 bookstore-v2 服务的请求收到带 5xx 状态码的响应，那么 bookbuyer 将重试发送 3 遍请求。如果一个尝试的重试耗时超过 3s，它将被认作一个失败的尝试。每次重试在它被尝试[计算](#配置重试)之前有一个延迟周期（回退）。所有重试的回退被限定在 10s。
+如果从 bookbuyer 服务到 bookstore-v1 服务或者 bookstore-v2 服务的请求收到带 5xx 状态码的响应，那么 bookbuyer 将重试发送 3 次。如果重试耗时超过 3s，它将被认作失败。每次重试下次尝试[计算](#配置重试)之前有一个延迟（回退）。所有重试的回退被限定在 10s。
 ```yaml
 kind: Retry
 apiVersion: policy.openservicemesh.io/v1alpha1
