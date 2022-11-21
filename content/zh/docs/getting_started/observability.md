@@ -48,7 +48,7 @@ osm-edge Grafana 仪表板能够通过如下命令来查看：
 osm dashboard
 ```
 
-导航到 [http://localhost:3000](http://localhost:3000) 来访问 Grafana 仪表板。默认的用户名是 `admin`，默认的密码是 `admin`。在 Grafana 主页上点击 **Home** 图标，将看到一个文件夹，里面包含了 osm-edge 控制平面和数据平面的仪表板。
+导航到 [http://localhost:3000](http://localhost:3000) 来访问 Grafana 仪表板。默认的用户名和密码都是 `admin`。在 Grafana 主页上点击 **Home** 图标，将看到一个文件夹，里面包含了 osm-edge 控制平面和数据平面的仪表板。
 
 ## 下一步
 
