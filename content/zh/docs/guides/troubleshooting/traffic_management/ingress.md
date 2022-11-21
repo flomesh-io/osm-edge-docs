@@ -1,8 +1,11 @@
 ---
-title: "入口故障排查"
-description: "入口故障排查指南"
+title: "入口"
+description: "入口流量故障排查"
 type: docs
+weight: 3
 ---
+
+# 入口流量故障排查
 
 ## 当 Ingress 未按预期工作时
 

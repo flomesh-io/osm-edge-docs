@@ -1,14 +1,16 @@
 ---
-title: "Prometheus 故障排查"
-description: "如何修复 osm-edge 中集成的 Prometheus 常见的问题"
+title: "Prometheus"
+description: "Prometheus 集成的故障排查"
 aliases: "/docs/troubleshooting/observability/prometheus"
 type: docs
-weight: 2
+weight: 15
 ---
+
+# Prometheus 集成的故障排查
 
 ## 无法访问 Prometheus
 
-如果随 osm-edge 安装的 Prometheus 实例无法访问，执行下面的步骤定位并解决问题
+如果无法访问随 osm-edge 安装的 Prometheus 实例，执行下面的步骤定位并解决问题。
 
 1. 确认 Prometheus 的 Pod 是存在的
 

@@ -107,13 +107,24 @@ kubectl get pods,deployments,serviceaccounts,services,endpoints -n bookwarehouse
 
 ```bash
 cp .env.example .env
-./scripts/port-forward-all.sh
+bash <<EOF
+./scripts/port-forward-bookbuyer-ui.sh &
+./scripts/port-forward-bookstore-ui.sh &
+./scripts/port-forward-bookthief-ui.sh &
+wait
+EOF
 ```
 
-_注意：要覆盖默认的端口，提前要把 `BOOKBUYER_LOCAL_PORT`，`BOOKSTORE_LOCAL_PORT`，`BOOKSTOREv1_LOCAL_PORT`，`BOOKSTOREv2_LOCAL_PORT`，和/或 `BOOKTHIEF_LOCAL_PORT` 变量在脚本前指派。例如：_
+_注意：要覆盖默认的端口，在 `port-forward` 脚本前使用 `BOOKBUYER_LOCAL_PORT`、`BOOKSTORE_LOCAL_PORT` 和/或 `BOOKTHIEF_LOCAL_PORT` 变量指定端口。例如：_
 
 ```bash
-BOOKBUYER_LOCAL_PORT=7070 BOOKSTOREv1_LOCAL_PORT=7071 BOOKSTOREv2_LOCAL_PORT=7072 BOOKTHIEF_LOCAL_PORT=7073 BOOKSTORE_LOCAL_PORT=7074 ./scripts/port-forward-all.sh
+export BOOKBUYER_LOCAL_PORT=7070 BOOKTHIEF_LOCAL_PORT=7073 BOOKSTORE_LOCAL_PORT=7074
+bash <<EOF
+./scripts/port-forward-bookbuyer-ui.sh &
+./scripts/port-forward-bookstore-ui.sh &
+./scripts/port-forward-bookthief-ui.sh &
+wait
+EOF
 ```
 
 在一个浏览器中，打开下面的 URL：
@@ -123,10 +134,8 @@ _注意：如果需要从宿主机访问，需要将 `localhost` 替换成虚拟
 - [http://localhost:8080](http://localhost:8080) - **bookbuyer**
 - [http://localhost:8083](http://localhost:8083) - **bookthief**
 - [http://localhost:8084](http://localhost:8084) - **bookstore**
-- [http://localhost:8082](http://localhost:8082) - **bookstore-v2**
-  - _注意：示例中的这个页面在当前阶段还不可用。在配置 SMI TrafficSplit 期间，它将可用。_
 
-置放好窗口，将可以同时看到全部四个。网页顶端的页眉指示了应用和其版本。
+通过多个窗口可以同时访问它们。网页顶端的页眉指示了应用和其版本。
 
 ## 下一步
 
