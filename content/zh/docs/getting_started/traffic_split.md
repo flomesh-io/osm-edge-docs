@@ -47,7 +47,7 @@ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< 
 
 _注意：根服务是一个 Kubernetes 服务，它的选择器需要匹配支持叶子服务的 pod。在这个演示中，根服务 `bookstore` 有选择器 `app:bookstore`，其分别匹配了在 `bookstore (v1)` 和 `bookstore-v2` 部署上的标签 `app:bookstore,version:v1` 和 `app:bookstore,version=v2`。该根服务能够被按照带或者不带 `.<namespace>.svc.cluster.local` 后缀的服务名称来引用 SMI 流量拆分中的资源。_
 
-对于书籍销售的计数，从 `bookstore-v2` 浏览器窗口看应该停止增长。这是因为当前的流量拆分策略把权重 100 给了 `bookstore-v1` 而排除了支持 `bookstore-v2` 服务的 pod。可以通过运行下面命令并同时观察**后端**的属性来验证流量拆分策略。
+对于书籍销售的计数，从 `bookstore-v2` 浏览器窗口看应该停止增长。这是因为当前的流量拆分策略把全部权重给了 `bookstore-v1` 而排除了 `bookstore-v2` 服务的 pod。可以通过运行下面命令并同时观察**后端**的属性来验证流量拆分策略。
 
 ```bash
 kubectl describe trafficsplit bookstore-split -n bookstore
