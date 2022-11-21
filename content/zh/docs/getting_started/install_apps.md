@@ -135,7 +135,7 @@ _注意：如果需要从宿主机访问，需要将 `localhost` 替换成虚拟
 - [http://localhost:8083](http://localhost:8083) - **bookthief**
 - [http://localhost:8084](http://localhost:8084) - **bookstore**
 
-置放好窗口，将可以同时看到它们全部。网页顶端的页眉指示了应用和其版本。
+通过多个窗口可以同时访问它们。网页顶端的页眉指示了应用和其版本。
 
 ## 下一步
 
