@@ -93,7 +93,7 @@ kubectl get secret -n $osm_namespace $osm_ca_bundle -o jsonpath='{.data.ca\.crt}
     openssl x509 -noout -dates
 ```
 
-对于 Sidecar 服务和要轮换的验证证书，数据平面组件必须重新启动。
+为了轮换 Sidecar 服务和验证证书，必须重新启动数据平面组件。
 
 #### Hashicorp Vault 和 Certmanager
 
