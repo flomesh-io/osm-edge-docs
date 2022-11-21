@@ -37,7 +37,7 @@ kubectl logs -n osm-system $(kubectl get pod -n osm-system -l app=osm-controller
 
 使用 `osm verify connectivity` 命令来验证 pod 能够使用 Kubernetes 服务来通信。
 
-例如，要验证命名空间 `curl` 中的 pod `curl-7bb5845476-zwxbt` 是否能够定向流量到使用 `httpbin` Kubernetes 服务的命名空间 `httpbin` 中的 pod `httpbin-69dc7d545c-n7pjb`：
+例如，要验证命名空间 `curl` 中的 pod `curl-7bb5845476-zwxbt` 是否能够使用 `httpbin` Kubernetes 服务定向流量到命名空间 `httpbin` 中的 pod `httpbin-69dc7d545c-n7pjb`：
 
 ```console
 $ osm verify connectivity --from-pod curl/curl-7bb5845476-zwxbt --to-pod httpbin/httpbin-69dc7d545c-n7pjb --to-service httpbin
