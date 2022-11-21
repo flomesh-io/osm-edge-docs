@@ -10,7 +10,7 @@ weight: 15
 
 ## 无法访问 Prometheus
 
-如果随 osm-edge 安装的 Prometheus 实例无法访问，执行下面的步骤定位并解决问题
+如果无法访问随 osm-edge 安装的 Prometheus 实例，执行下面的步骤定位并解决问题。
 
 1. 确认 Prometheus 的 Pod 是存在的
 
