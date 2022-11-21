@@ -52,7 +52,7 @@ spec:
     retryBackoffBaseInterval: 1s
 ```
 
-如果从 bookbuyer 服务到 bookstore-v2 服务的请求收到带状态码 5xx 或者可重试-4xx（409）的响应，那么 bookbuyer 将重试发 5 次请求。如果一个尝试的重试耗时超过 4s，它将被看作一次失败的尝试。每次重试在它被尝试[计算](#配置重试)之前有一个延迟周期（回退）。对所有重试回退被限定在 20ms。
+如果从 bookbuyer 服务到 bookstore-v2 服务的请求收到带状态码 5xx 或者可重试的-4xx（409）的响应，那么 bookbuyer 将重试 5 次。如果重试耗时超过 4s，它将被看作失败。每次重试在执行[计算](#配置重试)之前有一个延迟（回退）。对所有重试回退被限定在 20ms。
 ```yaml
 kind: Retry
 apiVersion: policy.openservicemesh.io/v1alpha1
