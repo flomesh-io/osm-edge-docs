@@ -13,7 +13,7 @@ Circuit breaking is a critical component of distributed systems and an important
 
 osm-edge leverages its [UpstreamTrafficSetting API][1] to configure circuit breaking attributes for traffic directed to an upstream service. We use the term `upstream service` to refer to a service that receives connections and requests from clients and return responses. The specification enables configuring circuit breaking attributes for an upstream service at the connection and request level. 
 
-Each `UpstreamTrafficSetting` configuration targets an upstream host defined by the `spec.host` field. For a Kubernetes service `my-svc` in the namespace `my-namespace`, the `UpstreamTrafficSetting` resource must be created in the namespace `my-namespace`, and `spec.host` must be an FQDN of the form `my-svc.my-namespace.svc.cluster.local`. When specified as a match in an [Egress policy](docs/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.EgressSpec), `spec.host` must correspond to the host specified in the Egress policy and the `UpstreamTrafficSetting` configuration must belong to the same namespace as the `Egress` resource.
+Each `UpstreamTrafficSetting` configuration targets an upstream host defined by the `spec.host` field. For a Kubernetes service `my-svc` in the namespace `my-namespace`, the `UpstreamTrafficSetting` resource must be created in the namespace `my-namespace`, and `spec.host` must be an FQDN of the form `my-svc.my-namespace.svc.cluster.local`. When specified as a match in an [Egress policy](/docs/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.EgressSpec), `spec.host` must correspond to the host specified in the Egress policy and the `UpstreamTrafficSetting` configuration must belong to the same namespace as the `Egress` resource.
 
 Circuit breaking is applicable at both the TCP and HTTP level, and can be configured using the `connectionSettings` attribute in the `UpstreamTrafficSetting` resource. TCP traffic settings apply to both TCP and HTTP traffic, while HTTP settings only apply to HTTP traffic.
 
@@ -31,7 +31,7 @@ The following circuit breaking configurations are supported:
 
 
 To learn more about configuring circuit breaking, refer to the following demo guides:
-- [Circuit breaking for destinations within the mesh](docs/demos/circuit_breaking_mesh_internal)
-- [Circuit breaking for destinations external to the mesh](docs/demos/circuit_breaking_mesh_external)
+- [Circuit breaking for destinations within the mesh](/docs/demos/circuit_breaking_mesh_internal)
+- [Circuit breaking for destinations external to the mesh](/docs/demos/circuit_breaking_mesh_external)
 
 [1]: /docs/api_reference/policy/v1alpha1/#policy.openservicemesh.io/v1alpha1.UpstreamTrafficSettingSpec

@@ -20,10 +20,10 @@ This guide demonstrates how to perform Canary rollouts using the SMI Traffic Spl
 
 In this demo, we will deploy an HTTP application and perform a canary rollout where a new version of the application is deployed to serve a percentage of traffic directed to the service.
 
-To split traffic to multiple service backends, the [SMI Traffic Split API](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha2/traffic-split.md) will be used. More about the usage of this API can be found in the [traffic split guide](docs/guides/traffic_management/traffic_split). For client applications to transparently split traffic to multiple service backends, it is important to note that client applications must direct traffic to the FQDN of the root service referenced in a `TrafficSplit` resource. In this demo, the `curl` client will direct traffic to the `httpbin` root service, initially backed by version `v1` of the service, and then perform a canary rollout to direct a percentage of traffic to version `v2` of the service.
+To split traffic to multiple service backends, the [SMI Traffic Split API](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha2/traffic-split.md) will be used. More about the usage of this API can be found in the [traffic split guide](/docs/guides/traffic_management/traffic_split). For client applications to transparently split traffic to multiple service backends, it is important to note that client applications must direct traffic to the FQDN of the root service referenced in a `TrafficSplit` resource. In this demo, the `curl` client will direct traffic to the `httpbin` root service, initially backed by version `v1` of the service, and then perform a canary rollout to direct a percentage of traffic to version `v2` of the service.
 
 The following steps demonstrate the canary rollout deployment strategy.
-> Note: [Permissive traffic policy mode](docs/guides/traffic_management/permissive_mode) is enabled to avoid the need to create explicit access control policies.
+> Note: [Permissive traffic policy mode](/docs/guides/traffic_management/permissive_mode) is enabled to avoid the need to create explicit access control policies.
 
 1. Enable permissive mode
 

@@ -7,7 +7,7 @@ weight: 2
 
 # osm-edge quick start guide
 
-This guide shows how to download, install, and run osm-edge, deploy a demo application, and complete SMI standard functionality like link encryption, access control, and traffic splitting in less than 5 minutes. This demo assumes you are running Ubuntu 21 on x86 architecture, running the k3s version 'V1.23.8 + K3S1'. For more version and platform support, please refer to the complete [Beginner's Guide](docs/getting_started/).
+This guide shows how to download, install, and run osm-edge, deploy a demo application, and complete SMI standard functionality like link encryption, access control, and traffic splitting in less than 5 minutes. This demo assumes you are running Ubuntu 21 on x86 architecture, running the k3s version 'V1.23.8 + K3S1'. For more version and platform support, please refer to the complete [Beginner's Guide](/docs/getting_started/).
 
 ## Pre-requisites
 
@@ -22,13 +22,30 @@ curl -sfL https://get.k3s.io | sh -s - --disable traefik --write-kubeconfig-mode
 
 ## Download and install osm-edge CLI
 
+
+### GNU/Linux
+
+Download the 64-bit GNU/Linux or macOS binary of osm-edge {{< param osm_edge_version >}}:
+
 ```bash
-system=$(uname -s | tr [:upper:] [:lower:])
-arch=$(dpkg --print-architecture)
+system=$(uname -s | tr '[:upper:]' '[:lower:]')
 release={{< param osm_edge_version >}}
-curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-edge-${release}-${system}-${arch}.tar.gz | tar -vxzf -
-./${system}-${arch}/osm version
+curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-edge-${release}-${system}-amd64.tar.gz | tar -vxzf -
+./${system}-amd64/osm version
 cp ./${system}-${arch}/osm /usr/local/bin/
+```
+
+### macOS
+
+Download the 64-bit macOS binaries for osm-edge {{< param osm_edge_version >}}
+
+```bash
+system=$(uname -s | tr "[:upper:]" "[:lower:]")
+arch=$(uname -m)
+release={{< param osm_edge_version >}}
+curl -L https://github.com/flomesh-io/osm-edge/releases/download/$release/osm-edge-$release-$system-$arch.tar.gz | tar -vxzf -
+./$system-$arch/osm version
+cp ./$system-$arch/osm /usr/local/bin/
 ```
 
 ## Install osm-edge on Kubernetes cluster

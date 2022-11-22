@@ -124,13 +124,13 @@ annotations:
 
 #### Grafana
 
-The following section assumes a Prometheus instance has already been configured as a data source for a running Grafana instance. Refer to the [Prometheus and Grafana](docs/demos/prometheus_grafana) demo for an example on how to create and configure a Grafana instance.
+The following section assumes a Prometheus instance has already been configured as a data source for a running Grafana instance. Refer to the [Prometheus and Grafana](/docs/demos/prometheus_grafana) demo for an example on how to create and configure a Grafana instance.
 
 ##### Importing osm-edge Dashboards
 
 osm-edge Dashboards are available through [our repository](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards), which can be imported as json blobs on the web admin portal.
 
-Detailed instructions for importing osm-edge dashboards can be found in the [Prometheus and Grafana](docs/demos/prometheus_grafana) demo. Refer to [osm-edge Grafana dashboard](#osm-grafana-dashboards) for an overview of the pre-configured dashboards.
+Detailed instructions for importing osm-edge dashboards can be found in the [Prometheus and Grafana](/docs/demos/prometheus_grafana) demo. Refer to [osm-edge Grafana dashboard](#osm-grafana-dashboards) for an overview of the pre-configured dashboards.
 
 ## Metrics scraping
 
@@ -229,7 +229,7 @@ annotations:
 
 #### Error Code Metrics
 
-When an error occurs in the osm-edge control plane the ErrCodeCounter Prometheus metric is incremented for the related osm-edge error code. For the complete list of error codes and their descriptions, see [osm-edge Control Plane Error Code Troubleshooting Guide](docs/guides/troubleshooting/control_plane_error_codes).
+When an error occurs in the osm-edge control plane the ErrCodeCounter Prometheus metric is incremented for the related osm-edge error code. For the complete list of error codes and their descriptions, see [osm-edge Control Plane Error Code Troubleshooting Guide](/docs/guides/troubleshooting/control_plane_error_codes).
 
 The fully-qualified name of the error code metric is `osm_error_err_code_count`.
 

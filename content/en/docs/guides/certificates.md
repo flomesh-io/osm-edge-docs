@@ -320,7 +320,7 @@ as a Kubernetes secret in the osm-edge namespace (`osm-system` by default) at th
 kubectl create secret -n osm-system generic osm-ca-bundle --from-file ca.crt
 ```
 
-Refer to the [cert-manager demo](docs/demos/cert-manager_integration) to learn more.
+Refer to the [cert-manager demo](/docs/demos/cert-manager_integration) to learn more.
 
 #### Configure osm-edge with cert-manager
 

@@ -304,7 +304,7 @@ This document walks you through the steps of getting Dapr working with osm-edge 
        $ osm uninstall mesh
        ```
 
-    4. To remove osm-edge's cluster wide resources after uninstallation, run the following command. See the [uninstall guide](docs/guides/uninstall/) for more context and information.
+    4. To remove osm-edge's cluster wide resources after uninstallation, run the following command. See the [uninstall guide](/docs/guides/uninstall/) for more context and information.
 
        ```console
        $ osm uninstall mesh --delete-cluster-wide-resources

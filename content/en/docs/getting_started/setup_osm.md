@@ -39,18 +39,18 @@ curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-
 Download the 64-bit macOS binaries for osm-edge {{< param osm_edge_version >}}
 
 ```bash
-system=$(uname -s | tr [:upper:] [:lower:])
+system=$(uname -s | tr "[:upper:]" "[:lower:]")
 arch=$(uname -m)
 release={{< param osm_edge_version >}}
-curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-edge-${release}-${system}-${arch}.tar.gz | tar -vxzf -
-. /${system}-${arch}/osm version
+curl -L https://github.com/flomesh-io/osm-edge/releases/download/$release/osm-edge-$release-$system-$arch.tar.gz | tar -vxzf -
+./$system-$arch/osm version
 ```
 
-The `osm` CLI can be compiled from source according to [this guide](docs/guides/cli).
+The `osm` CLI can be compiled from source according to [this guide](/docs/guides/cli).
 
 ## Installing osm-edge on Kubernetes
 
-With the `osm` binary downloaded and unzipped, we are ready to install Open Service Mesh on a Kubernetes cluster:
+With the `osm` binary downloaded, unzipped, and placed into `$PATH`, we are ready to install Open Service Mesh on a Kubernetes cluster:
 
 The command below shows how to install osm-edge on your Kubernetes cluster.
 This command enables
@@ -76,8 +76,8 @@ osm install \
     --set=osm.deployJaeger=true
 ```
 
-Read more on osm-edge's integrations with Prometheus, Grafana, and Jaeger in the [observability documentation](docs/guides/observability/).
+Read more on osm-edge's integrations with Prometheus, Grafana, and Jaeger in the [observability documentation](/docs/guides/observability/).
 
 ## Next Steps
 
-Now that the osm-edge control plane is up and running, [add applications](docs/getting_started/install_apps/) to the mesh.
+Now that the osm-edge control plane is up and running, [add applications](/docs/getting_started/install_apps/) to the mesh.

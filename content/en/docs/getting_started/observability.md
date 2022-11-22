@@ -7,7 +7,7 @@ weight: 5
 
 # Configure Observability with Prometheus and Grafana
 
-The following article shows you how to install osm-edge with automatic provisioning of the Prometheus and Grafana stack for observability and monitoring. For an example using a bring your own (BYO) Prometheus and Grafana stack on your cluster with osm-edge, see the [Integrate osm-edge with Prometheus and Grafana](docs/demos/prometheus_grafana/) demo.
+The following article shows you how to install osm-edge with automatic provisioning of the Prometheus and Grafana stack for observability and monitoring. For an example using a bring your own (BYO) Prometheus and Grafana stack on your cluster with osm-edge, see the [Integrate osm-edge with Prometheus and Grafana](/docs/demos/prometheus_grafana/) demo.
 
 The configuration created in this article should not be used in production environments. For production-grade deployments, see [Prometheus Operator](https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/user-guides/getting-started.md) and [Deploy Grafana in Kubernetes](https://grafana.com/docs/grafana/latest/installation/kubernetes/).
 
@@ -19,7 +19,7 @@ On `osm install`, a Prometheus and/or Grafana instance can be automatically prov
  osm install --set=osm.deployPrometheus=true \
              --set=osm.deployGrafana=true
 ```
-More information on observability can be found in the [Observability Guide](docs/guides/observability).
+More information on observability can be found in the [Observability Guide](/docs/guides/observability).
 
 ## Prometheus
 
@@ -27,7 +27,7 @@ When configured with the `--set=osm.deployPrometheus=true` flag, osm-edge instal
 
 ## Grafana
 
-osm-edge can be configured to deploy a [Grafana](https://grafana.com/grafana/) instance using the `--set=osm.deployGrafana=true` flag in `osm install`. osm-edge provides pre-configured dashboards that are documented in the [osm-edge Grafana dashboards](docs/guides/observability/metrics/#osm-grafana-dashboards) section of the Observability Guide.
+osm-edge can be configured to deploy a [Grafana](https://grafana.com/grafana/) instance using the `--set=osm.deployGrafana=true` flag in `osm install`. osm-edge provides pre-configured dashboards that are documented in the [osm-edge Grafana dashboards](/docs/guides/observability/metrics/#osm-grafana-dashboards) section of the Observability Guide.
 
 ## Enable Metrics Scraping
 
@@ -51,4 +51,4 @@ Navigate to http://localhost:3000 to access the Grafana dashboards. The default 
 
 ## Next Steps
 
-[Cleanup sample applications and uninstall osm-edge](docs/getting_started/cleanup/).
+[Cleanup sample applications and uninstall osm-edge](/docs/getting_started/cleanup/).
