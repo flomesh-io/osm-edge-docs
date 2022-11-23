@@ -22,13 +22,30 @@ curl -sfL https://get.k3s.io | sh -s - --disable traefik --write-kubeconfig-mode
 
 ## Download and install osm-edge CLI
 
+
+### GNU/Linux
+
+Download the 64-bit GNU/Linux or macOS binary of osm-edge {{< param osm_edge_version >}}:
+
 ```bash
-system=$(uname -s | tr [:upper:] [:lower:])
-arch=$(dpkg --print-architecture)
+system=$(uname -s | tr '[:upper:]' '[:lower:]')
 release={{< param osm_edge_version >}}
-curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-edge-${release}-${system}-${arch}.tar.gz | tar -vxzf -
-./${system}-${arch}/osm version
+curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-edge-${release}-${system}-amd64.tar.gz | tar -vxzf -
+./${system}-amd64/osm version
 cp ./${system}-${arch}/osm /usr/local/bin/
+```
+
+### macOS
+
+Download the 64-bit macOS binaries for osm-edge {{< param osm_edge_version >}}
+
+```bash
+system=$(uname -s | tr "[:upper:]" "[:lower:]")
+arch=$(uname -m)
+release={{< param osm_edge_version >}}
+curl -L https://github.com/flomesh-io/osm-edge/releases/download/$release/osm-edge-$release-$system-$arch.tar.gz | tar -vxzf -
+./$system-$arch/osm version
+cp ./$system-$arch/osm /usr/local/bin/
 ```
 
 ## Install osm-edge on Kubernetes cluster
