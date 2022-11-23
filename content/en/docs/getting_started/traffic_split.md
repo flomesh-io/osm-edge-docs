@@ -86,4 +86,4 @@ Now, all traffic directed to the `bookstore` service is flowing to `bookstore-v2
 ## Next Steps
 
 - [Configure observability with Prometheus and Grafana](/docs/getting_started/observability/)
-- [Cleanup sample applications and uninstall OSM](/docs/getting_started/cleanup/)
+- [Cleanup sample applications and uninstall osm-edge](/docs/getting_started/cleanup/)
