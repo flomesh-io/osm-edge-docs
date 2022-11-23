@@ -91,7 +91,7 @@ Prometheus が Pod のメトリクスをスクレイピングしていないこ�
     Metrics successfully enabled in namespace [<namespace>]
     ```
 
-2. [カスタム指標](docs/guides/observability/metrics/#custom-metrics) がスクレイピングされていない場合は、それらが有効になっていることを確認してください。
+2. [カスタム指標](/docs/guides/observability/metrics/#custom-metrics) がスクレイピングされていない場合は、それらが有効になっていることを確認してください。
 
      カスタム メトリックは現在、デフォルトで無効になっており、`osm.featureFlags.enableWASMStats` パラメータが `true` に設定されている場合に有効になります。 現在の osm-edge インスタンスに、`<osm-namespace>` 名前空間の `<osm-mesh-name>` という名前のメッシュ用にこのパラメーターが設定されていることを確認します。
 

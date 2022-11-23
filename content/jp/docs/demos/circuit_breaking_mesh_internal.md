@@ -19,7 +19,7 @@ weight: 21
 ## デモ
 次のデモは、トラフィックを httpbin サービスに送信するための負荷テストクライアント[fortio](https://github.com/fortio/fortio) を示す。httpbinサービスへのトラフィックに回路遮断を適用すると、設定された回路遮断の制限がかかったときに `fortio` クライアントにどのような影響を与えるかを確認する。
 
-1. シンプルにするために、 [permissive traffic policy mode](docs/guides/traffic_management/permissive_mode)を有効にし、メッシュ内のアプリケーション接続に明示的なSMIトラフィックアクセスポリシーが必要ないようにする。
+1. シンプルにするために、 [permissive traffic policy mode](/docs/guides/traffic_management/permissive_mode)を有効にし、メッシュ内のアプリケーション接続に明示的なSMIトラフィックアクセスポリシーが必要ないようにする。
     ```bash
     export osm_namespace=osm-system # Replace osm-system with the namespace where osm-edge is installed
     kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"enablePermissiveTrafficPolicyMode":true}}}'  --type=merge

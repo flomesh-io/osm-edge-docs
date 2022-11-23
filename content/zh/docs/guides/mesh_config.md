@@ -32,7 +32,7 @@ kubectl get meshconfig osm-mesh-config -n "$osm_namespace" -o yaml
 ```bash
 kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"enableEgress":true}}}'  --type=merge
 ```
-参考 [Config API reference](docs/api_reference/config/v1alpha1) 以获取更多信息。
+参考 [Config API reference](/docs/api_reference/config/v1alpha1) 以获取更多信息。
 
 如果一个不正确的值被使用了，在 [MeshConfig CRD](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/charts/osm/crds/meshconfig.yaml) 上的验证将阻止修改并给出一个错误信息来解释为什么这个值是无效的。
 例如，下面的命令显示了如果我们用 `enableEgress` 给一个非布尔值打补丁会发生什么。

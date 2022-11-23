@@ -126,4 +126,4 @@ BOOKBUYER_LOCAL_PORT=7070 BOOKSTOREv1_LOCAL_PORT=7071 BOOKSTOREv2_LOCAL_PORT=707
 
 ## 次のステップ
 
-サンプル アプリケーションが実行されているので、アプリケーション間の[configure traffic policies](docs/getting_started/traffic_policies/)。
+サンプル アプリケーションが実行されているので、アプリケーション間の[configure traffic policies](/docs/getting_started/traffic_policies/)。

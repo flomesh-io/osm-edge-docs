@@ -34,7 +34,7 @@ osm-edge 支持使用其 [Egress policy API][1] 为发往外部端点的流量�
 kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"featureFlags":{"enableEgressPolicy":true}}}'  --type=merge
 ```
 
-请参阅[出口策略演示](docs/demos/egress_policy) 和 [API 文档][1]，了解如何为各种协议配置路由出口流量的策略。
+请参阅[出口策略演示](/docs/demos/egress_policy) 和 [API 文档][1]，了解如何为各种协议配置路由出口流量的策略。
 
 ## 2. 配置网格范围内的出口直通
 
@@ -85,7 +85,7 @@ osm-edge 支持使用 TCP 作为底层传输的流量的出口。这包括原始
 
 由于网格范围的出口是一个全局设置，并且作为到未知目的地的通道运行，因此不可能对出口流量进行细粒度的访问控制（例如应用 TCP 或 HTTP 路由策略）。
 
-请参阅 [Egress 直通演示](docs/demos/egress_passthrough) 了解更多信息。
+请参阅 [Egress 直通演示](/docs/demos/egress_passthrough) 了解更多信息。
 
 #### Pipy 配置
 

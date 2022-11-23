@@ -305,7 +305,7 @@ osm-edge 名前空間 (デフォルトでは「osm-system」) の Kubernetes シ
 kubectl create secret -n osm-system generic osm-ca-bundle --from-file ca.crt
 ```
 
-詳細については、[cert-manager デモ](docs/demos/cert-manager_integration) を参照してください。
+詳細については、[cert-manager デモ](/docs/demos/cert-manager_integration) を参照してください。
 
 #### osm-edge が構成された発行者で cert-manager を使用するには、
 `osm install` コマンドの次の CLI 引数:

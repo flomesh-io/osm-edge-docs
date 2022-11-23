@@ -15,7 +15,7 @@ weight: 22
 - osm-edge バージョン >= v1.1.0.
 
 ## デモ
-次のデモは、サービスメッシュの外部にある httpbin サービスにトラフィックを送信する負荷テストクライアント [fortio](https://github.com/fortio/fortio)を示している。メッシュ外部のトラフィックは[Egress](docs/guides/traffic_management/egress)トラフィックとして扱われ、 [Egress traffic policy](docs/guides/traffic_management/egress/#1-configuring-egress-policies)を使用して承認される。外部 httpbin サービスへのトラフィックに回路遮断を適用すると、設定された回路遮断がトリップしたときに fortio クライアントにどのような影響があるかを確認する。
+次のデモは、サービスメッシュの外部にある httpbin サービスにトラフィックを送信する負荷テストクライアント [fortio](https://github.com/fortio/fortio)を示している。メッシュ外部のトラフィックは[Egress](/docs/guides/traffic_management/egress)トラフィックとして扱われ、 [Egress traffic policy](/docs/guides/traffic_management/egress/#1-configuring-egress-policies)を使用して承認される。外部 httpbin サービスへのトラフィックに回路遮断を適用すると、設定された回路遮断がトリップしたときに fortio クライアントにどのような影響があるかを確認する。
 
 1.  `httpbin` サービスを `httpbin` 名前空間にデプロイする。「httpbin」サービスはポート「14001」で実行され、メッシュに追加されないため、メッシュの外部の宛先と見なされる。
 

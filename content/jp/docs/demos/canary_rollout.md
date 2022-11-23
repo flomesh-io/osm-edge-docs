@@ -19,10 +19,10 @@ weight: 21
 
 このデモでは、HTTPアプリケーションを展開し、カナリアロールアウトを実行する。このロールアウトでは、新しいバージョンのアプリケーションが展開され、サービスに向けられたトラフィックの一部を処理する。
 
-トラフィックを複数のサービス バックエンドに分割するには、 [SMI Traffic Split API] (https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha2/traffic-split.md) が使用される。この API の使用方法の詳細については、[traffic split guide](docs/guides/traffic_management/traffic_split)を参照してください。クライアントアプリケーションが透過的にトラフィックを複数のサービスバックエンドに分割するには、クライアントアプリケーションが TrafficSplitリソースで参照されるルートサービスの FQDN にトラフィックを転送する必要があることに注意することが重要だ。このデモでは、「curl」クライアントはトラフィックを「httpbin」ルートサービスに転送します。最初はサービスのバージョン「v1」によってバックアップされ、その後、カナリアロールアウトを実行してトラフィックの一部をサービスのバージョン「v2」に転送する。
+トラフィックを複数のサービス バックエンドに分割するには、 [SMI Traffic Split API] (https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha2/traffic-split.md) が使用される。この API の使用方法の詳細については、[traffic split guide](/docs/guides/traffic_management/traffic_split)を参照してください。クライアントアプリケーションが透過的にトラフィックを複数のサービスバックエンドに分割するには、クライアントアプリケーションが TrafficSplitリソースで参照されるルートサービスの FQDN にトラフィックを転送する必要があることに注意することが重要だ。このデモでは、「curl」クライアントはトラフィックを「httpbin」ルートサービスに転送します。最初はサービスのバージョン「v1」によってバックアップされ、その後、カナリアロールアウトを実行してトラフィックの一部をサービスのバージョン「v2」に転送する。
 
 次の手順は、カナリアロールアウトのデプロイメント戦略を示している。
-> 注意:[Permissive traffic policy mode](docs/guides/traffic_management/permissive_mode)を有効にして、明示的なアクセス制御ポリシーを作成する必要がないようにする。
+> 注意:[Permissive traffic policy mode](/docs/guides/traffic_management/permissive_mode)を有効にして、明示的なアクセス制御ポリシーを作成する必要がないようにする。
 
 1. permissive modeを有効にする
 

@@ -46,7 +46,7 @@ curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-
 ./${system}-${arch}/osm version
 ```
 
-`osm` CLI 可以根据 [本指南](docs/guides/cli) 从源代码编译。
+`osm` CLI 可以根据 [本指南](/docs/guides/cli) 从源代码编译。
 
 ## 在 Kubernetes 上安装 osm-edge
 
@@ -74,8 +74,8 @@ osm install \
     --set=osm.tracing.enable=true
 ```
 
-在 [可观察性文档](docs/guides/observability/) 中阅读有关 osm-edge 与 Prometheus、Grafana 和 Jaeger 集成的更多信息。
+在 [可观察性文档](/docs/guides/observability/) 中阅读有关 osm-edge 与 Prometheus、Grafana 和 Jaeger 集成的更多信息。
 
 ## 下一步
 
-现在 osm-edge 控制平面已启动并运行，[添加应用程序](docs/getting_started/install_apps/) 到网格。
+现在 osm-edge 控制平面已启动并运行，[添加应用程序](/docs/getting_started/install_apps/) 到网格。

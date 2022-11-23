@@ -157,7 +157,7 @@ spec:
 
 #### 示例
 
-参阅 [FSM 入口示例](docs/demos/ingress_fsm) 作为示例来了解如何在 osm-edge 使用 FSM 将网格服务队外暴露。
+参阅 [FSM 入口示例](/docs/demos/ingress_fsm) 作为示例来了解如何在 osm-edge 使用 FSM 将网格服务队外暴露。
 
 ### 2. 自带入口控制器和网关
 

@@ -185,4 +185,4 @@ kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< 
 
 ## 次のステップ
 
-[configuring traffic split](docs/getting_started/traffic_split/)で、サービス間のトラフィックのバランスを取る方法を学ぶ。
+[configuring traffic split](/docs/getting_started/traffic_split/)で、サービス間のトラフィックのバランスを取る方法を学ぶ。

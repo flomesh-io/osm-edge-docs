@@ -124,13 +124,13 @@ annotations:
 
 #### グラファナ
 
-次のセクションでは、Prometheus インスタンスが実行中の Grafana インスタンスのデータ ソースとして既に構成されていることを前提としています。 Grafana インスタンスを作成および構成する方法の例については、[Prometheus and Grafana](docs/demos/prometheus_grafana) デモを参照してください。
+次のセクションでは、Prometheus インスタンスが実行中の Grafana インスタンスのデータ ソースとして既に構成されていることを前提としています。 Grafana インスタンスを作成および構成する方法の例については、[Prometheus and Grafana](/docs/demos/prometheus_grafana) デモを参照してください。
 
 ##### osm-edge ダッシュボードのインポート
 
 osm-edge ダッシュボードは、[our repository](https://github.com/openservicemesh/osm/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards)から入手できます。これは、Web 管理ポータルで json blob としてインポートできます。
 
-osm-edge ダッシュボードをインポートするための詳細な手順は、[Prometheus and Grafana](docs/demos/prometheus_grafana) デモにあります。 事前構成されたダッシュボードの概要については、[osm-edge Grafana-dashboards](#osm-grafana-dashboards) を参照してください。
+osm-edge ダッシュボードをインポートするための詳細な手順は、[Prometheus and Grafana](/docs/demos/prometheus_grafana) デモにあります。 事前構成されたダッシュボードの概要については、[osm-edge Grafana-dashboards](#osm-grafana-dashboards) を参照してください。
 ## メトリクスのスクレイピング
 
 メトリクス スクレイピングは、「osm metrics」コマンドを使用して構成できます。 デフォルトでは、osm-edge はメッシュ内のポッドのメトリック スクレイピングを構成しません**。 メトリクスのスクレイピングは、名前空間のスコープで有効または無効にできます。これにより、構成された名前空間に属するポッドがメトリクスのスクレイピングを有効または無効にできます。
@@ -224,7 +224,7 @@ annotations:
 
 #### エラー コード メトリック
 
-osm-edge コントロール プレーンでエラーが発生すると、関連する osm-edge エラー コードに対して ErrCodeCounter Prometheus メトリックが増加します。 エラー コードとその説明の完全なリストについては、[osm-edge Control Plane Error Code Troubleshooting Guide](docs/guides/troubleshooting/control_plane_error_codes) を参照してください。
+osm-edge コントロール プレーンでエラーが発生すると、関連する osm-edge エラー コードに対して ErrCodeCounter Prometheus メトリックが増加します。 エラー コードとその説明の完全なリストについては、[osm-edge Control Plane Error Code Troubleshooting Guide](/docs/guides/troubleshooting/control_plane_error_codes) を参照してください。
 
 エラー コード メトリックの完全修飾名は「osm_error_err_code_count」です。
 > 注: プロセスの再起動につながるエラーに対応するメトリックは、時間内にスクレイピングされない場合があります。

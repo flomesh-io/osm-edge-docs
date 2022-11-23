@@ -26,7 +26,7 @@ weight: 2
 osm namespace add <namespace>
 ```
 
-添加时使用[这里](docs/guides/app_onboarding/sidecar_injection/#explicitly-disabling-automatic-sidecar-injection-on-namespaces)提到的 `--disable-sidecar-injection` 标识来明确地禁用 sidecar 注入。
+添加时使用[这里](/docs/guides/app_onboarding/sidecar_injection/#explicitly-disabling-automatic-sidecar-injection-on-namespaces)提到的 `--disable-sidecar-injection` 标识来明确地禁用 sidecar 注入。
 
 ## 从 osm-edge 控制平面移除命名空间
 

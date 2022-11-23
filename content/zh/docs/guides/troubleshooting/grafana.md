@@ -50,7 +50,7 @@ weight: 16
 
 1. 确认 Prometheus 已经被安装并且是健康的。
 
-    因为 Grafana 查询的数据来源于 Prometheus，要确保 Prometheus 运行状态是符合预期的。详细内容请参考 [Prometheus 故障排除指南](docs/troubleshooting/observability/prometheus/)
+    因为 Grafana 查询的数据来源于 Prometheus，要确保 Prometheus 运行状态是符合预期的。详细内容请参考 [Prometheus 故障排除指南](/docs/troubleshooting/observability/prometheus/)
 
 2. 确认 Grafana 可以访问 Prometheus
 

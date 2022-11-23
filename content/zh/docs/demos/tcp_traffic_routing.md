@@ -70,7 +70,7 @@ weight: 20
 
 ### 使用宽松流量策略模式
 
-我们将启用[宽松流量策略模式](docs/guides/traffic_management/permissive_mode)允许应用互通而无需显式的 SMI 策略。
+我们将启用[宽松流量策略模式](/docs/guides/traffic_management/permissive_mode)允许应用互通而无需显式的 SMI 策略。
 
 
 1. 开启宽松流量策略模式

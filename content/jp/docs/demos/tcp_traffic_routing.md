@@ -67,7 +67,7 @@ weight: 20
 
 ### 許容なトラフィックポリシーモードの使用
 
-[permissive traffic policy mode](docs/guides/traffic_management/permissive_mode)を使用してサービスディスカバリを有効にする。これにより、明示的な SMI ポリシーを必要とせずにアプリケーション接続を確立できる。
+[permissive traffic policy mode](/docs/guides/traffic_management/permissive_mode)を使用してサービスディスカバリを有効にする。これにより、明示的な SMI ポリシーを必要とせずにアプリケーション接続を確立できる。
 
 1. 許容なトラフィックポリシーモードを有効にする
     ```bash

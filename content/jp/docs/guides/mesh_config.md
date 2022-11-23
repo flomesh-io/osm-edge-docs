@@ -32,7 +32,7 @@ kubectl get meshconfig osm-mesh-config -n "$osm_namespace" -o yaml
 ```bash
 kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"enableEgress":true}}}'  --type=merge
 ```
-詳細については、[Config API reference](docs/apidocs/config/v1alpha1) を参照してください。
+詳細については、[Config API reference](/docs/apidocs/config/v1alpha1) を参照してください。
 
 誤った値が使用された場合、[MeshConfig CRD](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/charts/osm/crds/meshconfig. yaml) は、値が無効である理由を説明するエラー メッセージで変更を防ぎます。
 たとえば、以下のコマンドは、「enableEgress」をブール値以外の値にパッチするとどうなるかを示しています。

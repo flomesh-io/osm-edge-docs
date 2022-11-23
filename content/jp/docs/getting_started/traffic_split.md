@@ -11,7 +11,7 @@ weight: 4
 
 ### bookstore v2 アプリケーションをデプロイする
 
-SMIトラフィックアクセスとスプリットポリシーの使用法を示すために、バージョン v2 のブックストアアプリケーション (bookstore-v2) をデプロイする。- openshift を使用している場合は、[installation guide](docs/install/#openshift)で指定されているように、bookstore-v2 サービス アカウントにセキュリティコンテキスト制約を追加する必要があることに注意してください。
+SMIトラフィックアクセスとスプリットポリシーの使用法を示すために、バージョン v2 のブックストアアプリケーション (bookstore-v2) をデプロイする。- openshift を使用している場合は、[installation guide](/docs/install/#openshift)で指定されているように、bookstore-v2 サービス アカウントにセキュリティコンテキスト制約を追加する必要があることに注意してください。
 
 ```bash
 # Contains the bookstore-v2 Kubernetes Service, Service Account, Deployment and SMI Traffic Target resource to allow
@@ -70,5 +70,5 @@ kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< 
 
 ## 次のステップ
 
-- [Configure observability with Prometheus and Grafana](docs/getting_started/observability/)
-- [Cleanup sample applications and uninstall osm-edge](docs/getting_started/cleanup/)
+- [Configure observability with Prometheus and Grafana](/docs/getting_started/observability/)
+- [Cleanup sample applications and uninstall osm-edge](/docs/getting_started/cleanup/)

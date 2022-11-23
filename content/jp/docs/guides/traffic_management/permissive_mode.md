@@ -52,7 +52,7 @@ kubectl patch meshconfig osm-mesh-config -n osm-system -p '{"spec":{"traffic":{"
 ## 使い方
 permissive トラフィック ポリシー モードが有効な場合、osm-edge コントローラーはメッシュの一部であるすべてのサービスを検出し、各 Pipy プロキシ サイドカーでワイルドカード トラフィック ルーティング ルールをプログラムして、メッシュ内の他のすべてのサービスに到達します。 さらに、サービスに関連付けられている各プロキシ フロンティング ワークロードは、サービス宛てのすべてのトラフィックを受け入れるように構成されています。 サービスのアプリケーション プロトコル (HTTP、TCP、gRPC など) に応じて、適切なトラフィック ルーティング ルールが Pipy サイドカーで構成され、その特定のタイプのすべてのトラフィックが許可されます。
 
-詳細については、[Permissive traffic policy mode demo](docs/demos/permissive_traffic_mode) を参照してください。
+詳細については、[Permissive traffic policy mode demo](/docs/demos/permissive_traffic_mode) を参照してください。
 
 ### ピピー構成
 Permissive モードでは、osm-edge コントローラーは、クライアント アプリケーションがサービスと通信するためのワイルドカード ルートをプログラムします。 以下は、`curl` および `httpbin` サイドカー プロキシからの Pipy インバウンドおよびアウトバウンド フィルタおよびルート構成スニペットです。

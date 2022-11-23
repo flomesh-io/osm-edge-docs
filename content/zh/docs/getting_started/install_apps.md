@@ -139,4 +139,4 @@ _注意：如果需要从宿主机访问，需要将 `localhost` 替换成虚拟
 
 ## 下一步
 
-现在，示例应用正在运行，为应用间的通信[配置流量策略](docs/getting_started/traffic_policies/)。
+现在，示例应用正在运行，为应用间的通信[配置流量策略](/docs/getting_started/traffic_policies/)。
