@@ -7,11 +7,11 @@ weight: 1
 
 # About osm-edge
 
-osm-edge is built on top of [Open Service Mesh v1.1.0](https://github.com/openservicemesh/osm/tree/release-v1.1) codebase and is built purposely for edge computing and uses lightweight, high-performant, cloud native, and programmable proxy [Pipy](https://github.com/flomesh-io/pipy) as its data plane and sidecar proxy.
+osm-edge was born out of a fork from [Open Service Mesh v1.1.0](https://github.com/openservicemesh/osm/tree/release-v1.1) codebase and is built purposely for edge computing and uses lightweight, high-performant, cloud native, and programmable proxy [Pipy](https://github.com/flomesh-io/pipy) as its data plane and sidecar proxy.
 
 osm-edge is a simple, complete, and standalone [service mesh](https://en.wikipedia.org/wiki/Service_mesh) and ships out-of-the-box with all the necessary components to deploy a complete service mesh. As a lightweight and [SMI](https://smi-spec.io/)-compatible Service Mesh, osm-edge is designed to be intuitive and scalable.
 
-osm-edge 1.1 comes bundled with [Flomesh Service Mesh (FSM)](https://github.com/flomesh-io/fsm) a Kubernetes North-South traffic manager, provides Ingress controllers, Gateway API, Load Balancer, and cross-cluster service registration and service discovery.
+osm-edge comes bundled with [Flomesh Service Mesh (FSM)](https://github.com/flomesh-io/fsm) a Kubernetes North-South traffic manager, provides Ingress controllers, Gateway API, Load Balancer, and cross-cluster service registration and service discovery.
 
 With the help of FSM, osm-edge can now connect Kubernetes services across cluster boundaries in a way that’s secure, fully transparent to the application, and independent of network topology. Automated fail-over ability to automatically redirect all traffic from a failing or inaccessible service to one or more replicas of that service—including replicas on other clusters.
 
