@@ -22,10 +22,9 @@ curl -sfL https://get.k3s.io | sh -s - --disable traefik --write-kubeconfig-mode
 
 ## 下载并安装 osm-edge 命令行工具
 
+下载 OSM-edge {{< param osm_edge_version >}} 的 64 位 GNU/Linux 或 macOS 二进制文件：
+
 ### GNU/Linux
-
-Download the 64-bit GNU/Linux or macOS binary of osm-edge {{< param osm_edge_version >}}:
-
 
 ```bash
 system=$(uname -s | tr '[:upper:]' '[:lower:]')
@@ -37,8 +36,6 @@ cp ./${system}-${arch}/osm /usr/local/bin/
 ```
 
 ### macOS
-
-Download the 64-bit macOS binaries for osm-edge {{< param osm_edge_version >}}
 
 ```bash
 system=$(uname -s | tr "[:upper:]" "[:lower:]")
