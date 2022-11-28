@@ -22,7 +22,6 @@ curl -sfL https://get.k3s.io | sh -s - --disable traefik --write-kubeconfig-mode
 
 ## Download and install osm-edge CLI
 
-
 ### GNU/Linux
 
 Download the 64-bit GNU/Linux or macOS binary of osm-edge {{< param osm_edge_version >}}:
