@@ -22,15 +22,32 @@ curl -sfL https://get.k3s.io | sh -s - --disable traefik --write-kubeconfig-mode
 
 ## 下载并安装 osm-edge 命令行工具
 
+### GNU/Linux
+
+Download the 64-bit GNU/Linux or macOS binary of osm-edge {{< param osm_edge_version >}}:
+
+
 ```bash
-system=$(uname -s | tr [:upper:] [:lower:])
-arch=$(dpkg --print-architecture)
+system=$(uname -s | tr '[:upper:]' '[:lower:]')
+arch=$(uname -m)
 release={{< param osm_edge_version >}}
 curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-edge-${release}-${system}-${arch}.tar.gz | tar -vxzf -
 ./${system}-${arch}/osm version
 cp ./${system}-${arch}/osm /usr/local/bin/
 ```
 
+### macOS
+
+Download the 64-bit macOS binaries for osm-edge {{< param osm_edge_version >}}
+
+```bash
+system=$(uname -s | tr "[:upper:]" "[:lower:]")
+arch=$(uname -m)
+release={{< param osm_edge_version >}}
+curl -L https://github.com/flomesh-io/osm-edge/releases/download/$release/osm-edge-$release-$system-$arch.tar.gz | tar -vxzf -
+./$system-$arch/osm version
+cp ./$system-$arch/osm /usr/local/bin/
+```
 ## 在 Kubernetes 上安装 osm-edge
 
 > 此命令启用 [Prometheus](https://github.com/prometheus/prometheus)、[Grafana](https://github.com/grafana/grafana) 和 [Jaeger](https://github.com/jaegertracing/jaeger) 集成

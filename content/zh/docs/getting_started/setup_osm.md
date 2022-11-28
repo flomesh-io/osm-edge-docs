@@ -27,11 +27,11 @@ weight: 1
 下载 osm-edge {{< param osm_edge_version >}} 的 64 位 GNU/Linux 二进制文件：
 
 ```bash
-system=$(uname -s | tr [:upper:] [:lower:])
+system=$(uname -s | tr "[:upper:]" "[:lower:]")
 arch=$(dpkg --print-architecture)
 release={{< param osm_edge_version >}}
 curl -L https://github.com/flomesh-io/osm-edge/releases/download/${release}/osm-edge-${release}-${system}-${arch}.tar.gz | tar -vxzf -
-./${system}-${arch}/osm version
+./$system-$arch/osm version
 ```
 
 ### macOS
