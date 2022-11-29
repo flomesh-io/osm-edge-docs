@@ -1,6 +1,6 @@
 title = "Open Service Mesh For Edge"
 baseURL = "https://osm-edge-docs.flomesh.io/"
-languageCode = "zh"
+languageCode = "en"
 description = "Documentation for osm-edge"
 theme = "dosmy"
 RelativeURLs=true
@@ -104,9 +104,17 @@ fsm_version = "0.1.7"
 min_k8s_version = "v1.19.0"
 pipy_version = "0.50.0-25"
 
-# [[params.versions]]
-#   version = "v1.1 (latest)"
-#   url = "https://release-v1-1.docs.openservicemesh.io/"
+[[params.versions]]
+  version = "v1.2 (latest)"
+  url = "https://release-v1-2.osm-edge-docs.flomesh.io/"
+[[params.versions]]
+[[params.versions]]
+  version = "v1.1"
+  url = "https://release-v1-1.osm-edge-docs.flomesh.io/"
+[[params.versions]]
+[[params.versions]]
+  version = "All Releases"
+  url = "https://osm-edge-docs.flomesh.io/docs/releases/docs"
 
 [params.ui]
 navbar_logo = true
