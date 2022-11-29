@@ -1,6 +1,6 @@
 title = "Open Service Mesh For Edge"
 baseURL = "https://osm-edge-docs.flomesh.io/"
-languageCode = "zh"
+languageCode = "en"
 description = "Documentation for osm-edge"
 theme = "dosmy"
 RelativeURLs=true
@@ -15,18 +15,18 @@ defaultContentLanguage = "en"
 		description = "Documentation for osm-edge"
 		languageName ="English"
 		weight = 1
-	[languages.zh]
-		title = "开放边缘服务网格"
-		contentDir = 'content/zh'
-		description = "Documentation for osm-edge"
-		languageName ="中文"
-		weight = 2
-	[languages.jp]
-		title = "シンプルで整ったスタンドアロンサービスメッシュ"
-		contentDir = 'content/jp'
-		description = "osm-edgeドキュメント"
-		languageName ="日本語"
-		weight = 3
+	# [languages.zh]
+	# 	title = "开放边缘服务网格"
+	# 	contentDir = 'content/zh'
+	# 	description = "Documentation for osm-edge"
+	# 	languageName ="中文"
+	# 	weight = 2
+	# [languages.jp]
+	# 	title = "シンプルで整ったスタンドアロンサービスメッシュ"
+	# 	contentDir = 'content/jp'
+	# 	description = "osm-edgeドキュメント"
+	# 	languageName ="日本語"
+	# 	weight = 3
 [services]
 [services.googleAnalytics]
 id = "UA-130516746-13"
@@ -104,9 +104,21 @@ fsm_version = "0.1.8"
 min_k8s_version = "v1.19.0"
 pipy_version = "0.70.0-25"
 
-# [[params.versions]]
-#   version = "v1.1 (latest)"
-#   url = "https://release-v1-1.docs.openservicemesh.io/"
+[[params.versions]]
+  version = "v1.2 (latest)"
+  url = "https://release-v1-2.osm-edge-docs.flomesh.io/"
+[[params.versions]]
+[[params.versions]]
+  version = "v1.1"
+  url = "https://release-v1-1.osm-edge-docs.flomesh.io/"
+[[params.versions]]
+[[params.versions]]
+  version = "All Releases"
+  url = "/docs/releases/docs"
+# [params.versionbanner]
+# 	show = false
+# 	archive = "v1.0"
+# 	latest = "https://osm-edge-docs.flomesh.io/docs/releases/docs"
 
 [params.ui]
 navbar_logo = true
