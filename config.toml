@@ -116,7 +116,7 @@ pipy_version = "0.50.0-25"
   version = "All Releases"
   url = "/docs/releases/docs"
 [params.versionbanner]
-	show = false
+	show = true
 	archive = "v1.1"
 	latest = "https://osm-edge-docs.flomesh.io/docs/releases/docs"
 
