@@ -115,10 +115,10 @@ pipy_version = "0.70.0-46"
 [[params.versions]]
   version = "All Releases"
   url = "/docs/releases/docs"
-# [params.versionbanner]
-# 	show = false
-# 	archive = "v1.0"
-# 	latest = "https://osm-edge-docs.flomesh.io/docs/releases/docs"
+[params.versionbanner]
+	show = false
+	archive = "v1.1"
+	latest = "https://osm-edge-docs.flomesh.io/docs/releases/docs"
 
 [params.ui]
 navbar_logo = true
