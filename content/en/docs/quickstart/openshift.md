@@ -7,6 +7,12 @@ weight: 2
 
 If you already have running OpenShift platform, follow these steps to get started quickly.
 
+## Prerequisites
+
+- Openshift version 4.6 or above
+- The [osm-edge CLI](/docs/guides/cli) or the [helm 3 CLI](https://helm.sh/docs/intro/install/) or the OpenShift `oc` CLI.
+
+
 ### Helm Chart Repository
 
 OpenShift starting with version 4.8 comes with Helm Chart Repository installed, and if you are using an older version of OpenShift, you can add the repo via helm command:
