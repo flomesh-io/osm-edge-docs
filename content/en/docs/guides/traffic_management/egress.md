@@ -18,6 +18,12 @@ osm-edge redirects all outbound traffic from a pod within the mesh to the pod's 
 
 While in-mesh traffic is routed based on L7 traffic policies, egress traffic is routed differently and is not subject to in-mesh traffic policies. osm-edge supports access to external services as a passthrough without subjecting such traffic to filtering policies.
 
+## Egress traffic management
+
+There are two ways to manage traffic to external services, one is for the sidecar to send requests to external services directly, which we call sidecar passthrough; the other is for the sidecar to forward traffic to Egress Gateway first, and then Egress Gateway completes the forwarding to external services.
+
+**In this guide, we will show you the common configuration of them.**
+
 ## Configuring Egress
 
 There are two mechanisms to configure Egress:
