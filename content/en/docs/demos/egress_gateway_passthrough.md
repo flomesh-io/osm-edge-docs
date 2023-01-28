@@ -25,7 +25,7 @@ This guide demonstrates a client within the service mesh accessing destinations 
     helm install --namespace fsm --create-namespace --set fsm.version=0.2.0 --set fsm.egressGateway.enabled=true fsm fsm/fsm
     ```
 
-2. Declear egress gateway.
+2. Declare egress gateway.
     
     ```bash
     kubectl apply -f - <<EOF
