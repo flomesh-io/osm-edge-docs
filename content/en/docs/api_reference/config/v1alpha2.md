@@ -1,6 +1,6 @@
 ---
 title: "Config v1alpha2 API Reference"
-description: "Config v1alpha2 API reference documentation"
+description: "Config v1alpha2 API reference documentation."
 type: docs
 ---
 
