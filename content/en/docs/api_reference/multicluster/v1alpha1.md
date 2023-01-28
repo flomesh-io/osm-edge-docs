@@ -1,6 +1,6 @@
 ---
-title: "MultiCluster API Reference"
-description: "MultiCluster API reference documentation"
+title: "MultiCluster v1alpha1 API Reference"
+description: "MultiCluster v1alpha1 API reference documentation"
 type: docs
 ---
 
