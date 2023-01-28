@@ -225,7 +225,7 @@ PluginChainSpec
 </td>
 <td>
 <em>(Optional)</em>
-<p>Spec is the PlugIn specification</p>
+<p>Spec is the PluginChain specification</p>
 <br/>
 <br/>
 <table>
@@ -269,7 +269,7 @@ PluginChainStatus
 </td>
 <td>
 <em>(Optional)</em>
-<p>Status is the status of the PlugIn configuration.</p>
+<p>Status is the status of the PluginChain configuration.</p>
 </td>
 </tr>
 </tbody>
@@ -343,7 +343,7 @@ string
 </td>
 <td>
 <em>(Optional)</em>
-<p>CurrentStatus defines the current status of a Plugin resource.</p>
+<p>CurrentStatus defines the current status of an PluginChain resource.</p>
 </td>
 </tr>
 <tr>
@@ -355,7 +355,7 @@ string
 </td>
 <td>
 <em>(Optional)</em>
-<p>Reason defines the reason for the current status of a Plugin resource.</p>
+<p>Reason defines the reason for the current status of an PluginChain resource.</p>
 </td>
 </tr>
 </tbody>
@@ -517,7 +517,7 @@ k8s.io/apimachinery/pkg/runtime.RawExtension
 (<em>Appears on:</em><a href="#plugin.flomesh.io/v1alpha1.PluginConfig">PluginConfig</a>)
 </p>
 <div>
-<p>PluginConfigStatus is the type used to represent the status of a plugin service resource.</p>
+<p>PluginConfigStatus is the type used to represent the status of a PluginConfig resource.</p>
 </div>
 <table>
 <thead>
@@ -536,7 +536,7 @@ string
 </td>
 <td>
 <em>(Optional)</em>
-<p>CurrentStatus defines the current status of a Plugin resource.</p>
+<p>CurrentStatus defines the current status of an PluginConfig resource.</p>
 </td>
 </tr>
 <tr>
@@ -548,7 +548,7 @@ string
 </td>
 <td>
 <em>(Optional)</em>
-<p>Reason defines the reason for the current status of a Plugin resource.</p>
+<p>Reason defines the reason for the current status of an PluginConfig resource.</p>
 </td>
 </tr>
 </tbody>
@@ -618,7 +618,7 @@ string
 </td>
 <td>
 <em>(Optional)</em>
-<p>CurrentStatus defines the current status of a Plugin resource.</p>
+<p>CurrentStatus defines the current status of an Plugin resource.</p>
 </td>
 </tr>
 <tr>
@@ -630,7 +630,7 @@ string
 </td>
 <td>
 <em>(Optional)</em>
-<p>Reason defines the reason for the current status of a Plugin resource.</p>
+<p>Reason defines the reason for the current status of an Plugin resource.</p>
 </td>
 </tr>
 </tbody>
