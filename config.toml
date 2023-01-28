@@ -99,25 +99,26 @@ project_home = "https://github.com/flomesh-io/osm-edge"
 
 # Version params
 osm_branch = "main"
-osm_edge_version = "v1.2.1"
-fsm_version = "0.1.8"
+osm_edge_version = "v1.3.0"
+fsm_version = "0.2.0"
 min_k8s_version = "v1.19.0"
-pipy_version = "0.70.0-46"
+pipy_version = "0.90.0-18"
 
 [[params.versions]]
-  version = "v1.2 (latest)"
-  url = "https://release-v1-2.osm-edge-docs.flomesh.io/"
+  version = "v1.3 (latest)"
+  url = "https://release-v1-3.osm-edge-docs.flomesh.io/"
 [[params.versions]]
+  version = "v1.2"
+  url = "https://release-v1-2.osm-edge-docs.flomesh.io/"
 [[params.versions]]
   version = "v1.1"
   url = "https://release-v1-1.osm-edge-docs.flomesh.io/"
-[[params.versions]]
 [[params.versions]]
   version = "All Releases"
   url = "/docs/releases/docs"
 [params.versionbanner]
 	show = false
-	archive = "v1.1"
+	archive = "v1.2"
 	latest = "https://osm-edge-docs.flomesh.io/docs/releases/docs"
 
 [params.ui]
