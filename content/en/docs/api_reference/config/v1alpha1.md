@@ -1,9 +1,3 @@
----
-title: "Config v1alpha1 API Reference"
-description: "Config v1alpha1 API reference documentation."
-type: docs
----
-
 <p>Packages:</p>
 <ul>
 <li>
@@ -66,6 +60,77 @@ IngressGatewayCertSpec
 <td>
 <em>(Optional)</em>
 <p>IngressGateway defines the certificate specification for an ingress gateway.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.openservicemesh.io/v1alpha1.ClusterPropertySpec">ClusterPropertySpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.openservicemesh.io/v1alpha1.ClusterSetSpec">ClusterSetSpec</a>)
+</p>
+<div>
+<p>ClusterPropertySpec is the type to represent cluster property.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Name defines the name of cluster property.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>value</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Value defines the name of cluster property.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.openservicemesh.io/v1alpha1.ClusterSetSpec">ClusterSetSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.openservicemesh.io/v1alpha1.MeshConfigSpec">MeshConfigSpec</a>)
+</p>
+<div>
+<p>ClusterSetSpec is the type to represent cluster set.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>properties</code><br/>
+<em>
+<a href="#config.openservicemesh.io/v1alpha1.ClusterPropertySpec">
+[]ClusterPropertySpec
+</a>
+</em>
+</td>
+<td>
+<p>Properties defines properties for cluster.</p>
 </td>
 </tr>
 </tbody>
@@ -230,13 +295,36 @@ service mesh backends.</p>
 </tr>
 <tr>
 <td>
-<code>enableEnvoyActiveHealthChecks</code><br/>
+<code>enableAccessControlPolicy</code><br/>
 <em>
 bool
 </em>
 </td>
 <td>
-<p>EnableEnvoyActiveHealthChecks defines if OSM will Envoy active health
+<p>EnableAccessControlPolicy defines if OSM will use the AccessControl API to allow access control traffic to
+service mesh backends.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enableAccessCertPolicy</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>EnableAccessCertPolicy defines if OSM can issue certificates for external services..</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enableSidecarActiveHealthChecks</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>EnableSidecarActiveHealthChecks defines if OSM will sidecar active health
 checks between services allowed to communicate.</p>
 </td>
 </tr>
@@ -249,6 +337,17 @@ bool
 </td>
 <td>
 <p>EnableRetryPolicy defines if retry policy is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>enablePluginPolicy</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>EnablePluginPolicy defines if plugin policy is enabled.</p>
 </td>
 </tr>
 </tbody>
@@ -352,6 +451,19 @@ MeshConfigSpec
 <table>
 <tr>
 <td>
+<code>clusterSet</code><br/>
+<em>
+<a href="#config.openservicemesh.io/v1alpha1.ClusterSetSpec">
+ClusterSetSpec
+</a>
+</em>
+</td>
+<td>
+<p>ClusterSetSpec defines the configurations of cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
 <code>sidecar</code><br/>
 <em>
 <a href="#config.openservicemesh.io/v1alpha1.SidecarSpec">
@@ -361,6 +473,19 @@ SidecarSpec
 </td>
 <td>
 <p>Sidecar defines the configurations of the proxy sidecar in a mesh.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>repoServer</code><br/>
+<em>
+<a href="#config.openservicemesh.io/v1alpha1.RepoServerSpec">
+RepoServerSpec
+</a>
+</em>
+</td>
+<td>
+<p>RepoServer defines the configurations of pipy repo server.</p>
 </td>
 </tr>
 <tr>
@@ -413,6 +538,19 @@ FeatureFlags
 </td>
 <td>
 <p>FeatureFlags defines the feature flags for a mesh instance.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>pluginChains</code><br/>
+<em>
+<a href="#config.openservicemesh.io/v1alpha1.PluginChainsSpec">
+PluginChainsSpec
+</a>
+</em>
+</td>
+<td>
+<p>PluginChains defines the default plugin chains.</p>
 </td>
 </tr>
 </table>
@@ -438,6 +576,19 @@ FeatureFlags
 <tbody>
 <tr>
 <td>
+<code>clusterSet</code><br/>
+<em>
+<a href="#config.openservicemesh.io/v1alpha1.ClusterSetSpec">
+ClusterSetSpec
+</a>
+</em>
+</td>
+<td>
+<p>ClusterSetSpec defines the configurations of cluster.</p>
+</td>
+</tr>
+<tr>
+<td>
 <code>sidecar</code><br/>
 <em>
 <a href="#config.openservicemesh.io/v1alpha1.SidecarSpec">
@@ -447,6 +598,19 @@ SidecarSpec
 </td>
 <td>
 <p>Sidecar defines the configurations of the proxy sidecar in a mesh.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>repoServer</code><br/>
+<em>
+<a href="#config.openservicemesh.io/v1alpha1.RepoServerSpec">
+RepoServerSpec
+</a>
+</em>
+</td>
+<td>
+<p>RepoServer defines the configurations of pipy repo server.</p>
 </td>
 </tr>
 <tr>
@@ -499,6 +663,19 @@ FeatureFlags
 </td>
 <td>
 <p>FeatureFlags defines the feature flags for a mesh instance.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>pluginChains</code><br/>
+<em>
+<a href="#config.openservicemesh.io/v1alpha1.PluginChainsSpec">
+PluginChainsSpec
+</a>
+</em>
+</td>
+<td>
+<p>PluginChains defines the default plugin chains.</p>
 </td>
 </tr>
 </tbody>
@@ -554,6 +731,348 @@ TracingSpec
 <p>Tracing defines OSM&rsquo;s tracing configuration.</p>
 </td>
 </tr>
+<tr>
+<td>
+<code>remoteLogging</code><br/>
+<em>
+<a href="#config.openservicemesh.io/v1alpha1.RemoteLoggingSpec">
+RemoteLoggingSpec
+</a>
+</em>
+</td>
+<td>
+<p>RemoteLogging defines OSM&rsquo;s remot logging configuration.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.openservicemesh.io/v1alpha1.PluginChainSpec">PluginChainSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.openservicemesh.io/v1alpha1.PluginChainsSpec">PluginChainsSpec</a>)
+</p>
+<div>
+<p>PluginChainSpec is the type to represent plugin chain.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>plugin</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Plugin defines the name of plugin</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>priority</code><br/>
+<em>
+float32
+</em>
+</td>
+<td>
+<p>Priority defines the priority of plugin</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>disable</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>Disable defines the visibility of plugin</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.openservicemesh.io/v1alpha1.PluginChainsSpec">PluginChainsSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.openservicemesh.io/v1alpha1.MeshConfigSpec">MeshConfigSpec</a>)
+</p>
+<div>
+<p>PluginChainsSpec is the type to represent plugin chains.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>inbound-tcp</code><br/>
+<em>
+<a href="#config.openservicemesh.io/v1alpha1.PluginChainSpec">
+[]PluginChainSpec
+</a>
+</em>
+</td>
+<td>
+<p>InboundTCPChains defines inbound tcp chains</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>inbound-http</code><br/>
+<em>
+<a href="#config.openservicemesh.io/v1alpha1.PluginChainSpec">
+[]PluginChainSpec
+</a>
+</em>
+</td>
+<td>
+<p>InboundHTTPChains defines inbound http chains</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>outbound-tcp</code><br/>
+<em>
+<a href="#config.openservicemesh.io/v1alpha1.PluginChainSpec">
+[]PluginChainSpec
+</a>
+</em>
+</td>
+<td>
+<p>OutboundTCPChains defines outbound tcp chains</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>outbound-http</code><br/>
+<em>
+<a href="#config.openservicemesh.io/v1alpha1.PluginChainSpec">
+[]PluginChainSpec
+</a>
+</em>
+</td>
+<td>
+<p>OutboundHTTPChains defines outbound http chains</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.openservicemesh.io/v1alpha1.RemoteLoggingSpec">RemoteLoggingSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.openservicemesh.io/v1alpha1.ObservabilitySpec">ObservabilitySpec</a>)
+</p>
+<div>
+<p>RemoteLoggingSpec is the type to represent OSM&rsquo;s remote logging configuration.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>enable</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>Enable defines a boolean indicating if the sidecars are enabled for remote logging.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>port</code><br/>
+<em>
+uint16
+</em>
+</td>
+<td>
+<p>Port defines the remote loggings port.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>address</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Address defines the remote logging&rsquo;s hostname.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>endpoint</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Endpoint defines the API endpoint for remote logging requests sent to the collector.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>authorization</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Authorization defines the access entity that allows to authorize someone in remote logging service.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sampledFraction</code><br/>
+<em>
+float32
+</em>
+</td>
+<td>
+<p>SampledFraction defines the sampled fraction.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.openservicemesh.io/v1alpha1.RepoServerSpec">RepoServerSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.openservicemesh.io/v1alpha1.MeshConfigSpec">MeshConfigSpec</a>)
+</p>
+<div>
+<p>RepoServerSpec is the type to represent repo server.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ipaddr</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>IPAddr of the pipy repo server</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>codebase</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Codebase is the folder used by osmController</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="config.openservicemesh.io/v1alpha1.SidecarDriverSpec">SidecarDriverSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#config.openservicemesh.io/v1alpha1.SidecarSpec">SidecarSpec</a>)
+</p>
+<div>
+<p>SidecarDriverSpec is the type to represent OSM&rsquo;s sidecar driver define.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>sidecarName</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>SidecarName defines the name of the sidecar driver.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sidecarImage</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>SidecarImage defines the container image used for the proxy sidecar.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sidecarImageWindowsImage</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>SidecarWindowsImage defines the windows container image used for the proxy sidecar.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>initContainerImage</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>InitContainerImage defines the container image used for the init container injected to meshed pods.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>proxyServerPort</code><br/>
+<em>
+uint32
+</em>
+</td>
+<td>
+<p>ProxyServerPort is the port on which the Discovery Service listens for new connections from Sidecars</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sidecarDisabledMTLS</code><br/>
+<em>
+bool
+</em>
+</td>
+<td>
+<p>SidecarDisabledMTLS defines if mTLS are disabled.</p>
+</td>
+</tr>
 </tbody>
 </table>
 <h3 id="config.openservicemesh.io/v1alpha1.SidecarSpec">SidecarSpec
@@ -602,19 +1121,7 @@ string
 </em>
 </td>
 <td>
-<p>SidecarClass defines the class used for the proxy sidecar.</p>
-</td>
-</tr>
-<tr>
-<td>
-<code>sidecarDrivers</code><br/>
-<em>
-<a href="#config.openservicemesh.io/v1alpha2.SidecarDriverSpec">
-[]SidecarDriverSpec
-</em>
-</td>
-<td>
-<p>SidecarDrivers defines the sidecar supported.</p>
+<p>SidecarClass defines the container provider used for the proxy sidecar.</p>
 </td>
 </tr>
 <tr>
@@ -648,6 +1155,19 @@ string
 </td>
 <td>
 <p>InitContainerImage defines the container image used for the init container injected to meshed pods.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sidecarDrivers</code><br/>
+<em>
+<a href="#config.openservicemesh.io/v1alpha1.SidecarDriverSpec">
+[]SidecarDriverSpec
+</a>
+</em>
+</td>
+<td>
+<p>SidecarDrivers defines the sidecar supported.</p>
 </td>
 </tr>
 <tr>
@@ -718,7 +1238,7 @@ bool
 <td>
 <code>port</code><br/>
 <em>
-int16
+uint16
 </em>
 </td>
 <td>
@@ -747,6 +1267,17 @@ string
 <p>Endpoint defines the API endpoint for tracing requests sent to the collector.</p>
 </td>
 </tr>
+<tr>
+<td>
+<code>sampledFraction</code><br/>
+<em>
+float32
+</em>
+</td>
+<td>
+<p>SampledFraction defines the sampled fraction.</p>
+</td>
+</tr>
 </tbody>
 </table>
 <h3 id="config.openservicemesh.io/v1alpha1.TrafficSpec">TrafficSpec
@@ -765,6 +1296,17 @@ string
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<code>interceptionMode</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>InterceptionMode defines a string indicating which traffic interception mode is used.</p>
+</td>
+</tr>
 <tr>
 <td>
 <code>enableEgress</code><br/>
@@ -839,5 +1381,5 @@ for all inbound and ingress traffic in the mesh.</p>
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>893ff872</code>.
+on git commit <code>06a57e32</code>.
 </em></p>
