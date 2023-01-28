@@ -618,7 +618,7 @@ string
 </td>
 <td>
 <em>(Optional)</em>
-<p>CurrentStatus defines the current status of an AccessCert resource.</p>
+<p>CurrentStatus defines the current status of an Plugin resource.</p>
 </td>
 </tr>
 <tr>
@@ -630,7 +630,7 @@ string
 </td>
 <td>
 <em>(Optional)</em>
-<p>Reason defines the reason for the current status of an AccessCert resource.</p>
+<p>Reason defines the reason for the current status of an Plugin resource.</p>
 </td>
 </tr>
 </tbody>
