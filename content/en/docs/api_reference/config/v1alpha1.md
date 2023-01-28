@@ -1,3 +1,9 @@
+---
+title: "Config API Reference"
+description: "Config API reference documentation"
+type: docs
+---
+
 <p>Packages:</p>
 <ul>
 <li>

@@ -1,3 +1,9 @@
+---
+title: "Plugin API Reference"
+description: "Plugin API reference documentation"
+type: docs
+---
+
 <p>Packages:</p>
 <ul>
 <li>

@@ -1,3 +1,9 @@
+---
+title: "Policy API Reference"
+description: "Policy API reference documentation"
+type: docs
+---
+
 <p>Packages:</p>
 <ul>
 <li>
