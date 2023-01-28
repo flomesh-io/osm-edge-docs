@@ -16,6 +16,492 @@ type: docs
 </div>
 Resource Types:
 <ul></ul>
+<h3 id="policy.openservicemesh.io/v1alpha1.AccessCert">AccessCert
+</h3>
+<div>
+<p>AccessCert is the type used to represent an AccessCert policy.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Object&rsquo;s metadata</p>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.AccessCertSpec">
+AccessCertSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Spec is the Access Cert specification</p>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>subjectAltNames</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>SubjectAltNames defines the Subject Alternative Names (domain names and IP addresses) secured by the certificate.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>secret</code><br/>
+<em>
+<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#secretreference-v1-core">
+Kubernetes core/v1.SecretReference
+</a>
+</em>
+</td>
+<td>
+<p>Secret defines the secret in which the certificate is stored.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.AccessCertStatus">
+AccessCertStatus
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Status is the status of the AccessCert configuration.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="policy.openservicemesh.io/v1alpha1.AccessCertSpec">AccessCertSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.AccessCert">AccessCert</a>)
+</p>
+<div>
+<p>AccessCertSpec is the type used to represent the AccessCert policy specification.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>subjectAltNames</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>SubjectAltNames defines the Subject Alternative Names (domain names and IP addresses) secured by the certificate.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>secret</code><br/>
+<em>
+<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#secretreference-v1-core">
+Kubernetes core/v1.SecretReference
+</a>
+</em>
+</td>
+<td>
+<p>Secret defines the secret in which the certificate is stored.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="policy.openservicemesh.io/v1alpha1.AccessCertStatus">AccessCertStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.AccessCert">AccessCert</a>)
+</p>
+<div>
+<p>AccessCertStatus is the type used to represent the status of an AccessCert resource.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>currentStatus</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>CurrentStatus defines the current status of an AccessCert resource.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>reason</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Reason defines the reason for the current status of an AccessCert resource.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="policy.openservicemesh.io/v1alpha1.AccessControl">AccessControl
+</h3>
+<div>
+<p>AccessControl is the type used to represent an AccessControl policy.
+An AccessControl policy authorizes one or more backends to accept
+ingress traffic from one or more sources.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Object&rsquo;s metadata</p>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.AccessControlSpec">
+AccessControlSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Spec is the Ingress backend policy specification</p>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>backends</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.AccessControlBackendSpec">
+[]AccessControlBackendSpec
+</a>
+</em>
+</td>
+<td>
+<p>Backends defines the list of backends the AccessControl policy applies to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sources</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.AccessControlSourceSpec">
+[]AccessControlSourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>Sources defines the list of sources the AccessControl policy applies to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>matches</code><br/>
+<em>
+<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#typedlocalobjectreference-v1-core">
+[]Kubernetes core/v1.TypedLocalObjectReference
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Matches defines the list of object references the AccessControl policy should match on.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td>
+<code>status</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.AccessControlStatus">
+AccessControlStatus
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Status is the status of the AccessControl configuration.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="policy.openservicemesh.io/v1alpha1.AccessControlBackendSpec">AccessControlBackendSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.AccessControlSpec">AccessControlSpec</a>)
+</p>
+<div>
+<p>AccessControlBackendSpec is the type used to represent a Backend specified in the AccessControl policy specification.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Name defines the name of the backend.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>port</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.PortSpec">
+PortSpec
+</a>
+</em>
+</td>
+<td>
+<p>Port defines the specification for the backend&rsquo;s port.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>tls</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.TLSSpec">
+TLSSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>TLS defines the specification for the backend&rsquo;s TLS configuration.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="policy.openservicemesh.io/v1alpha1.AccessControlSourceSpec">AccessControlSourceSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.AccessControlSpec">AccessControlSpec</a>)
+</p>
+<div>
+<p>AccessControlSourceSpec is the type used to represent the Source in the list of Sources specified in an
+AccessControl policy specification.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>kind</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Kind defines the kind for the source in the AccessControl policy.
+Must be one of: Service, AuthenticatedPrincipal, IPRange</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Name defines the name of the source for the given Kind.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>namespace</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Namespace defines the namespace for the given source.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="policy.openservicemesh.io/v1alpha1.AccessControlSpec">AccessControlSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.AccessControl">AccessControl</a>)
+</p>
+<div>
+<p>AccessControlSpec is the type used to represent the AccessControl policy specification.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>backends</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.AccessControlBackendSpec">
+[]AccessControlBackendSpec
+</a>
+</em>
+</td>
+<td>
+<p>Backends defines the list of backends the AccessControl policy applies to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>sources</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.AccessControlSourceSpec">
+[]AccessControlSourceSpec
+</a>
+</em>
+</td>
+<td>
+<p>Sources defines the list of sources the AccessControl policy applies to.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>matches</code><br/>
+<em>
+<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#typedlocalobjectreference-v1-core">
+[]Kubernetes core/v1.TypedLocalObjectReference
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Matches defines the list of object references the AccessControl policy should match on.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="policy.openservicemesh.io/v1alpha1.AccessControlStatus">AccessControlStatus
+</h3>
+<p>
+(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.AccessControl">AccessControl</a>)
+</p>
+<div>
+<p>AccessControlStatus is the type used to represent the status of an AccessControl resource.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>currentStatus</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>CurrentStatus defines the current status of an AccessControl resource.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>reason</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Reason defines the reason for the current status of an AccessControl resource.</p>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="policy.openservicemesh.io/v1alpha1.BackendSpec">BackendSpec
 </h3>
 <p>
@@ -247,6 +733,337 @@ The destination port of the traffic is matched against the list of Ports specifi
 </tr>
 </tbody>
 </table>
+<h3 id="policy.openservicemesh.io/v1alpha1.EgressBindingSubject">EgressBindingSubject
+</h3>
+<p>
+(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.EgressPolicyGatewayRule">EgressPolicyGatewayRule</a>)
+</p>
+<div>
+<p>EgressBindingSubject is a Kubernetes objects which should be allowed egress</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>name</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>namespace</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="policy.openservicemesh.io/v1alpha1.EgressGateway">EgressGateway
+</h3>
+<div>
+<p>EgressGateway is the type used to represent an Egress Gateway policy.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>metadata</code><br/>
+<em>
+<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#objectmeta-v1-meta">
+Kubernetes meta/v1.ObjectMeta
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Object&rsquo;s metadata</p>
+Refer to the Kubernetes API documentation for the fields of the
+<code>metadata</code> field.
+</td>
+</tr>
+<tr>
+<td>
+<code>spec</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.EgressGatewaySpec">
+EgressGatewaySpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Spec is the EgressGateway policy specification</p>
+<br/>
+<br/>
+<table>
+<tr>
+<td>
+<code>global</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.GatewayBindingSubject">
+[]GatewayBindingSubject
+</a>
+</em>
+</td>
+<td>
+<p>GlobalEgressGateways defines the list of Global egress gateway.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>rules</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.EgressPolicyGatewayRule">
+[]EgressPolicyGatewayRule
+</a>
+</em>
+</td>
+<td>
+<p>EgressPolicyGatewayRules defines the rules of gateway based egress policies.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>matches</code><br/>
+<em>
+<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#typedlocalobjectreference-v1-core">
+[]Kubernetes core/v1.TypedLocalObjectReference
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Matches defines the list of object references the EgressGateway policy should match on.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="policy.openservicemesh.io/v1alpha1.EgressGatewaySpec">EgressGatewaySpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.EgressGateway">EgressGateway</a>)
+</p>
+<div>
+<p>EgressGatewaySpec is the type used to represent the Egress Gateway specification.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>global</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.GatewayBindingSubject">
+[]GatewayBindingSubject
+</a>
+</em>
+</td>
+<td>
+<p>GlobalEgressGateways defines the list of Global egress gateway.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>rules</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.EgressPolicyGatewayRule">
+[]EgressPolicyGatewayRule
+</a>
+</em>
+</td>
+<td>
+<p>EgressPolicyGatewayRules defines the rules of gateway based egress policies.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>matches</code><br/>
+<em>
+<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#typedlocalobjectreference-v1-core">
+[]Kubernetes core/v1.TypedLocalObjectReference
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>Matches defines the list of object references the EgressGateway policy should match on.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="policy.openservicemesh.io/v1alpha1.EgressPolicyGatewayRule">EgressPolicyGatewayRule
+</h3>
+<p>
+(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.EgressGatewaySpec">EgressGatewaySpec</a>)
+</p>
+<div>
+<p>EgressPolicyGatewayRule is the type used to represent the rule of Egress Gateway specification based egress policies.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>egressPolicies</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.EgressBindingSubject">
+[]EgressBindingSubject
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>egressGateways</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.GatewayBindingSubject">
+[]GatewayBindingSubject
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="policy.openservicemesh.io/v1alpha1.EgressSourceCertSpec">EgressSourceCertSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.EgressSourceMTLSSpec">EgressSourceMTLSSpec</a>)
+</p>
+<div>
+<p>EgressSourceCertSpec is the type to represent the certificate specification for an egress source.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>sn</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+<p>SerialNumber defines the serial number of the certificate.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>subjectAltNames</code><br/>
+<em>
+[]string
+</em>
+</td>
+<td>
+<p>SubjectAltNames defines the Subject Alternative Names (domain names and IP addresses) secured by the certificate.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>expiration</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>Expiration defines the expiration of the certificate.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>secret</code><br/>
+<em>
+<a href="https://v1-20.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.20/#secretreference-v1-core">
+Kubernetes core/v1.SecretReference
+</a>
+</em>
+</td>
+<td>
+<p>Secret defines the secret in which the certificate is stored.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="policy.openservicemesh.io/v1alpha1.EgressSourceMTLSSpec">EgressSourceMTLSSpec
+</h3>
+<p>
+(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.EgressSourceSpec">EgressSourceSpec</a>)
+</p>
+<div>
+<p>EgressSourceMTLSSpec is the type to represent the mTLS specification for an egress source.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>issuer</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>cert</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.EgressSourceCertSpec">
+EgressSourceCertSpec
+</a>
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="policy.openservicemesh.io/v1alpha1.EgressSourceSpec">EgressSourceSpec
 </h3>
 <p>
@@ -294,6 +1111,20 @@ string
 </td>
 <td>
 <p>Namespace defines the namespace for the given source.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>mtls</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.EgressSourceMTLSSpec">
+EgressSourceMTLSSpec
+</a>
+</em>
+</td>
+<td>
+<em>(Optional)</em>
+<p>MTLS defines the certificate specification for the egress source.</p>
 </td>
 </tr>
 </tbody>
@@ -391,6 +1222,189 @@ The destination port of the traffic is matched against the list of Ports specifi
 </tr>
 </tbody>
 </table>
+<h3 id="policy.openservicemesh.io/v1alpha1.GatewayBindingSubject">GatewayBindingSubject
+</h3>
+<p>
+(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.EgressGatewaySpec">EgressGatewaySpec</a>, <a href="#policy.openservicemesh.io/v1alpha1.EgressPolicyGatewayRule">EgressPolicyGatewayRule</a>)
+</p>
+<div>
+<p>GatewayBindingSubject is a Kubernetes objects which should be allowed forward to</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>service</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>namespace</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+<code>weight</code><br/>
+<em>
+int
+</em>
+</td>
+<td>
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="policy.openservicemesh.io/v1alpha1.HTTPCircuitBreaking">HTTPCircuitBreaking
+</h3>
+<p>
+(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.HTTPConnectionSettings">HTTPConnectionSettings</a>)
+</p>
+<div>
+<p>HTTPCircuitBreaking defines the HTTP Circuit Breaking settings for an
+upstream host.</p>
+</div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>statTimeWindow</code><br/>
+<em>
+<a href="https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1#Duration">
+Kubernetes meta/v1.Duration
+</a>
+</em>
+</td>
+<td>
+<p>StatTimeWindow specifies statistical time period of circuit breaking</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>minRequestAmount</code><br/>
+<em>
+uint32
+</em>
+</td>
+<td>
+<p>MinRequestAmount specifies minimum number of requests (in an active statistic time span) that can trigger circuit breaking.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>degradedTimeWindow</code><br/>
+<em>
+<a href="https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1#Duration">
+Kubernetes meta/v1.Duration
+</a>
+</em>
+</td>
+<td>
+<p>DegradedTimeWindow specifies recovery timeout (in seconds) when circuit breaker opens.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>slowTimeThreshold</code><br/>
+<em>
+<a href="https://pkg.go.dev/k8s.io/apimachinery/pkg/apis/meta/v1#Duration">
+Kubernetes meta/v1.Duration
+</a>
+</em>
+</td>
+<td>
+<p>SlowTimeThreshold specifies the time threshold of slow request</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>slowAmountThreshold</code><br/>
+<em>
+uint32
+</em>
+</td>
+<td>
+<p>SlowAmountThreshold specifies the amount threshold of slow request</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>slowRatioThreshold</code><br/>
+<em>
+float32
+</em>
+</td>
+<td>
+<p>SlowRatioThreshold specifies the ratio threshold of slow request</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>errorAmountThreshold</code><br/>
+<em>
+uint32
+</em>
+</td>
+<td>
+<p>ErrorAmountThreshold specifies the amount threshold of error request</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>errorRatioThreshold</code><br/>
+<em>
+float32
+</em>
+</td>
+<td>
+<p>ErrorRatioThreshold specifies the ratio threshold of error request</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>degradedStatusCode</code><br/>
+<em>
+int32
+</em>
+</td>
+<td>
+<p>DegradedStatusCode specifies the degraded http status code of circuit breaking</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>degradedResponseContent</code><br/>
+<em>
+string
+</em>
+</td>
+<td>
+<p>DegradedResponseContent specifies the degraded http response content of circuit breaking</p>
+</td>
+</tr>
+</tbody>
+</table>
 <h3 id="policy.openservicemesh.io/v1alpha1.HTTPConnectionSettings">HTTPConnectionSettings
 </h3>
 <p>
@@ -465,6 +1479,19 @@ uint32
 <p>MaxRetries specifies the maximum number of parallel retries
 allowed to the upstream host.
 Defaults to 4294967295 (2^32 - 1) if not specified.</p>
+</td>
+</tr>
+<tr>
+<td>
+<code>circuitBreaking</code><br/>
+<em>
+<a href="#policy.openservicemesh.io/v1alpha1.HTTPCircuitBreaking">
+HTTPCircuitBreaking
+</a>
+</em>
+</td>
+<td>
+<p>CircuitBreaking specifies the HTTP connection circuit breaking setting.</p>
 </td>
 </tr>
 </tbody>
@@ -576,7 +1603,8 @@ uint32
 <p>ResponseStatusCode defines the HTTP status code to use for responses
 to rate limited requests. Code must be in the 400-599 (inclusive)
 error range. If not specified, a default of 429 (Too Many Requests) is used.
-</p>
+See <a href="https://www.envoyproxy.io/docs/envoy/latest/api-v3/type/v3/http_status.proto#enum-type-v3-statuscode">https://www.envoyproxy.io/docs/envoy/latest/api-v3/type/v3/http_status.proto#enum-type-v3-statuscode</a>
+for the list of HTTP status codes supported by Envoy.</p>
 </td>
 </tr>
 <tr>
@@ -635,7 +1663,7 @@ applied per HTTP route.</p>
 (<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.UpstreamTrafficSettingSpec">UpstreamTrafficSettingSpec</a>)
 </p>
 <div>
-<p>HTTPRouteSpec defines the settings correspondng to an HTTP route</p>
+<p>HTTPRouteSpec defines the settings corresponding to an HTTP route</p>
 </div>
 <table>
 <thead>
@@ -988,7 +2016,7 @@ configured rate limit status.</p>
 <h3 id="policy.openservicemesh.io/v1alpha1.PortSpec">PortSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.BackendSpec">BackendSpec</a>, <a href="#policy.openservicemesh.io/v1alpha1.EgressSpec">EgressSpec</a>)
+(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.AccessControlBackendSpec">AccessControlBackendSpec</a>, <a href="#policy.openservicemesh.io/v1alpha1.BackendSpec">BackendSpec</a>, <a href="#policy.openservicemesh.io/v1alpha1.EgressSpec">EgressSpec</a>)
 </p>
 <div>
 <p>PortSpec is the type used to represent the Port in the list of Ports specified in an Egress policy specification.</p>
@@ -1438,7 +2466,7 @@ rate that are allowed in a short period of time.</p>
 <h3 id="policy.openservicemesh.io/v1alpha1.TLSSpec">TLSSpec
 </h3>
 <p>
-(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.BackendSpec">BackendSpec</a>)
+(<em>Appears on:</em><a href="#policy.openservicemesh.io/v1alpha1.AccessControlBackendSpec">AccessControlBackendSpec</a>, <a href="#policy.openservicemesh.io/v1alpha1.BackendSpec">BackendSpec</a>)
 </p>
 <div>
 <p>TLSSpec is the type used to represent the backend&rsquo;s TLS configuration.</p>
@@ -1732,5 +2760,5 @@ string
 <hr/>
 <p><em>
 Generated with <code>gen-crd-api-reference-docs</code>
-on git commit <code>893ff872</code>.
+on git commit <code>06a57e32</code>.
 </em></p>
