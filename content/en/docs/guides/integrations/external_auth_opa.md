@@ -33,11 +33,11 @@ cd <PATH_TO_OSM_REPO>
 demo/run-osm-demo.sh  # wait for all services to come up
 ```
 
-- When osm-edge's demo is up and running, proceed to deploy `opa-envoy-plugin`. osm-edge provides a [curated standalone opa-envoy-plugin deployment chart](https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml) which exposes `opa-envoy-plugin`'s gRPC port (default `9191`) through a service, over the network. This is the endpoint that osm-edge will configure the proxies with when enabling external authorization. The following snippet creates an `opa` namespace and deploys `opa-envoy-plugin` in it with minimal deny-all configuration:
+- When osm-edge's demo is up and running, proceed to deploy `opa-envoy-plugin`. osm-edge provides a [curated standalone opa-envoy-plugin deployment chart](https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml) which exposes `opa-envoy-plugin`'s gRPC port (default `9191`) through a service, over the network. This is the endpoint that osm-edge will configure the proxies with when enabling external authorization. The following snippet creates an `opa` namespace and deploys `opa-envoy-plugin` in it with minimal deny-all configuration:
 
 ```bash
 kubectl create namespace opa
-kubectl apply -f https://raw.githubusercontent.com/openservicemesh/osm-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml
+kubectl apply -f https://raw.githubusercontent.com/flomesh-io/osm-edge-docs/{{< param osm_branch >}}/manifests/opa/deploy-opa-envoy.yaml
 ```
 
 - Once osm-edge's demo is up and running, proceed to edit osm-edge's MeshConfig to add external authorization to the mesh. For that, configure the `inboundExternalAuthorization` to point to the remote external authorization endpoint as follows:
