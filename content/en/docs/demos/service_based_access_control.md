@@ -17,7 +17,7 @@ This guide demonstrates an access control mechanism applied at Service level to 
 
 ## Demo
 
-deploy the sample services `httpbin` and `curl`
+deploy the sample services `httpbin` and `curl`.
 
 ```shell
 #Mock target service

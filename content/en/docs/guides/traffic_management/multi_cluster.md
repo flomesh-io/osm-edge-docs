@@ -62,7 +62,85 @@ Flomesh team aims to help the community by providing solutions to these problems
 
  ![](/docs/images/mcs/fsm-architecture-managed-cluster.png)
 
-FSM provides a set of Kubernetes custom resources (CRD) for cluster connector, and make use of [KEP-1645](https://github.com/kubernetes/enhancements/tree/master/keps/sig-multicluster/1645-multi-cluster-services-api) `ServiceExport` and `ServiceImport` API for exporting and importing services.
+FSM provides a set of Kubernetes custom resources (CRD) for cluster connector, and make use of [KEP-1645](https://github.com/kubernetes/enhancements/tree/master/keps/sig-multicluster/1645-multi-cluster-services-api) `ServiceExport` and `ServiceImport` API for exporting and importing services. So let's take a quick look at them
+
+### `Cluster` CRD
+
+When registering a cluster, we provide the following information.
+
+- The address (e.g. `gatewayHost: cluster-A.host`) and port (e.g. `gatewayPort: 80`) of the cluster
+- `kubeconfig` to access the cluster, containing the api-server address and information such as the certificate and secret key
+
+```yaml
+apiVersion: flomesh.io/v1alpha1
+kind: Cluster
+metadata:
+  name: cluster-A
+spec:
+  gatewayHost: cluster-A.host
+  gatewayPort: 80
+  kubeconfig: |+
+    ---
+    apiVersion: v1
+    clusters:
+    - cluster:
+        certificate-authority-data:
+        server: https://cluster-A.host:6443
+      name: cluster-A
+    contexts:
+    - context:
+        cluster: cluster-A
+        user: admin@cluster-A
+      name: cluster-A
+    current-context: cluster-A
+    kind: Config
+    preferences: {}
+    users:
+    - name: admin@cluster-A
+      user:
+        client-certificate-data:
+        client-key-data:
+```
+
+### `ServiceExport` and `ServiceImport` CRD
+
+For cross-cluster service registration, FSM provides the `ServiceExport` and `ServiceImport` CRDs from [KEP-1645: Multi-Cluster Services API](https://github.com/kubernetes/enhancements/tree/master/keps/sig-multicluster/1645-multi-cluster-services-api) for `ServiceExports.flomesh.io` and `ServiceImports.flomesh.io`. The former is used to register services with the control plane and declare that the application can provide services across clusters, while the latter is used to reference services from other clusters. 
+
+For clusters `cluster-A` and `cluster-B` that join the cluster federation, a `Service` named `foo` exists under the namespace `bar` of cluster `cluster-A` and a `ServiceExport` `foo` of the same name is created under the same namespace. A `ServiceImport` resource with the same name is automatically created under the namespace `bar` of cluster `cluster-B` (if it does not exist, it is automatically created).
+
+```yaml
+// in cluster-A
+apiVersion: v1
+kind: Service
+metadata:
+  name: foo
+  namespace: bar
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: foo
+---
+apiVersion: flomesh.io/v1alpha1
+kind: ServiceExport
+metadata:
+  name: foo
+  namespace: bar
+---
+// in cluster-B
+apiVersion: flomesh.io/v1alpha1
+kind: ServiceImport
+metadata:
+  name: foo
+  namespace: bar
+```
+
+The YAML snippet above shows how to register the `foo` service to the control plane of a multi-cluster. In the following, we will walk through a slightly more complex scenario of cross-cluster service registration and traffic scheduling.
+
+Okay that was a quick introduction to the CRDs, so let's continue with our demo.
+
+
+For detailed CRD reference, refer to [Multicluster API Reference](/docs/api_reference/multicluster)
 
 ## Demo
 

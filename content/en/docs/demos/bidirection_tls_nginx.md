@@ -1,11 +1,11 @@
 ---
-title: "Bi-direction TLS"
+title: "Bi-direction TLS with NginX Ingress"
 description: "Configuring different TLS certificates for Ingress and Egress"
 type: docs
 weight: 13
 ---
 
-This guide will demonstrate with multiple scenarios on how to configure different TLS certificates for Ingress and Egress communication.
+This guide will demonstrate with multiple scenarios on how to configure different TLS certificates for Nginx Ingress and Egress communication.
 
 ## Prerequisites
 
@@ -13,11 +13,7 @@ This guide will demonstrate with multiple scenarios on how to configure differen
 - Have osm-edge installed.
 - Have `kubectl` available to interact with the API server.
 - Have `osm` CLI available for managing the service mesh.
-- Have FSM or Kubernetes Nginx Ingress Controller installed. Demo below will be using Nginx Ingress as a sample for demonstration
-
-## Demo Architecture
-
-![](/docs/images/Bidirectional_mTLS.png)
+- Have Kubernetes Nginx Ingress Controller installed. Refer to the [deployment guide](https://kubernetes.github.io/ingress-nginx/deploy/) to install it.
 
 ### Deploy demo pods
 
@@ -466,7 +462,7 @@ kubectl delete secrets -n osm-system egress-middle-cert
 
 #### Test Commands
 
-Traffic flow
+Traffic flow:
 
 Client --**http**--> Nginx Ingress Controller
 

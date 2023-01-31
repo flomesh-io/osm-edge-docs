@@ -2,7 +2,7 @@
 title: "Access Control Management"
 description: "Using access control policies to access services with the service mesh."
 type: docs
-weight: 9
+weight: 10
 ---
 
 # Access Control Management
