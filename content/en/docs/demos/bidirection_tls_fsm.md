@@ -21,8 +21,11 @@ if you haven't yet installed FSM Ingress controller, you can install that quickl
 
 ```bash
 helm repo add fsm https://charts.flomesh.io
-helm install --namespace flomesh --create-namespace --version=0.2.0 -f https://raw.githubusercontent.com/flomesh-io/fsm/release-v0.2/samples/mTLS-ingress/values.yaml fsm fsm/fsm
 
+helm install --namespace flomesh --create-namespace \
+    --set fsm.version=0.2.0 \
+    --set fsm.ingress.tls.enabled=true \
+    --set fsm.ingress.tls.mTLS=true fsm fsm/fsm
 
 kubectl wait --namespace flomesh \
   --for=condition=ready pod \
@@ -617,8 +620,11 @@ EOF
 #### Replace client TLS
 
 ```shell
+curl https://raw.githubusercontent.com/flomesh-io/fsm/main/samples/mTLS-ingress/client.crt -o client.crt
+curl https://raw.githubusercontent.com/flomesh-io/fsm/main/samples/mTLS-ingress/client.key -o client.key
+
 kubectl create secret generic -n egress-client egress-client-secret \
-  --from-file=ca.crt=./ca.crt \
+  --from-file=ca.crt=./pipy-ca.crt \
   --from-file=tls.crt=./client.crt \
   --from-file=tls.key=./client.key 
 
@@ -816,8 +822,12 @@ kubectl create secret generic -n egress-middle ingress-pipy-ca-secret \
 #### Replace client TLS certificate
 
 ```shell
+
+curl https://raw.githubusercontent.com/flomesh-io/fsm/main/samples/mTLS-ingress/client.crt -o client.crt
+curl https://raw.githubusercontent.com/flomesh-io/fsm/main/samples/mTLS-ingress/client.key -o client.key
+
 kubectl create secret generic -n egress-client egress-client-secret \
-  --from-file=ca.crt=./ca.crt \
+  --from-file=ca.crt=./pipy-ca.crt \
   --from-file=tls.crt=./client.crt \
   --from-file=tls.key=./client.key 
 
