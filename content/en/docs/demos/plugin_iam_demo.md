@@ -19,7 +19,7 @@ Corresponding to this are two `PluginChain`s:
 - `token-injector-chain` 
 - `token-verifier-chain`
 
-![](/docs/images/plugins/16756463922829.gif)
+![](/docs/images/plugins/auth-via-sidecar.gif)
 
 ## Prerequisites
 
