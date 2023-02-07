@@ -27,7 +27,7 @@ For detailed information on plugin CRDs, refer to the [Plugin API document](/doc
 
 ### Built-in variables
 
-Below is a list of `built-in` PipyJS variables which can be imported into your custom plugins via PipyJS `import` keyword.
+Below is a list of `built-in` PipyJS variables which can be imported into your custom plugins via PipyJS [import](https://flomesh.io/pipy/docs/en/reference/api/Configuration/import) keyword.
 
 | variable        | type    | namespace                                          | suited for Chains                     | description                          |
 | ----------- | ------- | --------------------------------------------- | ----------------------------- | --------------------------- |
