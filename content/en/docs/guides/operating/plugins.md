@@ -25,6 +25,32 @@ osm-edge provides three new CRDs for extensibility:
 
 For detailed information on plugin CRDs, refer to the [Plugin API document](/docs/api_reference/plugin/).
 
+### Built-in variables
+
+Below is a list of `built-in` PipyJS variables which can be imported into your custom plugins via PipyJS `import` keyword.
+
+| variable        | type    | namespace                                          | suited for Chains                     | description                          |
+| ----------- | ------- | --------------------------------------------- | ----------------------------- | --------------------------- |
+| __protocol  | string  | inbound                                       | inbound-http / inbound-tcp    | connection protocol indicator                         |
+| __port      | json    | inbound                                       | inbound-http / inbound-tcp    | port of inbound endpoint         |
+| __isHTTP2   | boolean | inbound                                       | inbound-http                  | whether protocol is HTTP/2               |
+| __isIngress | boolean | inbound                                       | inbound-http                  | Ingress mode enabled              |
+| __target    | string  | inbound/connect-tcp                           | inbound-http / inbound-tcp    | Destination upstream                      |
+| __plugins   | json    | inbound                                       | inbound-http / inbound-tcp    | JSON object of inbound plugins     |
+| __service   | json    | inbound-http-routing                          | inbound-http                  | http service json object            |
+| __route     | json    | inbound-http-routing                          | inbound-http                  | http route json object            |
+| __cluster   | json    | inbound-http-routing<br>inbound-tcp-rouging   | inbound-http<br>inbound-tcp   | target cluster json object |
+| __protocol  | string  | outbound                                      | outbound-http / outbound-tcp  | outbound connection protocol                        |
+| __port      | json    | outbound                                      | outbound-http / outbound-tcp  | outbound port json object        |
+| __isHTTP2   | boolean | outbound                                      | outbound-http                 | whether protocol is HTTP/2               |
+| __isEgress  | boolean | outbound                                      | outbound-tcp                  | Egress mode               |
+| __target    | string  | outbound/                                     | outbound-http / outbound-tcp  | Upstream target                      |
+| __plugins   | json    | outbound                                      | outbound-http / outbound-tcp  | outbound plugin json object    |
+| __service   | json    | outbound-http-routing                         | outbound-http                 | http service json object            |
+| __route     | json    | outbound-http-routing                         | outbound-http                 | http route json object           |
+| __cluster   | json    | outbound-http-routing<br>outbound-tcp-routing | outbound-http<br>outbound-tcp | target cluster json object |
+
+
 ## Demo
 
 For a simple demonstration of how to extend osm-edge via `Plugins`, refer to below demo:
