@@ -46,7 +46,7 @@ The access fails because by default the services outside the mesh cannot access 
 Before applying the policy, you need to enable the access control feature, which is disabled by default.
 
 ```shell
-kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"featureFlags":{"enableAccessControlPolicy":true}}}' --type= merge
+kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"featureFlags":{"enableAccessControlPolicy":true}}}' --type=merge
 ```
 
 ## Plaintext transfer
