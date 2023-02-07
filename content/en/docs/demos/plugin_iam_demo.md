@@ -27,6 +27,7 @@ Corresponding to this are two `PluginChain`s:
 - Have osm-edge installed.
 - Have `kubectl` available to interact with the API server.
 - Have `osm` CLI available for managing the service mesh.
+- Have `jq` command available.
 
 ## Deploy demo services
 
