@@ -10,7 +10,9 @@ In this demonstration, we will extend the IAM (Identity and Access Management) f
 Two plugins are required here: 
 
 - `token-injector` to inject the token into the request from service A
-- `token-verifyer` to verify the identity of the request accessing service B. Both of them handle outbound and inbound traffic, respectively.
+- `token-verifyer` to verify the identity of the request accessing service B. 
+
+Both of them handle outbound and inbound traffic, respectively.
 
 Corresponding to this are two `PluginChain`s: 
 
