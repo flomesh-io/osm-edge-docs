@@ -63,7 +63,7 @@ You can configure the osm-edge installation by overriding the values file.
 Then run the following `helm install` command. The chart version can be found in the Helm chart you wish to install [here](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/charts/osm/Chart.yaml#L17).
 
 ```console
-$ helm install <mesh name> osm --repo https://flomesh-io.github.io/osm-edge --version <chart version> --namespace <osm namespace> --values override.yaml
+$ helm install <mesh name> osm-edge --repo https://flomesh-io.github.io/osm-edge --version <chart version> --namespace <osm namespace> --values override.yaml
 ```
 
 Omit the `--values` flag if you prefer to use the default settings.

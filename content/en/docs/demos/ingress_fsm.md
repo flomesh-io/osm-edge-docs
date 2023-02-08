@@ -36,7 +36,7 @@ osm install --set fsm.enabled=true \
 Using ``Helm`` to install.
 
 ```bash
-helm install "$osm_mesh_name" osm --repo https://flomesh-io.github.io/osm-edge \
+helm install "$osm_mesh_name" osm-edge --repo https://flomesh-io.github.io/osm-edge \
     --set fsm.enabled=true
 ```
 
@@ -49,8 +49,8 @@ kubectl label namespace "$osm_namespace" openservicemesh.io/monitored-by="$osm_m
 Save the external IP address and port of the entry gateway, which will be used later to test access to the backend application.
 
 ```bash
-export ingress_host="$(kubectl -n "$osm_namespace" get service ingress-pipy-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}') "
-export ingress_port="$(kubectl -n "$osm_namespace" get service ingress-pipy-controller -o jsonpath='{.spec.ports[? (@.name=="http")].port}')"
+export ingress_host="$(kubectl -n "$osm_namespace" get service fsm-ingress-pipy-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')"
+export ingress_port="$(kubectl -n "$osm_namespace" get service fsm-ingress-pipy-controller -o jsonpath='{.spec.ports[?(@.name=="http")].port}')"
 ```
 
 The next step is to deploy the sample `httpbin` service.
@@ -93,7 +93,7 @@ spec:
   ingressClassName: pipy
   rules:
   - host: httpbin.org
-    paths: http:
+    http:
       paths:
       - path: /
         pathType: Prefix
@@ -117,7 +117,7 @@ spec:
   sources:
   - kind: Service
     namespace: "$osm_namespace"
-    name: ingress-pipy-controller
+    name: fsm-ingress-pipy-controller
 EOF
 ```
 

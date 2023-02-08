@@ -7,11 +7,11 @@ weight: 10
 
 # Traffic Splitting
 
-The [SMI Traffic Split API](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha2/traffic-split.md) can be used to split outgoing traffic to multiple service backends. This can be used to orchestrate canary releases for multiple versions of the software.
+The [SMI Traffic Split API](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha4/traffic-split.md) can be used to split outgoing traffic to multiple service backends. This can be used to orchestrate canary releases for multiple versions of the software.
 
 ## What is supported
 
-osm-edge implements the [SMI traffic split v1alpha2 version](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha2/traffic-split.md).
+osm-edge implements the [SMI traffic split v1alpha4 version](https://github.com/servicemeshinterface/smi-spec/blob/main/apis/traffic-split/v1alpha4/traffic-split.md).
 
 It supports the following:
 
