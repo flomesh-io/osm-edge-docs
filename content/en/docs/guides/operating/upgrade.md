@@ -97,7 +97,7 @@ For example, if the `logLevel` field in the MeshConfig was set to `info` prior t
 #### Helm Upgrade
 Then run the following `helm upgrade` command.
 ```console
-$ helm upgrade <mesh name> osm --repo https://openservicemesh.github.io/osm --version <chart version> --namespace <osm namespace> --values override.yaml
+$ helm upgrade <mesh name> osm-edge --repo https://openservicemesh.github.io/osm --version <chart version> --namespace <osm namespace> --values override.yaml
 ```
 Omit the `--values` flag if you prefer to use the default settings.
 

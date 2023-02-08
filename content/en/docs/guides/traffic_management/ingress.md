@@ -144,13 +144,13 @@ spec:
   sources:
     - kind: Service
       namespace: osm-system
-      name: ingress-pipy-controller
+      name: fsm-ingress-pipy-controller
 ```
 
 The above configuration allows external clients to access the `foo` service under the `test` namespace.
 
 1. The Ingress configuration will route incoming HTTP traffic from external sources with the `Host:` header of `foo-basic.bar.com` to the service named `foo` on port `80` in the `test` namespace.
-2. IngressBackend is configured to allow only endpoints named `ingress-pipy-controller` service from the same namespace where osm-edge is installed (default is `osm-system`) to access port `80` of the `foo` serivce under the `test` namespace.
+2. IngressBackend is configured to allow only endpoints named `fsm-ingress-pipy-controller` service from the same namespace where osm-edge is installed (default is `osm-system`) to access port `80` of the `foo` serivce under the `test` namespace.
 
 #### Examples
 
