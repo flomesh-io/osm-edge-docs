@@ -40,7 +40,7 @@ helm install "$osm_mesh_name" osm-edge --repo https://flomesh-io.github.io/osm-e
     --set fsm.enabled=true
 ```
 
-In order to authorize clients by restricting access to backend traffic, we will configure IngressBackend so that only ingress traffic from the `ingress-pipy-controller` endpoint can be routed to the backend service. In order to discover the `ingress-pipy-controller` endpoint, we need the osm-edge controller and the corresponding namespace to monitor it. However, to ensure that the FSM functions properly, it cannot be injected with a Pipy sidecar.
+In order to authorize clients by restricting access to backend traffic, we will configure IngressBackend so that only ingress traffic from the `fsm-ingress-pipy-controller` endpoint can be routed to the backend service. In order to discover the `fsm-ingress-pipy-controller` endpoint, we need the osm-edge controller and the corresponding namespace to monitor it. However, to ensure that the FSM functions properly, it cannot be injected with a Pipy sidecar.
 
 ```bash
 kubectl label namespace "$osm_namespace" openservicemesh.io/monitored-by="$osm_mesh_name"
