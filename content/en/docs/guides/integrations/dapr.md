@@ -14,17 +14,17 @@ This document walks you through the steps of getting Dapr working with osm-edge 
 
 1. Install Dapr on your cluster with mTLS disabled:
 
-   1. Dapr has a quickstart repository to help users get familiar with dapr and its features. For this integration demo we will be leveraging the [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) quickstart. As we would like to integrate this Dapr example with osm-edge, there are a few modifications required and they are as follows:
+   1. Dapr has a quickstart repository to help users get familiar with dapr and its features. For this integration demo we will be leveraging the [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes) quickstart. As we would like to integrate this Dapr example with osm-edge, there are a few modifications required and they are as follows:
 
-      - The [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) demo installs Dapr with mtls enabled (by default), we would **not want mtls from Dapr and would like to leverage osm-edge for this**. Hence while [installing Dapr](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-1---setup-dapr-on-your-kubernetes-cluster) on your cluster, make sure to disable mtls by passing the flag : `--enable-mtls=false` during the installation
-      - Further [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes) sets up everything in the default namespace, it is **strongly recommended** to set up the entire hello-kubernetes demo in a specific namespace (we will later join this namespace to osm-edge's mesh). For the purpose of this integration, we have the namespace as `dapr-test`
+      - The [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes) demo installs Dapr with mtls enabled (by default), we would **not want mtls from Dapr and would like to leverage osm-edge for this**. Hence while [installing Dapr](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes#step-1---setup-dapr-on-your-kubernetes-cluster) on your cluster, make sure to disable mtls by passing the flag : `--enable-mtls=false` during the installation
+      - Further [hello-kubernetes](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes) sets up everything in the default namespace, it is **strongly recommended** to set up the entire hello-kubernetes demo in a specific namespace (we will later join this namespace to osm-edge's mesh). For the purpose of this integration, we have the namespace as `dapr-test`
 
         ```console
          $ kubectl create namespace dapr-test
          namespace/dapr-test created
         ```
 
-      - The [redis state store](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-2---create-and-configure-a-state-store), [redis.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/redis.yaml), [node.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/node.yaml) and [python.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/python.yaml) need to be deployed in the `dapr-test` namespace
+      - The [redis state store](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes#step-2---create-and-configure-a-state-store), [redis.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/redis.yaml), [node.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/node.yaml) and [python.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/python.yaml) need to be deployed in the `dapr-test` namespace
       - Since the resources for this demo are set up in a custom namespace. We will need to add an rbac rule on the cluster for Dapr to have access to the secrets. Create the following role and role binding:
 
         ```bash
@@ -104,7 +104,7 @@ This document walks you through the steps of getting Dapr working with osm-edge 
       dapr-sentry             ClusterIP   10.0.87.36     <none>        80/TCP               2h
       dapr-sidecar-injector   ClusterIP   10.0.77.47     <none>        443/TCP              2h
       ```
-   2. Get the ports of your redis state store from the [redis.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/redis.yaml), `6379`incase of this demo
+   2. Get the ports of your redis state store from the [redis.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/redis.yaml), `6379`incase of this demo
 
    3. Add these ports to the MeshConfig so that outbound traffic to it is excluded from interception by osm-edge's sidecar
 
@@ -131,7 +131,7 @@ This document walks you through the steps of getting Dapr working with osm-edge 
       dapr-sidecar-injector   ClusterIP   10.0.77.47     <none>        443/TCP              2h
       ```
 
-   2. Update the pod spec in both nodeapp ([node.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/node.yaml)) and pythonapp ([python.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/python.yaml)) to contain the following annotation: `openservicemesh.io/outbound-port-exclusion-list: "80"`
+   2. Update the pod spec in both nodeapp ([node.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/node.yaml)) and pythonapp ([python.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/python.yaml)) to contain the following annotation: `openservicemesh.io/outbound-port-exclusion-list: "80"`
 
    Adding the annotation to the pod excludes Dapr's api (`dapr-api`) and sentry (`dapr-sentry`) port's from being intercepted by osm-edge's sidecar, as these pods would need to talk to Dapr's control plane.
 
@@ -180,9 +180,9 @@ This document walks you through the steps of getting Dapr working with osm-edge 
 
 9. Verify the Dapr hello-kubernetes demo works as expected:
 
-   1. Verify the nodeapp service using the steps documented [here](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-3---deploy-the-nodejs-app-with-the-dapr-sidecar)
+   1. Verify the nodeapp service using the steps documented [here](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes#step-3---deploy-the-nodejs-app-with-the-dapr-sidecar)
 
-   2. Verify the pythonapp documented [here](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-6---observe-messages)
+   2. Verify the pythonapp documented [here](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes#step-6---observe-messages)
 
 10. Applying SMI Traffic Policies:
 
@@ -197,7 +197,7 @@ This document walks you through the steps of getting Dapr working with osm-edge 
        meshconfig.config.openservicemesh.io/osm-mesh-config patched
        ```
 
-    2. Verify the pythonapp documented [here](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-6---observe-messages) no longer causes the order ID to increment.
+    2. Verify the pythonapp documented [here](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes#step-6---observe-messages) no longer causes the order ID to increment.
 
     3. Create a service account for nodeapp and pythonapp:
 
@@ -280,9 +280,9 @@ This document walks you through the steps of getting Dapr working with osm-edge 
        EOF
        ```
 
-    6. Update the pod spec in both nodeapp ([node.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/node.yaml)) and pythonapp ([python.yaml](https://github.com/dapr/quickstarts/blob/master/hello-kubernetes/deploy/python.yaml)) to contain their respective service accounts. Delete and re-deploy the Dapr hello-kubernetes pods
+    6. Update the pod spec in both nodeapp ([node.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/node.yaml)) and pythonapp ([python.yaml](https://github.com/dapr/quickstarts/blob/master/tutorials/hello-kubernetes/deploy/python.yaml)) to contain their respective service accounts. Delete and re-deploy the Dapr hello-kubernetes pods
 
-    7. Verify the Dapr hello-kubernetes demo works as expected, shown [here](https://github.com/dapr/quickstarts/tree/master/hello-kubernetes#step-6---observe-messages)
+    7. Verify the Dapr hello-kubernetes demo works as expected, shown [here](https://github.com/dapr/quickstarts/tree/master/tutorials/hello-kubernetes#step-6---observe-messages)
 
 11. Cleanup:
 
