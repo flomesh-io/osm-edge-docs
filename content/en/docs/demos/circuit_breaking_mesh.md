@@ -13,7 +13,7 @@ This guide demonstrates how to configure circuit breaking for destinations that 
 - Have osm-edge installed.
 - Have `kubectl` available to interact with the API server.
 - Have `osm` CLI available for managing the service mesh.
-- osm-edge version >= v1.1.0.
+- osm-edge version >= v1.3.0.
 
 
 ## Demo
