@@ -13,7 +13,7 @@ This guide describes how to uninstall osm-edge from a Kubernetes cluster. This g
 
 - Kubernetes cluster with osm-edge installed
 - The `kubectl` CLI
-- The [`osm` CLI](/docs/install/#set-up-the-osm-cli) or the Helm 3 CLI
+- The [`osm`](/docs/guides/operating/install/#set-up-the-osm-cli) CLI or the Helm 3 CLI
 
 ## Remove Pipy Sidecars from Application Pods and Pipy Secrets
 
@@ -71,10 +71,12 @@ as all the Pods are restarting.
 
 The osm-edge control plane and related components will be uninstalled in the following steps:
 
-1. [Uninstall the osm-edge control plane](#uninstall-the-osm-control-plane)
-1. [Remove User Provided Resources](#remove-user-provided-resources)
-1. [Delete osm-edge Namespace](#delete-osm-namespace)
-1. [Removal of osm-edge Cluster Wide Resources](#removal-of-osm-cluster-wide-resources)
+
+1. [Uninstall the osm-edge control plane](#uninstall-the-osm-edge-control-plane)
+2. [Remove User Provided Resources](#remove-user-provided-resources)
+3. [Delete osm-edge Namespace](#delete-osm-edge-namespace)
+4. [Removal of osm-edge Cluster Wide Resources](#removal-of-osm-edge-cluster-wide-resources)
+
 
 ### Uninstall the osm-edge control plane
 

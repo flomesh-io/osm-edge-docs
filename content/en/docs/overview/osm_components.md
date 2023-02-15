@@ -32,7 +32,7 @@ Let's take a look at each component:
 
 ### (1) Proxy Control Plane
 
-The Proxy Control Plane plays a key part in operating the [service mesh](https://www.bing.com/search?q=What%27s+a+service+mesh%3F). All proxies are installed as [sidecars](https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar) and establish an mTLS gRPC connection to the Proxy Control Plane. The proxies continuously receive configuration updates. This component implements the interfaces required by the specific reverse proxy chosen. osm-edge implements [Pipy Repo](https://flomesh.io/docs/en/operating/repo/0-intro).
+The Proxy Control Plane plays a key part in operating the [service mesh](https://www.bing.com/search?q=What%27s+a+service+mesh%3F). All proxies are installed as [sidecars](https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar) and establish an mTLS gRPC connection to the Proxy Control Plane. The proxies continuously receive configuration updates. This component implements the interfaces required by the specific reverse proxy chosen. osm-edge implements [Pipy Repo](https://flomesh.io/pipy/docs/en/operating/repo/0-intro).
 
 ### (2) Certificate Manager
 
@@ -45,7 +45,7 @@ Endpoints Providers are one or more components that communicate with the compute
 
 ### (4) Mesh specification
 
-Mesh Specification is a wrapper around the existing [SMI Spec](https://github.com/deislabs/smi-spec) components. This component abstracts the specific storage chosen for the YAML definitions. This module is effectively a wrapper around [SMI Spec's Kubernetes informers](https://github.com/deislabs/smi-sdk-go), currently abstracting away the storage (Kubernetes/etcd) specifics.
+Mesh Specification is a wrapper around the existing [SMI Spec](https://github.com/servicemeshinterface/smi-spec) components. This component abstracts the specific storage chosen for the YAML definitions. This module is effectively a wrapper around [SMI Spec's Kubernetes informers](https://github.com/servicemeshinterface/smi-sdk-go), currently abstracting away the storage (Kubernetes/etcd) specifics.
 
 ### (5) Mesh catalog
 
@@ -74,7 +74,7 @@ A Sidecar Driver needs to implement the **Driver** interface to integrate with t
 This section outlines the conventions adopted and guiding the development of the Open Service Mesh (osm-edge). Components discussed in this section:
 
 - (A) Proxy [sidecar](https://docs.microsoft.com/en-us/azure/architecture/patterns/sidecar) - Pipy or other reverse-proxy with service-mesh capabilities
-- (B) [Proxy Certificate](#b-proxy-tls-certificate) - unique X.509 certificate issued to the specific proxy by the [Certificate Manager](#2-certificate-manager)
+- (B) [Proxy Certificate](#proxy-certificate-proxy-and-endpoint-relationship) - unique X.509 certificate issued to the specific proxy by the [Certificate Manager](#2-certificate-manager)
 - (C) Service - [Kubernetes service resource](https://kubernetes.io/docs/concepts/services-networking/service/) referenced in SMI Spec
 - (D) [Service Certificate](#d-service-tls-certificate) - X.509 certificate issued to the service
 - (E) Policy - [SMI Spec](https://smi-spec.io/) traffic policy enforced by the target service's proxy
@@ -144,7 +144,7 @@ This certificate is used to establish mTLS connection with peer proxies fronting
 The service certificate is short-lived.
 Each service certificate's lifetime will be [approximately 24 hours](#certificate-lifetime), which eliminates the need for a certificate revocation facility.
 osm-edge declares a type `ServiceCertificate` for these certificates.
-`ServiceCertificate` is how this kind of certificate is referred to in the [Interfaces](#interfaces) section of the developer documentation.
+`ServiceCertificate` is how this kind of certificate is referred to in the `interfaces` section of the developer documentation.
 
 ### (E) Policy
 

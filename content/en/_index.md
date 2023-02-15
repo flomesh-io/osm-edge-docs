@@ -7,7 +7,7 @@ type: docs
 
 A simple, complete, and standalone service mesh.
 
-osm-edge runs on [Kubernetes](https://kubernetes.io/). The osm-edge control plane implements [Pipy Repo](https://flomesh.io/docs/en/operating/repo/0-intro) and is configured with [SMI](https://smi-spec.io/) APIs. osm-edge injects a [Pipy](https://flomesh.io/pipy) proxy as a sidecar container next to each instance of an application.
+osm-edge runs on [Kubernetes](https://kubernetes.io/). The osm-edge control plane implements [Pipy Repo](https://flomesh.io/pipy/docs/en/operating/repo/0-intro) and is configured with [SMI](https://smi-spec.io/) APIs. osm-edge injects a [Pipy](https://flomesh.io/pipy) proxy as a sidecar container next to each instance of an application.
 
 To learn more about osm-edge:
 

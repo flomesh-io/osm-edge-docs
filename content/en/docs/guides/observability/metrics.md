@@ -32,7 +32,7 @@ By default, both Prometheus and Grafana are disabled.
 
 However, when configured with the `--set=osm.deployPrometheus=true` flag, osm-edge installation will deploy a Prometheus instance to scrape the sidecar's metrics endpoints. Based on the metrics scraping configuration set by the user, osm-edge will annotate pods part of the mesh with necessary metrics annotations to have Prometheus reach and scrape the pods to collect relevant metrics. The [scraping configuration file](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/charts/osm/templates/prometheus-configmap.yaml) defines the default Prometheus behavior and the set of metrics collected by osm-edge.
 
-To install Grafana for metrics visualization, pass the `--set=osm.deployGrafana=true` flag to the `osm install` command. osm-edge provides a pre-configured dashboard that is documented in [osm-edge Grafana dashboards](#osm-grafana-dashboards).
+To install Grafana for metrics visualization, pass the `--set=osm.deployGrafana=true` flag to the `osm install` command. osm-edge provides a pre-configured dashboard that is documented in [osm-edge Grafana dashboards](#osm-edge-grafana-dashboards).
 
 ```bash
  osm install --set=osm.deployPrometheus=true \
@@ -128,9 +128,9 @@ The following section assumes a Prometheus instance has already been configured 
 
 ##### Importing osm-edge Dashboards
 
-osm-edge Dashboards are available through [our repository](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/charts/osm/grafana/dashboards), which can be imported as json blobs on the web admin portal.
+osm-edge Dashboards are available through [our repository](https://github.com/flomesh-io/osm-edge/tree/{{< param osm_branch >}}/charts/osm/grafana/pipy/dashboards), which can be imported as json blobs on the web admin portal.
 
-Detailed instructions for importing osm-edge dashboards can be found in the [Prometheus and Grafana](/docs/demos/prometheus_grafana) demo. Refer to [osm-edge Grafana dashboard](#osm-grafana-dashboards) for an overview of the pre-configured dashboards.
+Detailed instructions for importing osm-edge dashboards can be found in the [Prometheus and Grafana](/docs/demos/prometheus_grafana) demo. Refer to [osm-edge Grafana dashboard](#osm-edge-grafana-dashboards) for an overview of the pre-configured dashboards.
 
 ## Metrics scraping
 
