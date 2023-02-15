@@ -46,7 +46,7 @@ curl -L https://github.com/flomesh-io/osm-edge/releases/download/$release/osm-ed
 ./$system-$arch/osm version
 ```
 
-The `osm` CLI can be compiled from source according to [this guide](/docs/guides/cli).
+The `osm` CLI can be compiled from source according to [this guide](/docs/guides/operating/cli).
 
 ## Installing osm-edge on Kubernetes
 

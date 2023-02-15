@@ -34,7 +34,7 @@ kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traff
 ```
 Refer to the [Config API reference](/docs/api_reference/config/v1alpha1) for more information.
 
-If an incorrect value is used, validations on the [MeshConfig CRD](https://github.com/flomesh-io/osm-edge/blob/{{< param osm_branch >}}/charts/osm/crds/meshconfig.yaml) will prevent the change with an error message explaining why the value is invalid.
+If an incorrect value is used, validations on the `MeshConfig CRD` will prevent the change with an error message explaining why the value is invalid.
 For example, the below command shows what happens if we patch `enableEgress` to a non-boolean value.
 ```bash
 kubectl patch meshconfig osm-mesh-config -n "$osm_namespace" -p '{"spec":{"traffic":{"enableEgress":"no"}}}'  --type=merge

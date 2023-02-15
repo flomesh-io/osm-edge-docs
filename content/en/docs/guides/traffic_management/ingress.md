@@ -154,7 +154,7 @@ The above configuration allows external clients to access the `foo` service unde
 
 #### Examples
 
-Refer to the [Ingress with FSM demo](/docs/demos/ingress_fms) for examples on how to expose mesh services externally using FSM in osm-edge.
+Refer to the [Ingress with FSM demo](/docs/demos/ingress_fsm) for examples on how to expose mesh services externally using FSM in osm-edge.
 
 ### 2. Bring your own Ingress Controller and Gateway
 

@@ -122,7 +122,7 @@ To familiarize yourself on how osm-edge works with Prometheus, try installing a 
    osm-edge [mesh name: osm] uninstalled
    ```
 
-   To remove osm-edge's cluster wide resources after uninstallation, run the following command. See the [uninstall guide](/docs/guides/uninstall/) for more context and information.
+   To remove osm-edge's cluster wide resources after uninstallation, run the following command. See the [uninstall guide](/docs/guides/operating/uninstall/) for more context and information.
 
    ```console
    $ osm uninstall mesh --delete-cluster-wide-resources

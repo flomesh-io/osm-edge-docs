@@ -10,7 +10,7 @@ If you already have running OpenShift platform, follow these steps to get starte
 ## Prerequisites
 
 - Openshift version 4.6 or above
-- The [osm-edge CLI](/docs/guides/cli) or the [helm 3 CLI](https://helm.sh/docs/intro/install/) or the OpenShift `oc` CLI.
+- The [osm-edge CLI](/docs/guides/operating/cli) or the [helm 3 CLI](https://helm.sh/docs/intro/install/) or the OpenShift `oc` CLI.
 
 
 ### Helm Chart Repository
