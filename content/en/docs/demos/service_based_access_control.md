@@ -163,8 +163,6 @@ spec:
         app: curl
     spec:
       serviceAccountName: curl
-      nodeSelector:
-        kubernetes.io/os: linux
       containers:
       - image: curlimages/curl
         imagePullPolicy: IfNotPresent

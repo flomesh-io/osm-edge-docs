@@ -32,8 +32,6 @@ spec:
         app: middle
     spec:
       serviceAccountName: middle
-      nodeSelector:
-        kubernetes.io/os: linux
       containers:
       - image: cybwan/mtls-egress-demo-middle
         imagePullPolicy: Always

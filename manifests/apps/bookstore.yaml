@@ -65,9 +65,6 @@ spec:
         version: v1
     spec:
       serviceAccountName: bookstore
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        kubernetes.io/os: linux
       containers:
         - name: bookstore
           image: openservicemesh/bookstore:latest-main

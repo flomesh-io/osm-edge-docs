@@ -41,9 +41,6 @@ spec:
         version: v1
     spec:
       serviceAccountName: tcp-echo
-      nodeSelector:
-        kubernetes.io/arch: amd64
-        kubernetes.io/os: linux
       containers:
       - name: tcp-echo-server
         image: "openservicemesh/tcp-echo-server:latest"
