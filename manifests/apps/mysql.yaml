@@ -36,8 +36,6 @@ spec:
         app: mysql
     spec:
       serviceAccountName: mysql
-      nodeSelector:
-        kubernetes.io/os: linux
       containers:
       - image: mariadb:10.7.4
         name: mysql

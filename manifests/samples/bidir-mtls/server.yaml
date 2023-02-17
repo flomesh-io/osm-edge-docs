@@ -32,8 +32,6 @@ spec:
         app: server
     spec:
       serviceAccountName: server
-      nodeSelector:
-        kubernetes.io/os: linux
       containers:
       - image: cybwan/mtls-egress-demo-server
         imagePullPolicy: Always
