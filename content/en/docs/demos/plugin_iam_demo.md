@@ -227,8 +227,10 @@ spec:
     pipy({
         _pluginName: '',
         _pluginConfig: null,
-        _accessToken: null,
-        _valid: false,
+        _verifier: null,
+        _authPaths: null,
+        _authRequred: false,
+        _authSuccess: undefined,
     })
     .import({
         __service: 'inbound-http-routing',
@@ -238,21 +240,33 @@ spec:
         () => void (
             _pluginName = __filename.slice(9, -3),
             _pluginConfig = __service?.Plugins?.[_pluginName],
-            _accessToken = _pluginConfig?.AccessToken
-        )
-    )
-    .handleMessageStart(
-        msg => _valid = (_accessToken && msg.head.headers['accesstoken'] === _accessToken)
-    )
-    .branch(
-        () => _valid, (
-            $ => $.chain()
-        ), (
-            $ => $.replaceMessage(
-            new Message({ status: 403 }, 'token verify failed')
+            _verifier = _pluginConfig?.Verifier,
+            _authPaths = _pluginConfig?.Paths && _pluginConfig.Paths?.length > 0 && (
+              new algo.URLRouter(Object.fromEntries(_pluginConfig.Paths.map(path => [path, true])))
             )
         )
     )
+    .handleMessageStart(
+        msg => _authRequred = (_verifier && _authPaths?.find(msg.head.headers.host, msg.head.path))
+    )
+    .branch(
+        () => _authRequred, (
+        $ => $
+          .fork().to($ => $
+            .muxHTTP().to($ => $.connect(()=> _verifier))
+            .handleMessageStart(
+              msg => _authSuccess = (msg.head.status == 200)
+            )
+          )
+          .wait(() => _authSuccess !== undefined)
+          .branch(() => _authSuccess, $ => $.chain(),
+            $ => $.replaceMessage(
+              () => new Message({ status: 401 }, 'Unauthorized!')
+            )
+          )
+      ),
+        $ => $.chain()
+      )
     )
 EOF
 ```
