@@ -75,8 +75,6 @@ spec:
     port:
       number: 14001 # targetPort of httpbin service
       protocol: http
-    tls:
-      skipClientCertValidation: false
   sources:
   - kind: IPRange
     name: ${curl_pod_ip}/32
@@ -88,7 +86,7 @@ EOF
 Send the request again for testing.
 
 ```shell
-kubectl exec "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}')" -n curl -- curl -ksI https://httpbin.httpbin:14001/get --cacert /certs/ca.crt --key /certs/tls.key --cert /certs/tls.crt
+kubectl exec "$(kubectl get pod -n curl -l app=curl -o jsonpath='{.items..metadata.name}')" -n curl -- curl -sI http://httpbin.httpbin:14001/get
 HTTP/2 200
 server: gunicorn/19.9.0
 date: Mon, 07 Nov 2022 10:58:55 GMT
