@@ -2,7 +2,7 @@
 title: "Deploy Sample Applications"
 description: "Deploy the sample bookstore applications"
 type: docs
-weight: 2
+weight: 3
 aliases: = ["/docs/install/manual_demo/"]
 ---
 
