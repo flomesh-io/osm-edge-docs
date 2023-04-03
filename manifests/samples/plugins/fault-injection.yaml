@@ -7,16 +7,16 @@ spec:
   pipyscript: |+
     ((
       seconds = val => (
-        val?.indexOf('s') > 0 && (
+        val?.indexOf?.('s') > 0 && (
           val.replace('s', '')
         ) ||
-        val?.indexOf('m') > 0 && (
+        val?.indexOf?.('m') > 0 && (
           val.replace('m', '') * 60
         ) ||
-        val?.indexOf('h') > 0 && (
+        val?.indexOf?.('h') > 0 && (
           val.replace('h', '') * 3600
         ) ||
-        val?.indexOf('d') > 0 && (
+        val?.indexOf?.('d') > 0 && (
           val.replace('d', '') * 86400
         ) ||
         0
