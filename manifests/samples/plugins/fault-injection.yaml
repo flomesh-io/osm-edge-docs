@@ -1,0 +1,101 @@
+kind: Plugin
+apiVersion: plugin.flomesh.io/v1alpha1
+metadata:
+  name: http-fault-injection
+spec:
+  priority: 165
+  pipyscript: |+
+    ((
+      seconds = val => (
+        val?.indexOf('s') > 0 && (
+          val.replace('s', '')
+        ) ||
+        val?.indexOf('m') > 0 && (
+          val.replace('m', '') * 60
+        ) ||
+        val?.indexOf('h') > 0 && (
+          val.replace('h', '') * 3600
+        ) ||
+        val?.indexOf('d') > 0 && (
+          val.replace('d', '') * 86400
+        ) ||
+        0
+      ),    
+      hexChar = { '0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9, 'a': 10, 'b': 11, 'c': 12, 'd': 13, 'e': 14, 'f': 15 },    
+      randomInt63 = () => (
+        algo.uuid().substring(0, 18).replaceAll('-', '').split('').reduce((calc, char) => (calc * 16) + hexChar[char], 0) / 2
+      ),    
+      samplingRange = fraction => (fraction > 0 ? fraction : 0) * Math.pow(2, 63),    
+      configCache = new algo.Cache(
+        pluginConfig => pluginConfig && (
+          {
+            delaySamplingRange: pluginConfig?.delay?.percentage?.value > 0 ? samplingRange(pluginConfig.delay.percentage.value) : 0,
+            fixedDelay: seconds(pluginConfig?.delay?.fixedDelay),
+            abortSamplingRange: pluginConfig?.abort?.percentage?.value > 0 && pluginConfig?.abort?.httpStatus > 0 ? (
+              samplingRange(pluginConfig.abort.percentage.value)
+            ) : 0,
+            httpStatus: pluginConfig?.abort?.httpStatus,
+          }
+        )
+      ),      
+    ) => pipy({
+      _pluginName: '',
+      _pluginConfig: null,
+      _faultConfig: null,
+      _randomVal: 0,
+      _delayFlag: false,
+      _abortFlag: false,
+    })
+    .import({
+      __service: 'inbound-http-routing',
+    })
+    .pipeline()
+    .onStart(
+      () => void (
+        _pluginName = __filename.slice(9, -3),
+        _pluginConfig = __service?.Plugins?.[_pluginName],
+        _faultConfig = configCache.get(_pluginConfig)
+      )
+    )
+    .handleMessageStart(
+      () => (
+        _faultConfig && (
+          _randomVal = randomInt63(),
+          _faultConfig.delaySamplingRange && (_randomVal < _faultConfig.delaySamplingRange) && (     
+            _delayFlag = true
+          ),
+          _faultConfig.abortSamplingRange && (_randomVal < _faultConfig.abortSamplingRange) && (
+            _abortFlag = true
+          )
+        )
+      )
+    )
+    .branch(
+      () => _delayFlag, (
+        $=>$.replay({ delay: () => _faultConfig.fixedDelay }).to(
+          $=>$.branch(
+            () => _delayFlag && (_delayFlag = false, true), (
+              $=>$.replaceMessageStart(
+                () => new StreamEnd('Replay')
+              )
+            ), (
+              $=>$
+            )
+          )
+        )
+      ), (
+        $=>$
+      )
+    )
+    .branch(
+      () => _abortFlag, (
+        $=>$.replaceMessage(
+          () => (
+            new Message({ status: _faultConfig.httpStatus })
+          )
+        )
+      ), (
+        $=>$.chain()
+      )
+    )
+    )()
