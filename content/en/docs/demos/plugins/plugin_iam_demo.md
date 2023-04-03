@@ -1,8 +1,8 @@
 ---
-title: "Extending osm-edge with Plugins"
+title: "Identity and Access Management"
 description: "Adding Identity and Access Management functionality to osm-edge sidecar via Plugins"
 type: docs
-weight: 25
+weight: 1
 ---
 
 In this demonstration, we will extend the IAM (Identity and Access Management) feature for the service mesh to enhance the security of the service. When service A accesses service B, it will carry the obtained token. After receiving the request, service B verifies the token through the authentication service, and based on the verification result, decides whether to serve the request or not.
