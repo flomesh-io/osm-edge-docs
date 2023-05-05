@@ -1,7 +1,6 @@
 ---
 title: "Multi-cluster services discovery & communication"
 description: "Multi-cluster service communication using Flomesh Service Mesh"
-type: docs
 weight: 23
 ---
 

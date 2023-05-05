@@ -1,7 +1,6 @@
 ---
 title: "Sidecar Injection"
 description: "This section describes the sidecar injection workflow in osm-edge."
-type: docs
 weight: 3
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "出口策略"
 description: "使用出口策略访问外部服务"
-type: docs
 weight: 15
 ---
 

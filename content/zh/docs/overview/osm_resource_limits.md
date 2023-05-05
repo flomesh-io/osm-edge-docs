@@ -1,7 +1,6 @@
 ---
 title: "osm-edge 资源需求和限制"
 description: "给 osm-edge Pod 和部署的资源需求与限制"
-type: docs
 weight: 3
 ---
 

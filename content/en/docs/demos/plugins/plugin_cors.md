@@ -1,7 +1,6 @@
 ---
 title: "Cross-Origin Resource Sharing (CORS)"
 description: "Adding CORS functionality to osm-edge sidecar via Plugins"
-type: docs
 weight: 5
 ---
 

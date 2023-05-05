@@ -1,7 +1,6 @@
 ---
 title: "应用容器启动"
 description: "应用容器启动"
-type: docs
 ---
 
 # 容器启动

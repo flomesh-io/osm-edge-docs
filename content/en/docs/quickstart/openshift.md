@@ -1,7 +1,6 @@
 ---
 title: "Quick Start on OpenShift"
 description: "How to quickly setup osm-edge on Redhat OpenShift"
-type: docs
 weight: 2
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "Install the osm-edge Control Plane"
 description: "This section describes how to install/uninstall osm-edge on a Kubernetes cluster"
-type: docs
 weight: 2
 ---
 

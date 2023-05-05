@@ -2,7 +2,6 @@
 title: "Integrate Flagger with osm-edge"
 description: "A simple demo showing how osm-edge integrates with Flagger"
 aliases: "/docs/guides/integrations/demo_flagger"
-type: docs
 weight: 4
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "网格外部服务的熔断"
 description: "为网格外部服务配置熔断"
-type: docs
 weight: 22
 draft: true
 ---

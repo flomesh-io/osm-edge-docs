@@ -1,7 +1,6 @@
 ---
 title: "Circuit Breaking"
 description: "Using Circuit breaking to limit connections and requests"
-type: docs
 weight: 11
 ---
 

@@ -2,7 +2,6 @@
 title: "Namespace addition"
 description: "This section describes how and why osm-edge monitors Kubernetes namespaces"
 aliases: "/docs/tasks/namespace_monitoring"
-type: docs
 weight: 2
 ---
 

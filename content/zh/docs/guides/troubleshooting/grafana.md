@@ -2,7 +2,6 @@
 title: "Grafana"
 description: "Grafana 集成的故障排查"
 aliases: "/docs/troubleshooting/observability/grafana"
-type: docs
 weight: 16
 ---
 

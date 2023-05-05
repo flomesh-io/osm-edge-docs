@@ -1,7 +1,6 @@
 ---
 title: "Identity and Access Management"
 description: "Adding Identity and Access Management functionality to osm-edge sidecar via Plugins"
-type: docs
 weight: 1
 ---
 

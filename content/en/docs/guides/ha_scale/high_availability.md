@@ -2,7 +2,6 @@
 title: "HA Design considerations"
 description: "osm-edge HA Design considerations"
 aliases: "/docs/HA/"
-type: docs
 ---
 
 # High Availability

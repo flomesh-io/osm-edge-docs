@@ -1,7 +1,6 @@
 ---
 title: "Multi-cluster services access control"
 description: "Multi-cluster service access control"
-type: docs
 weight: 23
 ---
 

@@ -1,5 +1,4 @@
 ---
-title: "目录"
-type: docs
+title: "Flomesh 服务网格"
 weight: 1
 ---

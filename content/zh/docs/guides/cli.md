@@ -1,7 +1,6 @@
 ---
 title: "安装 osm-edge CLI"
 description: "这个章节描述了安装和使用 `osm-edge` CLI."
-type: docs
 weight: 1
 ---
 

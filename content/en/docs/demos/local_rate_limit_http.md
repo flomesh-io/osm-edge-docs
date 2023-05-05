@@ -1,7 +1,6 @@
 ---
 title: "Local rate limiting of HTTP requests"
 description: "Configuring local rate limiting for HTTP requests"
-type: docs
 weight: 23
 ---
 

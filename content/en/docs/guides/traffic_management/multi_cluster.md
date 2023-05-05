@@ -1,7 +1,6 @@
 ---
 title: "Multi-cluster services"
 description: "Multi-cluster services communication using Flomesh Service Mesh (FSM) and osm-edge"
-type: docs
 weight: 13
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "Traffic Access Control"
 description: "Traffic access control using SMI Traffic Access Control API"
-type: docs
 weight: 10
 ---
 

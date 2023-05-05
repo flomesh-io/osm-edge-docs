@@ -1,7 +1,6 @@
 ---
 title: "Ingress with FSM"
 description: "HTTP ingress implemented by the FSM Ingress controller"
-type: docs
 weight: 10
 draft: false
 ---

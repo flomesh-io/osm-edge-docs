@@ -1,7 +1,6 @@
 ---
 title: "Setup osm-edge"
 description: "Install the osm-edge control plane using the osm-edge CLI"
-type: docs
 weight: 1
 ---
 

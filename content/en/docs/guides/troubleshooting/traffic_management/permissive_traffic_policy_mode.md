@@ -1,7 +1,6 @@
 ---
 title: "Permissive Traffic Policy Mode"
 description: "Troubleshooting permissive traffic policy"
-type: docs
 weight: 2
 ---
 

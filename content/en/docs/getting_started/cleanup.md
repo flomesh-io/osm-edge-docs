@@ -1,7 +1,6 @@
 ---
 title: "Uninstall osm-edge"
 description: "Uninstall osm-edge and the bookstore applications"
-type: docs
 weight: 6
 ---
 

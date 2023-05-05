@@ -2,7 +2,6 @@
 title: "osm-edge Documentation"
 description: ""
 type: docs
-
 ---
 
 A simple, complete, and standalone service mesh.

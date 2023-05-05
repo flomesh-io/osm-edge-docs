@@ -1,7 +1,6 @@
 ---
 title: "Circuit breaking for destinations within the mesh"
 description: "Configuring circuit breaking for destinations within the mesh"
-type: docs
 weight: 21
 ---
 

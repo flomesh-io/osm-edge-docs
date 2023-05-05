@@ -1,7 +1,6 @@
 ---
 title: "Certificate Management"
 description: "osm-edge uses mTLS for encryption of data between pods as well as Pipy and service identity."
-type: docs
 weight: 8
 ---
 

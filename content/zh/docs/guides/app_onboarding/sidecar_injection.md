@@ -1,7 +1,6 @@
 ---
 title: "Sidecar 注入"
 description: "本章节描述 osm-edge 中 sidecar 的注入流程。"
-type: docs
 weight: 3
 ---
 

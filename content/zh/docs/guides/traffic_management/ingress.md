@@ -1,7 +1,6 @@
 ---
 title: "入口"
 description: "使用入口管理对群集内服务的外部访问"
-type: docs
 weight: 5
 ---
 

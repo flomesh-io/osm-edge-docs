@@ -1,7 +1,6 @@
 ---
 title: "出口故障排查"
 description: "出口故障排查指南"
-type: docs
 ---
 
 ## 当出口未按预期工作时

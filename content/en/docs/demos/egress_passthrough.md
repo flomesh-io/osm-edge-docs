@@ -1,7 +1,6 @@
 ---
 title: "Egress Passthrough to Unknown Destinations"
 description: "Accessing external services without Egress policies"
-type: docs
 weight: 16
 ---
 

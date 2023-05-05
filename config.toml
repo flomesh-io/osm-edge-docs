@@ -17,8 +17,8 @@ defaultContentLanguage = "en"
 		weight = 1
 	# [languages.zh]
 	# 	title = "开放边缘服务网格"
-	# 	contentDir = 'content/zh'
 	# 	description = "Documentation for osm-edge"
+	# 	contentDir = 'content/zh'
 	# 	languageName ="中文"
 	# 	weight = 2
 	# [languages.jp]

@@ -2,7 +2,6 @@
 title: "Prometheus"
 description: "Prometheus 集成的故障排查"
 aliases: "/docs/troubleshooting/observability/prometheus"
-type: docs
 weight: 15
 ---
 

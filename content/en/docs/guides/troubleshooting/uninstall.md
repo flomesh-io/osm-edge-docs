@@ -2,7 +2,6 @@
 title: "Uninstall"
 description: "Troubleshooting osm-edge uninstall"
 aliases: ["/docs/troubleshooting/uninstall"]
-type: docs
 weight: 20
 ---
 

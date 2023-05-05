@@ -1,7 +1,6 @@
 ---
 title: "外部授权"
 description: "通过 MeshConfig 配置外部授权。"
-type: docs
 weight: 1
 draft: true
 ---

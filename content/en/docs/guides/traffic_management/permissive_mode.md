@@ -1,7 +1,6 @@
 ---
 title: "Permissive Mode"
 description: "Permissive Traffic Policy Mode"
-type: docs
 weight: 2
 ---
 

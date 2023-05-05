@@ -2,7 +2,6 @@
 title: "Integrate Dapr with osm-edge"
 description: "A simple demo showing to integrate Dapr with osm-edge"
 aliases: "/docs/integrations/demo_dapr"
-type: docs
 weight: 2
 ---
 

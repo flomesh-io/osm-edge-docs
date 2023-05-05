@@ -2,7 +2,6 @@
 title: "卸载"
 description: "卸载 osm-edge 的故障排查"
 aliases: ["/docs/troubleshooting/uninstall"]
-type: docs
 weight: 20
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "重试"
 description: "实现重试来处理短暂的故障"
-type: docs
 weight: 11
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "链路追踪"
 description: "使用 Jaeger 进行链路追踪"
-type: docs
 weight: 4
 ---
 

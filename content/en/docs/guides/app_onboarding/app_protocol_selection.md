@@ -1,7 +1,6 @@
 ---
 title: "Application Protocol Selection"
 description: "Application Protocol Selection"
-type: docs
 ---
 
 # Application Protocol Selection

@@ -2,7 +2,6 @@
 title: "Reconciler Guide"
 description: "Reconciler Guide"
 aliases: ["/docs/reconciler_guide"]
-type: docs
 weight: 8
 ---
 

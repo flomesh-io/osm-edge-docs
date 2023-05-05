@@ -1,7 +1,6 @@
 ---
 title: "安装 osm-edge 控制平面"
 description: "这个章节描述了如何在一个 Kubernetes 集群上安装/卸载开放边缘服务网格 (osm-edge)"
-type: docs
 weight: 2
 ---
 

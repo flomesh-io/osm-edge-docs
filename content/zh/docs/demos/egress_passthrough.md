@@ -1,7 +1,6 @@
 ---
 title: "到未知目的地的出口透传"
 description: "在没有 Egress 策略的情况下访问外部服务"
-type: docs
 weight: 16
 ---
 

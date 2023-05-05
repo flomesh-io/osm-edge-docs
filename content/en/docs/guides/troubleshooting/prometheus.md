@@ -2,7 +2,6 @@
 title: "Prometheus"
 description: "Troubleshooting Prometheus integration"
 aliases: "/docs/troubleshooting/observability/prometheus"
-type: docs
 weight: 15
 ---
 

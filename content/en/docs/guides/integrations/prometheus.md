@@ -2,7 +2,6 @@
 title: "Integrate Prometheus with osm-edge"
 description: "A simple demo showing how osm-edge integrates with Prometheus for metrics"
 aliases: "/docs/integrations/demo_prometheus"
-type: docs
 weight: 3
 ---
 

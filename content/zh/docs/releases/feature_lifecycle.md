@@ -1,7 +1,6 @@
 ---
 title: "功能的生命周期"
 description: "功能的生命周期和它们的状态"
-type: docs
 weight: 1
 ---
 

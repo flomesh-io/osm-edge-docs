@@ -1,0 +1,21 @@
+{{ $hasbanner := .Site.Params.versionbanner }}
+<!doctype html>
+<html lang="{{ .Site.Language.Lang }}" class="no-js">
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body class="td-{{ .Kind }} {{ if $hasbanner.show }} has-banner{{ end }}">
+    <header>
+    </header>
+    <div class="container-fluid td-outer">
+      <div class="td-main">
+        <div class="row flex-xl-nowrap">
+          <main class="col-12 col-md-9 col-xl-9 pl-md-5" role="main">
+            {{ partial "all-in-one.html" . }}
+          </main>
+        </div>
+      </div>
+    </div>
+    {{ partial "scripts-no-anchor.html" . }}
+  </body>
+</html>

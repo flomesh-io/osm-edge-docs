@@ -1,7 +1,6 @@
 ---
 title: "用 Prometheus 和 Grafana 配置可观测性"
 description: "使用 osm-edge 带 Prometheus 和 Grafana 的可观测性集成来检查书店应用间的流量"
-type: docs
 weight: 5
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "宽松流量策略模式"
 description: "宽松流量策略模式故障排查"
-type: docs
 weight: 2
 ---
 

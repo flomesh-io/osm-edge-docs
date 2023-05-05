@@ -2,7 +2,6 @@
 title: "Prometheus 与 osm-edge 集成"
 description: "演示如何将 osm-edge 与 Prometheus 集成用于指标采集"
 aliases: "/docs/integrations/demo_prometheus"
-type: docs
 weight: 3
 ---
 

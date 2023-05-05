@@ -2,7 +2,6 @@
 title: "升级 osm-edge 控制平面"
 description: "升级指南"
 aliases: ["/docs/upgrade_guide","/docs/troubleshooting/cli/mesh_upgrade"]
-type: docs
 weight: 3
 ---
 

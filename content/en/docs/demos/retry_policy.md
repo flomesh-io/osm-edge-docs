@@ -1,7 +1,6 @@
 ---
 title: "Retry Policy"
 description: "Using retries to enhance service availability"
-type: docs
 weight: 15
 ---
 

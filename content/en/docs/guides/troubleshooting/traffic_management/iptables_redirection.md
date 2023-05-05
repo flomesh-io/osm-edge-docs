@@ -1,7 +1,6 @@
 ---
 title: "Iptables Redirection"
 description: "Troubleshooting Iptables interception and redirection"
-type: docs
 weight: 1
 ---
 

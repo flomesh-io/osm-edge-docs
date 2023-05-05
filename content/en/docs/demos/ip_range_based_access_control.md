@@ -1,7 +1,6 @@
 ---
 title: "IP range-based access control"
 description: "Managing access to services based on IP ranges"
-type: docs
 weight: 19
 ---
 

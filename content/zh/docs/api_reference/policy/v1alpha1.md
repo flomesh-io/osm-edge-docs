@@ -1,7 +1,6 @@
 ---
 title: "策略 v1alpha1 API 参考"
 description: "策略 v1alpha1 API 参考文档."
-type: docs
 ---
 
 <p>Packages:</p>

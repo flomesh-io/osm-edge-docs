@@ -1,7 +1,6 @@
 ---
 title: "使用 Kubernetes Nginx 入口控制器的入口"
 description: "使用 Kubernetes Nginx 入口控制器的 HTTP 和 HTTPS 入口"
-type: docs
 weight: 11
 ---
 

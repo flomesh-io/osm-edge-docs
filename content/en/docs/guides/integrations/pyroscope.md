@@ -2,7 +2,6 @@
 title: "Integrate Pyroscope with osm-edge"
 description: "A simple demo showing how osm-edge integrates with Pyroscope for continuous profiling"
 aliases: "/docs/integrations/demo_pyroscope"
-type: docs
 weight: 5
 ---
 

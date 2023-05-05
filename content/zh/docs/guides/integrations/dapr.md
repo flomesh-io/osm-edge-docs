@@ -2,7 +2,6 @@
 title: "Dapr 与 osm-edge 集成"
 description: "将 Dapr 与 osm-edge 集成的简单演示"
 aliases: "/docs/integrations/demo_dapr"
-type: docs
 weight: 2
 draft: true
 ---

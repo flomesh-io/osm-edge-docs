@@ -1,7 +1,6 @@
 ---
 title: "Quick Start"
 description: "Try osm-edge in 5 minutes"
-type: docs
 weight: 2
 ---
 

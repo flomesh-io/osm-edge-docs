@@ -1,7 +1,6 @@
 ---
 title: "部署示例应用"
 description: "部署示例书店应用"
-type: docs
 weight: 2
 aliases: = ["/docs/install/manual_demo/"]
 ---

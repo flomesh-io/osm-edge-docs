@@ -1,7 +1,6 @@
 ---
 title: "Ingress with Traefik"
 description: "Kubernetes ingress with Traefik Ingress Controller"
-type: docs
 weight: 12
 draft: false
 ---

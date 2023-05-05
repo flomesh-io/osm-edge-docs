@@ -1,7 +1,6 @@
 ---
 title: "Performance and Scalability"
 description: "Performance benchmark on control plane and data plane sidecar and scalability test of osm-edge"
-type: docs
 weight: 2
 ---
 

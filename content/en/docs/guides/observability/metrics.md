@@ -1,7 +1,6 @@
 ---
 title: "Metrics"
 description: "Proxy and osm-edge control plane Prometheus metrics"
-type: docs
 weight: 1
 ---
 

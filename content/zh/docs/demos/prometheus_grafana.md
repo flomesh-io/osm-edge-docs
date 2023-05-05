@@ -1,7 +1,6 @@
 ---
 title: "将 osm-edge 与 Prometheus 和 Grafana 集成"
 description: "描述如何使用自维护的 Prometheus 和 Grafana 配置 osm-edge 特定的配置和仪表板"
-type: docs
 weight: 25
 ---
 

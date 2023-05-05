@@ -1,7 +1,6 @@
 ---
 title: "Feature Lifecycle"
 description: "Lifecycle of features and their status"
-type: docs
 weight: 1
 ---
 

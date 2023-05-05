@@ -1,7 +1,6 @@
 ---
 title: "出口"
 description: "启用对互联网和服务网格外部服务的访问。"
-type: docs
 weight: 6
 ---
 

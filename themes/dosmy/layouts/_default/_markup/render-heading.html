@@ -1,0 +1,4 @@
+{{/* increase the heading level and remove heading one */}}
+{{ if ne .Level 1}}
+<h{{ add .Level 1 }} id="{{ .Text }}">{{ .Text }}</h{{ .Level }}>
+{{ end }}

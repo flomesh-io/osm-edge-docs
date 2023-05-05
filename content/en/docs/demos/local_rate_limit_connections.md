@@ -1,7 +1,6 @@
 ---
 title: "Local rate limiting of L4 connections"
 description: "Configuring local rate limiting for L4 connections"
-type: docs
 weight: 22
 ---
 

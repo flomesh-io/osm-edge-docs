@@ -1,7 +1,6 @@
 ---
 title: "Iptables Redirection"
 description: "Iptables Redirection"
-type: docs
 weight: 1
 ---
 
