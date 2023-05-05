@@ -1,7 +1,6 @@
 ---
 title: "证书管理"
 description: "osm-edge 使用 mTLS 为 Pod 间的数据加密，就像 Pipy 和 服务标识那样"
-type: docs
 weight: 10
 draft: true
 ---

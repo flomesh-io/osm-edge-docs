@@ -1,7 +1,6 @@
 ---
 title: "性能和可扩展性"
 description: "osm 的控制平面和数据平面 sidecar 的性能基准测试以及开放边缘服务网格的可扩展性测试"
-type: docs
 weight: 2
 ---
 

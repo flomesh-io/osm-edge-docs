@@ -1,7 +1,6 @@
 ---
 title: "安装 osm-edge"
 description: "使用 osm-edge 命令行工具安装 osm-edge 控制平面"
-type: docs
 weight: 1
 ---
 

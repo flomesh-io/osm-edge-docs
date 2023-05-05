@@ -1,7 +1,6 @@
 ---
 title: "Service-based access control"
 description: "Managing access to services"
-type: docs
 weight: 18
 ---
 

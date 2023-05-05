@@ -1,7 +1,6 @@
 ---
 title: "配置流量拆分"
 description: "使用 SMI Traffic Split API 来平衡服务之间的流量"
-type: docs
 weight: 4
 ---
 

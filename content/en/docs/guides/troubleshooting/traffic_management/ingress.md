@@ -1,7 +1,6 @@
 ---
 title: "Ingress"
 description: "Troubleshooting ingress traffic"
-type: docs
 weight: 3
 ---
 

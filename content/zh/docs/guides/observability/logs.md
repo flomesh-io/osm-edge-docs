@@ -1,7 +1,6 @@
 ---
 title: "日志"
 description: "osm-edge 控制平面的诊断日志"
-type: docs
 ---
 
 # 日志

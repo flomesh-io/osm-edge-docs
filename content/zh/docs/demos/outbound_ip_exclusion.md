@@ -1,7 +1,6 @@
 ---
 title: "出站流量 IP 范围排除"
 description: "从 Sidecar 拦截中排除出站流量的 IP 地址范围"
-type: docs
 weight: 5
 ---
 

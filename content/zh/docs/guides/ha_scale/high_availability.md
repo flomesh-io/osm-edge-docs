@@ -2,7 +2,6 @@
 title: "高可用设计注意事项"
 description: "开放边缘服务网格高可用设计注意事项"
 aliases: "/docs/HA/"
-type: docs
 weight: 3
 ---
 

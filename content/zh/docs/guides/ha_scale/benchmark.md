@@ -1,7 +1,6 @@
 ---
 title: "数据平面基准测试"
 description: "osm-edge 和 osm 数据平面的基准测试"
-type: docs
 weight: 1
 ---
 

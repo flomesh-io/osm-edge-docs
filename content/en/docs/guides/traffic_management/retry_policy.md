@@ -1,7 +1,6 @@
 ---
 title: "Retry"
 description: "Impelmenting Retry to handle transient failures"
-type: docs
 weight: 11
 ---
 

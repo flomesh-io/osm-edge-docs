@@ -1,7 +1,6 @@
 ---
 title: "Configure Traffic Policies"
 description: "Configure traffic to flow between the bookstore applications"
-type: docs
 weight: 4
 ---
 

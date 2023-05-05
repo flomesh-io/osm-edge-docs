@@ -1,7 +1,6 @@
 ---
 title: "应用迁入"
 description: "迁入服务"
-type: docs
 weight: 5
 ---
 

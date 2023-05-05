@@ -1,7 +1,6 @@
 ---
 title: "eBPF setup quickstart"
 description: "Learn how to use eBPF with osm-edge"
-type: docs
 weight: 2
 ---
 

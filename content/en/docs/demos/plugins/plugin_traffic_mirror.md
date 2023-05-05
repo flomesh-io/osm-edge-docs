@@ -1,7 +1,6 @@
 ---
 title: "Traffic Mirroring"
 description: "Adding Traffic Shadowing functionality to osm-edge sidecar via Plugins"
-type: docs
 weight: 4
 ---
 

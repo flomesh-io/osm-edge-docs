@@ -1,7 +1,6 @@
 ---
 title: "Outbound Traffic IP Range Exclusions"
 description: "Excluding IP address ranges of outbound traffic from sidecar interception"
-type: docs
 weight: 5
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "Configure Observability with Prometheus and Grafana"
 description: "Use osm-edge's observability integrations with Prometheus and Grafana to inspect the traffic between the bookstore applications"
-type: docs
 weight: 6
 ---
 

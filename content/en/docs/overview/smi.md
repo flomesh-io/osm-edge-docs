@@ -1,7 +1,6 @@
 ---
 title: Service Mesh Interface (SMI) Support
 description: "SMI implementation in osm-edge"
-type: docs
 ---
 
 ## Overview

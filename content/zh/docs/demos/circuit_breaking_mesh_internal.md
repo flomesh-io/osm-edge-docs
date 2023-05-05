@@ -1,7 +1,6 @@
 ---
 title: "网格内服务的熔断"
 description: "为网格内服务配置熔断"
-type: docs
 weight: 21
 draft: true
 ---

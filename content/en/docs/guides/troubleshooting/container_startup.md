@@ -1,7 +1,6 @@
 ---
 title: "Application Container Lifecycle"
 description: "Troubleshooting application container lifecycle"
-type: docs
 weight: 1
 ---
 

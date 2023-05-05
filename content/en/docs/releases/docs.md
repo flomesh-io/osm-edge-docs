@@ -1,7 +1,6 @@
 ---
 title: "All Documentation Releases"
 description: "A complete listing of all osm-edge documentation releases"
-type: docs
 weight: 2
 ---
 

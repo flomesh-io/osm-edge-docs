@@ -1,7 +1,6 @@
 ---
 title: "Egress Gateway"
 description: "Mannage access to the Internet and services external to the service mesh with Egress gateway."
-type: docs
 weight: 7
 ---
 

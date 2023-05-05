@@ -1,0 +1,34 @@
+{{/* We cache this partial for bigger sites and set the active class client side. */}}
+{{ $shouldDelayActive := ge (len .Site.Pages) 2000 }}
+<div>
+  <div>
+    {{ template "print" (dict "page" . "section" (index .Site.Sections 0) "delayActive" $shouldDelayActive)  }}
+  </div>
+</div>
+{{ define "print" }}
+{{ $s := .section }}
+{{ $p := .page }}
+{{ $shouldDelayActive := .delayActive }}
+{{ $active := eq $p.CurrentSection $s }}
+{{ $sid := $s.RelPermalink | anchorize }}
+  <h1>{{ $s.LinkTitle }}</h1>
+      {{ $s.Content }}
+      {{ $pages := where (union $s.Pages $s.Sections).ByWeight ".Params.toc_hide" "!=" true }}
+      {{ $pages := $pages | first 50 }}
+      {{ range $pages }}
+      {{ if .IsPage }}
+      {{ $mid := printf "m-%s" (.RelPermalink | anchorize) }}
+      {{ $pageActive := eq . $p }}
+      <h2>{{ .LinkTitle }}</h2>
+      <br/>
+      {{ .Content }}
+      {{ else if or (eq $p.RelPermalink "/") (eq $p.RelPermalink (printf "/%s/" $p.Language)) }}
+      {{ $mid := printf "m-%s" (.RelPermalink | anchorize) }}
+      <a class="td-sidebar-link td-sidebar-link__page" id="{{ $mid }}" href="{{ .RelPermalink }}">&gt; {{ .LinkTitle }}</a>
+      {{ else }}
+      {{ template "print" (dict "page" $p "section" .) }}
+      <br/>
+      <br/>
+      {{ end }}
+      {{ end }}
+{{ end }}

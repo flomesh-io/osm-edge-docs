@@ -1,7 +1,6 @@
 ---
 title: "Bi-directional mTLS"
 description: "Configuring different TLS certificates for Ingress and Egress traffic"
-type: docs
 weight: 9
 ---
 

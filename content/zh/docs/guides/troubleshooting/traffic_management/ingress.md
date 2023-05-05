@@ -1,7 +1,6 @@
 ---
 title: "入口"
 description: "入口流量故障排查"
-type: docs
 weight: 3
 ---
 

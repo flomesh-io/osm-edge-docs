@@ -1,7 +1,6 @@
 ---
 title: "Ingress with Kubernetes Nginx Ingress Controller"
 description: "HTTP and HTTPS ingress with Kubernetes Nginx Ingress Controller"
-type: docs
 weight: 11
 ---
 

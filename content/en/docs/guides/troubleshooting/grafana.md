@@ -2,7 +2,6 @@
 title: "Grafana"
 description: "Troubleshooting Grafana integration"
 aliases: "/docs/troubleshooting/observability/grafana"
-type: docs
 weight: 16
 ---
 

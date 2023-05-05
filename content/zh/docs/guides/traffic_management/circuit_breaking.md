@@ -1,7 +1,6 @@
 ---
 title: "熔断"
 description: "使用熔断来限制连接和请求"
-type: docs
 weight: 11
 draft: true
 ---

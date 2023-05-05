@@ -1,7 +1,6 @@
 ---
 title: "Traffic Splitting"
 description: "Traffic splitting using SMI Traffic Split API"
-type: docs
 weight: 10
 ---
 

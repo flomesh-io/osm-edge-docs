@@ -2,7 +2,6 @@
 title: "调节器指南"
 description: "调节器指南"
 aliases: ["/docs/reconciler_guide"]
-type: docs
 weight: 8
 ---
 

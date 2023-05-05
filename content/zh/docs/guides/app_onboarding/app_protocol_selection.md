@@ -1,7 +1,6 @@
 ---
 title: "应用协议选择"
 description: "应用协议选择"
-type: docs
 ---
 
 # 应用协议选择

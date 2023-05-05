@@ -1,7 +1,6 @@
 ---
 title: "网格配置"
 description: "osm-edge MeshConfig"
-type: docs
 aliases: ["/docs/osm_mesh_config/"]
 weight: 7
 ---

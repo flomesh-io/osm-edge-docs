@@ -1,7 +1,6 @@
 ---
 title: "Cert-manager Certificate Provider"
 description: "Using cert-manager as a certificate provider"
-type: docs
 weight: 30
 ---
 

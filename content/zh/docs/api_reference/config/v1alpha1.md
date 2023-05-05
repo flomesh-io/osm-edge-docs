@@ -1,7 +1,6 @@
 ---
 title: "配置 v1alpha1 API 参考"
 description: "配置 v1alpha1 API 参考文档."
-type: docs
 ---
 
 <p>Packages:</p>

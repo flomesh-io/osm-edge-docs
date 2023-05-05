@@ -1,7 +1,6 @@
 ---
 title: "Uninstall the osm-edge Control Plane and Components"
 description: "Uninstall"
-type: docs
 weight: 4
 ---
 

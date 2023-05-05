@@ -1,7 +1,6 @@
 ---
 title: "Canary Rollouts using SMI Traffic Split"
 description: "Managing Canary rollouts using SMI Taffic Split"
-type: docs
 weight: 21
 ---
 

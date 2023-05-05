@@ -1,7 +1,6 @@
 ---
 title: "宽松模式"
 description: "宽松流量策略模式"
-type: docs
 weight: 2
 ---
 

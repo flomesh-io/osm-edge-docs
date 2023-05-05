@@ -1,7 +1,6 @@
 ---
 title: "Rate Limiting"
 description: "Using rircuit breaking to control the throughput of traffic"
-type: docs
 weight: 12
 ---
 

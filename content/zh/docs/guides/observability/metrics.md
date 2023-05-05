@@ -1,7 +1,6 @@
 ---
 title: "度量"
 description: "使用 Promtheus 对代理以及 osm-edge 控制平面进行度量"
-type: docs
 weight: 1
 ---
 

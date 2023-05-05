@@ -1,7 +1,6 @@
 ---
 title: "Using eBPF with osm-edge"
 description: "Learn how to use eBPF with osm-edge"
-type: docs
 weight: 2
 ---
 

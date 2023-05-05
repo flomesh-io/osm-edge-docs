@@ -1,7 +1,6 @@
 ---
 title: "osm-edge 控制平面组件"
 description: "组件"
-type: docs
 weight: 2
 ---
 

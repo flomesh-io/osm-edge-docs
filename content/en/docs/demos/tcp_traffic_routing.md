@@ -1,7 +1,6 @@
 ---
 title: "TCP Traffic Routing"
 description: "Set up TCP traffic routing"
-type: docs
 weight: 20
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "Egress Troubleshooting"
 description: "Egress Troubleshooting Guide"
-type: docs
 ---
 
 ## When Egress is not working as expected

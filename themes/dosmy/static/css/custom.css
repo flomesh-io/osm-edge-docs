@@ -1,0 +1,8 @@
+code[class*="language-"],
+pre[class*="language-"] {
+	white-space: pre-wrap;
+}
+
+main img {
+  max-width: 100%;
+}

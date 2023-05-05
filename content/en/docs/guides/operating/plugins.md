@@ -1,7 +1,6 @@
 ---
 title: "Extending osm-edge"
 description: "How to extend osm-edge service mesh without re-compiling it"
-type: docs
 weight: 15
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "Egress Gateway Policy"
 description: "Accessing external services via Egress Gateway using Egress policies"
-type: docs
 weight: 18
 ---
 

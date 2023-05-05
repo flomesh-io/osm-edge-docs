@@ -1,7 +1,6 @@
 ---
 title: "About osm-edge"
 description: "An overview of osm-edge, background, features, and architecture"
-type: docs
 weight: 1
 ---
 

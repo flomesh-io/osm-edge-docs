@@ -1,7 +1,6 @@
 ---
 title: "osm-edge 概述"
 description: "介绍 osm-edge 产生的背景、采用的技术、架构"
-type: docs
 weight: 1
 ---
 

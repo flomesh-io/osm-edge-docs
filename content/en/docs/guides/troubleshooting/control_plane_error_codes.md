@@ -2,7 +2,6 @@
 title: "Error Codes"
 description: "Troubleshooting control plane error codes"
 aliases: ["/docs/troubleshooting/observability/errorcodes/"]
-type: docs
 weight: 5
 ---
 

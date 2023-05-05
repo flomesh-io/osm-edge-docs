@@ -1,7 +1,6 @@
 ---
 title: "配置流量策略"
 description: "配置流量在书店应用之间流动"
-type: docs
 weight: 3
 ---
 

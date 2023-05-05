@@ -1,7 +1,6 @@
 ---
 title: "osm-edge Resource Requests and Limits"
 description: "Resource requests and limits for osm-edge pods and deployments"
-type: docs
 weight: 3
 ---
 

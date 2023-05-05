@@ -1,7 +1,6 @@
 ---
 title: "Bi-direction TLS with NginX Ingress"
 description: "Configuring different TLS certificates for Ingress and Egress"
-type: docs
 weight: 13
 ---
 

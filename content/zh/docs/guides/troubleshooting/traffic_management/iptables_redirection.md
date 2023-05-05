@@ -1,7 +1,6 @@
 ---
 title: "Iptables 重定向"
 description: "Iptables 拦截和重定向故障排查"
-type: docs
 weight: 1
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "Permissive Traffic Policy Mode"
 description: "Set up application connectivity using service discovery without explicit SMI policies"
-type: docs
 weight: 1
 ---
 

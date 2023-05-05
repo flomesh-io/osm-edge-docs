@@ -1,7 +1,6 @@
 ---
 title: "TCP 流量路由"
 description: "设置 TCP 流量路由"
-type: docs
 weight: 20
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "宽松流量策略模式"
 description: "无需显式 SMI 策略使用服务发现设置应用程序连接"
-type: docs
 weight: 1
 ---
 

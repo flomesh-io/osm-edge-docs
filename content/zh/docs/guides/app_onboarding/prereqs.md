@@ -1,7 +1,6 @@
 ---
 title: "先决条件"
 description: "应用程序要求"
-type: docs
 aliases: ["/docs/application_requirements"]
 weight: 1
 ---

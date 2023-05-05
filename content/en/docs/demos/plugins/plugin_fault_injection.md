@@ -1,7 +1,6 @@
 ---
 title: "Fault Injection"
 description: "Adding Fault Injection functionality to osm-edge sidecar via Plugins"
-type: docs
 weight: 3
 ---
 

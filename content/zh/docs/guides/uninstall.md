@@ -1,7 +1,6 @@
 ---
 title: "卸载 osm-edge 控制平面和组件"
 description: "卸载"
-type: docs
 weight: 4
 ---
 

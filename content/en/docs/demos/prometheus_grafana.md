@@ -1,7 +1,6 @@
 ---
 title: "Integrate osm-edge with Prometheus and Grafana"
 description: "Describes how to set up an osm-edge-specific configuration and dashboards with your own Prometheus and Grafana stack"
-type: docs
 weight: 25
 ---
 

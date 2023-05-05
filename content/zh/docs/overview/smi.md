@@ -1,7 +1,6 @@
 ---
 title: 服务网格接口 (SMI) 支持
 description: "osm-edge 的 SMI 实现"
-type: docs
 weight: 4
 ---
 

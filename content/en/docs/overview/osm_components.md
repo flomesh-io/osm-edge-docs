@@ -1,7 +1,6 @@
 ---
 title: "osm-edge control plane components"
 description: "Components"
-type: docs
 weight: 2
 ---
 

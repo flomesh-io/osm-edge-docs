@@ -1,7 +1,6 @@
 ---
 title: "FSM 入口"
 description: "FSM 入口控制器实现的 HTTP 入口"
-type: docs
 weight: 10
 draft: false
 ---

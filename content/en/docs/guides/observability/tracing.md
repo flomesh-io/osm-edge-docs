@@ -1,7 +1,6 @@
 ---
 title: "Tracing"
 description: "Tracing with Jaeger"
-type: docs
 weight: 4
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "快速体验"
 description: "5 分钟快速体验 osm-ege"
-type: docs
 weight: 2
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "Iptables 重定向"
 description: "Iptables 重定向"
-type: docs
 weight: 1
 ---
 

@@ -1,7 +1,6 @@
 ---
 title: "Logs"
 description: "Diagnostic logs from the osm-edge control plane"
-type: docs
 ---
 
 # Logs

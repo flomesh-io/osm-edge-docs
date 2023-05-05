@@ -1,7 +1,6 @@
 ---
 title: "使用 SMI 流量拆分进行金丝雀部署"
 description: "使用 SMI 流量拆分管理金丝雀部署"
-type: docs
 weight: 21
 ---
 

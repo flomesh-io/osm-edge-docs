@@ -1,7 +1,6 @@
 ---
 title: "卸载 osm-edge"
 description: "卸载 osm-edge 和书店应用"
-type: docs
 weight: 6
 ---
 

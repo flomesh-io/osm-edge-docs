@@ -1,7 +1,6 @@
 ---
 title: "Configure Traffic Split"
 description: "Balance traffic between services with the SMI Traffic Split API"
-type: docs
 weight: 5
 ---
 

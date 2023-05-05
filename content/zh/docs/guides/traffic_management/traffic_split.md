@@ -1,7 +1,6 @@
 ---
 title: "流量拆分"
 description: "使用 SMI 流量拆分 API 的流量拆分"
-type: docs
 weight: 10
 ---
 
